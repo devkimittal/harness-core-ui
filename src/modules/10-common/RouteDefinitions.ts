@@ -1390,6 +1390,7 @@ const routes = {
   toCEOverview: withAccountId(() => '/ce/overview'),
   toCEPerspectiveDashboard: withAccountId(() => `/ce/perspective`),
   toCEAnomalyDetection: withAccountId(() => `/ce/anomaly-detection`),
+  toCEMicro: withAccountId(() => '/ce/micro'),
   /********************************************************************************************************************/
   toCustomDashboard: withAccountId(() => '/home/dashboards'),
   toCustomDashboardHome: withAccountId(

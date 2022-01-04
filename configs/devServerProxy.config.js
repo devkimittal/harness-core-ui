@@ -102,5 +102,9 @@ module.exports = {
   '/auth': {
     pathRewrite: { '^/auth': '' },
     target: 'https://app.harness.io/auth'
+  },
+  '/ccmui': {
+    pathRewrite: { '^/ccmui': '' },
+    target: process.env.CCM_UI_URL || 'https://localhost:8183'
   }
 }
