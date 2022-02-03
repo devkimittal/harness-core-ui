@@ -44,7 +44,8 @@ import {
   useSavingsOfService,
   useGetServiceDiagnostics,
   ServiceError,
-  useCumulativeServiceSavings
+  useCumulativeServiceSavings,
+  useRouteDetails
 } from 'services/lw'
 import { String, useStrings } from 'framework/strings'
 import useDeleteServiceHook from '@ce/common/useDeleteService'
@@ -468,6 +469,53 @@ interface RulesTableContainerProps {
   searchParams: SearchParams
 }
 
+const useSubmittedRulesStatusUpdate = ({
+  rules,
+  onRuleUpdate
+}: {
+  rules: Service[]
+  onRuleUpdate?: (params: { updatedService: Service; index: number }) => void
+}) => {
+  const { accountId } = useParams<AccountPathProps>()
+  const { data, refetch, loading } = useRouteDetails({ account_id: accountId, rule_id: 0, lazy: true })
+  const rulesToFetch = useRef<{ index: number; rule: Service }[]>([])
+  const timer = useRef<NodeJS.Timer | null>(null)
+
+  useEffect(() => {
+    rulesToFetch.current = []
+    rules.forEach((r, i) => {
+      if (r.status === 'submitted') {
+        rulesToFetch.current.push({ index: i, rule: r })
+      }
+    })
+    console.log({ rulesToFetch, rules })
+  }, [rules])
+
+  const triggerRuleFetching = () => {
+    timer.current = setInterval(() => {
+      refetch({ pathParams: { account_id: accountId, rule_id: rulesToFetch.current[0].rule.id } })
+    }, 5000)
+  }
+
+  useEffect(() => {
+    if (!_isEmpty(rulesToFetch.current) && !loading && timer.current === null) {
+      triggerRuleFetching()
+    }
+  }, [rulesToFetch.current, timer.current])
+
+  useEffect(() => {
+    if (!_isEmpty(data?.response) && data?.response?.service?.status !== 'submitted') {
+      onRuleUpdate?.({ updatedService: data?.response?.service as Service, index: rulesToFetch.current[0].index })
+      rulesToFetch.current.shift()
+      clearInterval(timer.current as NodeJS.Timer)
+      timer.current = null
+    }
+    if (timer.current) {
+      return () => clearInterval(timer.current as NodeJS.Timer)
+    }
+  }, [data?.response])
+}
+
 const RulesTableContainer: React.FC<RulesTableContainerProps> = ({
   rules,
   loading,
@@ -480,6 +528,17 @@ const RulesTableContainer: React.FC<RulesTableContainerProps> = ({
   const { getString } = useStrings()
   const history = useHistory()
   const location = useLocation()
+  const tableData = rules.slice(
+    pageProps.index * TOTAL_ITEMS_PER_PAGE,
+    pageProps.index * TOTAL_ITEMS_PER_PAGE + TOTAL_ITEMS_PER_PAGE
+  )
+
+  useSubmittedRulesStatusUpdate({
+    rules: tableData
+    // onRuleUpdate: ({ updatedService, index }) => {
+    //   console.log({ updatedService, index })
+    // }
+  })
 
   const onSearchChange = async (val: string) => {
     val = val.trim()
@@ -544,10 +603,7 @@ const RulesTableContainer: React.FC<RulesTableContainerProps> = ({
               <Text>Refresh</Text>
             </Layout.Horizontal>
             <TableV2<Service>
-              data={rules.slice(
-                pageProps.index * TOTAL_ITEMS_PER_PAGE,
-                pageProps.index * TOTAL_ITEMS_PER_PAGE + TOTAL_ITEMS_PER_PAGE
-              )}
+              data={tableData}
               pagination={{
                 pageSize: TOTAL_ITEMS_PER_PAGE,
                 pageIndex: pageProps.index,
