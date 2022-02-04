@@ -469,6 +469,8 @@ interface RulesTableContainerProps {
   searchParams: SearchParams
 }
 
+const POLL_TIMER = 1000 * 60 * 1
+
 const useSubmittedRulesStatusUpdate = ({
   rules,
   onRuleUpdate
@@ -488,30 +490,38 @@ const useSubmittedRulesStatusUpdate = ({
         rulesToFetch.current.push({ index: i, rule: r })
       }
     })
-    console.log({ rulesToFetch, rules })
+    console.log('inside 1st useeffect', { rulesToFetch, rules })
   }, [rules])
 
   const triggerRuleFetching = () => {
-    timer.current = setInterval(() => {
+    console.log('inside rule fetch function')
+    timer.current = setTimeout(() => {
+      console.log('inside set interval callback')
       refetch({ pathParams: { account_id: accountId, rule_id: rulesToFetch.current[0].rule.id } })
-    }, 5000)
+      clearTimeout(timer.current as NodeJS.Timer)
+      timer.current = null
+    }, POLL_TIMER)
   }
 
   useEffect(() => {
+    console.log('inside 2nd useeffect')
     if (!_isEmpty(rulesToFetch.current) && !loading && timer.current === null) {
+      console.log('starting triggering rule fetching')
       triggerRuleFetching()
     }
   }, [rulesToFetch.current, timer.current])
 
   useEffect(() => {
+    console.log('inside 3rd useeffect')
     if (!_isEmpty(data?.response) && data?.response?.service?.status !== 'submitted') {
+      console.log('got the updated rule status')
       onRuleUpdate?.({ updatedService: data?.response?.service as Service, index: rulesToFetch.current[0].index })
       rulesToFetch.current.shift()
-      clearInterval(timer.current as NodeJS.Timer)
+      clearTimeout(timer.current as NodeJS.Timer)
       timer.current = null
     }
     if (timer.current) {
-      return () => clearInterval(timer.current as NodeJS.Timer)
+      return () => clearTimeout(timer.current as NodeJS.Timer)
     }
   }, [data?.response])
 }
