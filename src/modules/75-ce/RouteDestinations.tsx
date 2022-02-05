@@ -18,6 +18,7 @@ import type { AccountPathProps, Module } from '@common/interfaces/RouteInterface
 import NotFoundPage from '@common/pages/404/NotFoundPage'
 import { MinimalLayout } from '@common/layouts'
 import SessionToken from 'framework/utils/SessionToken'
+// eslint-disable-next-line no-restricted-imports
 import ChildAppMounter from 'microfrontends/ChildAppMounter'
 
 import CESideNav from '@ce/components/CESideNav/CESideNav'
@@ -279,14 +280,14 @@ const CERoutes: React.FC = () => {
           <BudgetDetails />
         </RouteWithLayout>
 
-        {/* <RouteWithLayout
+        <RouteWithLayout
           licenseRedirectData={licenseRedirectData}
           sidebarProps={CESideNavProps}
           path={routes.toCERecommendations({ ...accountPathProps, ...projectPathProps })}
           exact
         >
           <RecommendationList />
-        </RouteWithLayout> */}
+        </RouteWithLayout>
         <RouteWithLayout
           licenseRedirectData={licenseRedirectData}
           sidebarProps={CESideNavProps}
