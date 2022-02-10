@@ -6,7 +6,7 @@
  */
 
 import React, { useMemo, useCallback, useState, useRef } from 'react'
-import { Container, Text, Color } from '@wings-software/uicore'
+import { Container, Text, Icon, Layout } from '@wings-software/uicore'
 import cx from 'classnames'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
@@ -27,21 +27,19 @@ function ColumnHeaderRow(): JSX.Element {
   const { getString } = useStrings()
   return (
     <Container className={cx(css.mainRow, css.columnHeader)}>
-      <Text color={Color.BLACK} className={cx(css.clusterType, css.logRowColumnHeader)}>
-        {getString('pipeline.verification.logs.clusterType')}
-      </Text>
-      <Text color={Color.BLACK} className={cx(css.risk, css.logRowColumnHeader)}>
-        {getString('pipeline.verification.logs.risk')}
-      </Text>
-      <Text color={Color.BLACK} className={cx(css.message, css.logRowColumnHeader)}>
-        {getString('pipeline.verification.logs.sampleMessage')}
-      </Text>
-      <Text color={Color.BLACK} className={cx(css.count, css.logRowColumnHeader)}>
-        {getString('pipeline.verification.logs.messageCount')}
-      </Text>
-      <Text color={Color.BLACK} className={cx(css.messageFrequency, css.logRowColumnHeader)}>
-        {getString('pipeline.verification.logs.messageFrequency')}
-      </Text>
+      <Text padding={{ left: 'small' }}>{getString('pipeline.verification.logs.eventType')}</Text>
+      <Text>{getString('cv.sampleMessage')}</Text>
+      <Container>
+        <Text>{getString('common.frequency')}</Text>
+        <Text className={css.secondaryText}>({getString('pipeline.verification.logs.countPerMin')})</Text>
+      </Container>
+
+      {/* BELOW TWO COLUMNS HAS NO TITLE */}
+      {/* LOG UPDATED INFO */}
+      <span />
+
+      {/* LOG ACTIONS */}
+      <span />
     </Container>
   )
 }
@@ -72,47 +70,28 @@ function DataRow(props: LogAnalysisDataRowProps): JSX.Element {
   }, [])
 
   return (
-    <Container className={cx(css.mainRow, css.dataRow, css.highlightRow)} data-testid={'logs-data-row'}>
-      <Container className={cx(css.dataColumn, css.openModalColumn, css.compareDataColumn, css.clusterType)}>
-        {/* <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            onSelect?.(e.currentTarget.checked, rowData, index, chartOptions)
-          }}
-        /> */}
+    <Container className={cx(css.mainRow, css.dataRow)} data-testid={'logs-data-row'}>
+      <Container
+        padding={{ left: 'small' }}
+        className={cx(css.openModalColumn, css.compareDataColumn, css.clusterType)}
+      >
         {rowData.clusterType && (
           <Text onClick={onShowRiskEditModalCallback}>{getEventTypeFromClusterType(rowData.clusterType)}</Text>
         )}
       </Container>
-      <Container
-        className={cx(css.logRowText, css.dataColumn, css.openModalColumn, css.risk)}
-        onClick={onShowRiskEditModalCallback}
-      >
-        {riskScore || riskScore === 0 ? (
-          <div className={css.healthScoreCard} style={{ background: color }}>
-            <Text font={{ size: 'xsmall', weight: 'semi-bold' }} color={Color.WHITE}>
-              {getString(getRiskLabelStringId(riskStatus)).toUpperCase()}
-            </Text>
-          </div>
-        ) : null}
-      </Container>
-      <Container
-        className={cx(css.logText, css.dataColumn, css.openModalColumn, css.message)}
-        onClick={onShowRiskEditModalCallback}
-      >
+      <Container className={cx(css.logText, css.openModalColumn, css.message)} onClick={onShowRiskEditModalCallback}>
         <p className={css.logRowText} ref={logTextRef}>
           {isErrorTracking ? rowData.message.split('|').slice(0, 4).join('|') : rowData.message}
         </p>
       </Container>
-      <Container
-        className={cx(css.logRowText, css.dataColumn, css.openModalColumn, css.count)}
+      {/* <Container
+        className={cx(css.logRowText, css.openModalColumn, css.count)}
         onClick={onShowRiskEditModalCallback}
         padding={{ left: 'medium' }}
       >
         <p className={css.count}>{rowData.count}</p>
-      </Container>
-      <Container className={cx(css.lineChartContainer, css.dataColumn, css.messageFrequency)}>
+      </Container> */}
+      <Container className={cx(css.lineChartContainer, css.messageFrequency)}>
         <HighchartsReact highchart={Highcharts} options={chartOptions} />
       </Container>
       {displayRiskEditModal ? (
@@ -125,6 +104,10 @@ function DataRow(props: LogAnalysisDataRowProps): JSX.Element {
           feedback={feedbackGiven}
         />
       ) : null}
+      <span />
+      <Layout.Horizontal style={{ alignItems: 'center' }}>
+        <Icon name="description" size={24} onClick={onShowRiskEditModalCallback} />
+      </Layout.Horizontal>
     </Container>
   )
 }

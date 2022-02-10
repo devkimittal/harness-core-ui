@@ -9,34 +9,18 @@
   height: 100%;
   width: 100%;
   .dataContainer {
+    flex: 1;
     overflow-y: auto;
+    padding-bottom: var(--spacing-xxlarge) !important;
   }
   .mainRow {
-    display: flex;
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 100px 50px;
 
-    .clusterType {
-      flex: 2;
-    }
-
-    .risk {
-      flex: 1.5;
-    }
-
-    .message {
-      flex: 4;
-    }
-
-    .count {
-      font-weight: 400;
-      font-style: normal;
-      font-size: small;
-      line-height: normal;
-      justify-content: center;
-      flex: 1.5;
-    }
-
-    .messageFrequency {
-      flex: 3;
+    &.dataRow {
+      box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+      border-radius: 3px;
+      margin-top: var(--spacing-medium);
     }
 
     .logRowText {
@@ -46,6 +30,10 @@
       color: #22272d !important;
     }
 
+    p.secondaryText {
+      font-weight: normal !important;
+    }
+
     .logRowColumnHeader {
       margin-bottom: var(--spacing-small);
       font-size: var(--font-size-small) !important;
@@ -53,14 +41,9 @@
 
     .compareDataColumn {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       input {
         margin-right: var(--spacing-small);
-      }
-
-      input,
-      [class*='bp3-icon'] {
-        cursor: pointer;
       }
     }
 
@@ -81,9 +64,8 @@
       white-space: pre-wrap;
       word-break: break-word;
       p {
-        font-family: var(--font-family-mono) !important;
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 2;
         overflow: hidden;
         -webkit-box-orient: vertical;
       }
@@ -103,27 +85,19 @@
       }
     }
 
-    .dataColumn {
-      align-items: center;
-    }
-
     .actions {
       display: flex;
     }
   }
-}
-
-.columnHeader {
-  border-bottom: 1px solid var(--grey-250);
-}
-
-.dataRow {
-  padding: var(--spacing-xsmall) 0 !important;
-  height: 70px;
-}
-
-.highlightRow:hover {
-  background-color: var(--blue-200);
+  .columnHeader {
+    align-items: center;
+    p {
+      text-transform: uppercase !important;
+      color: var(--grey-600) !important;
+      font-size: var(--font-size-small) !important;
+      font-weight: 500 !important;
+    }
+  }
 }
 
 .healthScoreCard {

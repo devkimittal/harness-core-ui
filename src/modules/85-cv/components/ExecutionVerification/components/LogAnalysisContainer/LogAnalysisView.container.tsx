@@ -188,7 +188,7 @@ export default function LogAnalysisContainer({
   )
 
   return (
-    <Container padding="large">
+    <Container height="100%">
       <LogAnalysis
         data={logsData}
         clusterChartData={clusterChartData}

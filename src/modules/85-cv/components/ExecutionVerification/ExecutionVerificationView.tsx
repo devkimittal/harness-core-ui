@@ -60,6 +60,7 @@ export function ExecutionVerificationView(props: ExecutionVerificationViewProps)
           id={getString('pipeline.verification.analysisTab.logs')}
           title={getString('pipeline.verification.analysisTab.logs')}
           panel={<LogAnalysisContainer step={step} hostName={selectedNode?.hostName} />}
+          panelClassName={css.mainTabPanelLogs}
         />
         {isErrorTrackingEnabled && (
           <Tab

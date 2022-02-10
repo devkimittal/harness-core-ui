@@ -680,6 +680,8 @@ verification:
     share: share
     sampleEvent: Sample event
     trend: trend
+    eventType: EVENT TYPE
+    countPerMin: Count per min
 stepCommonFields:
   runAsUser: Run as User
   ifNotPresent: 'If Not Present'

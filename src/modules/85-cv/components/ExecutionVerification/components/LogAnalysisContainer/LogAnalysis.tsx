@@ -98,7 +98,7 @@ export default function LogAnalysis(props: LogAnalysisProps): JSX.Element {
 
   return (
     <Container className={styles.logsTab}>
-      <Container className={styles.filters}>
+      {/* <Container className={styles.filters}>
         <Select
           items={getClusterTypes(getString)}
           defaultSelectedItem={getClusterTypes(getString)[0]}
@@ -114,13 +114,13 @@ export default function LogAnalysis(props: LogAnalysisProps): JSX.Element {
           className={styles.logsAnalysisFilters}
           verificationType={VerificationType.LOG}
         />
-      </Container>
+      </Container> */}
       <Container className={styles.clusterChart}>
         <Text font={{ weight: 'bold' }}>{getString('pipeline.verification.logs.logCluster')}</Text>
         {renderChartCluster()}
       </Container>
       <Container className={styles.tableContent}>{renderLogsData()}</Container>
-      {!!data?.resource?.totalPages && (
+      {/* {!!data?.resource?.totalPages && (
         <Pagination
           pageSize={data.resource.pageSize as number}
           pageCount={data.resource.totalPages}
@@ -128,7 +128,7 @@ export default function LogAnalysis(props: LogAnalysisProps): JSX.Element {
           pageIndex={data.resource.pageIndex}
           gotoPage={goToPage}
         />
-      )}
+      )} */}
     </Container>
   )
 }

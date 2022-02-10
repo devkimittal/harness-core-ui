@@ -2937,6 +2937,8 @@ export interface StringsMap {
   'pipeline.verification.logs.allEvents': string
   'pipeline.verification.logs.clusterType': string
   'pipeline.verification.logs.copyURL': string
+  'pipeline.verification.logs.countPerMin': string
+  'pipeline.verification.logs.eventType': string
   'pipeline.verification.logs.filterByClusterType': string
   'pipeline.verification.logs.knownEvent': string
   'pipeline.verification.logs.logCluster': string
