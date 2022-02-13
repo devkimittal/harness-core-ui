@@ -680,8 +680,18 @@ verification:
     share: share
     sampleEvent: Sample event
     trend: trend
-    eventType: EVENT TYPE
+    eventType: Event Type
     countPerMin: Count per min
+    eventCountPerMin: Event count per minute
+    frequency: Frequency
+    eventDetails: Event Details
+    updateEventPreference: Update Event Preference
+    eventPreference: Event Preference
+    lastKnownOccurence: Last Known Occurence
+    firstOccurence: First Occurence
+    notARiskLabel: Mark as Not a Risk
+    eventPriorityLabel: Update the Event Priority
+    reasonRequired: Reason field is required
 stepCommonFields:
   runAsUser: Run as User
   ifNotPresent: 'If Not Present'

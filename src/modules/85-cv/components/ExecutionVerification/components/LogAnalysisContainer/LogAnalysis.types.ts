@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import type { SeriesLineOptions } from 'highcharts'
+import type { SeriesColumnOptions } from 'highcharts'
 import type { SelectOption } from '@pipeline/components/PipelineSteps/Steps/StepsTypes'
 import type {
   LogData,
@@ -18,7 +18,7 @@ export type LogAnalysisRowData = {
   clusterType: LogData['tag']
   message: string
   count: number
-  messageFrequency: SeriesLineOptions[]
+  messageFrequency: SeriesColumnOptions[]
   riskScore: number
   riskStatus: LogData['riskStatus']
 }

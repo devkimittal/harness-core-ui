@@ -2938,13 +2938,22 @@ export interface StringsMap {
   'pipeline.verification.logs.clusterType': string
   'pipeline.verification.logs.copyURL': string
   'pipeline.verification.logs.countPerMin': string
+  'pipeline.verification.logs.eventCountPerMin': string
+  'pipeline.verification.logs.eventDetails': string
+  'pipeline.verification.logs.eventPreference': string
+  'pipeline.verification.logs.eventPriorityLabel': string
   'pipeline.verification.logs.eventType': string
   'pipeline.verification.logs.filterByClusterType': string
+  'pipeline.verification.logs.firstOccurence': string
+  'pipeline.verification.logs.frequency': string
   'pipeline.verification.logs.knownEvent': string
+  'pipeline.verification.logs.lastKnownOccurence': string
   'pipeline.verification.logs.logCluster': string
   'pipeline.verification.logs.messageCount': string
   'pipeline.verification.logs.messageFrequency': string
   'pipeline.verification.logs.noAnalysis': string
+  'pipeline.verification.logs.notARiskLabel': string
+  'pipeline.verification.logs.reasonRequired': string
   'pipeline.verification.logs.risk': string
   'pipeline.verification.logs.sampleEvent': string
   'pipeline.verification.logs.sampleMessage': string
@@ -2952,6 +2961,7 @@ export interface StringsMap {
   'pipeline.verification.logs.trend': string
   'pipeline.verification.logs.unexpectedFrequency': string
   'pipeline.verification.logs.unknownEvent': string
+  'pipeline.verification.logs.updateEventPreference': string
   'pipeline.verification.logs.urlCopied': string
   'pipeline.verification.metricViewPlaceholder': string
   'pipeline.verification.metricsInViolation': string

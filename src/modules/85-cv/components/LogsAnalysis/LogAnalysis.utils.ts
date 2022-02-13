@@ -29,7 +29,7 @@ export function getLogAnalysisTableData(logsData: AnalyzedLogDataDTO[]): LogAnal
       messageFrequency: [
         {
           name: 'trendData',
-          type: 'line',
+          type: 'column',
           color: getRiskColorValue(log.logData?.riskStatus),
           data: log.logData?.trend?.map(t => t.count ?? 0)
         }

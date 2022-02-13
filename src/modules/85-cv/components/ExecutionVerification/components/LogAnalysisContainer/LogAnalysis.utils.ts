@@ -5,11 +5,18 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { getRiskColorValue } from '@cv/utils/CommonUtils'
+import { getEventTypeChartColor, getRiskColorValue } from '@cv/utils/CommonUtils'
 import type { SelectOption } from '@pipeline/components/PipelineSteps/Steps/StepsTypes'
 import type { UseStringsReturn } from 'framework/strings'
 import type { LogData, RestResponsePageLogAnalysisClusterDTO } from 'services/cv'
 import type { LogAnalysisRowData } from './LogAnalysis.types'
+
+export enum EVENT_TYPE {
+  KNOWN = 'KNOWN',
+  UNKNOWN = 'UNKNOWN',
+  FREQUENCY = 'FREQUENCY',
+  BASELINE = 'BASELINE'
+}
 
 export const mapClusterType = (type: string): LogData['tag'] => {
   switch (type) {
@@ -42,15 +49,9 @@ export function getLogAnalysisData(data: RestResponsePageLogAnalysisClusterDTO |
       messageFrequency: [
         {
           name: 'testData',
-          type: 'line',
-          color: getRiskColorValue(d.risk),
+          type: 'column',
+          color: getEventTypeChartColor(d.clusterType),
           data: d?.testFrequencyData
-        },
-        {
-          name: 'controlData',
-          type: 'line',
-          color: 'var(--grey-350)',
-          data: d?.controlFrequencyData
         }
       ],
       riskScore: d?.score as number,

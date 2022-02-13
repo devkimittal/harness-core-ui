@@ -12,6 +12,7 @@ declare const styles: {
   readonly compareDataColumn: string
   readonly dataContainer: string
   readonly dataRow: string
+  readonly eventTypeTag: string
   readonly healthScoreCard: string
   readonly lineChartContainer: string
   readonly logRowColumnHeader: string

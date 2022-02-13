@@ -10,6 +10,7 @@ import type { SeriesLineOptions } from 'highcharts'
 export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions[]): Highcharts.Options {
   return {
     chart: {
+      type: 'column',
       renderTo: 'chart',
       margin: [0, 10, 0, 10],
       backgroundColor: 'transparent',
@@ -26,7 +27,7 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
     },
     xAxis: {
       labels: { enabled: false },
-      lineWidth: 0,
+      // lineWidth: 0,
       tickLength: 0,
       gridLineWidth: 0,
       title: {
@@ -44,12 +45,7 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
     },
     plotOptions: {
       series: {
-        stickyTracking: false
-      },
-      line: {
-        marker: {
-          enabled: false
-        }
+        pointWidth: 15
       }
     },
     tooltip: {

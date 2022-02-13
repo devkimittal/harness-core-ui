@@ -14,6 +14,7 @@ declare const styles: {
   readonly copySuccess: string
   readonly dataContent: string
   readonly dataNameData: string
+  readonly firstRow: string
   readonly formAndMessageContainer: string
   readonly formContainer: string
   readonly headingContainer: string
@@ -25,7 +26,6 @@ declare const styles: {
   readonly message: string
   readonly sampleEvent: string
   readonly sharePopoverContent: string
-  readonly trendChart: string
   readonly urlContent: string
 }
 export default styles

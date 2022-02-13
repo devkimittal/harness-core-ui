@@ -11,7 +11,12 @@ import cx from 'classnames'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import { useStrings } from 'framework/strings'
-import { getRiskColorValue, getRiskLabelStringId } from '@cv/utils/CommonUtils'
+import {
+  getEventTypeColor,
+  getEventTypeLightColor,
+  getRiskColorValue,
+  getRiskLabelStringId
+} from '@cv/utils/CommonUtils'
 import getLogAnalysisLineChartOptions from './LogAnalysisLineChartConfig'
 import { LogAnalysisRiskAndJiraModal } from './components/LogAnalysisRiskAndJiraModal/LogAnalysisRiskAndJiraModal'
 import type {
@@ -71,27 +76,27 @@ function DataRow(props: LogAnalysisDataRowProps): JSX.Element {
 
   return (
     <Container className={cx(css.mainRow, css.dataRow)} data-testid={'logs-data-row'}>
-      <Container
-        padding={{ left: 'small' }}
-        className={cx(css.openModalColumn, css.compareDataColumn, css.clusterType)}
-      >
+      <Container padding={{ left: 'small' }} className={cx(css.openModalColumn, css.compareDataColumn)}>
         {rowData.clusterType && (
-          <Text onClick={onShowRiskEditModalCallback}>{getEventTypeFromClusterType(rowData.clusterType)}</Text>
+          <Text
+            onClick={onShowRiskEditModalCallback}
+            className={css.eventTypeTag}
+            font="xsmall"
+            style={{
+              color: getEventTypeColor(rowData.clusterType),
+              background: getEventTypeLightColor(rowData.clusterType)
+            }}
+          >
+            {getEventTypeFromClusterType(rowData.clusterType)}
+          </Text>
         )}
       </Container>
-      <Container className={cx(css.logText, css.openModalColumn, css.message)} onClick={onShowRiskEditModalCallback}>
+      <Container className={cx(css.logText, css.openModalColumn)} onClick={onShowRiskEditModalCallback}>
         <p className={css.logRowText} ref={logTextRef}>
           {isErrorTracking ? rowData.message.split('|').slice(0, 4).join('|') : rowData.message}
         </p>
       </Container>
-      {/* <Container
-        className={cx(css.logRowText, css.openModalColumn, css.count)}
-        onClick={onShowRiskEditModalCallback}
-        padding={{ left: 'medium' }}
-      >
-        <p className={css.count}>{rowData.count}</p>
-      </Container> */}
-      <Container className={cx(css.lineChartContainer, css.messageFrequency)}>
+      <Container className={cx(css.lineChartContainer)}>
         <HighchartsReact highchart={Highcharts} options={chartOptions} />
       </Container>
       {displayRiskEditModal ? (

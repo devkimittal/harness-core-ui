@@ -14,11 +14,6 @@ export interface LogAnalysisRiskAndJiraModalProps {
   feedback?: { risk: string; message?: string }
 }
 
-export interface DataNameAndDataProps {
-  dataName: string
-  data?: string | number
-}
-
 export interface RiskAndMessageFormProps {
   handleSubmit: () => void
   hasSubmitted?: boolean
@@ -27,6 +22,7 @@ export interface RiskAndMessageFormProps {
 export interface ActivityHeadingContentProps {
   count: number
   trendData?: Highcharts.Options
+  activityType?: string
 }
 
 export interface SampleDataProps {
