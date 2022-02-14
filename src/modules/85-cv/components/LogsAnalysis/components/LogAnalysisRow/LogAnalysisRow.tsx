@@ -11,12 +11,7 @@ import cx from 'classnames'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import { useStrings } from 'framework/strings'
-import {
-  getEventTypeColor,
-  getEventTypeLightColor,
-  getRiskColorValue,
-  getRiskLabelStringId
-} from '@cv/utils/CommonUtils'
+import { getEventTypeColor, getEventTypeLightColor, getRiskColorValue } from '@cv/utils/CommonUtils'
 import getLogAnalysisLineChartOptions from './LogAnalysisLineChartConfig'
 import { LogAnalysisRiskAndJiraModal } from './components/LogAnalysisRiskAndJiraModal/LogAnalysisRiskAndJiraModal'
 import type {
@@ -51,28 +46,22 @@ function ColumnHeaderRow(): JSX.Element {
 
 function DataRow(props: LogAnalysisDataRowProps): JSX.Element {
   const { getString } = useStrings()
-  const { rowData, isErrorTracking } = props
+  const { rowData, isErrorTracking, onDrawOpen, index } = props
   const { riskScore, riskStatus } = rowData
   const color = getRiskColorValue(riskStatus)
   const chartOptions = useMemo(
     () => getLogAnalysisLineChartOptions(rowData?.messageFrequency || []),
     [rowData?.messageFrequency]
   )
-  const [displayRiskEditModal, setDisplayRiskEditModal] = useState(false)
-  const [feedbackGiven, setFeedbackGiven] = useState<{ risk: string; message: string } | undefined>(undefined)
-  const logTextRef = useRef<HTMLParagraphElement>(null)
+  // const [displayRiskEditModal, setDisplayRiskEditModal] = useState(false)
+  // const [feedbackGiven, setFeedbackGiven] = useState<{ risk: string; message: string } | undefined>(undefined)
   const onShowRiskEditModalCallback = useCallback(() => {
     if (isErrorTracking) {
       onClickErrorTrackingRow(rowData.message)
     } else {
-      setDisplayRiskEditModal(true)
+      onDrawOpen(index)
     }
   }, [isErrorTracking, rowData.message])
-
-  const onHideRiskEditModalCallback = useCallback((data?) => {
-    if (data?.risk || data?.message) setFeedbackGiven(data)
-    setDisplayRiskEditModal(false)
-  }, [])
 
   return (
     <Container className={cx(css.mainRow, css.dataRow)} data-testid={'logs-data-row'}>
@@ -92,23 +81,13 @@ function DataRow(props: LogAnalysisDataRowProps): JSX.Element {
         )}
       </Container>
       <Container className={cx(css.logText, css.openModalColumn)} onClick={onShowRiskEditModalCallback}>
-        <p className={css.logRowText} ref={logTextRef}>
+        <p className={css.logRowText}>
           {isErrorTracking ? rowData.message.split('|').slice(0, 4).join('|') : rowData.message}
         </p>
       </Container>
       <Container className={cx(css.lineChartContainer)}>
         <HighchartsReact highchart={Highcharts} options={chartOptions} />
       </Container>
-      {displayRiskEditModal ? (
-        <LogAnalysisRiskAndJiraModal
-          onHide={onHideRiskEditModalCallback}
-          trendData={chartOptions}
-          count={rowData.count || 0}
-          activityType={rowData.clusterType}
-          logMessage={rowData.message || ''}
-          feedback={feedbackGiven}
-        />
-      ) : null}
       <span />
       <Layout.Horizontal style={{ alignItems: 'center' }}>
         <Icon name="description" size={24} onClick={onShowRiskEditModalCallback} />
@@ -120,6 +99,12 @@ function DataRow(props: LogAnalysisDataRowProps): JSX.Element {
 export function LogAnalysisRow(props: LogAnalysisRowProps): JSX.Element {
   const { data = [], isErrorTracking } = props
   const [dataToCompare, setDataToCompare] = useState<CompareLogEventsInfo[]>([])
+
+  // const [displayRiskEditModal, setDisplayRiskEditModal] = useState(false)
+  const [riskEditModalData, setRiskEditModalData] = useState({
+    showDrawer: false,
+    selectedRowIndex: null
+  })
 
   const onCompareSelectCallback = useCallback(
     (isSelect: boolean, selectedData: LogAnalysisRowData, index: number) => {
@@ -136,9 +121,35 @@ export function LogAnalysisRow(props: LogAnalysisRowProps): JSX.Element {
   )
   const selectedIndices = useMemo(() => new Set(dataToCompare.map(d => d.index)), [dataToCompare])
 
+  const onDrawerOpen = (selectedIndex: number) => {
+    console.log('selectedIndex', selectedIndex)
+
+    setRiskEditModalData({
+      showDrawer: true,
+      selectedRowIndex: selectedIndex
+    })
+  }
+
+  const onDrawerHide = () => {
+    setRiskEditModalData({
+      showDrawer: false,
+      selectedRowIndex: null
+    })
+  }
+
   return (
     <Container className={cx(css.main, props.className)}>
       <ColumnHeaderRow />
+      {riskEditModalData.showDrawer ? (
+        <LogAnalysisRiskAndJiraModal
+          onHide={onDrawerHide}
+          rowData={
+            riskEditModalData.selectedRowIndex !== null
+              ? data[riskEditModalData.selectedRowIndex as unknown as number]
+              : {}
+          }
+        />
+      ) : null}
       <Container className={css.dataContainer}>
         {data.map((row, index) => {
           if (!row) return null
@@ -149,6 +160,7 @@ export function LogAnalysisRow(props: LogAnalysisRowProps): JSX.Element {
               rowData={row}
               index={index}
               onSelect={onCompareSelectCallback}
+              onDrawOpen={onDrawerOpen}
               isSelected={selectedIndices.has(index)}
               isErrorTracking={isErrorTracking}
             />

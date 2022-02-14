@@ -12,7 +12,7 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
     chart: {
       type: 'column',
       renderTo: 'chart',
-      margin: [0, 10, 0, 10],
+      // margin: [0, 0, 0],
       backgroundColor: 'transparent',
       style: {
         fontFamily: 'var(--font-family)'
@@ -30,6 +30,7 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
       // lineWidth: 0,
       tickLength: 0,
       gridLineWidth: 0,
+      min: 0.25,
       title: {
         text: ''
       }
@@ -45,7 +46,7 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
     },
     plotOptions: {
       series: {
-        pointWidth: 15
+        pointWidth: 10
       }
     },
     tooltip: {

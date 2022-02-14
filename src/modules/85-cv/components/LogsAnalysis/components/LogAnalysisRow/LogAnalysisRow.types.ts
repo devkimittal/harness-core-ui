@@ -31,6 +31,7 @@ export interface LogAnalysisDataRowProps {
     index: number,
     chartOptions: Highcharts.Options
   ) => void
+  onDrawOpen: (index: number) => void
   index: number
   isSelected: boolean
   isErrorTracking?: boolean

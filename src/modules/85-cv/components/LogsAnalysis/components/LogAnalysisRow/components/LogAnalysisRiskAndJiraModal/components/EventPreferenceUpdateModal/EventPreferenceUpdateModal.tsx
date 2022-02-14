@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Yup from 'yup'
 import type { IDialogProps } from '@blueprintjs/core'
-import { Dialog, Button, Formik, FormikForm, FormInput } from '@harness/uicore'
+import { Dialog, Button, Formik, FormikForm, FormInput, Text } from '@harness/uicore'
 import { useModalHook } from '@harness/use-modal'
 import { useStrings } from 'framework/strings'
 import type {
@@ -9,6 +9,7 @@ import type {
   EventPreferenceUpdateModalReturn,
   UseEventPreferenceUpdateModalProps
 } from './EventPreferenceUpdateModal.type'
+import { eventPriorities } from './EventPreferenceUpdateModal.utils'
 import css from './EventPreferenceUpdateModal.module.scss'
 
 const useEventPreferenceUpdateModal = (props: UseEventPreferenceUpdateModalProps): EventPreferenceUpdateModalReturn => {
@@ -41,38 +42,40 @@ const useEventPreferenceUpdateModal = (props: UseEventPreferenceUpdateModalProps
           onSubmitOfEventPreferenceEdit(formValues)
         }}
         validationSchema={Yup.object().shape({
-          reason: Yup.string().trim().required(getString('pipeline.verification.logs.reasonRequired'))
+          reason: Yup.string().trim().required(getString('pipeline.verification.logs.reasonRequired')),
+          priority: Yup.string().when('isNotARisk', {
+            is: function (isNotARisk) {
+              return !isNotARisk
+            },
+            then: Yup.string().required('it is required')
+          })
         })}
       >
         {formikProps => (
-          <>
-            <FormikForm>
-              <FormInput.CheckBox name="isNotARisk" label={getString('pipeline.verification.logs.notARiskLabel')} />
+          <FormikForm>
+            <FormInput.CheckBox name="isNotARisk" label={getString('pipeline.verification.logs.notARiskLabel')} />
 
-              {!formikProps.values.isNotARisk && (
-                <FormInput.RadioGroup
-                  name="priority"
-                  label={getString('pipeline.verification.logs.eventPriorityLabel')}
-                  items={[
-                    { label: 'P1', value: 'P1' },
-                    { label: 'P2', value: 'P2' },
-                    { label: 'P3', value: 'P3' },
-                    { label: 'P4', value: 'P4' },
-                    { label: 'P5', value: 'P5' }
-                  ]}
-                />
-              )}
-              <FormInput.TextArea className={css.reasonTextArea} name="reason" label={getString('reason')} />
-              <Button
-                disabled={!formikProps.isValid}
-                text={getString('submit')}
-                margin={{ right: 'small' }}
-                type="submit"
-                intent="primary"
+            {!formikProps.values.isNotARisk && (
+              <FormInput.RadioGroup
+                name="priority"
+                label={getString('pipeline.verification.logs.eventPriorityLabel')}
+                items={eventPriorities.map(priority => ({
+                  label: <Text>{priority}</Text>,
+                  value: priority
+                }))}
+                className={css.priorityRadioGroup}
               />
-              <Button text={getString('cancel')} onClick={hideModal} />
-            </FormikForm>
-          </>
+            )}
+            <FormInput.TextArea className={css.reasonTextArea} name="reason" label={getString('reason')} />
+            <Button
+              // disabled={!formikProps.isValid}
+              text={getString('submit')}
+              margin={{ right: 'small' }}
+              type="submit"
+              intent="primary"
+            />
+            <Button text={getString('cancel')} onClick={hideModal} />
+          </FormikForm>
         )}
       </Formik>
     </Dialog>

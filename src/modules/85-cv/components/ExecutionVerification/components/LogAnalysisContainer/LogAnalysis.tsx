@@ -16,6 +16,7 @@ import { LogAnalysisRow } from '@cv/components/LogsAnalysis/components/LogAnalys
 import ClusterChart from '@cv/components/LogsAnalysis/components/ClusterChart/ClusterChart'
 import type { LogAnalysisProps, LogAnalysisRowData } from './LogAnalysis.types'
 import { getClusterTypes, getLogAnalysisData } from './LogAnalysis.utils'
+import LogAnalysisRadarChart from './components/LogAnalysisRadarChart'
 import { HealthSourceDropDown } from '../HealthSourcesDropdown/HealthSourcesDropdown'
 import styles from './LogAnalysis.module.scss'
 
@@ -116,8 +117,9 @@ export default function LogAnalysis(props: LogAnalysisProps): JSX.Element {
         />
       </Container> */}
       <Container className={styles.clusterChart}>
-        <Text font={{ weight: 'bold' }}>{getString('pipeline.verification.logs.logCluster')}</Text>
-        {renderChartCluster()}
+        {/* <Text font={{ weight: 'bold' }}>{getString('pipeline.verification.logs.logCluster')}</Text> */}
+        <LogAnalysisRadarChart />
+        {/* {renderChartCluster()} */}
       </Container>
       <Container className={styles.tableContent}>{renderLogsData()}</Container>
       {/* {!!data?.resource?.totalPages && (

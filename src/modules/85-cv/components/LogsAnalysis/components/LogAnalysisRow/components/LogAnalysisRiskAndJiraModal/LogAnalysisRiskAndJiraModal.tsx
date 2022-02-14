@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { Container, Heading, Button, Text, Color, ButtonVariation, FontVariation } from '@wings-software/uicore'
 import { Drawer } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
@@ -15,6 +15,7 @@ import useEventPreferenceUpdateModal from './components/EventPreferenceUpdateMod
 import { DrawerProps } from './LogAnalysisRiskAndJiraModal.constants'
 import css from './LogAnalysisRiskAndJiraModal.module.scss'
 import type { EventPreferenceForm } from './components/EventPreferenceUpdateModal/EventPreferenceUpdateModal.type'
+import getLogAnalysisLineChartOptions from '../../LogAnalysisLineChartConfig'
 
 export function SampleData(props: SampleDataProps): JSX.Element {
   const { logMessage } = props
@@ -32,16 +33,14 @@ export function SampleData(props: SampleDataProps): JSX.Element {
 }
 
 export function LogAnalysisRiskAndJiraModal(props: LogAnalysisRiskAndJiraModalProps): JSX.Element {
-  const {
-    onHide,
-    activityType,
-    count,
-    trendData,
-    logMessage
-    // feedback
-  } = props
+  const { onHide, rowData } = props
   const [isOpen, setOpen] = useState(true)
   // const [hasSubmitted, setSubmit] = useState(false)
+
+  const { messageFrequency, count = 0, clusterType: activityType, message } = rowData
+
+  const trendData = useMemo(() => getLogAnalysisLineChartOptions(messageFrequency || []), [messageFrequency])
+
   const { getString } = useStrings()
   const onHideCallback = useCallback(() => {
     setOpen(false)
@@ -86,7 +85,7 @@ export function LogAnalysisRiskAndJiraModal(props: LogAnalysisRiskAndJiraModalPr
         </Formik> */}
         <Container>
           <ActivityHeadingContent activityType={activityType} trendData={trendData} count={count} />
-          <SampleData logMessage={logMessage} />
+          <SampleData logMessage={message} />
         </Container>
         <Container className={css.buttonContainer}>
           <Button onClick={() => onHide()}>{getString('back')}</Button>
