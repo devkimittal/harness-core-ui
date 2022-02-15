@@ -460,6 +460,7 @@ const TOTAL_ITEMS_PER_PAGE = 5
 
 interface RulesTableContainerProps {
   rules: Service[]
+  setRules: (services: Service[]) => void
   loading: boolean
   rowMenuProps: TableRowMenuProps
   pageProps: { index: number; setIndex: (index: number) => void }
@@ -483,42 +484,39 @@ const useSubmittedRulesStatusUpdate = ({
   const rulesToFetch = useRef<{ index: number; rule: Service }[]>([])
   const timer = useRef<NodeJS.Timer | null>(null)
 
+  const clearTimer = () => {
+    clearTimeout(timer.current as NodeJS.Timer)
+    timer.current = null
+  }
+
   useEffect(() => {
     rulesToFetch.current = []
+    clearTimer()
     rules.forEach((r, i) => {
       if (r.status === 'submitted') {
         rulesToFetch.current.push({ index: i, rule: r })
       }
     })
-    console.log('inside 1st useeffect', { rulesToFetch, rules })
   }, [rules])
 
   const triggerRuleFetching = () => {
-    console.log('inside rule fetch function')
     timer.current = setTimeout(() => {
-      console.log('inside set interval callback')
       refetch({ pathParams: { account_id: accountId, rule_id: rulesToFetch.current[0].rule.id } })
-      clearTimeout(timer.current as NodeJS.Timer)
-      timer.current = null
+      clearTimer()
     }, POLL_TIMER)
   }
 
   useEffect(() => {
-    console.log('inside 2nd useeffect')
     if (!_isEmpty(rulesToFetch.current) && !loading && timer.current === null) {
-      console.log('starting triggering rule fetching')
       triggerRuleFetching()
     }
   }, [rulesToFetch.current, timer.current])
 
   useEffect(() => {
-    console.log('inside 3rd useeffect')
     if (!_isEmpty(data?.response) && data?.response?.service?.status !== 'submitted') {
-      console.log('got the updated rule status')
       onRuleUpdate?.({ updatedService: data?.response?.service as Service, index: rulesToFetch.current[0].index })
       rulesToFetch.current.shift()
-      clearTimeout(timer.current as NodeJS.Timer)
-      timer.current = null
+      clearTimer()
     }
     if (timer.current) {
       return () => clearTimeout(timer.current as NodeJS.Timer)
@@ -528,6 +526,7 @@ const useSubmittedRulesStatusUpdate = ({
 
 const RulesTableContainer: React.FC<RulesTableContainerProps> = ({
   rules,
+  setRules,
   loading,
   rowMenuProps: { onDelete, onEdit, onStateToggle },
   pageProps,
@@ -544,10 +543,13 @@ const RulesTableContainer: React.FC<RulesTableContainerProps> = ({
   )
 
   useSubmittedRulesStatusUpdate({
-    rules: tableData
-    // onRuleUpdate: ({ updatedService, index }) => {
-    //   console.log({ updatedService, index })
-    // }
+    rules: tableData,
+    onRuleUpdate: ({ updatedService, index }) => {
+      const updatedRules = [...rules]
+      const updatedIndex = pageProps.index * TOTAL_ITEMS_PER_PAGE + index
+      updatedRules.splice(updatedIndex, 1, updatedService)
+      setRules(updatedRules)
+    }
   })
 
   const onSearchChange = async (val: string) => {
@@ -878,6 +880,7 @@ const COGatewayList: React.FC = () => {
         <COGatewayCumulativeAnalytics data={graphData?.response} loadingData={graphLoading} />
         <RulesTableContainer
           rules={tableData}
+          setRules={setTableData}
           loading={loading}
           onRowClick={(e, index) => {
             setSelectedService({ data: e, index })
