@@ -35,7 +35,6 @@ export interface LogAnalysisProps {
   goToPage(val: number): void
   logsLoading: boolean
   clusterChartLoading: boolean
-  setSelectedClusterType: (clusterType: SelectOption) => void
   onChangeHealthSource: (selectedHealthSource: string) => void
   activityId?: string
   isErrorTracking?: boolean

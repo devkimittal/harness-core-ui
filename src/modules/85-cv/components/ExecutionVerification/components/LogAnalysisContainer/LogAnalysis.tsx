@@ -27,7 +27,6 @@ export default function LogAnalysis(props: LogAnalysisProps): JSX.Element {
     goToPage,
     logsLoading,
     clusterChartLoading,
-    setSelectedClusterType,
     onChangeHealthSource,
     activityId,
     isErrorTracking
@@ -99,27 +98,8 @@ export default function LogAnalysis(props: LogAnalysisProps): JSX.Element {
 
   return (
     <Container className={styles.logsTab}>
-      {/* <Container className={styles.filters}>
-        <Select
-          items={getClusterTypes(getString)}
-          defaultSelectedItem={getClusterTypes(getString)[0]}
-          className={styles.clusterTypeFilter}
-          inputProps={{ placeholder: getString('pipeline.verification.logs.filterByClusterType') }}
-          onChange={setSelectedClusterType}
-        />
-        <HealthSourceDropDown
-          data={healthSourcesData}
-          loading={healthSourcesLoading}
-          error={healthSourcesError}
-          onChange={onChangeHealthSource}
-          className={styles.logsAnalysisFilters}
-          verificationType={VerificationType.LOG}
-        />
-      </Container> */}
       <Container className={styles.clusterChart}>
-        {/* <Text font={{ weight: 'bold' }}>{getString('pipeline.verification.logs.logCluster')}</Text> */}
-        <LogAnalysisRadarChart />
-        {/* {renderChartCluster()} */}
+        <LogAnalysisRadarChart clusterChartLoading={clusterChartLoading} clusterChartData={clusterChartData} />
       </Container>
       <Container className={styles.tableContent}>{renderLogsData()}</Container>
       {/* {!!data?.resource?.totalPages && (

@@ -692,6 +692,7 @@ verification:
     notARiskLabel: Mark as Not a Risk
     eventPriorityLabel: Update the Event Priority
     reasonRequired: Reason field is required
+    totalClusters: Total Clusters
 stepCommonFields:
   runAsUser: Run as User
   ifNotPresent: 'If Not Present'

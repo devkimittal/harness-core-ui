@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  background-color: var(--white) !important;
+  padding: var(--spacing-small) var(--spacing-large) !important;
+  overflow: hidden !important;
+
+  .divider {
+    border-bottom: 1px solid var(--grey-200) !important;
+    margin-bottom: var(--spacing-small) !important;
+  }
+}

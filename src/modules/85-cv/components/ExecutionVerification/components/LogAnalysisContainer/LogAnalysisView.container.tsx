@@ -6,23 +6,24 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Container, SelectOption } from '@wings-software/uicore'
+import { Container } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
 import {
   useGetDeploymentLogAnalysisResult,
   useGetDeploymentLogAnalysisClusters,
-  GetDeploymentLogAnalysisResultQueryParams
+  RestResponsePageLogAnalysisClusterDTO
 } from 'services/cv'
 import { useToaster } from '@common/exports'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import { useStrings } from 'framework/strings'
 import LogAnalysis from './LogAnalysis'
 import { pageSize, initialPageNumber, POLLING_INTERVAL, StepStatus } from './LogAnalysis.constants'
+import type { ClusterTypes } from './LogAnalysisView.container.types'
 import type { LogAnalysisContainerProps } from './LogAnalysis.types'
 import { getActivityId } from '../../ExecutionVerificationView.utils'
 import { getClusterTypes } from './LogAnalysis.utils'
-
-type ClusterTypes = GetDeploymentLogAnalysisResultQueryParams['clusterTypes']
+import ClusterTypeFiltersForLogs from './components/ClusterTypeFiltersForLogs'
+import css from './LogAnalysisView.container.module.scss'
 
 export default function LogAnalysisContainer({
   step,
@@ -32,8 +33,11 @@ export default function LogAnalysisContainer({
   const { accountId } = useParams<AccountPathProps>()
   const { showError } = useToaster()
   const { getString } = useStrings()
-  const [selectedClusterType, setSelectedClusterType] = useState<SelectOption>(getClusterTypes(getString)[0])
+  const [clusterTypeFilters, setClusterTypeFilters] = useState<ClusterTypes>(
+    () => getClusterTypes(getString).map(i => i.value) as ClusterTypes
+  )
   const [selectedHealthSource, setSelectedHealthSource] = useState<string>()
+  const [logsDataState, setLogsDataState] = useState<RestResponsePageLogAnalysisClusterDTO | null>(null)
   const [pollingIntervalId, setPollingIntervalId] = useState<any>(-1)
   const activityId = useMemo(() => getActivityId(step), [step])
 
@@ -43,19 +47,19 @@ export default function LogAnalysisContainer({
       pageNumber: initialPageNumber,
       pageSize,
       ...(hostName && { hostName }),
-      clusterTypes: selectedClusterType.value ? ([selectedClusterType.value] as ClusterTypes) : undefined,
+      clusterTypes: clusterTypeFilters?.length ? clusterTypeFilters : undefined,
       healthSources: selectedHealthSource ? [selectedHealthSource] : undefined
     }
-  }, [accountId, hostName, selectedClusterType?.value, selectedHealthSource])
+  }, [accountId, hostName, clusterTypeFilters, selectedHealthSource])
 
   const clusterAnalysisQueryParams = useMemo(() => {
     return {
       accountId,
       ...(hostName && { hostName }),
-      clusterTypes: selectedClusterType.value ? ([selectedClusterType.value] as ClusterTypes) : undefined,
+      clusterTypes: clusterTypeFilters?.length ? clusterTypeFilters : undefined,
       healthSources: selectedHealthSource ? [selectedHealthSource] : undefined
     }
-  }, [accountId, hostName, selectedClusterType?.value, selectedHealthSource])
+  }, [accountId, hostName, clusterTypeFilters, selectedHealthSource])
 
   const {
     data: logsData,
@@ -85,19 +89,25 @@ export default function LogAnalysisContainer({
     lazy: true
   })
 
+  // useEffect(() => {
+  //   console.log('data', logsData)
+  //   console.log('logsLoading', logsLoading)
+  //   // console.log('clusterTypeFilters', clusterTypeFilters)
+  //   if (!logsLoading) {
+  //     setLogsDataState(() => {
+  //       return { ...logsData }
+  //     })
+  //   }
+  // }, [logsData, logsLoading, clusterAnalysisQueryParams, logsAnalysisQueryParams])
+
+  const logsData2 = useMemo(() => ({ ...logsData }), [logsData])
+
   // Fetching logs and cluster data for selected cluster type
   useEffect(() => {
-    fetchLogsDataForCluster(selectedClusterType.value as string)
-    fetchLogsClusterDataForCluster(selectedClusterType.value as string)
+    fetchLogsDataForCluster(clusterTypeFilters)
+    fetchLogsClusterDataForCluster(clusterTypeFilters)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedClusterType?.value])
-
-  // Fetching logs and cluster data for selected health source
-  useEffect(() => {
-    fetchLogsDataForHealthSource(selectedHealthSource)
-    fetchLogsClusterDataForHealthSource(selectedHealthSource)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedHealthSource])
+  }, [clusterTypeFilters])
 
   useEffect(() => {
     if (logsError) showError(logsError.message)
@@ -131,35 +141,22 @@ export default function LogAnalysisContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterAnalysisQueryParams, logsAnalysisQueryParams, step?.status])
 
-  const fetchLogsDataForHealthSource = useCallback(
-    currentHealthSource => {
+  const handleFilterChange = useCallback((checked: boolean, filterName: string): void => {
+    setClusterTypeFilters((currentFilters: any) => {
+      if (checked) {
+        return [...(currentFilters as string[]), filterName]
+      } else {
+        return currentFilters?.filter((item: string) => item !== filterName)
+      }
+    })
+  }, [])
+
+  const fetchLogsDataForCluster = useCallback(
+    appliedClusterTypeFilters => {
       fetchLogAnalysis({
         queryParams: {
           ...logsAnalysisQueryParams,
-          healthSources: currentHealthSource ? [currentHealthSource] : undefined
-        }
-      })
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [logsAnalysisQueryParams]
-  )
-
-  const fetchLogsDataForCluster = useCallback(
-    clusterType => {
-      fetchLogAnalysis({
-        queryParams: { ...logsAnalysisQueryParams, clusterTypes: clusterType ? [clusterType] : undefined }
-      })
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [logsAnalysisQueryParams]
-  )
-
-  const fetchLogsClusterDataForHealthSource = useCallback(
-    currentHealthSource => {
-      fetchClusterAnalysis({
-        queryParams: {
-          ...clusterAnalysisQueryParams,
-          healthSources: currentHealthSource ? [currentHealthSource] : undefined
+          clusterTypes: appliedClusterTypeFilters.length ? [appliedClusterTypeFilters] : undefined
         }
       })
     },
@@ -168,9 +165,12 @@ export default function LogAnalysisContainer({
   )
 
   const fetchLogsClusterDataForCluster = useCallback(
-    clusterType => {
+    appliedClusterTypeFilters => {
       fetchClusterAnalysis({
-        queryParams: { ...clusterAnalysisQueryParams, clusterTypes: clusterType ? [clusterType] : undefined }
+        queryParams: {
+          ...clusterAnalysisQueryParams,
+          clusterTypes: appliedClusterTypeFilters.length ? [appliedClusterTypeFilters] : undefined
+        }
       })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -188,14 +188,19 @@ export default function LogAnalysisContainer({
   )
 
   return (
-    <Container height="100%">
+    <Container className={css.main}>
+      <ClusterTypeFiltersForLogs
+        totalClustersCount={200}
+        clusterTypeFilters={clusterTypeFilters}
+        onFilterChange={handleFilterChange}
+      />
+      <Container className={css.divider} />
       <LogAnalysis
-        data={logsData}
+        data={logsData2}
         clusterChartData={clusterChartData}
         logsLoading={logsLoading}
         clusterChartLoading={clusterChartLoading}
         goToPage={goToLogsPage}
-        setSelectedClusterType={setSelectedClusterType}
         onChangeHealthSource={setSelectedHealthSource}
         activityId={activityId}
         isErrorTracking={isErrorTracking}

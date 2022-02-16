@@ -1,0 +1,18 @@
+.main {
+  margin-bottom: var(--spacing-small) !important;
+
+  .filterContainer {
+    align-items: center !important;
+
+    > span {
+      margin-right: var(--spacing-small) !important;
+      padding-right: var(--spacing-small) !important;
+      border-right: 1px solid var(--grey-250);
+      color: var(--black-100) !important;
+    }
+
+    label {
+      margin-right: var(--spacing-small) !important;
+    }
+  }
+}

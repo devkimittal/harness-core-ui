@@ -2958,6 +2958,7 @@ export interface StringsMap {
   'pipeline.verification.logs.sampleEvent': string
   'pipeline.verification.logs.sampleMessage': string
   'pipeline.verification.logs.share': string
+  'pipeline.verification.logs.totalClusters': string
   'pipeline.verification.logs.trend': string
   'pipeline.verification.logs.unexpectedFrequency': string
   'pipeline.verification.logs.unknownEvent': string
