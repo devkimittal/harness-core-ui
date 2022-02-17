@@ -464,7 +464,7 @@ describe('Unit tests for Deployment metrics ', () => {
     fireEvent.click(screen.getByTestId(/node_name_filter/))
     await waitFor(() => expect(document.querySelector('[class*="menuItem"]')).not.toBeNull())
     fireEvent.click(screen.getByText('V'))
-    jest.runTimersToTime(1000)
+    jest.advanceTimersByTime(1000)
 
     await waitFor(() =>
       expect(useGetDeploymentMetricsSpy).toHaveBeenLastCalledWith({
@@ -771,7 +771,7 @@ describe('Unit tests for Deployment metrics ', () => {
       refetch: refetchFn as unknown
     } as any)
 
-    jest.runTimersToTime(20000)
+    jest.advanceTimersByTime(20000)
     await waitFor(() => expect(refetchFn).toHaveBeenCalledTimes(1))
   })
 
