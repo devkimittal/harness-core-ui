@@ -137,6 +137,7 @@ allowpaths:
   - /verify-step/{verifyStepExecutionId}/deployment-activity-summary
   - /verify-step/{verifyStepExecutionId}/healthSources
   - /change-event/monitored-service-timeline
+  - /verify-step/{verifyStepExecutionId}/deployment-log-analysis-data-v2
 operationIdOverrides:
   /appdynamics/applications.get: getAppDynamicsApplications
   /appdynamics/metric-data.post: getAppDynamicsMetricData

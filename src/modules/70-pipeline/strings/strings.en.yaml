@@ -664,9 +664,9 @@ verification:
   logs:
     logCluster: Log cluster
     filterByClusterType: Filter by cluster type
-    knownEvent: Known Event
-    unknownEvent: Unknown Event
-    unexpectedFrequency: Unexpected Frequency
+    knownEvent: Known
+    unknownEvent: Unknown
+    unexpectedFrequency: Frequency
     allEvents: All Events
     noAnalysis: No analysis
     clusterType: CLUSTER TYPE
