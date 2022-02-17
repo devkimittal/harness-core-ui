@@ -247,6 +247,10 @@ export interface VirtualMachine {
    */
   onDemandPrice?: number
   /**
+   * Instance type series/family
+   */
+  series?: string
+  /**
    * Instance type
    */
   type?: string
@@ -257,7 +261,7 @@ export interface VirtualMachine {
 }
 
 /**
- * SingleClusterRecommendationReq encapsulates the recommendation input data
+ * SingleClusterRecommendationReq encapsulates the recommendation input data, the filters applied is in the order IncludeSeries -> ExcludeSeries ->
  */
 export interface RecommendClusterRequest {
   /**
@@ -273,13 +277,21 @@ export interface RecommendClusterRequest {
    */
   category?: string[]
   /**
-   * Excludes is a blacklist - a slice with vm types to be excluded from the recommendation
+   * ExcludeSeries is a blacklist - a group of vm of particular series/families to be excluded from the recommendation
    */
-  excludes?: string[]
+  excludeSeries?: string[]
   /**
-   * Includes is a whitelist - a slice with vm types to be contained in the recommendation
+   * ExcludeTypes is a blacklist - a slice with vm types to be excluded from the recommendation
    */
-  includes?: string[]
+  excludeTypes?: string[]
+  /**
+   * IncludeSeries is a whitelist - a group of vm of particular series/families to be contained in the recommendation
+   */
+  includeSeries?: string[]
+  /**
+   * IncludeTypes is a whitelist - a slice with vm types to be contained in the recommendation
+   */
+  includeTypes?: string[]
   /**
    * Maximum number of nodes in the recommended cluster
    */
