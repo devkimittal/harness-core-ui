@@ -767,6 +767,18 @@ nodeRecommendation:
   suitable:
     prod: well suited for prod
     qa: well suited for non-prod/QA
+  tuneRecommendationsInfo: 'Recommendations are calculated by analysing historical utilization in the specified period. You can tune recommendations on the right side section'
+  autoScaling: 'Consider AutoScaling for calculating Recommendations'
+  preferredInstanceFamilies: 'Preferred Instance families'
+  addPreferredInstanceFamilies: 'add preferred instance families'
+  setInstancePreferences: 'Set CPU/Memory/Node count/Instance preferences'
+  applyPreferences: 'Apply Preferences'
+  prefResourceNeeds: 'Preferred Resource Needs'
+  buffer: 'Buffer'
+  largestWorkloadReq: 'Largest Workload Requirements'
+  prefMinNodeCount: 'Preferred Minimum Node Count'
+  ram: 'RAM'
+  resourceUtilInLast: 'Resource Utilisation in the {{ timeRange }}'
 budgets:
   sideNavText: Budgets
   confirmDeleteBudgetTitle: Delete Budget
