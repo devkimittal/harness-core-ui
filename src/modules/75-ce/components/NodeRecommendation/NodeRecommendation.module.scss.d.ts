@@ -8,6 +8,7 @@
 // this is an auto-generated file, do not update this manually
 declare const styles: {
   readonly blue: string
+  readonly bufferSlider: string
   readonly card: string
   readonly cardCategory: string
   readonly cardInfo: string
@@ -21,6 +22,8 @@ declare const styles: {
   readonly instructionPanel: string
   readonly leftAlign: string
   readonly line: string
+  readonly minNodeContainer: string
+  readonly minNodeInput: string
   readonly noBgColor: string
   readonly noShadow: string
   readonly preferences: string

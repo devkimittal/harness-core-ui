@@ -7,6 +7,7 @@
  **/
 // this is an auto-generated file, do not update this manually
 declare const styles: {
+  readonly actionText: string
   readonly body: string
   readonly breadCrumb: string
   readonly header: string

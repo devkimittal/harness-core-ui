@@ -6,12 +6,27 @@
  */
 
 .preferences {
-  padding-left: var(--spacing-huge) !important;
-
   .input {
     display: inline-block;
-    max-width: 60px;
-    margin-left: var(--spacing-small);
+    width: 60px;
+    height: 24px;
+  }
+}
+
+.minNodeContainer {
+  .minNodeInput {
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+  }
+
+  button[class*='bp3-button'] {
+    padding: 4px !important;
+    border-radius: 50px !important;
+  }
+
+  span[class*='bp3-icon'] {
+    padding-right: 0 !important;
   }
 }
 
@@ -30,7 +45,6 @@
 
     .recommendationCategory {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
       column-gap: 10px;
       justify-content: center;
       align-items: center;
@@ -49,7 +63,7 @@
   .cards {
     margin-top: var(--spacing-large) !important;
     display: grid;
-    grid-template-columns: 220px 30px 180px 30px 180px 30px 180px;
+    grid-template-columns: 220px 30px 180px 30px 180px 180px 70px;
   }
 
   .card {
@@ -109,10 +123,8 @@
 
   .cardLabelPill {
     padding: 3px 8px;
-    border-radius: 8px;
-    border: 1px solid var(--grey-200);
     font-size: var(--font-size-xsmall);
-    font-weight: 600;
+    font-weight: 700;
   }
 }
 
@@ -124,7 +136,7 @@
 }
 
 .instructionPanel {
-  border-left: 1px solid rgba(176, 177, 195, 0.5);
+  // border-left: 1px solid rgba(176, 177, 195, 0.5);
   padding: var(--spacing-xxlarge) !important;
 
   & > * {
@@ -140,4 +152,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.bufferSlider {
+  > span[class*='bp3-slider-handle'] {
+    background: #ffffff;
+    box-shadow: 0px 1px 2px rgba(40, 41, 61, 0.2), 0px 2px 4px rgba(96, 97, 112, 0.2);
+    border-radius: 100px;
+    height: 16px;
+    width: 16px;
+  }
+
+  > div[class*='bp3-slider-track'] {
+    height: 2px;
+    background-color: var(--white);
+    top: 7px;
+  }
+
+  > div[class*='bp3-slider-progress'] {
+    background-color: var(--white);
+  }
 }
