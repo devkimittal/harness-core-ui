@@ -182,6 +182,15 @@ module.exports = {
       base: `{getConfig("ccm/recommendations/api/v1")}`
     }
   },
+  'ccm-public-pricing': {
+    output: 'src/services/ce/publicPricingService.tsx',
+    file: 'src/services/ce/public-pricing-service.json',
+    transformer: 'scripts/swagger-transform.js',
+    customImport: `import { getConfig } from "../config";`,
+    customProps: {
+      base: `{getConfig("ccm/public-pricing/api/v1")}`
+    }
+  },
   pm: {
     output: 'src/services/pm/index.tsx',
     file: 'src/services/pm/swagger.json',

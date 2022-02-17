@@ -17,8 +17,11 @@ import {
   Checkbox,
   ButtonVariation,
   ButtonSize,
-  Icon
+  Icon,
+  Tabs
 } from '@wings-software/uicore'
+import { Dialog } from '@blueprintjs/core/lib/esm/components'
+import { useModalHook } from '@harness/use-modal'
 import moment from 'moment'
 import { isEqual } from 'lodash-es'
 import pDebounce from 'p-debounce'
@@ -35,8 +38,10 @@ import {
   RecommendationDetailsSavingsCard,
   RecommendationDetailsSpendCard
 } from '@ce/components/RecommendationDetailsSummaryCards/RecommendationDetailsSummaryCards'
-import NodeCountInstancePreferences from '@ce/components/NodeRecommendation/NodeCountInstancePreferences'
+import TuneNodeRecommendationCard from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
+import { useGetSeries } from 'services/ce/publicPricingService'
+import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
 import resourceUtilization from './images/resource-utilization.svg'
 // import css from './NodeRecommendation.module.scss'
 
@@ -80,19 +85,21 @@ interface NodeRecommendationDetailsProps {
   recommendationStats: RecommendationOverviewStats
   recommendationDetails: NodeRecommendationDto
   timeRange: TimeRangeValue
-  showModal: () => void
+  recommendationName: string
 }
 
 const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   recommendationDetails,
   recommendationStats,
   timeRange,
-  showModal
+  recommendationName
 }) => {
   const { getString } = useStrings()
   const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
 
   const [buffer, setBuffer] = useState(0)
+  const [tuneRecomVisible, setTuneRecomVisible] = useState(false)
+  const [autoScaling, setAutoScaling] = useState(false)
 
   const { sumCpu, sumMem, maxNodes, minNodes } = (recommendationDetails.resourceRequirement ||
     {}) as RecommendClusterRequest
@@ -119,9 +126,15 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     service: service || ''
   })
 
+  const { data: seriesData, loading: seriesDataLoading } = useGetSeries({
+    provider: provider || '',
+    service: service || '',
+    region: region || ''
+  })
+
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
-  useDidMountEffect(async () => {
+  const updateRecommendationDetails = async () => {
     const payload = { ...recommendationDetails.resourceRequirement, ...state }
     try {
       const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
@@ -137,17 +150,50 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     } catch (e) {
       // console.log('Error in fetching recommended cluster ', e)
     }
-  }, [state])
+  }
 
-  // const [minNodeCount, setMinNodeCount] = useState(recomDetails.resourceRequirement?.minNodes || minNodes)
+  useDidMountEffect(() => {
+    updateRecommendationDetails()
+  }, [])
 
-  const [tuneRecomVisible, setTuneRecomVisible] = useState(false)
+  const [showModal, hideModal] = useModalHook(() => {
+    return (
+      <Dialog isOpen={true} enforceFocus={false} onClose={hideModal} style={{ width: 1175, height: 640 }}>
+        <Layout.Vertical spacing="medium" padding="xxlarge" height="100%">
+          <Text font={{ variation: FontVariation.H4 }} icon="gcp">
+            {`${recommendationName}: Preferred Instance Families`}
+          </Text>
+          <Text>{getString('ce.nodeRecommendation.instaceFamiliesModalDesc')}</Text>
+          <Container height="100%">
+            <Tabs
+              id={'horizontalTabs'}
+              tabList={Object.keys(seriesData?.categoryDetails || {}).map(key => ({
+                id: key,
+                title: key,
+                panel: (
+                  <InstanceFamiliesModalTab
+                    data={seriesData?.categoryDetails ? seriesData?.categoryDetails[key] : {}}
+                  />
+                )
+              }))}
+            />
+          </Container>
+          <Layout.Horizontal spacing="medium">
+            <Button variation={ButtonVariation.PRIMARY}>Save Preferences</Button>
+            <Button variation={ButtonVariation.TERTIARY} onClick={hideModal}>
+              {getString('cancel')}
+            </Button>
+          </Layout.Horizontal>
+        </Layout.Vertical>
+      </Dialog>
+    )
+  }, [seriesDataLoading])
 
   return (
     <>
       <Layout.Vertical>
         <Card style={{ paddingLeft: 0, paddingRight: 0 }}>
-          <Layout.Horizontal spacing="large" padding={{ left: 'large', right: 'large' }}>
+          <Layout.Horizontal spacing="large" padding={{ left: 'xlarge', right: 'xlarge' }}>
             <RecommendationDetailsSpendCard
               withRecommendationAmount={formatCost(
                 recommendationStats?.totalMonthlyCost - recommendationStats?.totalMonthlySaving
@@ -186,29 +232,29 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             {getString('ce.recommendation.detailsPage.viewMoreDetailsText')}
           </Button>
         </Layout.Horizontal>
-        <Layout.Horizontal spacing="xxlarge">
+        <Layout.Horizontal flex={{ justifyContent: 'space-between' }}>
           <Container>
             <Text inline font={{ variation: FontVariation.SMALL }}>
               {getString('delegate.delegateCPU')}
             </Text>
-            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${
-              Math.floor((100 + buffer) * state.sumCpu) / 100
-            }vCPU`}</Text>
+            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumCpu || 0).toFixed(
+              2
+            )}vCPU`}</Text>
           </Container>
           <Container>
             <Text inline font={{ variation: FontVariation.SMALL }}>
               {getString('ce.recommendation.recommendationChart.memoryLabelRegular')}
             </Text>
-            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${
-              Math.floor((100 + buffer) * state.sumMem) / 100
-            }GiB`}</Text>
+            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumMem || 0).toFixed(
+              2
+            )}GiB`}</Text>
           </Container>
           <Container>
             <Text inline font={{ variation: FontVariation.SMALL }}>
               {getString('ce.nodeRecommendation.nodeCount')}
             </Text>
             <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>
-              {` ${state.minNodes}`}
+              {` ${+(minNodes || 0).toFixed(2)}`}
             </Text>
           </Container>
         </Layout.Horizontal>
@@ -217,7 +263,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
         <Layout.Horizontal style={{ alignItems: 'center' }}>
-          <Checkbox />
+          <Checkbox checked={autoScaling} onChange={() => setAutoScaling(prevState => !prevState)} />
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.nodeRecommendation.autoScaling')}</Text>
         </Layout.Horizontal>
         <Card style={{ padding: 0 }}>
@@ -233,14 +279,16 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           </Container>
           {tuneRecomVisible ? (
             <Container padding="medium" background={Color.PRIMARY_1}>
-              <NodeCountInstancePreferences state={state} dispatch={dispatch} buffer={buffer} setBuffer={setBuffer} />
+              <TuneNodeRecommendationCard state={state} dispatch={dispatch} buffer={buffer} setBuffer={setBuffer} />
               <Text font={{ variation: FontVariation.SMALL_SEMI }} margin={{ bottom: 'small', top: 'medium' }}>
                 {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
               </Text>
               <Button icon="plus" variation={ButtonVariation.LINK} margin={{ bottom: 'medium' }} onClick={showModal}>
                 {getString('ce.nodeRecommendation.addPreferredInstanceFamilies')}
               </Button>
-              <Button variation={ButtonVariation.PRIMARY}>{getString('ce.nodeRecommendation.applyPreferences')}</Button>
+              <Button variation={ButtonVariation.PRIMARY} onClick={updateRecommendationDetails}>
+                {getString('ce.nodeRecommendation.applyPreferences')}
+              </Button>
             </Container>
           ) : null}
         </Card>

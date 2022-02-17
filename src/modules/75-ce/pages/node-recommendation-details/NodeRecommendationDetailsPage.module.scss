@@ -16,9 +16,9 @@
 }
 
 .body {
-  padding: var(--spacing-xlarge) var(--spacing-xxlarge) var(--spacing-xlarge) var(--spacing-xxlarge) !important;
+  padding: var(--spacing-xlarge) !important;
   display: grid;
-  grid-template-columns: minmax(875px, 2fr) minmax(350px, 1fr);
+  grid-template-columns: minmax(850px, 1fr) minmax(450px, 1fr);
   column-gap: 10px;
 }
 

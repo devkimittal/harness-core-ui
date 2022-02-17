@@ -63,7 +63,7 @@
   .cards {
     margin-top: var(--spacing-large) !important;
     display: grid;
-    grid-template-columns: 220px 30px 180px 30px 180px 180px 70px;
+    grid-template-columns: 180px 30px 180px 30px 180px 180px 70px;
   }
 
   .card {
@@ -91,7 +91,7 @@
   }
 
   .card.leftAlign > .cardItem {
-    padding-left: var(--spacing-huge);
+    padding-left: var(--spacing-xlarge);
     justify-content: flex-start;
   }
 

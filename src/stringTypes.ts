@@ -3796,6 +3796,7 @@ export interface StringsMap {
   'ce.nodeRecommendation.estimatedSavings': string
   'ce.nodeRecommendation.gke': string
   'ce.nodeRecommendation.howItWorks': string
+  'ce.nodeRecommendation.instaceFamiliesModalDesc': string
   'ce.nodeRecommendation.instanceFam': string
   'ce.nodeRecommendation.item1': string
   'ce.nodeRecommendation.item2': string

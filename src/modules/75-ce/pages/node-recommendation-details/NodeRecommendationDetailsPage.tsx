@@ -7,20 +7,8 @@
 
 import React, { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Layout,
-  Text,
-  Color,
-  FontVariation,
-  Card,
-  Popover,
-  Container,
-  Tabs,
-  Button,
-  ButtonVariation
-} from '@wings-software/uicore'
-import { Position, Menu, MenuItem, Dialog } from '@blueprintjs/core'
-import { useModalHook } from '@harness/use-modal'
+import { Layout, Text, Color, FontVariation, Card, Popover, Container } from '@wings-software/uicore'
+import { Position, Menu, MenuItem } from '@blueprintjs/core'
 
 import { TimeRange, TimeRangeType, TimeRangeValue } from '@ce/types'
 import { GET_DATE_RANGE } from '@ce/utils/momentUtils'
@@ -36,7 +24,7 @@ import routes from '@common/RouteDefinitions'
 import { useStrings } from 'framework/strings'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
 import { ViewTimeRange } from '@ce/components/RecommendationDetails/constants'
-import NodeRecommendation from '@ce/components/NodeRecommendation/NodeRecommendation'
+import NodeRecommendationDetails from '@ce/components/NodeRecommendation/NodeRecommendation'
 import css from './NodeRecommendationDetailsPage.module.scss'
 
 interface Params {
@@ -88,53 +76,6 @@ const NodeRecommendationDetailsPage = () => {
 
   const nodePoolData =
     (data?.recommendationsV2?.items?.length && data?.recommendationsV2?.items[0]) || ({} as RecommendationItemDto)
-
-  const [showModal, hideModal] = useModalHook(() => {
-    return (
-      <Dialog isOpen={true} enforceFocus={false} onClose={hideModal} style={{ width: 1175, height: 640 }}>
-        <Layout.Vertical spacing="medium" padding="xxlarge">
-          <Text font={{ variation: FontVariation.H4 }} icon="gcp">
-            {`${recommendationName}: Preferred Instance Families`}
-          </Text>
-          <Text>
-            You can specify Preferred Instance Families for Compute Optimised or Storage Optimised Performance. The
-            alogrithm will create a recommendation out of this pool of preferred instances that is most economical to
-            you.
-          </Text>
-          <Tabs
-            id={'horizontalTabs'}
-            defaultSelectedTabId={'tab1'}
-            tabList={[
-              { id: 'tab1', title: 'Compute Optimized', panel: <div>Tab 1 content</div> },
-              { id: 'tab2', title: 'Storage Optimized', panel: <div>Tab 2 content</div> }
-            ]}
-          />
-          <Layout.Horizontal spacing="medium">
-            <Button variation={ButtonVariation.PRIMARY}>Save Preferences</Button>
-            <Button variation={ButtonVariation.TERTIARY}>Cancel</Button>
-          </Layout.Horizontal>
-        </Layout.Vertical>
-      </Dialog>
-    )
-  }, [])
-
-  // const goToWNodePoolDetails = () => {
-  //   if (nodePoolData) {
-  //     trackEvent(USER_JOURNEY_EVENTS.RECOMMENDATION_VIEW_MORE_CLICK, {})
-  //     nodePoolData.clusterName &&
-  //       nodePoolData.resourceName &&
-  //       nodePoolData.namespace &&
-  //       history.push(
-  //         routes.toCERecommendationDetails({
-  //           accountId,
-  //           recommendation,
-  //           recommendationName,
-  //           clusterName: nodePoolData.clusterName,
-  //           namespace: nodePoolData.namespace,
-  //           workloadName: nodePoolData.resourceName
-  //         })
-  //       )
-  //   }
 
   if (fetching) {
     return <Page.Spinner />
@@ -198,11 +139,11 @@ const NodeRecommendationDetailsPage = () => {
           </Layout.Horizontal>
         </Card>
         <Container className={css.body}>
-          <NodeRecommendation
+          <NodeRecommendationDetails
             recommendationStats={recommendationStats}
             recommendationDetails={recommendationDetails}
             timeRange={timeRange}
-            showModal={showModal}
+            recommendationName={recommendationName}
           />
         </Container>
       </Page.Body>

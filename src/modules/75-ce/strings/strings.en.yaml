@@ -779,6 +779,7 @@ nodeRecommendation:
   prefMinNodeCount: 'Preferred Minimum Node Count'
   ram: 'RAM'
   resourceUtilInLast: 'Resource Utilisation in the {{ timeRange }}'
+  instaceFamiliesModalDesc: 'You can specify Preferred Instance Families for Compute Optimised or Storage Optimised Performance. The alogrithm will create a recommendation out of this pool of preferred instances that is most economical to you.'
 budgets:
   sideNavText: Budgets
   confirmDeleteBudgetTitle: Delete Budget
