@@ -78,6 +78,6 @@ module.exports = {
       lines: 65
     }
   },
-  transformIgnorePatterns: ['node_modules/(?!(date-fns|lodash-es|p-debounce)/)'],
+  transformIgnorePatterns: ['node_modules/(?!(date-fns|lodash-es|p-debounce|@swc/helpers)/)'],
   testPathIgnorePatterns: ['<rootDir>/dist']
 }
