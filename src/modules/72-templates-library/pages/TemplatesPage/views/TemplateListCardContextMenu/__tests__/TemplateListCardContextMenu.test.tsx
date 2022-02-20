@@ -7,11 +7,12 @@
 
 import React from 'react'
 import { findByText, fireEvent, getByRole, render } from '@testing-library/react'
+import { defaultTo } from 'lodash-es'
 import { findPopoverContainer, TestWrapper } from '@common/utils/testUtils'
 import { mockTemplates } from '@templates-library/TemplatesTestHelper'
 import { TemplateListCardContextMenu } from '../TemplateListCardContextMenu'
 
-describe('<TemplateListContextMenu /> tests', () => {
+describe('<TemplateListCardContextMenu /> tests', () => {
   const template = mockTemplates.data?.content?.[0] || {}
   test('snapshot test', async () => {
     const { container } = render(
@@ -22,20 +23,17 @@ describe('<TemplateListContextMenu /> tests', () => {
     expect(container).toMatchSnapshot()
   })
   test('menu should open on click', async () => {
-    const onDelete = jest.fn()
-    const onOpenSettings = jest.fn()
-    const onPreview = jest.fn()
-    const onOpenEdit = jest.fn()
+    const baseProps = {
+      template: defaultTo(mockTemplates.data?.content?.[0], {}),
+      onDelete: jest.fn(),
+      onOpenSettings: jest.fn(),
+      onPreview: jest.fn(),
+      onOpenEdit: jest.fn()
+    }
 
     const { container } = render(
       <TestWrapper>
-        <TemplateListCardContextMenu
-          template={mockTemplates.data?.content?.[0] || {}}
-          onDelete={onDelete}
-          onOpenSettings={onOpenSettings}
-          onPreview={onPreview}
-          onOpenEdit={onOpenEdit}
-        />
+        <TemplateListCardContextMenu {...baseProps} />
       </TestWrapper>
     )
 
@@ -46,18 +44,18 @@ describe('<TemplateListContextMenu /> tests', () => {
 
     const previewBtn = await findByText(popover as HTMLElement, 'connectors.ceAws.crossAccountRoleExtention.step1.p2')
     fireEvent.click(previewBtn)
-    expect(onPreview).toBeCalledWith(template)
+    expect(baseProps.onPreview).toBeCalledWith(template)
 
     const editBtn = await findByText(popover as HTMLElement, 'templatesLibrary.openEditTemplate')
     fireEvent.click(editBtn)
-    expect(onOpenEdit).toBeCalledWith(template)
+    expect(baseProps.onOpenEdit).toBeCalledWith(template)
 
     const settingsBtn = await findByText(popover as HTMLElement, 'templatesLibrary.templateSettings')
     fireEvent.click(settingsBtn)
-    expect(onOpenSettings).toBeCalledWith(template.identifier)
+    expect(baseProps.onOpenSettings).toBeCalledWith(template.identifier)
 
     const deleteBtn = await findByText(popover as HTMLElement, 'templatesLibrary.deleteTemplate')
     fireEvent.click(deleteBtn)
-    expect(onDelete).toBeCalledWith(template)
+    expect(baseProps.onDelete).toBeCalledWith(template)
   })
 })

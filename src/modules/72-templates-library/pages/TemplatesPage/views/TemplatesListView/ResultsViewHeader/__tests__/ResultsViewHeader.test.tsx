@@ -9,21 +9,17 @@ import { act, fireEvent, queryByAttribute, render, waitFor } from '@testing-libr
 import React from 'react'
 import { mockTemplates } from '@templates-library/TemplatesTestHelper'
 import { Sort, SortFields } from '@templates-library/pages/TemplatesPage/TemplatesPageUtils'
+import { TestWrapper } from '@common/utils/testUtils'
 import ResultsViewHeader from '../ResultsViewHeader'
-
-jest.mock('framework/strings', () => ({
-  ...(jest.requireActual('framework/strings') as any),
-  useStrings: jest.fn().mockReturnValue({
-    getString: jest.fn().mockImplementation(val => val)
-  })
-}))
 
 describe('<ResultsViewHeader /> tests', () => {
   test('should match snapshot', async () => {
     const setSort = jest.fn()
     const setPage = jest.fn()
     const { container, getByTestId } = render(
-      <ResultsViewHeader templateData={mockTemplates.data || {}} setSort={setSort} setPage={setPage} />
+      <TestWrapper>
+        <ResultsViewHeader templateData={mockTemplates.data || {}} setSort={setSort} setPage={setPage} />
+      </TestWrapper>
     )
     expect(container).toMatchSnapshot()
 

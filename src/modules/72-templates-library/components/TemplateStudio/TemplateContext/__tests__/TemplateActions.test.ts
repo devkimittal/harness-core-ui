@@ -15,9 +15,8 @@ import {
   TemplateActions,
   TemplateContextActions
 } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateActions'
-import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
-import type { NGTemplateInfoConfig } from 'services/template-ng'
 import type { YamlBuilderHandlerBinding } from '@common/interfaces/YAMLBuilderProps'
+import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
 
 describe('TemplateActions test', () => {
   test('TemplateActions Initialize', () => {
@@ -56,12 +55,16 @@ describe('TemplateActions test', () => {
   })
 
   test('TemplateActions UpdateTemplate', () => {
-    const templateData: NGTemplateInfoConfig = stageTemplateMock
     const newState = TemplateReducer(initialState, {
       type: TemplateActions.UpdateTemplate,
       response: { template: stageTemplateMock, isUpdated: false }
     })
-    expect(newState).toEqual({ ...initialState, template: templateData, isUpdated: false })
+    expect(newState).toEqual({ ...initialState, template: stageTemplateMock, isUpdated: false })
+  })
+
+  test('TemplateActions Loading', () => {
+    const newState = TemplateReducer(initialState, { ...TemplateContextActions.loading({ isLoading: true }) })
+    expect(newState).toEqual({ ...initialState, isLoading: true })
   })
 
   test('TemplateActions Fetching', () => {

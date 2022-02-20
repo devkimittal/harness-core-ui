@@ -8,7 +8,9 @@
 import { unset } from 'lodash-es'
 import type { StringKeys } from 'framework/strings'
 import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
-import { getVersionLabelText } from '@templates-library/utils/templatesUtils'
+import { getScopeBasedQueryParams, getVersionLabelText } from '@templates-library/utils/templatesUtils'
+import { Scope } from '@common/interfaces/SecretsInterface'
+import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 
 function getString(key: StringKeys): StringKeys {
   return key
@@ -22,5 +24,24 @@ describe('Test TemplateDetailsUtils', () => {
     )
     unset(stageTemplateMock, 'versionLabel')
     expect(getVersionLabelText(stageTemplateMock, getString)).toEqual('templatesLibrary.alwaysUseStableVersion')
+  })
+  const queryParams: ProjectPathProps = {
+    accountId: 'accountId',
+    projectIdentifier: 'projectIdentifier',
+    orgIdentifier: 'orgIdentifier'
+  }
+  test('Test getScopeBasedQueryParams method', () => {
+    expect(getScopeBasedQueryParams(queryParams, Scope.PROJECT)).toEqual({
+      accountIdentifier: 'accountId',
+      projectIdentifier: 'projectIdentifier',
+      orgIdentifier: 'orgIdentifier'
+    })
+  })
+  expect(getScopeBasedQueryParams(queryParams, Scope.ORG)).toEqual({
+    accountIdentifier: 'accountId',
+    orgIdentifier: 'orgIdentifier'
+  })
+  expect(getScopeBasedQueryParams(queryParams, Scope.ACCOUNT)).toEqual({
+    accountIdentifier: 'accountId'
   })
 })
