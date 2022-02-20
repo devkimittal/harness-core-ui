@@ -51,7 +51,8 @@ export const getAllowedTemplateTypes = (getString: UseStringsReturn['getString']
   },
   {
     label: getString('common.pipeline'),
-    value: TemplateType.Pipeline
+    value: TemplateType.Pipeline,
+    disabled: window.location.origin === 'https://app.harness.io'
   },
   {
     label: getString('service'),
