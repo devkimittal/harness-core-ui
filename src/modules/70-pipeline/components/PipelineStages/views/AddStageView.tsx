@@ -59,7 +59,7 @@ export function AddStageView({
           <Heading level={6} color={Color.GREY_800}>
             {getString('pipeline.addStage.title')}
           </Heading>
-          {contextType === PipelineContextType.Pipeline && isTemplatesEnabled && (
+          {contextType !== PipelineContextType.StageTemplate && isTemplatesEnabled && (
             <RbacButton
               text={getString('common.useTemplate')}
               variation={ButtonVariation.SECONDARY}

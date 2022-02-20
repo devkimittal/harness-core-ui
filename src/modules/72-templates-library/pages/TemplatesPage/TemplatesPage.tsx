@@ -14,11 +14,11 @@ import {
   GridListToggle,
   HarnessDocTooltip,
   Layout,
-  Views
+  Views,
+  Dialog
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
 import { useHistory, useParams } from 'react-router-dom'
-import { Dialog } from '@blueprintjs/core'
 import { TemplateSettingsModal } from '@templates-library/components/TemplateSettingsModal/TemplateSettingsModal'
 import { Page } from '@common/exports'
 import { useStrings } from 'framework/strings'
@@ -126,7 +126,15 @@ export default function TemplatesPage(): React.ReactElement {
       />
     )
     return (
-      <Dialog enforceFocus={false} isOpen={true} className={css.deleteTemplateDialog}>
+      <Dialog
+        enforceFocus={false}
+        isOpen={true}
+        canEscapeKeyClose
+        canOutsideClickClose
+        onClose={hideDeleteTemplatesModal}
+        isCloseButtonShown
+        className={css.deleteTemplateDialog}
+      >
         {isGitSyncEnabled ? <GitSyncStoreProvider>{content}</GitSyncStoreProvider> : content}
       </Dialog>
     )
@@ -134,7 +142,15 @@ export default function TemplatesPage(): React.ReactElement {
 
   const [showTemplateSettingsModal, hideTemplateSettingsModal] = useModalHook(
     () => (
-      <Dialog enforceFocus={false} isOpen={true} className={css.updateTemplateSettingsDialog}>
+      <Dialog
+        enforceFocus={false}
+        isOpen={true}
+        canEscapeKeyClose
+        canOutsideClickClose
+        onClose={hideTemplateSettingsModal}
+        isCloseButtonShown
+        className={css.updateTemplateSettingsDialog}
+      >
         <TemplateSettingsModal
           templateIdentifier={templateIdentifierToSettings || ''}
           onClose={hideTemplateSettingsModal}

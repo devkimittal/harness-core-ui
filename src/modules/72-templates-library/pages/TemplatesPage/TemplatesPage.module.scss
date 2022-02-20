@@ -8,14 +8,18 @@
 .deleteTemplateDialog {
   width: 752px;
   overflow: hidden;
-  padding: var(--spacing-xlarge) var(--spacing-medium);
+  padding: var(--spacing-xlarge) var(--spacing-medium) !important;
   position: relative;
   min-height: 400px;
+  :global(.Dialog--close) {
+    display: none;
+  }
 }
+
 .updateTemplateSettingsDialog {
   width: 875px;
+  padding: 0 !important;
   overflow: hidden;
-  padding-bottom: 0;
   position: relative;
   min-height: 400px;
 }

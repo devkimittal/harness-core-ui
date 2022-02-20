@@ -6,7 +6,6 @@
  */
 
 import React, { useCallback } from 'react'
-import { noop } from 'lodash-es'
 import { Drawer, Position } from '@blueprintjs/core'
 import { Button } from '@wings-software/uicore'
 import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
@@ -39,9 +38,7 @@ export const TemplateDrawer: React.FC = (): JSX.Element => {
 
   return (
     <Drawer
-      onClose={() => {
-        noop()
-      }}
+      onClose={closeTemplateView}
       usePortal={true}
       autoFocus={true}
       canEscapeKeyClose={true}

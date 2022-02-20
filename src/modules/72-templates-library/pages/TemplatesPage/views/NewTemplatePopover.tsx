@@ -63,13 +63,13 @@ function NewTemplatePopoverWrapper(): React.ReactElement {
     [projectIdentifier, orgIdentifier, accountId, module]
   )
 
-  const getMenu = (): TemplateMenuItem[] => {
+  const menuItems = React.useMemo((): TemplateMenuItem[] => {
     return allowedTemplateTypes.map(templateType => {
       return merge(templateType, {
         onClick: () => goToTemplateStudio(templateType.value as TemplateType)
       })
     })
-  }
+  }, [allowedTemplateTypes, goToTemplateStudio])
 
   const tooltipBtn = React.useCallback(
     () =>
@@ -85,7 +85,7 @@ function NewTemplatePopoverWrapper(): React.ReactElement {
     <TemplatesActionPopover
       open={menuOpen}
       minimal={true}
-      items={getMenu()}
+      items={menuItems}
       position={Position.BOTTOM}
       disabled={!canEdit || !templatesEnabled}
       setMenuOpen={setMenuOpen}

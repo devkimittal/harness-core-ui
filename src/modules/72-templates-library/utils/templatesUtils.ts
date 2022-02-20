@@ -51,8 +51,7 @@ export const getAllowedTemplateTypes = (getString: UseStringsReturn['getString']
   },
   {
     label: getString('common.pipeline'),
-    value: TemplateType.Pipeline,
-    disabled: true
+    value: TemplateType.Pipeline
   },
   {
     label: getString('service'),

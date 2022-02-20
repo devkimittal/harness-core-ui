@@ -18,12 +18,12 @@ import {
   SelectOption,
   Text,
   VisualYamlSelectedView as SelectedView,
-  useConfirmationDialog
+  useConfirmationDialog,
+  Dialog
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
 import { useParams, useHistory } from 'react-router-dom'
 import { defaultTo, isEmpty, isNil, merge } from 'lodash-es'
-import { Dialog } from '@blueprintjs/core'
 import {
   Fields,
   ModalProps,
@@ -99,7 +99,15 @@ export const TemplateStudioSubHeaderLeftView: (props: TemplateStudioSubHeaderLef
 
   const [showConfigModal, hideConfigModal] = useModalHook(
     () => (
-      <Dialog enforceFocus={false} isOpen={true} className={css.createTemplateDialog}>
+      <Dialog
+        enforceFocus={false}
+        isOpen={true}
+        canEscapeKeyClose
+        canOutsideClickClose
+        onClose={onCloseCreate}
+        isCloseButtonShown
+        className={css.createTemplateDialog}
+      >
         {modalProps && (
           <TemplateConfigModal
             initialValues={merge(template, {

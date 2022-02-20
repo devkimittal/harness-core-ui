@@ -6,8 +6,7 @@
  */
 
 import React from 'react'
-import { Dialog } from '@blueprintjs/core'
-import { Button, ButtonVariation } from '@wings-software/uicore'
+import { Button, ButtonVariation, Dialog } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
 import { defaultTo, get, isEmpty, merge, noop } from 'lodash-es'
 import { useParams } from 'react-router-dom'
@@ -25,6 +24,7 @@ import type { Failure } from 'services/template-ng'
 import { DefaultNewTemplateId } from 'framework/Templates/templates'
 import { AppStoreContext } from 'framework/AppStore/AppStoreContext'
 import useCommentModal from '@common/hooks/CommentModal/useCommentModal'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
 import css from './SaveTemplatePopover.module.scss'
 export interface GetErrorResponse extends Omit<Failure, 'errors'> {
   errors?: FormikErrors<unknown>
@@ -54,7 +54,15 @@ export function SaveTemplatePopover(props: SaveTemplatePopoverProps): React.Reac
 
   const [showConfigModal, hideConfigModal] = useModalHook(
     () => (
-      <Dialog enforceFocus={false} isOpen={true} className={css.configDialog}>
+      <Dialog
+        enforceFocus={false}
+        isOpen={true}
+        canEscapeKeyClose
+        canOutsideClickClose
+        onClose={hideConfigModal}
+        isCloseButtonShown
+        className={css.configDialog}
+      >
         {modalProps && (
           <TemplateConfigModal
             initialValues={merge(template, {
@@ -158,7 +166,7 @@ export function SaveTemplatePopover(props: SaveTemplatePopoverProps): React.Reac
         ? [
             {
               label: getString('save'),
-              disabled: isEmpty(get(template.spec, 'type')),
+              disabled: isEmpty(get(template.spec, 'type')) && template.type !== TemplateType.Pipeline,
               onClick: onSave
             }
           ]

@@ -222,13 +222,6 @@ export const TemplateSettingsModal = (props: TemplateSettingsModalProps) => {
         projectIdentifier={projectIdentifier}
       />
       <TemplatePreview previewValues={previewValues} />
-      <Button
-        className={css.closeIcon}
-        iconProps={{ size: 24, color: Color.GREY_500 }}
-        icon="cross"
-        variation={ButtonVariation.ICON}
-        onClick={props.onClose}
-      />
     </Layout.Horizontal>
   )
 }

@@ -17,6 +17,14 @@ $dot-size: 1px;
 $dot-space: 10px;
 
 .canvas-container {
+  --pipeline-transparent: transparent;
+  --pipeline-grey-border: #c8c6c6;
+  --pipeline-light-grey: #e7e7e7;
+  --pipeline-blue-color: #25a6f7;
+  --pipeline-blue-bc: #021c3c;
+  --pipeline-selected-node: linear-gradient(123.92deg, #0092e4 32.53%, #0778fc 112.21%);
+  --pipeline-tag-color: #4bace9;
+
   height: 100%;
   padding: 0 !important;
   position: relative;

@@ -14,15 +14,12 @@
     > div {
       margin-bottom: var(--spacing-medium) !important;
     }
+    :global(.bp3-form-group) {
+      margin-bottom: 0px;
+    }
   }
 
   .comment {
     max-height: 240px !important;
   }
-}
-
-.closeIcon {
-  position: absolute;
-  top: var(--spacing-6);
-  right: var(--spacing-4);
 }

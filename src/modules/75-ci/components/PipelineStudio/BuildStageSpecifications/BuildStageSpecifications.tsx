@@ -118,7 +118,7 @@ export default function BuildStageSpecifications({ children }: React.PropsWithCh
   }, [])
 
   const validationSchema = yup.object().shape({
-    ...(contextType === PipelineContextType.Pipeline && { name: NameSchema() }),
+    ...(contextType !== PipelineContextType.StageTemplate && { name: NameSchema() }),
     sharedPaths: yup.lazy(value => {
       if (Array.isArray(value)) {
         return yup.array().test('valuesShouldBeUnique', getString('validation.uniqueValues'), list => {
@@ -227,7 +227,7 @@ export default function BuildStageSpecifications({ children }: React.PropsWithCh
                 </div>
                 <Card className={cx(css.sectionCard)} disabled={isReadonly}>
                   <FormikForm>
-                    {contextType === PipelineContextType.Pipeline && (
+                    {contextType !== PipelineContextType.StageTemplate && (
                       <NameIdDescriptionTags
                         formikProps={formik}
                         identifierProps={{

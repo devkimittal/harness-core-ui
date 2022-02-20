@@ -1322,7 +1322,7 @@ export interface NGTemplateInfoConfig {
   tags?: {
     [key: string]: string
   }
-  type: 'Step' | 'Stage'
+  type: 'Step' | 'Stage' | 'Pipeline'
   versionLabel: string
 }
 

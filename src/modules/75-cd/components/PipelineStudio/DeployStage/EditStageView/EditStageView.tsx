@@ -226,7 +226,7 @@ export const EditStageView: React.FC<EditStageViewProps> = ({
               formikRef.current = formikProps
               return (
                 <FormikForm>
-                  {contextType === PipelineContextType.Pipeline && (
+                  {contextType !== PipelineContextType.StageTemplate && (
                     <>
                       {context ? (
                         <Card className={stageCss.sectionCard}>
