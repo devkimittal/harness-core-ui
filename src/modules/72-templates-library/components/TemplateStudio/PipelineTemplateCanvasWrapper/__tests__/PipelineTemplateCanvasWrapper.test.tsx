@@ -13,6 +13,17 @@ import { getTemplateContextMock } from '@templates-library/components/TemplateSt
 import { TemplateType } from '@templates-library/utils/templatesUtils'
 import { PipelineTemplateCanvasWrapperWithRef } from '../PipelineTemplateCanvasWrapper'
 
+// jest.mock('@pipeline/components/PipelineStudio/StageBuilder/StageBuilder', () => ({
+//   ...(jest.requireActual('@pipeline/components/PipelineStudio/StageBuilder/StageBuilder') as any),
+//   StageBuilder: () => {
+//     return <div className="stage-builder-mock"></div>
+//   }
+// }))
+
+jest.mock('@pipeline/components/PipelineStudio/StageBuilder/StageBuilder', () => () => (
+  <div className="stage-builder-mock"></div>
+))
+
 describe('<PipelineTemplateCanvasWrapper/> tests', () => {
   const pipelineTemplateContextMock = getTemplateContextMock(TemplateType.Pipeline)
   test('should match snapshot', async () => {
