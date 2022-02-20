@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TemplateListContextMenu /> tests snapshot test 1`] = `
+exports[`<TemplateListCardContextMenu /> tests snapshot test 1`] = `
 <div>
   <span
     class="bp3-popover-wrapper main"
