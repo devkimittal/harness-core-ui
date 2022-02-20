@@ -59,19 +59,13 @@ describe('CREATE MODE', () => {
 
   test('if form closes', async () => {
     const props = getProps()
-    const { container, getByText } = render(
+    const { getByText } = render(
       <TestWrapper>
         <TemplateConfigModal {...props} />
       </TestWrapper>
     )
     act(() => {
       fireEvent.click(getByText('cancel'))
-    })
-    await waitFor(() => expect(props.onClose).toBeCalled())
-
-    const crossIcon = container.querySelector('span[icon="cross"]')
-    act(() => {
-      fireEvent.click(crossIcon!)
     })
     await waitFor(() => expect(props.onClose).toBeCalled())
   })
