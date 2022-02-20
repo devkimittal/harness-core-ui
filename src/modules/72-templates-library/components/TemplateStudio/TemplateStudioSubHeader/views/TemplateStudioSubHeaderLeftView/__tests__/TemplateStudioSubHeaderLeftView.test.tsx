@@ -7,12 +7,15 @@
 
 import React from 'react'
 import { act, fireEvent, getByRole, render } from '@testing-library/react'
+import produce from 'immer'
+import { set } from 'lodash-es'
 import { findDialogContainer, TestWrapper } from '@common/utils/testUtils'
-import templateContextMock from '@templates-library/components/TemplateStudio/SaveTemplatePopover/_test_/stateMock'
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import routes from '@common/RouteDefinitions'
 import { accountPathProps, pipelineModuleParams, templatePathProps } from '@common/utils/routeUtils'
 import { useUpdateStableTemplate } from 'services/template-ng'
+import { getTemplateContextMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
 import { TemplateStudioSubHeaderLeftView } from '../TemplateStudioSubHeaderLeftView'
 
 jest.mock('@wings-software/monaco-yaml/lib/esm/languageservice/yamlLanguageService', () => ({
@@ -32,13 +35,14 @@ jest.mock('services/template-ng', () => ({
 }))
 
 describe('<TemplateStudioSubHeaderLeftView /> tests', () => {
+  const stepTemplateContextMock = getTemplateContextMock(TemplateType.Step)
   test('snapshot test', async () => {
     const { container } = render(
-      <TemplateContext.Provider value={templateContextMock}>
+      <TemplateContext.Provider value={stepTemplateContextMock}>
         <TestWrapper
           path={routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })}
           pathParams={{
-            templateIdentifier: 'Test_Http_Template',
+            templateIdentifier: 'Test_Template',
             accountId: 'accountId',
             orgIdentifier: 'default',
             projectIdentifier: 'Yogesh_Test',
@@ -55,12 +59,15 @@ describe('<TemplateStudioSubHeaderLeftView /> tests', () => {
   })
 
   test('update stable template test', async () => {
+    const templateContextMock = produce(stepTemplateContextMock, draft => {
+      set(draft, 'state.stableVersion', 'v2')
+    })
     const { getByText } = render(
       <TemplateContext.Provider value={templateContextMock}>
         <TestWrapper
           path={routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })}
           pathParams={{
-            templateIdentifier: 'Test_Http_Template',
+            templateIdentifier: 'Test_Template',
             accountId: 'accountId',
             orgIdentifier: 'default',
             projectIdentifier: 'Yogesh_Test',
@@ -91,7 +98,7 @@ describe('<TemplateStudioSubHeaderLeftView /> tests', () => {
 
   test('edit btn should work as expected', async () => {
     const { container } = render(
-      <TemplateContext.Provider value={templateContextMock}>
+      <TemplateContext.Provider value={stepTemplateContextMock}>
         <TestWrapper
           path={routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })}
           pathParams={{
@@ -121,7 +128,7 @@ describe('<TemplateStudioSubHeaderLeftView /> tests', () => {
     await act(async () => {
       fireEvent.click(cancelBtn)
     })
-    expect(templateContextMock.updateTemplate).toBeCalledTimes(0)
+    expect(stepTemplateContextMock.updateTemplate).toBeCalledTimes(0)
 
     await act(async () => {
       fireEvent.click(editBtn)
@@ -131,6 +138,6 @@ describe('<TemplateStudioSubHeaderLeftView /> tests', () => {
     await act(async () => {
       fireEvent.click(saveBtn)
     })
-    expect(templateContextMock.updateTemplate).toBeCalled()
+    expect(stepTemplateContextMock.updateTemplate).toBeCalled()
   })
 })

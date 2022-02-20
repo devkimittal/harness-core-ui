@@ -15,7 +15,7 @@ import {
   TemplateActions,
   TemplateContextActions
 } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateActions'
-import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/_test_/stateMock'
+import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
 import type { NGTemplateInfoConfig } from 'services/template-ng'
 import type { YamlBuilderHandlerBinding } from '@common/interfaces/YAMLBuilderProps'
 

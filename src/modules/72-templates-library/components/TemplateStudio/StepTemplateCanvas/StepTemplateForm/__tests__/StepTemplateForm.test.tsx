@@ -8,12 +8,14 @@
 import React from 'react'
 import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
-import templateContextMock, {
+import {
+  getTemplateContextMock,
   stepTemplateMock
-} from '@templates-library/components/TemplateStudio/SaveTemplatePopover/_test_/stateMock'
+} from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
 import { TestWrapper } from '@common/utils/testUtils'
 import type { StepCommandsProps } from '@pipeline/components/PipelineStudio/StepCommands/StepCommandTypes'
 import { StepTemplateFormWithRef } from '@templates-library/components/TemplateStudio/StepTemplateCanvas/StepTemplateForm/StepTemplateForm'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
 
 jest.mock('@pipeline/components/PipelineStudio/StepCommands/StepCommands', () => ({
   ...(jest.requireActual('@pipeline/components/PipelineStudio/StepCommands/StepCommands') as any),
@@ -41,10 +43,11 @@ jest.mock('lodash-es', () => ({
 }))
 
 describe('<StepTemplateForm /> tests', () => {
+  const stepTemplateContextMock = getTemplateContextMock(TemplateType.Step)
   test('snapshot test', async () => {
     const { container, findByText } = render(
       <TestWrapper>
-        <TemplateContext.Provider value={templateContextMock}>
+        <TemplateContext.Provider value={stepTemplateContextMock}>
           <StepTemplateFormWithRef />
         </TemplateContext.Provider>
       </TestWrapper>
@@ -55,6 +58,6 @@ describe('<StepTemplateForm /> tests', () => {
     await act(async () => {
       fireEvent.click(button as HTMLElement)
     })
-    expect(templateContextMock.updateTemplate).toBeCalled()
+    expect(stepTemplateContextMock.updateTemplate).toBeCalled()
   })
 })

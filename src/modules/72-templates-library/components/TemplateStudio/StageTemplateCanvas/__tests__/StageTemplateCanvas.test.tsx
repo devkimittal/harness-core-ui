@@ -6,75 +6,36 @@
  */
 
 import React from 'react'
-import { act, fireEvent, render } from '@testing-library/react'
-import { set } from 'lodash-es'
+import { render } from '@testing-library/react'
 import produce from 'immer'
+import { set } from 'lodash-es'
 import { TestWrapper } from '@common/utils/testUtils'
 import routes from '@common/RouteDefinitions'
 import { accountPathProps, pipelineModuleParams, templatePathProps } from '@common/utils/routeUtils'
-import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/_test_/stateMock'
 import { PipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
 import pipelineContextMock from '@pipeline/components/PipelineStudio/RightDrawer/__tests__/stateMock'
+import { StageType } from '@pipeline/utils/stageHelpers'
+import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
 import {
   DefaultNewStageId,
   DefaultNewStageName
 } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateForm/StageTemplateForm'
-import { StageType } from '@pipeline/utils/stageHelpers'
-import { StageTemplateDiagram } from '../StageTemplateDiagram'
+import { StageTemplateCanvasWithRef } from '../StageTemplateCanvas'
 
-jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 jest.mock('@wings-software/monaco-yaml/lib/esm/languageservice/yamlLanguageService', () => ({
   getLanguageService: jest.fn()
 }))
 
-describe('<StageTemplateDiagram /> tests', () => {
-  test('should render plus button when stage is not selected', async () => {
-    const context = produce(pipelineContextMock, draft => {
-      delete draft.state.pipeline.stages
-      draft.getStageFromPipeline = _stageId => {
-        return {}
-      }
-      draft.stagesMap = {
-        Deployment: {
-          name: 'Deploy',
-          type: StageType.DEPLOY,
-          icon: 'cd-main',
-          iconColor: 'var(--pipeline-deploy-stage-color)',
-          isApproval: false,
-          openExecutionStrategy: true
-        }
-      }
-    })
-    const { container } = render(
-      <PipelineContext.Provider value={context}>
-        <TestWrapper
-          path={routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })}
-          pathParams={{
-            templateIdentifier: '-1',
-            accountId: 'accountId',
-            orgIdentifier: 'default',
-            projectIdentifier: 'Yogesh_Test',
-            module: 'cd',
-            templateType: 'Stage'
-          }}
-        >
-          <StageTemplateDiagram />
-        </TestWrapper>
-      </PipelineContext.Provider>
-    )
-    expect(container).toMatchSnapshot()
-    const node = container.querySelector('[data-nodeid="create-node"] .defaultNode') as HTMLElement
-    expect(node).toBeDefined()
-    let dynamicPopover = document.querySelector('[class*="dynamicPopover"]')
-    expect(dynamicPopover).toBeNull()
-    await act(async () => {
-      fireEvent.click(node)
-    })
-    dynamicPopover = document.querySelector('[class*="dynamicPopover"]')
-    expect(dynamicPopover).toBeDefined()
-  })
+jest.mock('@pipeline/components/PipelineStudio/RightDrawer/RightDrawer', () => ({
+  RightDrawer: () => <div />
+}))
 
-  test('should render stage button when stage is selected', async () => {
+jest.mock('@templates-library/components/TemplateDrawer/TemplateDrawer', () => ({
+  TemplateDrawer: () => <div />
+}))
+
+describe('<StageTemplateCanvasWithRef /> tests', () => {
+  test('should match snapshot in empty state', async () => {
     const context = produce(pipelineContextMock, draft => {
       delete draft.state.pipeline.stages
       set(draft, 'state.pipeline.stages[0].stage', {
@@ -93,7 +54,6 @@ describe('<StageTemplateDiagram /> tests', () => {
         }
       }
     })
-
     const { container } = render(
       <PipelineContext.Provider value={context}>
         <TestWrapper
@@ -107,10 +67,11 @@ describe('<StageTemplateDiagram /> tests', () => {
             templateType: 'Stage'
           }}
         >
-          <StageTemplateDiagram />
+          <StageTemplateCanvasWithRef />
         </TestWrapper>
       </PipelineContext.Provider>
     )
     expect(container).toMatchSnapshot()
+    expect(context.setSelection).toBeCalled()
   })
 })

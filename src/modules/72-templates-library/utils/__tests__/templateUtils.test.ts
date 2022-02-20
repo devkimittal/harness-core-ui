@@ -7,7 +7,7 @@
 
 import { unset } from 'lodash-es'
 import type { StringKeys } from 'framework/strings'
-import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/_test_/stateMock'
+import { stageTemplateMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
 import { getVersionLabelText } from '@templates-library/utils/templatesUtils'
 
 function getString(key: StringKeys): StringKeys {
