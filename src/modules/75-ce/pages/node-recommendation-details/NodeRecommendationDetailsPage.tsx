@@ -99,7 +99,7 @@ const NodeRecommendationDetailsPage = () => {
       />
       <Page.Body>
         <Card style={{ width: '100%' }}>
-          <Layout.Horizontal spacing="medium">
+          <Layout.Horizontal spacing="small">
             <Text color={Color.GREY_800} font={{ weight: 'semi-bold' }}>
               {getString('ce.recommendation.detailsPage.utilizationDataComputation')}
             </Text>

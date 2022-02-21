@@ -26,6 +26,7 @@ declare const styles: {
   readonly minNodeInput: string
   readonly noBgColor: string
   readonly noShadow: string
+  readonly pointer: string
   readonly preferences: string
   readonly recommendationCategory: string
   readonly title: string

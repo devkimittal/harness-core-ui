@@ -20,7 +20,7 @@
     height: 24px;
   }
 
-  button[class*='bp3-button'] {
+  [class*='bp3-button'] {
     padding: 4px !important;
     border-radius: 50px !important;
   }
@@ -41,7 +41,7 @@
   .cardCategory {
     margin-top: var(--spacing-large) !important;
     display: grid;
-    grid-template-columns: 250px 180px 30px 390px;
+    grid-template-columns: 210px 180px 30px 390px;
 
     .recommendationCategory {
       display: grid;
@@ -63,7 +63,7 @@
   .cards {
     margin-top: var(--spacing-large) !important;
     display: grid;
-    grid-template-columns: 180px 30px 180px 30px 180px 180px 70px;
+    grid-template-columns: 180px 30px 180px 30px 180px 180px 60px;
   }
 
   .card {
@@ -107,17 +107,27 @@
     .cardItem:nth-child(even) {
       background-color: rgba(243, 243, 250, 0.8);
     }
+    .cardItem:nth-child(3) {
+      height: 66px !important;
+    }
   }
 
   .card.white {
     .cardItem:nth-child(even) {
       background-color: var(--grey-50);
     }
+
+    .cardItem:nth-child(3) {
+      height: 66px !important;
+    }
   }
 
   .card.blue {
     .cardItem:nth-child(2n + 1) {
       background-color: var(--primary-1);
+    }
+    .cardItem:nth-child(4) {
+      height: 66px !important;
     }
   }
 
@@ -172,4 +182,12 @@
   > div[class*='bp3-slider-progress'] {
     background-color: var(--white);
   }
+}
+
+div[class*='bp3-tab-panel'] {
+  margin-top: 0px;
+}
+
+.pointer {
+  cursor: pointer;
 }

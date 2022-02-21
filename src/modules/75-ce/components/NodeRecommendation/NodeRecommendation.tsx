@@ -42,27 +42,41 @@ import TuneNodeRecommendationCard from '@ce/components/NodeRecommendation/TuneNo
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
-import resourceUtilization from './images/resource-utilization.svg'
-// import css from './NodeRecommendation.module.scss'
+import resourceUtilizationCpu from './images/resource-utilization-cpu.svg'
+import resourceUtilizationMem from './images/resource-utilization-memory.svg'
+import resourceUtilizationNodeCount from './images/resource-utilization-node-count.svg'
+
+import css from './NodeRecommendation.module.scss'
 
 export interface IState {
   sumCpu: number
   sumMem: number
   maxNodes: number
   minNodes: number
+  includeTypes: string[]
+  includeSeries: string[]
+  excludeTypes: string[]
+  excludeSeries: string[]
 }
 
 export enum ACTIONS {
   'CPUS',
   'MEM',
   'MIN_NODES',
-  'MAX_NODES'
+  'MAX_NODES',
+  'INCLUDE_TYPES',
+  'INCLUDE_SERIES',
+  'EXCLUDE_TYPES',
+  'EXCLUDE_SERIES'
 }
 
 export interface Action {
   type: ACTIONS
-  data: number
+  data: any
 }
+
+const insertOrRemoveIntoArray = (array: string[], val: string): string[] =>
+  array.indexOf(val) > -1 ? array.filter(ele => ele !== val) : [...array, val]
 
 const reducer = (state: IState, action: Action) => {
   const { type, data } = action
@@ -76,6 +90,26 @@ const reducer = (state: IState, action: Action) => {
       return { ...state, minNodes: data }
     case ACTIONS.MAX_NODES:
       return { ...state, maxNodes: data }
+    case ACTIONS.INCLUDE_TYPES:
+      return {
+        ...state,
+        includeTypes: insertOrRemoveIntoArray(state.includeTypes, data)
+      }
+    case ACTIONS.INCLUDE_SERIES:
+      return {
+        ...state,
+        includeSeries: insertOrRemoveIntoArray(state.includeSeries, data)
+      }
+    case ACTIONS.EXCLUDE_TYPES:
+      return {
+        ...state,
+        excludeTypes: insertOrRemoveIntoArray(state.excludeTypes, data)
+      }
+    case ACTIONS.EXCLUDE_SERIES:
+      return {
+        ...state,
+        excludeSeries: insertOrRemoveIntoArray(state.excludeSeries, data)
+      }
     default:
       return state
   }
@@ -101,8 +135,8 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const [tuneRecomVisible, setTuneRecomVisible] = useState(false)
   const [autoScaling, setAutoScaling] = useState(false)
 
-  const { sumCpu, sumMem, maxNodes, minNodes } = (recommendationDetails.resourceRequirement ||
-    {}) as RecommendClusterRequest
+  const { sumCpu, sumMem, maxNodes, minNodes, includeTypes, includeSeries, excludeTypes, excludeSeries } =
+    (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
   const [recomDetails, setRecomDetails] = useState(recommendationDetails)
@@ -114,7 +148,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           sumCpu: +(sumCpu || 0).toFixed(2),
           sumMem: +(sumMem || 0).toFixed(2),
           maxNodes: +(maxNodes || 0).toFixed(2),
-          minNodes: +(minNodes || 0).toFixed(2)
+          minNodes: +(minNodes || 0).toFixed(2),
+          includeTypes: includeTypes || [],
+          includeSeries: includeSeries || [],
+          excludeTypes: excludeTypes || [],
+          excludeSeries: excludeSeries || []
         } as IState),
       []
     )
@@ -158,7 +196,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
   const [showModal, hideModal] = useModalHook(() => {
     return (
-      <Dialog isOpen={true} enforceFocus={false} onClose={hideModal} style={{ width: 1175, height: 640 }}>
+      <Dialog isOpen={true} enforceFocus={false} onClose={hideModal} style={{ width: 1175 }}>
         <Layout.Vertical spacing="medium" padding="xxlarge" height="100%">
           <Text font={{ variation: FontVariation.H4 }} icon="gcp">
             {`${recommendationName}: Preferred Instance Families`}
@@ -173,13 +211,17 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 panel: (
                   <InstanceFamiliesModalTab
                     data={seriesData?.categoryDetails ? seriesData?.categoryDetails[key] : {}}
+                    state={state}
+                    dispatch={dispatch}
                   />
                 )
               }))}
             />
           </Container>
           <Layout.Horizontal spacing="medium">
-            <Button variation={ButtonVariation.PRIMARY}>Save Preferences</Button>
+            <Button variation={ButtonVariation.PRIMARY} onClick={hideModal}>
+              Save Preferences
+            </Button>
             <Button variation={ButtonVariation.TERTIARY} onClick={hideModal}>
               {getString('cancel')}
             </Button>
@@ -187,34 +229,43 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         </Layout.Vertical>
       </Dialog>
     )
-  }, [seriesDataLoading])
+  }, [seriesDataLoading, state])
 
   return (
     <>
       <Layout.Vertical>
         <Card style={{ paddingLeft: 0, paddingRight: 0 }}>
-          <Layout.Horizontal spacing="large" padding={{ left: 'xlarge', right: 'xlarge' }}>
-            <RecommendationDetailsSpendCard
-              withRecommendationAmount={formatCost(
-                recommendationStats?.totalMonthlyCost - recommendationStats?.totalMonthlySaving
-              )}
-              withoutRecommendationAmount={formatCost(recommendationStats?.totalMonthlyCost)}
-              title={`${getString('ce.recommendation.listPage.monthlyPotentialCostText')}`}
-              spentBy={moment(timeRangeFilter[1]).format('MMM DD')}
-            />
-            <RecommendationDetailsSavingsCard
-              amount={formatCost(recommendationStats?.totalMonthlySaving)}
-              title={getString('ce.recommendation.listPage.monthlySavingsText')}
-              amountSubTitle={`(${Math.floor(
-                (recommendationStats?.totalMonthlySaving / recommendationStats?.totalMonthlyCost) * 100
-              )}%)`}
-              subTitle={`${moment(timeRangeFilter[0]).format('MMM DD')} - ${moment(timeRangeFilter[1]).format(
-                'MMM DD'
-              )}`}
-            />
+          <Layout.Horizontal padding={{ left: 'large' }}>
+            <Container width={400}>
+              <RecommendationDetailsSpendCard
+                withRecommendationAmount={formatCost(
+                  recommendationStats?.totalMonthlyCost - recommendationStats?.totalMonthlySaving
+                )}
+                withoutRecommendationAmount={formatCost(recommendationStats?.totalMonthlyCost)}
+                title={`${getString('ce.recommendation.listPage.monthlyPotentialCostText')}`}
+                spentBy={moment(timeRangeFilter[1]).format('MMM DD')}
+              />
+            </Container>
+            <Container>
+              <RecommendationDetailsSavingsCard
+                amount={formatCost(recommendationStats?.totalMonthlySaving)}
+                title={getString('ce.recommendation.listPage.monthlySavingsText')}
+                amountSubTitle={`(${Math.floor(
+                  (recommendationStats?.totalMonthlySaving / recommendationStats?.totalMonthlyCost) * 100
+                )}%)`}
+                subTitle={`${moment(timeRangeFilter[0]).format('MMM DD')} - ${moment(timeRangeFilter[1]).format(
+                  'MMM DD'
+                )}`}
+              />
+            </Container>
           </Layout.Horizontal>
           <Recommender stats={recommendationStats} details={recomDetails} loading={loading} />
-          <Container style={{ width: 354, float: 'right' }} margin="large" padding="medium" background={Color.BLUE_50}>
+          <Container
+            margin="medium"
+            style={{ width: 354, float: 'right', marginRight: 60 }}
+            padding="medium"
+            background={Color.BLUE_50}
+          >
             <Text icon="info-messaging" color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
               {getString('ce.nodeRecommendation.tuneRecommendationsInfo')}
             </Text>
@@ -232,34 +283,43 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             {getString('ce.recommendation.detailsPage.viewMoreDetailsText')}
           </Button>
         </Layout.Horizontal>
-        <Layout.Horizontal flex={{ justifyContent: 'space-between' }}>
-          <Container>
-            <Text inline font={{ variation: FontVariation.SMALL }}>
-              {getString('delegate.delegateCPU')}
-            </Text>
-            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumCpu || 0).toFixed(
-              2
-            )}vCPU`}</Text>
-          </Container>
-          <Container>
-            <Text inline font={{ variation: FontVariation.SMALL }}>
-              {getString('ce.recommendation.recommendationChart.memoryLabelRegular')}
-            </Text>
-            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumMem || 0).toFixed(
-              2
-            )}GiB`}</Text>
-          </Container>
-          <Container>
-            <Text inline font={{ variation: FontVariation.SMALL }}>
-              {getString('ce.nodeRecommendation.nodeCount')}
-            </Text>
-            <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>
-              {` ${+(minNodes || 0).toFixed(2)}`}
-            </Text>
-          </Container>
+        <Layout.Horizontal padding={{ top: 'large' }} flex={{ justifyContent: 'space-between' }}>
+          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between' }}>
+            <Container padding={{ bottom: 'medium' }}>
+              <Text inline font={{ variation: FontVariation.SMALL }}>
+                {getString('delegate.delegateCPU')}
+              </Text>
+              <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumCpu || 0).toFixed(
+                2
+              )}vCPU`}</Text>
+            </Container>
+            <img src={resourceUtilizationCpu} />
+          </Layout.Vertical>
+
+          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between' }}>
+            <Container padding={{ bottom: 'medium' }}>
+              <Text inline font={{ variation: FontVariation.SMALL }}>
+                {getString('ce.recommendation.recommendationChart.memoryLabelRegular')}
+              </Text>
+              <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumMem || 0).toFixed(
+                2
+              )}GiB`}</Text>
+            </Container>
+            <img src={resourceUtilizationMem} />
+          </Layout.Vertical>
+          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between' }}>
+            <Container padding={{ bottom: 'medium' }}>
+              <Text inline font={{ variation: FontVariation.SMALL }}>
+                {getString('ce.nodeRecommendation.nodeCount')}
+              </Text>
+              <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>
+                {` ${+(minNodes || 0).toFixed(2)}`}
+              </Text>
+            </Container>
+            <img src={resourceUtilizationNodeCount} />
+          </Layout.Vertical>
         </Layout.Horizontal>
-        <img src={resourceUtilization} />
-        <Text font={{ variation: FontVariation.H5 }} margin={{ bottom: 'small' }}>
+        <Text font={{ variation: FontVariation.H5 }} padding={{ bottom: 'small' }}>
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
         <Layout.Horizontal style={{ alignItems: 'center' }}>
@@ -268,7 +328,12 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         </Layout.Horizontal>
         <Card style={{ padding: 0 }}>
           <Container padding="medium" flex={{ justifyContent: 'space-between' }}>
-            <Text font={{ variation: FontVariation.H6 }} color={tuneRecomVisible ? Color.GREY_700 : Color.PRIMARY_7}>
+            <Text
+              className={css.pointer}
+              font={{ variation: FontVariation.H6 }}
+              color={tuneRecomVisible ? Color.GREY_700 : Color.PRIMARY_7}
+              onClick={() => setTuneRecomVisible(prevState => !prevState)}
+            >
               {getString('ce.nodeRecommendation.setInstancePreferences')}
             </Text>
             <Icon
@@ -286,9 +351,18 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
               <Button icon="plus" variation={ButtonVariation.LINK} margin={{ bottom: 'medium' }} onClick={showModal}>
                 {getString('ce.nodeRecommendation.addPreferredInstanceFamilies')}
               </Button>
-              <Button variation={ButtonVariation.PRIMARY} onClick={updateRecommendationDetails}>
-                {getString('ce.nodeRecommendation.applyPreferences')}
-              </Button>
+              <Layout.Horizontal spacing="small">
+                <Button
+                  variation={ButtonVariation.PRIMARY}
+                  onClick={updateRecommendationDetails}
+                  disabled={isEqual(state, recomDetails)}
+                >
+                  {getString('ce.nodeRecommendation.applyPreferences')}
+                </Button>
+                <Button variation={ButtonVariation.SECONDARY}>
+                  {getString('ce.recommendation.detailsPage.resetRecommendationText')}
+                </Button>
+              </Layout.Horizontal>
             </Container>
           ) : null}
         </Card>
