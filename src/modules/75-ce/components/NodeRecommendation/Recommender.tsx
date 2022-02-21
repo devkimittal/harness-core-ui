@@ -12,7 +12,12 @@ import { get } from 'lodash-es'
 import { Container, Icon, Text, Color, FontVariation } from '@wings-software/uicore'
 
 import { useStrings } from 'framework/strings'
-import type { NodeRecommendationDto, RecommendationOverviewStats, RecommendationResponse } from 'services/ce/services'
+import type {
+  Maybe,
+  NodeRecommendationDto,
+  RecommendationOverviewStats,
+  RecommendationResponse
+} from 'services/ce/services'
 import formatCost from '@ce/utils/formatCost'
 import css from './NodeRecommendation.module.scss'
 
@@ -65,6 +70,11 @@ const Recommender = (props: RecommenderProps) => {
       return stats.totalMonthlyCost - recommendedMonthlyCost
     }
 
+    const getCpusAndMemoryPerVm = (vmDetails: Maybe<RecommendationResponse>) =>
+      vmDetails && vmDetails.nodePools?.length
+        ? `(CPU: ${vmDetails.nodePools[0]?.vm?.cpusPerVm} Mem: ${vmDetails.nodePools[0]?.vm?.cpusPerVm})`
+        : null
+
     return [
       {
         label: '',
@@ -114,7 +124,7 @@ const Recommender = (props: RecommenderProps) => {
           const isLabel = type === CardType.LABEL
 
           return (
-            <>
+            <Container>
               <Text
                 font={{
                   variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H6
@@ -122,7 +132,14 @@ const Recommender = (props: RecommenderProps) => {
               >
                 {v}
               </Text>
-            </>
+              {!isLabel ? (
+                <Text font={{ variation: FontVariation.TINY_SEMI, align: 'center' }}>
+                  {type === CardType.CURRENT
+                    ? getCpusAndMemoryPerVm(details?.current)
+                    : getCpusAndMemoryPerVm(details?.recommended)}
+                </Text>
+              ) : null}
+            </Container>
           )
         }
       },
