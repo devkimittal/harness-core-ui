@@ -51,6 +51,7 @@ export interface PipelineInputSetFormProps {
   isRunPipelineForm?: boolean
   listOfSelectedStages?: string[]
   isRetryFormStageSelected?: boolean
+  allowableTypes?: MultiTypeInputType[]
 }
 
 const stageTypeToIconMap: Record<string, IconName> = {
@@ -174,9 +175,16 @@ export function StageForm({
 }
 
 function PipelineInputSetFormInternal(props: PipelineInputSetFormProps): React.ReactElement {
-  const { originalPipeline, template, path = '', readonly, viewType, maybeContainerClass = '' } = props
+  const {
+    originalPipeline,
+    template,
+    path = '',
+    readonly,
+    viewType,
+    maybeContainerClass = '',
+    allowableTypes = [MultiTypeInputType.FIXED, MultiTypeInputType.EXPRESSION]
+  } = props
   const { getString } = useStrings()
-  const allowableTypes = [MultiTypeInputType.FIXED, MultiTypeInputType.EXPRESSION]
 
   const isCloneCodebaseEnabledAtLeastAtOneStage = originalPipeline?.stages?.some(
     stage =>

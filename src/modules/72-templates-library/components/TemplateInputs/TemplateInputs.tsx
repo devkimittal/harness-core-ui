@@ -33,7 +33,7 @@ import type {
 } from 'services/cd-ng'
 import MultiTypeDelegateSelector from '@common/components/MultiTypeDelegateSelector/MultiTypeDelegateSelector'
 import { useStrings } from 'framework/strings'
-import { PipelineInputSetForm, StageForm } from '@pipeline/components/PipelineInputSetForm/PipelineInputSetForm'
+import { PipelineInputSetFormInternal, StageForm } from '@pipeline/components/PipelineInputSetForm/PipelineInputSetForm'
 import { TemplateType } from '@templates-library/utils/templatesUtils'
 import NoResultsView from '@templates-library/pages/TemplatesPage/views/NoResultsView/NoResultsView'
 import { getTemplateNameWithLabel } from '@pipeline/utils/templateUtils'
@@ -80,7 +80,7 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
     }
   }, [templateInputYaml?.data])
 
-  const getInitialValues = React.useCallback(() => {
+  const initialValues = React.useMemo(() => {
     switch (template.templateEntityType) {
       case TemplateType.Step:
         return inputSetTemplate as StepElementConfig
@@ -138,7 +138,7 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
               </Container>
               <Formik<StepElementConfig | StageElementWrapperConfig | PipelineInfoConfig>
                 onSubmit={noop}
-                initialValues={getInitialValues()}
+                initialValues={initialValues}
                 formName="templateInputs"
                 enableReinitialize={true}
               >
@@ -146,12 +146,12 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
                   return (
                     <>
                       {template.templateEntityType === TemplateType.Pipeline && (
-                        <PipelineInputSetForm
+                        <PipelineInputSetFormInternal
                           originalPipeline={originalValues as PipelineInfoConfig}
                           template={formikProps.values as PipelineInfoConfig}
                           readonly={true}
                           viewType={StepViewType.InputSet}
-                          isRunPipelineForm={false}
+                          allowableTypes={allowableTypes}
                         />
                       )}
                       {template.templateEntityType === TemplateType.Stage && (
