@@ -25,10 +25,15 @@ import { StepViewType } from '@pipeline/components/AbstractSteps/Step'
 import { StepWidget } from '@pipeline/components/AbstractSteps/StepWidget'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { PageSpinner, useToaster } from '@common/components'
-import type { StageElementConfig, StepElementConfig, StageElementWrapperConfig } from 'services/cd-ng'
+import type {
+  StageElementConfig,
+  StepElementConfig,
+  StageElementWrapperConfig,
+  PipelineInfoConfig
+} from 'services/cd-ng'
 import MultiTypeDelegateSelector from '@common/components/MultiTypeDelegateSelector/MultiTypeDelegateSelector'
 import { useStrings } from 'framework/strings'
-import { StageForm } from '@pipeline/components/PipelineInputSetForm/PipelineInputSetForm'
+import { PipelineInputSetForm, StageForm } from '@pipeline/components/PipelineInputSetForm/PipelineInputSetForm'
 import { TemplateType } from '@templates-library/utils/templatesUtils'
 import NoResultsView from '@templates-library/pages/TemplatesPage/views/NoResultsView/NoResultsView'
 import { getTemplateNameWithLabel } from '@pipeline/utils/templateUtils'
@@ -75,6 +80,28 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
     }
   }, [templateInputYaml?.data])
 
+  const getInitialValues = React.useCallback(() => {
+    switch (template.templateEntityType) {
+      case TemplateType.Step:
+        return inputSetTemplate as StepElementConfig
+      case TemplateType.Stage:
+        return { stage: inputSetTemplate } as StageElementWrapperConfig
+      case TemplateType.Pipeline:
+        return inputSetTemplate as PipelineInfoConfig
+      default:
+        return {}
+    }
+  }, [template, inputSetTemplate])
+
+  const originalValues = React.useMemo(() => {
+    switch (template.templateEntityType) {
+      case TemplateType.Stage:
+        return { stage: parse(defaultTo(template.yaml, '')).template.spec }
+      default:
+        return parse(defaultTo(template.yaml, '')).template.spec
+    }
+  }, [template])
+
   return (
     <Container
       style={{ overflow: 'auto' }}
@@ -109,23 +136,28 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
                   </Text>
                 </Layout.Horizontal>
               </Container>
-              <Formik<StepElementConfig | StageElementWrapperConfig>
+              <Formik<StepElementConfig | StageElementWrapperConfig | PipelineInfoConfig>
                 onSubmit={noop}
-                initialValues={
-                  template.templateEntityType === TemplateType.Step
-                    ? (inputSetTemplate as StepElementConfig)
-                    : ({ stage: inputSetTemplate } as StageElementWrapperConfig)
-                }
+                initialValues={getInitialValues()}
                 formName="templateInputs"
                 enableReinitialize={true}
               >
                 {formikProps => {
                   return (
                     <>
+                      {template.templateEntityType === TemplateType.Pipeline && (
+                        <PipelineInputSetForm
+                          originalPipeline={originalValues as PipelineInfoConfig}
+                          template={formikProps.values as PipelineInfoConfig}
+                          readonly={true}
+                          viewType={StepViewType.InputSet}
+                          isRunPipelineForm={false}
+                        />
+                      )}
                       {template.templateEntityType === TemplateType.Stage && (
                         <StageForm
                           template={formikProps.values as StageElementWrapperConfig}
-                          allValues={formikProps.values as StageElementWrapperConfig}
+                          allValues={originalValues as StageElementWrapperConfig}
                           path={'stage'}
                           readonly={true}
                           viewType={StepViewType.InputSet}
@@ -144,7 +176,7 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
                           <StepWidget<Partial<StepElementConfig>>
                             factory={factory}
                             initialValues={formikProps.values as StepElementConfig}
-                            template={formikProps.values as StepElementConfig}
+                            template={originalValues as StepElementConfig}
                             readonly={true}
                             type={(formikProps.values as StepElementConfig)?.type as StepType}
                             stepViewType={StepViewType.InputSet}

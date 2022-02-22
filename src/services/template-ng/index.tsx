@@ -2176,7 +2176,7 @@ export interface TemplateResponse {
   tags?: {
     [key: string]: string
   }
-  templateEntityType?: 'Step' | 'Stage'
+  templateEntityType?: 'Step' | 'Stage' | 'Pipeline'
   templateScope?: 'account' | 'org' | 'project' | 'unknown'
   version?: number
   versionLabel?: string
