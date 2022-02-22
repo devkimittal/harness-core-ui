@@ -94,11 +94,11 @@ export const TemplateInputs: React.FC<TemplateInputsProps> = props => {
   }, [template, inputSetTemplate])
 
   const originalValues = React.useMemo(() => {
-    switch (template.templateEntityType) {
-      case TemplateType.Stage:
-        return { stage: parse(defaultTo(template.yaml, '')).template.spec }
-      default:
-        return parse(defaultTo(template.yaml, '')).template.spec
+    const templateSpec = parse(defaultTo(template.yaml, '')).template.spec
+    if (template.templateEntityType === TemplateType.Stage) {
+      return { stage: templateSpec }
+    } else {
+      return templateSpec
     }
   }, [template])
 
