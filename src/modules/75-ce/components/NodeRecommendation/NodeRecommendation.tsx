@@ -67,7 +67,8 @@ export enum ACTIONS {
   'INCLUDE_TYPES',
   'INCLUDE_SERIES',
   'EXCLUDE_TYPES',
-  'EXCLUDE_SERIES'
+  'EXCLUDE_SERIES',
+  'CLEAR_INSTACE_FAMILY'
 }
 
 export interface Action {
@@ -109,6 +110,14 @@ const reducer = (state: IState, action: Action) => {
       return {
         ...state,
         excludeSeries: insertOrRemoveIntoArray(state.excludeSeries, data)
+      }
+    case ACTIONS.CLEAR_INSTACE_FAMILY:
+      return {
+        ...state,
+        includeTypes: data.includeTypes,
+        includeSeries: data.includeSeries,
+        excludeTypes: data.excludeTypes,
+        excludeSeries: data.excludeSeries
       }
     default:
       return state
@@ -158,6 +167,8 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     )
   )
 
+  const [initialState, setInitialState] = useState(state)
+
   const { mutate: fetchNewRecommendation, loading } = useRecommendCluster({
     provider: provider || '',
     region: region || '',
@@ -184,6 +195,28 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
       // TODO: check how we can avoid it.
       if (!isEqual(recomDetails, newState)) {
         setRecomDetails(newState)
+
+        const {
+          sumCpu: updatedSumCpu,
+          sumMem: updatedSumMem,
+          maxNodes: updatedMaxNodes,
+          minNodes: updatedMinNodes,
+          includeTypes: updatedIncludeTypes,
+          includeSeries: updatedIncludeSeries,
+          excludeTypes: updatedExcludeTypes,
+          excludeSeries: updatedExcludeSeries
+        } = (newState.resourceRequirement || {}) as RecommendClusterRequest
+
+        setInitialState({
+          sumCpu: +(updatedSumCpu || 0).toFixed(2),
+          sumMem: +(updatedSumMem || 0).toFixed(2),
+          maxNodes: +(updatedMaxNodes || 0).toFixed(2),
+          minNodes: +(updatedMinNodes || 0).toFixed(2),
+          includeTypes: updatedIncludeTypes || [],
+          includeSeries: updatedIncludeSeries || [],
+          excludeTypes: updatedExcludeTypes || [],
+          excludeSeries: updatedExcludeSeries || []
+        } as IState)
       }
     } catch (e) {
       // console.log('Error in fetching recommended cluster ', e)
@@ -222,7 +255,21 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             <Button variation={ButtonVariation.PRIMARY} onClick={hideModal}>
               Save Preferences
             </Button>
-            <Button variation={ButtonVariation.TERTIARY} onClick={hideModal}>
+            <Button
+              variation={ButtonVariation.TERTIARY}
+              onClick={() => {
+                hideModal()
+                dispatch({
+                  type: ACTIONS.CLEAR_INSTACE_FAMILY,
+                  data: {
+                    includeTypes: initialState.includeTypes,
+                    includeSeries: initialState.includeSeries,
+                    excludeTypes: initialState.excludeTypes,
+                    excludeSeries: initialState.excludeSeries
+                  }
+                })
+              }}
+            >
               {getString('cancel')}
             </Button>
           </Layout.Horizontal>
@@ -355,7 +402,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 <Button
                   variation={ButtonVariation.PRIMARY}
                   onClick={updateRecommendationDetails}
-                  disabled={isEqual(state, recomDetails)}
+                  disabled={isEqual(state, initialState)}
                 >
                   {getString('ce.nodeRecommendation.applyPreferences')}
                 </Button>
