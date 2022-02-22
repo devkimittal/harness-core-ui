@@ -79,7 +79,6 @@ export const InstanceFamiliesModalTab: React.FC<TabProps> = ({ data, state, disp
                 checked={status === CheckboxStatus.CHECKED}
                 indeterminate={status === CheckboxStatus.INDETERMINATE}
                 onClick={() => {
-                  console.log(status)
                   if (status === CheckboxStatus.UNCHECKED) {
                     dispatch({ type: ACTIONS.INCLUDE_TYPES, data: type })
                   } else if (status === CheckboxStatus.CHECKED) {
