@@ -18,7 +18,8 @@ import {
   ButtonVariation,
   ButtonSize,
   Icon,
-  Tabs
+  Tabs,
+  TextInput
 } from '@wings-software/uicore'
 import { Dialog } from '@blueprintjs/core/lib/esm/components'
 import { useModalHook } from '@harness/use-modal'
@@ -157,7 +158,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
-  const defaultState = {
+  const initialState = {
     allowBurst: allowBurst || false,
     sumCpu: +(sumCpu || 0).toFixed(2),
     sumMem: +(sumMem || 0).toFixed(2),
@@ -172,10 +173,10 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const [recomDetails, setRecomDetails] = useState(recommendationDetails)
   const [state, dispatch] = useReducer(
     reducer,
-    useMemo(() => defaultState as IState, [])
+    useMemo(() => initialState as IState, [])
   )
 
-  const [initialState, setInitialState] = useState(defaultState)
+  const [updatedState, setUpdatedState] = useState(initialState)
 
   const { mutate: fetchNewRecommendation, loading } = useRecommendCluster({
     provider: provider || '',
@@ -192,7 +193,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
   const updateRecommendationDetails = async () => {
-    setInitialState(state)
+    setUpdatedState(state)
 
     const payload = { ...recommendationDetails.resourceRequirement, ...state }
     try {
@@ -240,7 +241,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             />
           </Container>
           <Layout.Horizontal spacing="medium">
-            <Button variation={ButtonVariation.PRIMARY} onClick={hideModal} disabled={isEqual(state, initialState)}>
+            <Button variation={ButtonVariation.PRIMARY} onClick={hideModal} disabled={isEqual(state, updatedState)}>
               {getString('ce.nodeRecommendation.savePreferences')}
             </Button>
             <Button
@@ -250,10 +251,10 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 dispatch({
                   type: ACTIONS.CLEAR_INSTACE_FAMILY,
                   data: {
-                    includeTypes: initialState.includeTypes,
-                    includeSeries: initialState.includeSeries,
-                    excludeTypes: initialState.excludeTypes,
-                    excludeSeries: initialState.excludeSeries
+                    includeTypes: updatedState.includeTypes,
+                    includeSeries: updatedState.includeSeries,
+                    excludeTypes: updatedState.excludeTypes,
+                    excludeSeries: updatedState.excludeSeries
                   }
                 })
               }}
@@ -264,7 +265,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         </Layout.Vertical>
       </Dialog>
     )
-  }, [seriesDataLoading, state, initialState])
+  }, [seriesDataLoading, state, updatedState])
 
   return (
     <>
@@ -407,6 +408,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
               <Text font={{ variation: FontVariation.SMALL_SEMI }} margin={{ bottom: 'small', top: 'medium' }}>
                 {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
               </Text>
+              <TextInput
+                value={state.includeTypes.toString()}
+                contentEditable={false}
+                className={css.instaceFamilyInput}
+              />
               <Button icon="plus" variation={ButtonVariation.LINK} margin={{ bottom: 'medium' }} onClick={showModal}>
                 {getString('ce.nodeRecommendation.addPreferredInstanceFamilies')}
               </Button>
@@ -414,7 +420,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 <Button
                   variation={ButtonVariation.PRIMARY}
                   onClick={updateRecommendationDetails}
-                  disabled={isEqual(state, initialState)}
+                  disabled={isEqual(state, updatedState)}
                 >
                   {getString('ce.nodeRecommendation.applyPreferences')}
                 </Button>
@@ -424,7 +430,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                     setBuffer(0)
                     dispatch({
                       type: ACTIONS.RESET_TO_DEFAULT,
-                      data: defaultState
+                      data: initialState
                     })
                   }}
                 >
