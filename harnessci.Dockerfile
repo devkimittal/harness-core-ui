@@ -1,4 +1,4 @@
-FROM cypress/browsers:node14.16.0-chrome90-ff88
+FROM cypress/browsers:node16.13.2-chrome97-ff96
 ARG GIT_BOT_TOKEN
 
 WORKDIR /tmp/workspace
