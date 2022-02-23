@@ -49,6 +49,7 @@ import resourceUtilizationNodeCount from './images/resource-utilization-node-cou
 import css from './NodeRecommendation.module.scss'
 
 export interface IState {
+  allowBurst: boolean
   sumCpu: number
   sumMem: number
   maxNodes: number
@@ -68,7 +69,9 @@ export enum ACTIONS {
   'INCLUDE_SERIES',
   'EXCLUDE_TYPES',
   'EXCLUDE_SERIES',
-  'CLEAR_INSTACE_FAMILY'
+  'CLEAR_INSTACE_FAMILY',
+  'TOGGLE_BURST',
+  'RESET_TO_DEFAULT'
 }
 
 export interface Action {
@@ -119,6 +122,13 @@ const reducer = (state: IState, action: Action) => {
         excludeTypes: data.excludeTypes,
         excludeSeries: data.excludeSeries
       }
+    case ACTIONS.TOGGLE_BURST:
+      return {
+        ...state,
+        allowBurst: data
+      }
+    case ACTIONS.RESET_TO_DEFAULT:
+      return data
     default:
       return state
   }
@@ -142,32 +152,30 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
   const [buffer, setBuffer] = useState(0)
   const [tuneRecomVisible, setTuneRecomVisible] = useState(false)
-  const [autoScaling, setAutoScaling] = useState(false)
 
-  const { sumCpu, sumMem, maxNodes, minNodes, includeTypes, includeSeries, excludeTypes, excludeSeries } =
+  const { allowBurst, sumCpu, sumMem, maxNodes, minNodes, includeTypes, includeSeries, excludeTypes, excludeSeries } =
     (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
+
+  const defaultState = {
+    allowBurst: allowBurst || false,
+    sumCpu: +(sumCpu || 0).toFixed(2),
+    sumMem: +(sumMem || 0).toFixed(2),
+    maxNodes: +(maxNodes || 0).toFixed(2),
+    minNodes: +(minNodes || 0).toFixed(2),
+    includeTypes: includeTypes || [],
+    includeSeries: includeSeries || [],
+    excludeTypes: excludeTypes || [],
+    excludeSeries: excludeSeries || []
+  }
 
   const [recomDetails, setRecomDetails] = useState(recommendationDetails)
   const [state, dispatch] = useReducer(
     reducer,
-    useMemo(
-      () =>
-        ({
-          sumCpu: +(sumCpu || 0).toFixed(2),
-          sumMem: +(sumMem || 0).toFixed(2),
-          maxNodes: +(maxNodes || 0).toFixed(2),
-          minNodes: +(minNodes || 0).toFixed(2),
-          includeTypes: includeTypes || [],
-          includeSeries: includeSeries || [],
-          excludeTypes: excludeTypes || [],
-          excludeSeries: excludeSeries || []
-        } as IState),
-      []
-    )
+    useMemo(() => defaultState as IState, [])
   )
 
-  const [initialState, setInitialState] = useState(state)
+  const [initialState, setInitialState] = useState(defaultState)
 
   const { mutate: fetchNewRecommendation, loading } = useRecommendCluster({
     provider: provider || '',
@@ -184,6 +192,8 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
   const updateRecommendationDetails = async () => {
+    setInitialState(state)
+
     const payload = { ...recommendationDetails.resourceRequirement, ...state }
     try {
       const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
@@ -195,28 +205,6 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
       // TODO: check how we can avoid it.
       if (!isEqual(recomDetails, newState)) {
         setRecomDetails(newState)
-
-        const {
-          sumCpu: updatedSumCpu,
-          sumMem: updatedSumMem,
-          maxNodes: updatedMaxNodes,
-          minNodes: updatedMinNodes,
-          includeTypes: updatedIncludeTypes,
-          includeSeries: updatedIncludeSeries,
-          excludeTypes: updatedExcludeTypes,
-          excludeSeries: updatedExcludeSeries
-        } = (newState.resourceRequirement || {}) as RecommendClusterRequest
-
-        setInitialState({
-          sumCpu: +(updatedSumCpu || 0).toFixed(2),
-          sumMem: +(updatedSumMem || 0).toFixed(2),
-          maxNodes: +(updatedMaxNodes || 0).toFixed(2),
-          minNodes: +(updatedMinNodes || 0).toFixed(2),
-          includeTypes: updatedIncludeTypes || [],
-          includeSeries: updatedIncludeSeries || [],
-          excludeTypes: updatedExcludeTypes || [],
-          excludeSeries: updatedExcludeSeries || []
-        } as IState)
       }
     } catch (e) {
       // console.log('Error in fetching recommended cluster ', e)
@@ -252,8 +240,8 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             />
           </Container>
           <Layout.Horizontal spacing="medium">
-            <Button variation={ButtonVariation.PRIMARY} onClick={hideModal}>
-              Save Preferences
+            <Button variation={ButtonVariation.PRIMARY} onClick={hideModal} disabled={isEqual(state, initialState)}>
+              {getString('ce.nodeRecommendation.savePreferences')}
             </Button>
             <Button
               variation={ButtonVariation.TERTIARY}
@@ -276,7 +264,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         </Layout.Vertical>
       </Dialog>
     )
-  }, [seriesDataLoading, state])
+  }, [seriesDataLoading, state, initialState])
 
   return (
     <>
@@ -307,21 +295,39 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             </Container>
           </Layout.Horizontal>
           <Recommender stats={recommendationStats} details={recomDetails} loading={loading} />
-          <Container
-            margin="medium"
-            style={{ width: 354, float: 'right', marginRight: 60 }}
-            padding="medium"
-            background={Color.BLUE_50}
-          >
-            <Text icon="info-messaging" color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
-              {getString('ce.nodeRecommendation.tuneRecommendationsInfo')}
-            </Text>
+          <Container margin="medium" className={css.tuneRecomInfoContainer} padding="medium" background={Color.BLUE_50}>
+            <Layout.Horizontal spacing="xsmall">
+              <Icon name="info-messaging" />
+              <Container>
+                <Text inline color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
+                  {getString('ce.nodeRecommendation.tuneRecommendationsInfo1')}
+                </Text>
+                <Text
+                  inline
+                  color={Color.PRIMARY_7}
+                  font={{ variation: FontVariation.SMALL }}
+                  onClick={() => setTuneRecomVisible(true)}
+                  margin={{ left: 'small' }}
+                  className={css.pointer}
+                >
+                  {getString('ce.recommendation.detailsPage.tuneRecommendations').toLowerCase()}
+                </Text>
+                <Text
+                  inline
+                  color={Color.GREY_700}
+                  font={{ variation: FontVariation.SMALL }}
+                  margin={{ left: 'small' }}
+                >
+                  {getString('ce.nodeRecommendation.tuneRecommendationsInfo2')}
+                </Text>
+              </Container>
+            </Layout.Horizontal>
           </Container>
         </Card>
       </Layout.Vertical>
       <Layout.Vertical spacing="large" padding="xlarge">
         <Layout.Horizontal flex={{ justifyContent: 'space-between' }}>
-          <Container width="50%">
+          <Container>
             <Text font={{ variation: FontVariation.H6 }}>
               {getString('ce.nodeRecommendation.resourceUtilInLast', { timeRange: timeRange.label.toLowerCase() })}
             </Text>
@@ -331,7 +337,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           </Button>
         </Layout.Horizontal>
         <Layout.Horizontal padding={{ top: 'large' }} flex={{ justifyContent: 'space-between' }}>
-          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between' }}>
+          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <Container padding={{ bottom: 'medium' }}>
               <Text inline font={{ variation: FontVariation.SMALL }}>
                 {getString('delegate.delegateCPU')}
@@ -343,7 +349,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             <img src={resourceUtilizationCpu} />
           </Layout.Vertical>
 
-          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between' }}>
+          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <Container padding={{ bottom: 'medium' }}>
               <Text inline font={{ variation: FontVariation.SMALL }}>
                 {getString('ce.recommendation.recommendationChart.memoryLabelRegular')}
@@ -354,7 +360,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             </Container>
             <img src={resourceUtilizationMem} />
           </Layout.Vertical>
-          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between' }}>
+          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <Container padding={{ bottom: 'medium' }}>
               <Text inline font={{ variation: FontVariation.SMALL }}>
                 {getString('ce.nodeRecommendation.nodeCount')}
@@ -370,7 +376,12 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
         <Layout.Horizontal style={{ alignItems: 'center' }}>
-          <Checkbox checked={autoScaling} onChange={() => setAutoScaling(prevState => !prevState)} />
+          <Checkbox
+            checked={state.allowBurst}
+            onChange={() => {
+              dispatch({ type: ACTIONS.TOGGLE_BURST, data: !state.allowBurst })
+            }}
+          />
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.nodeRecommendation.autoScaling')}</Text>
         </Layout.Horizontal>
         <Card style={{ padding: 0 }}>
@@ -387,6 +398,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
               name={tuneRecomVisible ? 'caret-up' : 'caret-down'}
               onClick={() => setTuneRecomVisible(prevState => !prevState)}
               color={Color.PRIMARY_7}
+              className={css.pointer}
             />
           </Container>
           {tuneRecomVisible ? (
@@ -406,7 +418,16 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 >
                   {getString('ce.nodeRecommendation.applyPreferences')}
                 </Button>
-                <Button variation={ButtonVariation.SECONDARY}>
+                <Button
+                  variation={ButtonVariation.SECONDARY}
+                  onClick={() => {
+                    setBuffer(0)
+                    dispatch({
+                      type: ACTIONS.RESET_TO_DEFAULT,
+                      data: defaultState
+                    })
+                  }}
+                >
                   {getString('ce.recommendation.detailsPage.resetRecommendationText')}
                 </Button>
               </Layout.Horizontal>

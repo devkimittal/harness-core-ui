@@ -248,6 +248,8 @@ interface CardProps {
 }
 
 const Card = (props: CardProps) => {
+  const { getString } = useStrings()
+
   const { classNames, data = [], type, emptyCards = false, loading = false } = props
   const isRecommendationCard = type === CardType.RECOMMENDED_ON_DEMAND || type === CardType.RECOMMENDED_SPOT
   const isLabel = type === CardType.LABEL
@@ -274,13 +276,33 @@ const Card = (props: CardProps) => {
     <div className={cx(css.card, classNames)}>
       {isRecommendationCard && <div className={css.cardOverlay} />}
       {data.map(d => {
+        const isInstaceFamilyCardOnDemand =
+          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.instanceFam')
+        const isInstaceFamilyCardSpot =
+          type === CardType.RECOMMENDED_SPOT && d.label === getString('ce.nodeRecommendation.instanceFam')
+        const isNodeCountCardDemand =
+          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.nodeCount')
+        const isNodeCountCardSpot =
+          type === CardType.RECOMMENDED_SPOT && d.label === getString('ce.nodeRecommendation.nodeCount')
+        const isEstimatedSavingsCardOnDemand =
+          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.estimatedSavings')
+        const isEstimatedSavingsCardSpot =
+          type === CardType.RECOMMENDED_SPOT && d.label === getString('ce.nodeRecommendation.estimatedSavings')
+
+        const cardStyles = cx(
+          css.cardItem,
+          { [css.borderTopLeft]: isEstimatedSavingsCardSpot },
+          { [css.borderTopRight]: isEstimatedSavingsCardOnDemand },
+          { [css.borderLeft]: isInstaceFamilyCardSpot },
+          { [css.borderRight]: isInstaceFamilyCardOnDemand },
+          { [css.borderBottomLeft]: isNodeCountCardSpot },
+          { [css.borderBottomRight]: isNodeCountCardDemand }
+        )
+
         return typeof d.renderer === 'function' ? (
-          <div className={cx(css.cardItem)}>{d.renderer(d, type!)}</div>
+          <div className={cardStyles}>{d.renderer(d, type!)}</div>
         ) : (
-          <Text
-            className={cx(css.cardItem)}
-            font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL }}
-          >
+          <Text className={cardStyles} font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL }}>
             {d[type!]}
           </Text>
         )

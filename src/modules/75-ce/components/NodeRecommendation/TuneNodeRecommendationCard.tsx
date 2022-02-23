@@ -56,7 +56,7 @@ const NodeCountInstancePreferences = (props: NodeCountInstancePreferencesProps) 
             </Layout.Horizontal>
             <Buffer state={state} dispatch={dispatch} buffer={buffer} setBuffer={setBuffer} />
           </Layout.Horizontal>
-          <Layout.Horizontal flex={{ justifyContent: 'space-between' }} margin={{ top: 'medium' }} spacing="medium">
+          <Layout.Horizontal padding={{ top: 'medium' }} spacing="medium">
             <LargestResources state={state} dispatch={dispatch} />
             <Nodes state={state} dispatch={dispatch} />
           </Layout.Horizontal>
@@ -174,7 +174,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
         <Text font={{ variation: FontVariation.SMALL_SEMI }}>
           {getString('ce.nodeRecommendation.largestWorkloadReq')}
         </Text>
-        <Container flex={{ justifyContent: 'space-between' }}>
+        <Container flex={{ justifyContent: 'space-between' }} width="75%">
           <Text inline color={Color.GREY_500} font={{ variation: FontVariation.SMALL_SEMI }}>
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
@@ -186,7 +186,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             }
           />
         </Container>
-        <Container flex={{ justifyContent: 'space-between' }}>
+        <Container flex={{ justifyContent: 'space-between' }} width="75%">
           <Text inline color={Color.GREY_500} font={{ variation: FontVariation.SMALL_SEMI }}>
             {getString('ce.nodeRecommendation.mem')}
           </Text>
@@ -207,7 +207,7 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
   const { getString } = useStrings()
 
   return (
-    <Container>
+    <Container padding={{ left: 'large' }}>
       <Layout.Vertical spacing="small">
         <Text font={{ variation: FontVariation.SMALL_SEMI }}>
           {getString('ce.nodeRecommendation.prefMinNodeCount')}
@@ -219,10 +219,6 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
             onClick={() => {
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes - 1 })
             }}
-            height={20}
-            width={20}
-            background={Color.PRIMARY_1}
-
             // disabled={state.minNodes <= 0}
           />
           <TextInput
@@ -238,9 +234,6 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
             onClick={() => {
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes + 1 })
             }}
-            height={20}
-            width={20}
-            background={Color.PRIMARY_1}
             // disabled={state.minNodes <= state.maxNodes}
           />
         </Layout.Horizontal>
