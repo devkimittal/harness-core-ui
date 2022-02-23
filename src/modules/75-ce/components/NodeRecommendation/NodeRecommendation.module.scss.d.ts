@@ -8,6 +8,12 @@
 // this is an auto-generated file, do not update this manually
 declare const styles: {
   readonly blue: string
+  readonly borderBottomLeft: string
+  readonly borderBottomRight: string
+  readonly borderLeft: string
+  readonly borderRight: string
+  readonly borderTopLeft: string
+  readonly borderTopRight: string
   readonly bufferSlider: string
   readonly card: string
   readonly cardCategory: string
@@ -30,6 +36,7 @@ declare const styles: {
   readonly preferences: string
   readonly recommendationCategory: string
   readonly title: string
+  readonly tuneRecomInfoContainer: string
   readonly white: string
 }
 export default styles

@@ -3762,13 +3762,15 @@ export interface StringsMap {
   'ce.nodeRecommendation.recommended': string
   'ce.nodeRecommendation.resourceNeed': string
   'ce.nodeRecommendation.resourceUtilInLast': string
+  'ce.nodeRecommendation.savePreferences': string
   'ce.nodeRecommendation.setInstancePreferences': string
   'ce.nodeRecommendation.spot': string
   'ce.nodeRecommendation.suitable.prod': string
   'ce.nodeRecommendation.suitable.qa': string
   'ce.nodeRecommendation.text1': string
   'ce.nodeRecommendation.text2': string
-  'ce.nodeRecommendation.tuneRecommendationsInfo': string
+  'ce.nodeRecommendation.tuneRecommendationsInfo1': string
+  'ce.nodeRecommendation.tuneRecommendationsInfo2': string
   'ce.overview.addClusterBtn': string
   'ce.overview.addClusterDesc': string
   'ce.overview.cardtitles.aws': string
