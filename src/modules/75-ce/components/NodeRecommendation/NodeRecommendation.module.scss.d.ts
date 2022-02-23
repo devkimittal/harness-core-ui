@@ -25,6 +25,7 @@ declare const styles: {
   readonly cards: string
   readonly comparisonCtn: string
   readonly input: string
+  readonly instaceFamilyInput: string
   readonly instructionPanel: string
   readonly leftAlign: string
   readonly line: string
