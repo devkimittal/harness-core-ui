@@ -88,11 +88,13 @@ const NodeRecommendationDetailsPage = () => {
     <>
       <Page.Header
         title={
-          <Layout.Horizontal style={{ alignItems: 'baseline' }} spacing="small">
+          <Layout.Horizontal spacing="small">
             <Text icon="gcp" font={{ variation: FontVariation.BODY1 }}>
-              Recommendations for
+              {getString('ce.recommendation.detailsPage.headerText')}
             </Text>
-            <Text font={{ variation: FontVariation.H4 }}>{nodePoolData.resourceName}</Text>
+            <Text font={{ variation: FontVariation.H4 }} style={{ verticalAlign: 'middle' }}>
+              {nodePoolData.resourceName}
+            </Text>
           </Layout.Horizontal>
         }
         breadcrumbs={<NGBreadcrumbs className={css.breadCrumb} links={breadCrumbLinks} />}
