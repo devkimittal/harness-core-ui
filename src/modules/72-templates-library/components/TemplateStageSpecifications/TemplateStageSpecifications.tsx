@@ -6,7 +6,7 @@
  */
 
 import React, { useContext } from 'react'
-import { debounce, defaultTo, isEqual, noop, omit, set } from 'lodash-es'
+import { cloneDeep, debounce, defaultTo, isEqual, noop, omit, set } from 'lodash-es'
 import { Card, Color, Container, Formik, FormikForm, Heading, Layout, PageError } from '@wings-software/uicore'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
@@ -112,7 +112,7 @@ export const TemplateStageSpecifications = (): JSX.Element => {
     if (!templateLoading && !templateInputSetLoading && stage?.stage && templateResponse?.data?.yaml) {
       try {
         const templateInputs = parse(defaultTo(templateInputSetYaml?.data, ''))
-        const mergedTemplateInputs = { ...templateInputs }
+        const mergedTemplateInputs = cloneDeep(templateInputs)
         iterateAndMergeTemplateInputs(mergedTemplateInputs, stage?.stage.template?.templateInputs)
         setFormValues(
           produce(stage?.stage as TemplateStageValues, draft => {

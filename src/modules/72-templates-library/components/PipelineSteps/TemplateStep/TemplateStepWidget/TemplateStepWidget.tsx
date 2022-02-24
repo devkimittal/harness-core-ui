@@ -22,7 +22,7 @@ import cx from 'classnames'
 import type { FormikProps } from 'formik'
 import { useParams } from 'react-router-dom'
 import { parse } from 'yaml'
-import { defaultTo, get, isEmpty, noop, set } from 'lodash-es'
+import { cloneDeep, defaultTo, get, isEmpty, noop, set } from 'lodash-es'
 import produce from 'immer'
 import { NameSchema } from '@common/utils/Validation'
 import { setFormikRef, StepViewType, StepFormikFowardRef } from '@pipeline/components/AbstractSteps/Step'
@@ -108,7 +108,7 @@ function TemplateStepWidget(
     if (!stepTemplateLoading && !stepTemplateInputSetLoading && stepTemplateResponse?.data?.yaml) {
       try {
         const templateInputs = parse(defaultTo(stepTemplateInputSetYaml?.data, ''))
-        const mergedTemplateInputs = { ...templateInputs }
+        const mergedTemplateInputs = cloneDeep(templateInputs)
         iterateAndMergeTemplateInputs(mergedTemplateInputs, initialValues.template?.templateInputs)
         setFormValues(
           produce(initialValues as TemplateStepValues, draft => {

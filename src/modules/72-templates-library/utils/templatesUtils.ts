@@ -6,7 +6,7 @@
  */
 
 import { isEmpty } from 'lodash-es'
-import { MultiTypeInputType } from '@wings-software/uicore'
+import { RUNTIME_INPUT_VALUE } from '@harness/uicore'
 import type { UseStringsReturn } from 'framework/strings'
 import { Scope } from '@common/interfaces/SecretsInterface'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
@@ -92,7 +92,7 @@ export const iterateAndMergeTemplateInputs = (obj: any, objToCopy: any) => {
   Object.keys(obj).forEach(key => {
     if (typeof obj[key] === 'object') {
       iterateAndMergeTemplateInputs(obj[key], objToCopy[key])
-    } else if (obj[key] === MultiTypeInputType.RUNTIME && objToCopy[key] !== null) {
+    } else if (typeof obj[key] === 'string' && obj[key].startsWith(RUNTIME_INPUT_VALUE) && objToCopy[key] !== null) {
       obj[key] = objToCopy[key]
     }
   })
