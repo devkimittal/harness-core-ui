@@ -37,6 +37,7 @@ declare const styles: {
   readonly preferences: string
   readonly recommendationCategory: string
   readonly title: string
+  readonly toaster: string
   readonly tuneRecomInfoContainer: string
   readonly white: string
 }

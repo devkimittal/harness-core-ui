@@ -21,7 +21,7 @@ import {
   Tabs,
   TextInput
 } from '@wings-software/uicore'
-import { Dialog } from '@blueprintjs/core/lib/esm/components'
+import { Dialog, Position, Toaster } from '@blueprintjs/core'
 import { useModalHook } from '@harness/use-modal'
 import moment from 'moment'
 import { isEqual } from 'lodash-es'
@@ -50,7 +50,8 @@ import resourceUtilizationNodeCount from './images/resource-utilization-node-cou
 import css from './NodeRecommendation.module.scss'
 
 export interface IState {
-  allowBurst: boolean
+  minCpu: number
+  minMem: number
   sumCpu: number
   sumMem: number
   maxNodes: number
@@ -62,8 +63,10 @@ export interface IState {
 }
 
 export enum ACTIONS {
-  'CPUS',
-  'MEM',
+  'SUM_CPUS',
+  'SUM_MEM',
+  'MIN_CPUS',
+  'MIN_MEM',
   'MIN_NODES',
   'MAX_NODES',
   'INCLUDE_TYPES',
@@ -71,7 +74,6 @@ export enum ACTIONS {
   'EXCLUDE_TYPES',
   'EXCLUDE_SERIES',
   'CLEAR_INSTACE_FAMILY',
-  'TOGGLE_BURST',
   'RESET_TO_DEFAULT'
 }
 
@@ -87,10 +89,14 @@ const reducer = (state: IState, action: Action) => {
   const { type, data } = action
 
   switch (type) {
-    case ACTIONS.CPUS:
+    case ACTIONS.SUM_CPUS:
       return { ...state, sumCpu: data }
-    case ACTIONS.MEM:
+    case ACTIONS.SUM_MEM:
       return { ...state, sumMem: data }
+    case ACTIONS.MIN_CPUS:
+      return { ...state, minCpu: data }
+    case ACTIONS.MIN_MEM:
+      return { ...state, minMem: data }
     case ACTIONS.MIN_NODES:
       return { ...state, minNodes: data }
     case ACTIONS.MAX_NODES:
@@ -123,17 +129,17 @@ const reducer = (state: IState, action: Action) => {
         excludeTypes: data.excludeTypes,
         excludeSeries: data.excludeSeries
       }
-    case ACTIONS.TOGGLE_BURST:
-      return {
-        ...state,
-        allowBurst: data
-      }
     case ACTIONS.RESET_TO_DEFAULT:
       return data
     default:
       return state
   }
 }
+
+export const UpdatePreferenceToaster = Toaster.create({
+  className: css.toaster,
+  position: Position.BOTTOM_RIGHT
+})
 
 interface NodeRecommendationDetailsProps {
   recommendationStats: RecommendationOverviewStats
@@ -149,17 +155,30 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   recommendationName
 }) => {
   const { getString } = useStrings()
+
   const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
 
   const [buffer, setBuffer] = useState(0)
-  const [tuneRecomVisible, setTuneRecomVisible] = useState(false)
+  const [autoScaling, setAutoScaling] = useState(false)
+  const [tuneRecomVisible, setTuneRecomVisible] = useState(true)
 
-  const { allowBurst, sumCpu, sumMem, maxNodes, minNodes, includeTypes, includeSeries, excludeTypes, excludeSeries } =
-    (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
+  const {
+    minCpu,
+    sumCpu,
+    minMem,
+    sumMem,
+    maxNodes,
+    minNodes,
+    includeTypes,
+    includeSeries,
+    excludeTypes,
+    excludeSeries
+  } = (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
   const initialState = {
-    allowBurst: allowBurst || false,
+    minCpu: +(minCpu || 0).toFixed(2),
+    minMem: +(minMem || 0).toFixed(2),
     sumCpu: +(sumCpu || 0).toFixed(2),
     sumMem: +(sumMem || 0).toFixed(2),
     maxNodes: +(maxNodes || 0).toFixed(2),
@@ -202,11 +221,12 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         ...recomDetails,
         recommended: { ...recomDetails.recommended, ...response }
       } as NodeRecommendationDto
-
       // TODO: check how we can avoid it.
       if (!isEqual(recomDetails, newState)) {
         setRecomDetails(newState)
       }
+
+      UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
     } catch (e) {
       // console.log('Error in fetching recommended cluster ', e)
     }
@@ -377,12 +397,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
         <Layout.Horizontal style={{ alignItems: 'center' }}>
-          <Checkbox
-            checked={state.allowBurst}
-            onChange={() => {
-              dispatch({ type: ACTIONS.TOGGLE_BURST, data: !state.allowBurst })
-            }}
-          />
+          <Checkbox checked={autoScaling} onChange={() => setAutoScaling(!autoScaling)} />
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.nodeRecommendation.autoScaling')}</Text>
         </Layout.Horizontal>
         <Card style={{ padding: 0 }}>
@@ -405,9 +420,14 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           {tuneRecomVisible ? (
             <Container padding="medium" background={Color.PRIMARY_1}>
               <TuneNodeRecommendationCard state={state} dispatch={dispatch} buffer={buffer} setBuffer={setBuffer} />
-              <Text font={{ variation: FontVariation.SMALL_SEMI }} margin={{ bottom: 'small', top: 'medium' }}>
-                {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
-              </Text>
+              <Container margin={{ bottom: 'small', top: 'medium' }}>
+                <Text inline font={{ variation: FontVariation.SMALL_SEMI }}>
+                  {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
+                </Text>
+                <Button inline variation={ButtonVariation.LINK} icon="edit" onClick={showModal}>
+                  {getString('edit')}
+                </Button>
+              </Container>
               <TextInput
                 value={state.includeTypes.toString()}
                 contentEditable={false}

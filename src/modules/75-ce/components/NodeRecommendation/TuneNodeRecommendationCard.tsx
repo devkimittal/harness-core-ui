@@ -85,7 +85,7 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             defaultValue={`${state.sumCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_CPUS, data: +e.target.value })
             }
           />
         </Container>
@@ -102,7 +102,7 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             defaultValue={`${state.sumMem}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_MEM, data: +e.target.value })
             }
           />
         </Container>
@@ -126,7 +126,7 @@ const Buffer = ({
   const [recomDetails] = useState(state)
 
   return (
-    <Container width="50%">
+    <Container>
       <Layout.Vertical spacing="xxsmall">
         <Layout.Horizontal style={{ justifyContent: 'space-between' }}>
           <Text font={{ variation: FontVariation.SMALL_SEMI }} rightIcon="info" rightIconProps={{ size: 12 }}>
@@ -143,23 +143,23 @@ const Buffer = ({
           onChange={val => setBuffer(val)}
           onRelease={val => {
             dispatch({
-              type: ACTIONS.CPUS,
+              type: ACTIONS.SUM_CPUS,
               data: addBufferToValue(val, recomDetails.sumCpu)
             })
             dispatch({
-              type: ACTIONS.MEM,
+              type: ACTIONS.SUM_MEM,
               data: addBufferToValue(val, recomDetails.sumMem)
             })
           }}
           className={css.bufferSlider}
         />
         <Container>
-          <Text font={{ variation: FontVariation.SMALL }}>{`${getString('delegate.delegateCPU')}: ${
+          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString('delegate.delegateCPU')}: ${
             Math.floor((100 + buffer) * state.sumCpu) / 100
           } vCPU `}</Text>
-          <Text font={{ variation: FontVariation.SMALL }}>{`${getString('ce.nodeRecommendation.ram')}: ${
-            Math.floor((100 + buffer) * state.sumMem) / 100
-          } GiB`}</Text>
+          <Text margin={{ left: 'small' }} inline font={{ variation: FontVariation.SMALL }}>{`${getString(
+            'ce.nodeRecommendation.ram'
+          )}: ${Math.floor((100 + buffer) * state.sumMem) / 100} GiB`}</Text>
         </Container>
       </Layout.Vertical>
     </Container>
@@ -179,10 +179,10 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
           <TextInput
-            defaultValue={`${state.sumCpu}`}
+            defaultValue={`${state.minCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.MIN_CPUS, data: +e.target.value })
             }
           />
         </Container>
@@ -191,10 +191,10 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             {getString('ce.nodeRecommendation.mem')}
           </Text>
           <TextInput
-            defaultValue={`${state.sumMem}`}
+            defaultValue={`${state.minMem}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.MIN_MEM, data: +e.target.value })
             }
           />
         </Container>
@@ -219,7 +219,6 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
             onClick={() => {
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes - 1 })
             }}
-            // disabled={state.minNodes <= 0}
           />
           <TextInput
             value={`${state.minNodes}`}
@@ -234,7 +233,6 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
             onClick={() => {
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes + 1 })
             }}
-            // disabled={state.minNodes <= state.maxNodes}
           />
         </Layout.Horizontal>
       </Layout.Vertical>

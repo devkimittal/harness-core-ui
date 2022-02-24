@@ -20,7 +20,7 @@ import {
 import { Slider } from '@blueprintjs/core'
 
 import { useStrings } from 'framework/strings'
-import { Action, ACTIONS, IState } from '@ce/pages/node-recommendation-details/NodeRecommendationDetailsPage'
+import { Action, ACTIONS, IState } from '@ce/components/NodeRecommendation/NodeRecommendation'
 import css from './NodeRecommendation.module.scss'
 
 interface NodeCountInstancePreferencesProps {
@@ -74,7 +74,7 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             defaultValue={`${state.sumCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_CPUS, data: +e.target.value })
             }
           />
         </Container>
@@ -86,7 +86,7 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             defaultValue={`${state.sumMem}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_MEM, data: +e.target.value })
             }
           />
         </Container>
@@ -123,7 +123,7 @@ const Buffer = ({
           labelRenderer={false}
           value={buffer}
           onChange={val => setBuffer(val)}
-          onRelease={val => dispatch({ type: ACTIONS.CPUS, data: Math.floor((100 + val) * state.sumCpu) / 100 })}
+          onRelease={val => dispatch({ type: ACTIONS.SUM_CPUS, data: Math.floor((100 + val) * state.sumCpu) / 100 })}
           className={css.bufferSlider}
         />
         <Container>
@@ -155,7 +155,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             defaultValue={`${state.sumCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_CPUS, data: +e.target.value })
             }
           />
         </Container>
@@ -167,7 +167,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             defaultValue={`${state.sumMem}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_MEM, data: +e.target.value })
             }
           />
         </Container>
