@@ -22,7 +22,7 @@ import cx from 'classnames'
 import type { FormikProps } from 'formik'
 import { useParams } from 'react-router-dom'
 import { parse } from 'yaml'
-import { defaultTo, get, isEmpty, merge, noop, set } from 'lodash-es'
+import { defaultTo, get, isEmpty, noop, set } from 'lodash-es'
 import produce from 'immer'
 import { NameSchema } from '@common/utils/Validation'
 import { setFormikRef, StepViewType, StepFormikFowardRef } from '@pipeline/components/AbstractSteps/Step'
@@ -38,7 +38,7 @@ import type { TemplateStepNode } from 'services/pipeline-ng'
 import { validateStep } from '@pipeline/components/PipelineStudio/StepUtil'
 import { StepForm } from '@pipeline/components/PipelineInputSetForm/StageInputSetForm'
 import { setTemplateInputs, TEMPLATE_INPUT_PATH } from '@pipeline/utils/templateUtils'
-import { getScopeBasedQueryParams } from '@templates-library/utils/templatesUtils'
+import { getScopeBasedQueryParams, iterateAndMergeTemplateInputs } from '@templates-library/utils/templatesUtils'
 import { useQueryParams } from '@common/hooks'
 import stepCss from '@pipeline/components/PipelineSteps/Steps/Steps.module.scss'
 import css from './TemplateStepWidget.module.scss'
@@ -108,7 +108,8 @@ function TemplateStepWidget(
     if (!stepTemplateLoading && !stepTemplateInputSetLoading && stepTemplateResponse?.data?.yaml) {
       try {
         const templateInputs = parse(defaultTo(stepTemplateInputSetYaml?.data, ''))
-        const mergedTemplateInputs = merge({}, templateInputs, initialValues.template?.templateInputs)
+        const mergedTemplateInputs = { ...templateInputs }
+        iterateAndMergeTemplateInputs(mergedTemplateInputs, initialValues.template?.templateInputs)
         setFormValues(
           produce(initialValues as TemplateStepValues, draft => {
             setTemplateInputs(draft, mergedTemplateInputs)

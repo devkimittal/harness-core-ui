@@ -6,7 +6,7 @@
  */
 
 import React, { useContext } from 'react'
-import { debounce, defaultTo, isEqual, merge, noop, omit, set } from 'lodash-es'
+import { debounce, defaultTo, isEqual, noop, omit, set } from 'lodash-es'
 import { Card, Color, Container, Formik, FormikForm, Heading, Layout, PageError } from '@wings-software/uicore'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
@@ -33,7 +33,7 @@ import ErrorsStripBinded from '@pipeline/components/ErrorsStrip/ErrorsStripBinde
 import { useStageTemplateActions } from '@pipeline/utils/useStageTemplateActions'
 import { TemplateBar } from '@pipeline/components/PipelineStudio/TemplateBar/TemplateBar'
 import { setTemplateInputs, TEMPLATE_INPUT_PATH } from '@pipeline/utils/templateUtils'
-import { getScopeBasedQueryParams } from '@templates-library/utils/templatesUtils'
+import { getScopeBasedQueryParams, iterateAndMergeTemplateInputs } from '@templates-library/utils/templatesUtils'
 import css from './TemplateStageSpecifications.module.scss'
 
 declare global {
@@ -112,7 +112,8 @@ export const TemplateStageSpecifications = (): JSX.Element => {
     if (!templateLoading && !templateInputSetLoading && stage?.stage && templateResponse?.data?.yaml) {
       try {
         const templateInputs = parse(defaultTo(templateInputSetYaml?.data, ''))
-        const mergedTemplateInputs = merge({}, templateInputs, stage?.stage.template?.templateInputs)
+        const mergedTemplateInputs = { ...templateInputs }
+        iterateAndMergeTemplateInputs(mergedTemplateInputs, stage?.stage.template?.templateInputs)
         setFormValues(
           produce(stage?.stage as TemplateStageValues, draft => {
             setTemplateInputs(draft, mergedTemplateInputs)

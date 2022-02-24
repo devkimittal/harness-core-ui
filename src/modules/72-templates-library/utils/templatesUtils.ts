@@ -6,6 +6,7 @@
  */
 
 import { isEmpty } from 'lodash-es'
+import { MultiTypeInputType } from '@wings-software/uicore'
 import type { UseStringsReturn } from 'framework/strings'
 import { Scope } from '@common/interfaces/SecretsInterface'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
@@ -82,4 +83,17 @@ export const getVersionLabelText = (template: TemplateSummaryResponse, getString
     : template.stableTemplate
     ? getString('templatesLibrary.stableVersion', { entity: template.versionLabel })
     : template.versionLabel
+}
+
+export const iterateAndMergeTemplateInputs = (obj: any, objToCopy: any) => {
+  if (isEmpty(objToCopy)) {
+    return
+  }
+  Object.keys(obj).forEach(key => {
+    if (typeof obj[key] === 'object') {
+      iterateAndMergeTemplateInputs(obj[key], objToCopy[key])
+    } else if (obj[key] === MultiTypeInputType.RUNTIME && objToCopy[key] !== null) {
+      obj[key] = objToCopy[key]
+    }
+  })
 }
