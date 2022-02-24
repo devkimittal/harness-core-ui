@@ -33,25 +33,6 @@ interface Params {
   accountId: string
 }
 
-export interface IState {
-  sumCpu: number
-  sumMem: number
-  maxNodes: number
-  minNodes: number
-}
-
-export enum ACTIONS {
-  'CPUS',
-  'MEM',
-  'MIN_NODES',
-  'MAX_NODES'
-}
-
-export interface Action {
-  type: ACTIONS
-  data: number
-}
-
 const NodeRecommendationDetailsPage = () => {
   const { getString } = useStrings()
   const { recommendation, accountId, recommendationName } = useParams<Params>()

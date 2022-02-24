@@ -3771,6 +3771,7 @@ export interface StringsMap {
   'ce.nodeRecommendation.text2': string
   'ce.nodeRecommendation.tuneRecommendationsInfo1': string
   'ce.nodeRecommendation.tuneRecommendationsInfo2': string
+  'ce.nodeRecommendation.updatePreferences': string
   'ce.overview.addClusterBtn': string
   'ce.overview.addClusterDesc': string
   'ce.overview.cardtitles.aws': string
