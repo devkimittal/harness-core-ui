@@ -1322,7 +1322,7 @@ export interface NGTemplateInfoConfig {
   tags?: {
     [key: string]: string
   }
-  type: 'Step' | 'Stage' | 'Pipeline'
+  type: 'Step' | 'Stage'
   versionLabel: string
 }
 
@@ -2176,7 +2176,7 @@ export interface TemplateResponse {
   tags?: {
     [key: string]: string
   }
-  templateEntityType?: 'Step' | 'Stage' | 'Pipeline'
+  templateEntityType?: 'Step' | 'Stage'
   templateScope?: 'account' | 'org' | 'project' | 'unknown'
   version?: number
   versionLabel?: string
