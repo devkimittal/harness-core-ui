@@ -21,7 +21,8 @@ const ExactSharedPackages = [
   '@blueprintjs/core',
   '@blueprintjs/select',
   '@blueprintjs/datetime',
-  'restful-react'
+  'restful-react',
+  'urql'
 ]
 
 module.exports = ({ enableGovernance, enableGitOpsUI, enableSTO }) => {
