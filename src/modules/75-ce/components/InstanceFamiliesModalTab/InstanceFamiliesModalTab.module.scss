@@ -7,19 +7,82 @@
 
 table {
   border-spacing: 0;
+  overflow: hidden;
 
-  .cell:nth-child(odd) {
-    background-color: var(--grey-100);
+  .rowHeader {
+    width: 64px !important;
   }
-}
 
-.headerGroup {
-  th {
-    width: auto;
-    padding: var(--spacing-small);
+  tr {
+    height: 30px;
   }
-}
 
-.tableHeader {
-  width: max-content;
+  td:first-child {
+    left: 0;
+    position: sticky;
+    z-index: 9999;
+  }
+
+  .hoverBackground {
+    background-color: rgba(2, 120, 213, 0.05) !important;
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: rgba(27, 46, 73, 0.02);
+    }
+
+    td:nth-child(even) {
+      background-color: rgba(27, 46, 73, 0.02);
+    }
+
+    tr:hover {
+      background-color: rgba(2, 120, 213, 0.05);
+    }
+
+    td:hover::after {
+      background-color: rgba(2, 120, 213, 0.05);
+    }
+  }
+
+  .headerGroup {
+    th {
+      width: auto;
+      padding: var(--spacing-small);
+      height: 40px;
+    }
+
+    th:nth-child(even) {
+      background-color: rgba(27, 46, 73, 0.02);
+    }
+  }
+
+  .tableHeader {
+    width: max-content;
+  }
+
+  .columnCheckbox {
+    display: none;
+  }
+
+  th:hover .columnCheckbox,
+  .visible {
+    display: inline;
+  }
+
+  .rowCheckboxContainer {
+    width: 30px;
+
+    .rowCheckbox {
+      display: none;
+    }
+  }
+
+  label[class*='bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main'] {
+    padding: 0px !important;
+  }
+
+  tr:hover .rowCheckbox {
+    display: inline;
+  }
 }

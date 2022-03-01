@@ -39,6 +39,7 @@ declare const styles: {
   readonly title: string
   readonly toaster: string
   readonly tuneRecomInfoContainer: string
+  readonly tuneRecommendationCard: string
   readonly white: string
 }
 export default styles

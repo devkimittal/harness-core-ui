@@ -7,8 +7,13 @@
  **/
 // this is an auto-generated file, do not update this manually
 declare const styles: {
-  readonly cell: string
+  readonly columnCheckbox: string
   readonly headerGroup: string
+  readonly hoverBackground: string
+  readonly rowCheckbox: string
+  readonly rowCheckboxContainer: string
+  readonly rowHeader: string
   readonly tableHeader: string
+  readonly visible: string
 }
 export default styles

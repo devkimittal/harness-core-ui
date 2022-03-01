@@ -5,10 +5,10 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Container, Text, Color, FontVariation, Checkbox, Layout } from '@harness/uicore'
 import { CellProps, useTable, Column } from 'react-table'
-
+import cx from 'classnames'
 import { flatten } from 'lodash-es'
 import { Action, ACTIONS, IState } from '../NodeRecommendation/NodeRecommendation'
 
@@ -93,12 +93,16 @@ export const InstanceFamiliesModalTab: React.FC<TabProps> = ({ data, state, disp
     const status = getSeriesCheckboxStatus(val)
 
     return (
-      <Layout.Horizontal padding="small" style={{ alignItems: 'center' }}>
-        <Checkbox
-          checked={status === CheckboxStatus.CHECKED}
-          indeterminate={status === CheckboxStatus.INDETERMINATE}
-          onClick={() => handleInstanceSeriesCheckbox(status, val)}
-        />
+      <Layout.Horizontal className={css.rowHeader} padding="small" style={{ alignItems: 'center' }}>
+        <Container className={css.rowCheckboxContainer}>
+          <Container className={css.rowCheckbox}>
+            <Checkbox
+              checked={status === CheckboxStatus.CHECKED}
+              indeterminate={status === CheckboxStatus.INDETERMINATE}
+              onClick={() => handleInstanceSeriesCheckbox(status, val)}
+            />
+          </Container>
+        </Container>
         <Text font={{ variation: FontVariation.SMALL_SEMI }}>{val}</Text>
       </Layout.Horizontal>
     )
@@ -161,6 +165,7 @@ const Grid: React.FC<GridProps> = ({ columns, data, getTypeCheckboxStatus, handl
     columns,
     data
   })
+  const [columnHoverIndex, setColumnHoverIndex] = useState(0)
 
   return (
     <table {...getTableProps()}>
@@ -171,14 +176,26 @@ const Grid: React.FC<GridProps> = ({ columns, data, getTypeCheckboxStatus, handl
               const status = getTypeCheckboxStatus(column.render('Header')?.toString() || '')
 
               return (
-                <th {...column.getHeaderProps()} key={headerIndex}>
+                <th
+                  {...column.getHeaderProps()}
+                  key={headerIndex}
+                  onMouseEnter={() => setColumnHoverIndex(headerIndex)}
+                  onMouseLeave={() => setColumnHoverIndex(0)}
+                  className={cx({ [css.hoverBackground]: headerIndex === columnHoverIndex && columnHoverIndex !== 0 })}
+                >
                   <Layout.Horizontal style={{ alignItems: 'center' }}>
                     {column.render('Header') ? (
-                      <Checkbox
-                        checked={status === CheckboxStatus.CHECKED}
-                        indeterminate={status === CheckboxStatus.INDETERMINATE}
-                        onClick={() => handleInstanceTypeCheckbox(status, column.render('Header')?.toString() || '')}
-                      />
+                      <Container
+                        className={cx(css.columnCheckbox, {
+                          [css.visible]: headerIndex === columnHoverIndex && columnHoverIndex !== 0
+                        })}
+                      >
+                        <Checkbox
+                          checked={status === CheckboxStatus.CHECKED}
+                          indeterminate={status === CheckboxStatus.INDETERMINATE}
+                          onClick={() => handleInstanceTypeCheckbox(status, column.render('Header')?.toString() || '')}
+                        />
+                      </Container>
                     ) : null}
                     <Text className={css.tableHeader} font={{ variation: FontVariation.SMALL_BOLD }}>
                       {column.render('Header')}
@@ -194,10 +211,16 @@ const Grid: React.FC<GridProps> = ({ columns, data, getTypeCheckboxStatus, handl
         {rows.map((row, i) => {
           prepareRow(row)
           return (
-            <tr className={css.cell} {...row.getRowProps()} key={i}>
+            <tr {...row.getRowProps()} key={i}>
               {row.cells.map((cell, cellIndex) => {
                 return (
-                  <td {...cell.getCellProps()} key={cellIndex}>
+                  <td
+                    {...cell.getCellProps()}
+                    key={cellIndex}
+                    onMouseEnter={() => setColumnHoverIndex(cellIndex)}
+                    onMouseLeave={() => setColumnHoverIndex(0)}
+                    className={cx({ [css.hoverBackground]: cellIndex === columnHoverIndex && columnHoverIndex !== 0 })}
+                  >
                     {cell.render('Cell')}
                   </td>
                 )
