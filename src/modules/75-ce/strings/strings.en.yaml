@@ -767,8 +767,8 @@ nodeRecommendation:
   suitable:
     prod: well suited for prod
     qa: well suited for non-prod/QA
-  tuneRecommendationsInfo1: 'Recommendations are calculated by analysing historical utilization in the specified period. You can'
-  tuneRecommendationsInfo2: 'on the right side section'
+  tuneRecommendationsInfo1: 'Recommendations are calculated by analysing historical utilization in the specified period. You can '
+  tuneRecommendationsInfo2: ' on the right side section'
   autoScaling: 'Consider AutoScaling for calculating Recommendations'
   preferredInstanceFamilies: 'Preferred Instance families'
   addPreferredInstanceFamilies: 'add preferred instance families'

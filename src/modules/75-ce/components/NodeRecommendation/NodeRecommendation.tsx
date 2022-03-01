@@ -26,6 +26,7 @@ import { useModalHook } from '@harness/use-modal'
 import moment from 'moment'
 import { isEqual } from 'lodash-es'
 import pDebounce from 'p-debounce'
+import { useToaster } from '@common/exports'
 
 import useDidMountEffect from '@ce/common/useDidMountEffect'
 
@@ -155,6 +156,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   recommendationName
 }) => {
   const { getString } = useStrings()
+  const { showError } = useToaster()
 
   const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
 
@@ -228,7 +230,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
       UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
     } catch (e) {
-      // console.log('Error in fetching recommended cluster ', e)
+      showError('Error in fetching recommended cluster')
     }
   }
 
@@ -328,17 +330,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                   color={Color.PRIMARY_7}
                   font={{ variation: FontVariation.SMALL }}
                   onClick={() => setTuneRecomVisible(true)}
-                  margin={{ left: 'small' }}
                   className={css.pointer}
                 >
                   {getString('ce.recommendation.detailsPage.tuneRecommendations').toLowerCase()}
                 </Text>
-                <Text
-                  inline
-                  color={Color.GREY_700}
-                  font={{ variation: FontVariation.SMALL }}
-                  margin={{ left: 'small' }}
-                >
+                <Text inline color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
                   {getString('ce.nodeRecommendation.tuneRecommendationsInfo2')}
                 </Text>
               </Container>
@@ -400,7 +396,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           <Checkbox checked={autoScaling} onChange={() => setAutoScaling(!autoScaling)} />
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.nodeRecommendation.autoScaling')}</Text>
         </Layout.Horizontal>
-        <Card style={{ padding: 0 }}>
+        <Card className={css.tuneRecommendationCard}>
           <Container padding="medium" flex={{ justifyContent: 'space-between' }}>
             <Text
               className={css.pointer}
@@ -429,9 +425,10 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 </Button>
               </Container>
               <TextInput
-                value={state.includeTypes.toString()}
+                value={[...state.includeSeries, ...state.includeTypes].toString()}
                 contentEditable={false}
                 className={css.instaceFamilyInput}
+                readOnly
               />
               <Button icon="plus" variation={ButtonVariation.LINK} margin={{ bottom: 'medium' }} onClick={showModal}>
                 {getString('ce.nodeRecommendation.addPreferredInstanceFamilies')}
@@ -444,18 +441,20 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 >
                   {getString('ce.nodeRecommendation.applyPreferences')}
                 </Button>
-                <Button
-                  variation={ButtonVariation.SECONDARY}
-                  onClick={() => {
-                    setBuffer(0)
-                    dispatch({
-                      type: ACTIONS.RESET_TO_DEFAULT,
-                      data: initialState
-                    })
-                  }}
-                >
-                  {getString('ce.recommendation.detailsPage.resetRecommendationText')}
-                </Button>
+                {!isEqual(state, initialState) ? (
+                  <Button
+                    variation={ButtonVariation.SECONDARY}
+                    onClick={() => {
+                      setBuffer(0)
+                      dispatch({
+                        type: ACTIONS.RESET_TO_DEFAULT,
+                        data: initialState
+                      })
+                    }}
+                  >
+                    {getString('ce.recommendation.detailsPage.resetRecommendationText')}
+                  </Button>
+                ) : null}
               </Layout.Horizontal>
             </Container>
           ) : null}

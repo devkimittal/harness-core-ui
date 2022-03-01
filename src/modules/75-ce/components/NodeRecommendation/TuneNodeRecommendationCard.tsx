@@ -23,7 +23,7 @@ import { useStrings } from 'framework/strings'
 import { Action, ACTIONS, IState } from '@ce/components/NodeRecommendation/NodeRecommendation'
 import css from './NodeRecommendation.module.scss'
 
-interface NodeCountInstancePreferencesProps {
+interface TuneRecommendationCardProps {
   state: IState
   dispatch: React.Dispatch<Action>
   buffer: number
@@ -33,7 +33,7 @@ interface NodeCountInstancePreferencesProps {
 const addBufferToValue = (bufferPercentage: number, value: number): number =>
   +(((100 + bufferPercentage) / 100) * value).toFixed(2)
 
-const NodeCountInstancePreferences = (props: NodeCountInstancePreferencesProps) => {
+const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
   const { state, dispatch, buffer, setBuffer } = props
   const { getString } = useStrings()
 
@@ -126,7 +126,7 @@ const Buffer = ({
   const [recomDetails] = useState(state)
 
   return (
-    <Container>
+    <Container width="60%">
       <Layout.Vertical spacing="xxsmall">
         <Layout.Horizontal style={{ justifyContent: 'space-between' }}>
           <Text font={{ variation: FontVariation.SMALL_SEMI }} rightIcon="info" rightIconProps={{ size: 12 }}>
@@ -157,9 +157,9 @@ const Buffer = ({
           <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString('delegate.delegateCPU')}: ${
             Math.floor((100 + buffer) * state.sumCpu) / 100
           } vCPU `}</Text>
-          <Text margin={{ left: 'small' }} inline font={{ variation: FontVariation.SMALL }}>{`${getString(
-            'ce.nodeRecommendation.ram'
-          )}: ${Math.floor((100 + buffer) * state.sumMem) / 100} GiB`}</Text>
+          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString('ce.nodeRecommendation.ram')}: ${
+            Math.floor((100 + buffer) * state.sumMem) / 100
+          } GiB`}</Text>
         </Container>
       </Layout.Vertical>
     </Container>
@@ -240,4 +240,4 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
   )
 }
 
-export default NodeCountInstancePreferences
+export default TuneRecommendationCard
