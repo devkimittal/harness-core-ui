@@ -20,9 +20,7 @@ import {
 } from '@wings-software/uicore'
 import { defaultTo, get, isEmpty, pick } from 'lodash-es'
 import { Formik } from 'formik'
-import { useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
-import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { PageSpinner, useToaster } from '@common/components'
 import { TemplateListType } from '@templates-library/pages/TemplatesPage/TemplatesPageUtils'
 import { useMutateAsGet } from '@common/hooks'
@@ -36,13 +34,13 @@ import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import useDeleteConfirmationDialog from '@pipeline/pages/utils/DeleteConfirmDialog'
 import css from './DeleteTemplateModal.module.scss'
 
-export interface DeleteTemplateProps {
+interface DeleteTemplateProps {
   template: TemplateSummaryResponse
   onClose: () => void
   onSuccess: () => void
-  // onDeleteTemplateGitSync: (commitMsg: string, versions?: string[]) => Promise<void>
 }
-export interface CheckboxOptions {
+
+interface CheckboxOptions {
   label: string
   value: string
   checked: boolean
@@ -54,7 +52,7 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
   const { template, onClose, onSuccess } = props
   const [checkboxOptions, setCheckboxOptions] = React.useState<CheckboxOptions[]>([])
   const [query, setQuery] = React.useState<string>('')
-  const { accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps>()
+  const { accountId = '', orgIdentifier, projectIdentifier, identifier = '', gitDetails, name } = template
   const { showSuccess, showError } = useToaster()
   const { isGitSyncEnabled } = useAppStore()
   const { mutate: deleteTemplates, loading: deleteLoading } = useDeleteTemplateVersionsOfIdentifier({})
@@ -64,15 +62,14 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
     loading,
     error: templatesError
   } = useMutateAsGet(useGetTemplateList, {
-    body: { filterType: 'Template', templateIdentifiers: [template.identifier] },
+    body: { filterType: 'Template', templateIdentifiers: [identifier] },
     queryParams: {
       accountIdentifier: accountId,
-      orgIdentifier,
-      projectIdentifier,
-      module,
+      orgIdentifier: orgIdentifier,
+      projectIdentifier: projectIdentifier,
       templateListType: TemplateListType.All,
-      repoIdentifier: defaultTo(template.gitDetails?.repoIdentifier, ''),
-      branch: defaultTo(template.gitDetails?.branch, '')
+      repoIdentifier: gitDetails?.repoIdentifier,
+      branch: gitDetails?.branch
     },
     queryParamStringifyOptions: { arrayFormat: 'comma' }
   })
@@ -86,30 +83,34 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
 
   const performDelete = async (commitMsg: string, versions?: string[]): Promise<void> => {
     try {
-      const resp = await deleteTemplates(defaultTo(template.identifier, ''), {
+      const resp = await deleteTemplates(defaultTo(identifier, ''), {
         queryParams: {
           accountIdentifier: accountId,
           orgIdentifier,
           projectIdentifier,
           comments: commitMsg,
           ...(isGitSyncEnabled &&
-            template.gitDetails?.objectId && {
-              ...pick(template.gitDetails, ['branch', 'repoIdentifier', 'filePath', 'rootFolder']),
+            gitDetails?.objectId && {
+              ...pick(gitDetails, ['branch', 'repoIdentifier', 'filePath', 'rootFolder']),
               commitMsg,
-              lastObjectId: template.gitDetails?.objectId
+              lastObjectId: gitDetails?.objectId
             })
         },
         body: JSON.stringify({ templateVersionLabels: versions }),
         headers: { 'content-type': 'application/json' }
       })
       if (resp?.status === 'SUCCESS') {
-        showSuccess(getString('common.template.deleteTemplate.templatesDeleted', { name: template.name }))
-        onSuccess?.()
+        showSuccess(getString('common.template.deleteTemplate.templatesDeleted', { name }))
+        onSuccess()
       } else {
         throw getString('somethingWentWrong')
       }
     } catch (err) {
-      showError(err?.data?.message || err?.message, undefined, 'common.template.deleteTemplate.errorWhileDeleting')
+      showError(
+        err?.data?.message || err?.message || getString('common.template.deleteTemplate.errorWhileDeleting'),
+        undefined,
+        'common.template.deleteTemplate.errorWhileDeleting'
+      )
     }
   }
 
@@ -135,14 +136,12 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
   React.useEffect(() => {
     if (!isEmpty(checkboxOptions)) {
       setCheckboxOptions(
-        checkboxOptions.map(option => {
-          return {
-            label: option.label,
-            value: option.value,
-            checked: option.checked,
-            visible: option.label.startsWith(query)
-          }
-        })
+        checkboxOptions.map(option => ({
+          label: option.label,
+          value: option.value,
+          checked: option.checked,
+          visible: option.label.startsWith(query)
+        }))
       )
     }
   }, [query])
@@ -180,11 +179,9 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
                             flex={{ justifyContent: 'space-between', alignItems: 'stretch' }}
                           >
                             <Container height={300} style={{ overflow: 'auto' }}>
-                              {options.map((option, index) => {
-                                if (!option.visible) {
-                                  return null
-                                }
-                                return (
+                              {options
+                                .filter(option => option.visible)
+                                .map((option, index) => (
                                   <Checkbox
                                     key={option.label}
                                     label={option.label}
@@ -196,8 +193,7 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
                                       setFieldValue('checkboxOptions', newOptions)
                                     }}
                                   />
-                                )
-                              })}
+                                ))}
                             </Container>
                             <FormError name="versions" errorMessage={get(errors, 'versions')} />
                             <Container>
@@ -207,14 +203,12 @@ export const DeleteTemplateModal = (props: DeleteTemplateProps) => {
                                 onChange={e => {
                                   setFieldValue(
                                     'checkboxOptions',
-                                    options.map(option => {
-                                      return {
-                                        label: option.label,
-                                        value: option.value,
-                                        checked: e.currentTarget.checked,
-                                        visible: option.label.startsWith(query)
-                                      }
-                                    })
+                                    options.map(option => ({
+                                      label: option.label,
+                                      value: option.value,
+                                      checked: e.currentTarget.checked,
+                                      visible: option.label.startsWith(query)
+                                    }))
                                   )
                                 }}
                               />

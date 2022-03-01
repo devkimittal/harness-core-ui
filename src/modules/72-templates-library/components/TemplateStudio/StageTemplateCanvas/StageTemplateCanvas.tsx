@@ -5,79 +5,75 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
+import produce from 'immer'
+import { get, isEmpty, omit, set } from 'lodash-es'
 import React from 'react'
-import SplitPane from 'react-split-pane'
-import { debounce, isEmpty } from 'lodash-es'
+import { useParams } from 'react-router-dom'
+import {
+  DefaultNewStageId,
+  DefaultNewStageName
+} from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateForm/StageTemplateForm'
+import { TemplatePipelineProvider } from '@pipeline/components/TemplatePipelineContext'
+import type { PipelineInfoConfig } from 'services/cd-ng'
+import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import type { TemplateFormRef } from '@templates-library/components/TemplateStudio/TemplateStudio'
-import { StageTemplateFormWithRef } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateForm/StageTemplateForm'
-import { StageTemplateDiagram } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateDiagram/StageTemplateDiagram'
-import { RightDrawer } from '@pipeline/components/PipelineStudio/RightDrawer/RightDrawer'
-import { TemplateDrawer } from '@templates-library/components/TemplateDrawer/TemplateDrawer'
-import { SplitViewTypes } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineActions'
-import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
+import { DefaultPipeline } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineActions'
+import type { GitQueryParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
+import { sanitize } from '@common/utils/JSONUtils'
+import { useQueryParams } from '@common/hooks'
+import { PipelineContextType } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
+import { StageTemplateCanvasInternalWithRef } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateCanvasInternal'
 
-const StageTemplateCanvas = (_props: unknown, formikRef: TemplateFormRef): JSX.Element => {
+const StageTemplateCanvas = (_props: unknown, formikRef: TemplateFormRef) => {
   const {
-    state: {
-      pipeline: { stages },
-      pipelineView,
-      pipelineView: {
-        isSplitViewOpen,
-        splitViewData: { type = SplitViewTypes.StageView }
-      },
-      selectionState: { selectedStageId }
-    },
-    getStageFromPipeline,
-    updatePipelineView,
-    setSelection
-  } = usePipelineContext()
-  const [splitPaneSize, setSplitPaneSize] = React.useState(200)
-  const setSplitPaneSizeDeb = React.useRef(debounce(setSplitPaneSize, 200))
-  const handleStageResize = (size: number): void => {
-    setSplitPaneSizeDeb.current(size)
-  }
-  const resizerStyle = navigator.userAgent.match(/firefox/i)
-    ? { display: 'flow-root list-item' }
-    : { display: 'inline-table' }
+    state: { template, isLoading, isUpdated },
+    updateTemplate,
+    isReadonly
+  } = React.useContext(TemplateContext)
+  const { accountId, projectIdentifier, orgIdentifier } = useParams<ProjectPathProps>()
+  const { branch, repoIdentifier } = useQueryParams<GitQueryParams>()
 
-  const selectedStage = getStageFromPipeline(selectedStageId || '')
-  const openSplitView = isSplitViewOpen && !!selectedStage?.stage
-
-  React.useEffect(() => {
-    if (selectedStageId) {
-      updatePipelineView({
-        ...pipelineView,
-        isSplitViewOpen: true,
-        splitViewData: { type: SplitViewTypes.StageView }
-      })
-    }
-  }, [selectedStageId])
-
-  React.useEffect(() => {
-    if (!isEmpty(stages)) {
-      setSelection({ stageId: stages?.[0]?.stage?.identifier })
-    }
-  }, [stages])
-
-  return (
-    <>
-      <SplitPane
-        size={splitPaneSize}
-        split="horizontal"
-        minSize={160}
-        maxSize={300}
-        style={{ overflow: 'auto' }}
-        pane2Style={{ overflow: 'initial', zIndex: 2 }}
-        resizerStyle={resizerStyle}
-        onChange={handleStageResize}
-      >
-        <StageTemplateDiagram />
-        {openSplitView && type === SplitViewTypes.StageView ? <StageTemplateFormWithRef ref={formikRef} /> : null}
-      </SplitPane>
-      <RightDrawer />
-      <TemplateDrawer />
-    </>
+  const createPipelineFromTemplate = React.useCallback(
+    () =>
+      produce({ ...DefaultPipeline }, draft => {
+        if (!isEmpty(template.spec)) {
+          set(draft, 'stages[0].stage', { ...template.spec, name: DefaultNewStageName, identifier: DefaultNewStageId })
+        }
+      }),
+    [template.spec]
   )
+
+  const [pipeline, setPipeline] = React.useState<PipelineInfoConfig>(createPipelineFromTemplate())
+
+  React.useEffect(() => {
+    if (!isLoading && !isUpdated) {
+      setPipeline(createPipelineFromTemplate())
+    }
+  }, [isLoading, isUpdated])
+
+  const onUpdatePipeline = async (pipelineConfig: PipelineInfoConfig) => {
+    const stage = get(pipelineConfig, 'stages[0].stage')
+    const processNode = omit(stage, 'name', 'identifier', 'description', 'tags')
+    sanitize(processNode, { removeEmptyArray: false, removeEmptyObject: false, removeEmptyString: false })
+    set(template, 'spec', processNode)
+    await updateTemplate(template)
+  }
+
+  if (pipeline) {
+    return (
+      <TemplatePipelineProvider
+        queryParams={{ accountIdentifier: accountId, orgIdentifier, projectIdentifier, repoIdentifier, branch }}
+        initialValue={pipeline as PipelineInfoConfig}
+        onUpdatePipeline={onUpdatePipeline}
+        contextType={PipelineContextType.StageTemplate}
+        isReadOnly={isReadonly}
+      >
+        <StageTemplateCanvasInternalWithRef ref={formikRef} />
+      </TemplatePipelineProvider>
+    )
+  } else {
+    return <></>
+  }
 }
 
 export const StageTemplateCanvasWithRef = React.forwardRef(StageTemplateCanvas)

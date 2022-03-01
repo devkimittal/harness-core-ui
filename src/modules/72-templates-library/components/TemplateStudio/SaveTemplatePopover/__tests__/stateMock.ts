@@ -164,7 +164,11 @@ export const getTemplateContextMock = (type: TemplateType): TemplateContextInter
       stableVersion: 'v1',
       versions: ['v1', 'v2', 'v3'],
       templateIdentifier: 'Test_Template',
-      templateView: { isDrawerOpened: false, isYamlEditable: false, drawerData: { type: DrawerTypes.AddStep } },
+      templateView: {
+        isDrawerOpened: false,
+        isYamlEditable: false,
+        drawerData: { type: DrawerTypes.AddStep, data: { paletteData: { onSelection: () => undefined } } }
+      },
       isLoading: false,
       isBETemplateUpdated: false,
       isDBInitialized: true,
@@ -181,7 +185,7 @@ export const getTemplateContextMock = (type: TemplateType): TemplateContextInter
     setYamlHandler: () => undefined,
     updateTemplate: jest.fn(),
     updateTemplateView: jest.fn(),
-    deleteTemplateCache: () => new Promise<void>(() => undefined),
+    deleteTemplateCache: jest.fn(),
     setLoading: () => void 0,
     updateGitDetails: () => new Promise<void>(() => undefined)
   }

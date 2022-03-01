@@ -11,19 +11,19 @@ import { TestWrapper } from '@common/utils/testUtils'
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import { getTemplateContextMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
 import { TemplateType } from '@templates-library/utils/templatesUtils'
-import { PipelineTemplateCanvasWrapperWithRef } from '../PipelineTemplateCanvasWrapper'
+import { PipelineTemplateCanvasWithRef } from '../PipelineTemplateCanvas'
 
 jest.mock('@pipeline/components/PipelineStudio/StageBuilder/StageBuilder', () => () => (
   <div className="stage-builder-mock"></div>
 ))
 
-describe('<PipelineTemplateCanvasWrapper/> tests', () => {
+describe('<PipelineTemplateCanvas/> tests', () => {
   const pipelineTemplateContextMock = getTemplateContextMock(TemplateType.Pipeline)
   test('should match snapshot', async () => {
     const { container } = render(
       <TestWrapper>
         <TemplateContext.Provider value={pipelineTemplateContextMock}>
-          <PipelineTemplateCanvasWrapperWithRef />
+          <PipelineTemplateCanvasWithRef />
         </TemplateContext.Provider>
       </TestWrapper>
     )

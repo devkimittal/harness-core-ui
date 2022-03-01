@@ -10,7 +10,7 @@ import { Color } from '@wings-software/uicore'
 import { Template, TemplateProps } from '@templates-library/components/AbstractTemplate/Template'
 import { TemplateType } from '@templates-library/utils/templatesUtils'
 import type { NGTemplateInfoConfig } from 'services/template-ng'
-import { StageTemplateCanvasWrapperWithRef } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateCanvasWrapper'
+import { StageTemplateCanvasWithRef } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateCanvas'
 
 export class StageTemplate extends Template<NGTemplateInfoConfig> {
   protected type = TemplateType.Stage
@@ -25,6 +25,6 @@ export class StageTemplate extends Template<NGTemplateInfoConfig> {
   }
 
   renderTemplateCanvas(props: TemplateProps<NGTemplateInfoConfig>): JSX.Element {
-    return <StageTemplateCanvasWrapperWithRef ref={props.formikRef} />
+    return <StageTemplateCanvasWithRef ref={props.formikRef} />
   }
 }

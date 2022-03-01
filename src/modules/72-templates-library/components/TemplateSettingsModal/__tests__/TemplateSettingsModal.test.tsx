@@ -1,17 +1,17 @@
 /*
- * Copyright 2021 Harness Inc. All rights reserved.
+ * Copyright 2022 Harness Inc. All rights reserved.
  * Use of this source code is governed by the PolyForm Shield 1.0.0 license
  * that can be found in the licenses directory at the root of this repository, also available at
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
 import React from 'react'
-import { act, getByText, render, waitFor } from '@testing-library/react'
-import { fireEvent } from '@testing-library/dom'
 import { defaultTo } from 'lodash-es'
-import { findDialogContainer, TestWrapper } from '@common/utils/testUtils'
+import { act, render, waitFor } from '@testing-library/react'
+import { fireEvent } from '@testing-library/dom'
 import { mockTemplates, mockTemplatesSuccessResponse } from '@templates-library/TemplatesTestHelper'
-import { DeleteTemplateModal } from '../DeleteTemplateModal'
+import { TestWrapper } from '@common/utils/testUtils'
+import { TemplateSettingsModal } from '../TemplateSettingsModal'
 
 jest.mock('@common/hooks', () => ({
   ...(jest.requireActual('@common/hooks') as any),
@@ -20,7 +20,7 @@ jest.mock('@common/hooks', () => ({
 
 jest.mock('services/template-ng', () => ({
   ...(jest.requireActual('services/template-ng') as any),
-  useDeleteTemplateVersionsOfIdentifier: jest.fn().mockImplementation(() => ({
+  useUpdateStableTemplate: jest.fn().mockImplementation(() => ({
     loading: false,
     mutate: jest.fn().mockImplementation(() => {
       return Promise.resolve({
@@ -32,25 +32,25 @@ jest.mock('services/template-ng', () => ({
   }))
 }))
 
-describe('<DeleteTemplateModal /> tests', () => {
+describe('<TemplateSettingsModal /> tests', () => {
   const baseProps = {
-    template: defaultTo(mockTemplates.data?.content?.[0], ''),
+    templateIdentifier: defaultTo(mockTemplates.data?.content?.[0].identifier, ''),
     onSuccess: jest.fn(),
     onClose: jest.fn()
   }
   test('snapshot test', async () => {
     const { container } = render(
       <TestWrapper defaultAppStoreValues={{ isGitSyncEnabled: false }}>
-        <DeleteTemplateModal {...baseProps} />
+        <TemplateSettingsModal {...baseProps} />
       </TestWrapper>
     )
     expect(container).toMatchSnapshot()
   })
 
-  test('Cancel button should work as expected and delete should be disabled by default', async () => {
+  test('Cancel button should work as expected', async () => {
     const { getByRole } = render(
       <TestWrapper defaultAppStoreValues={{ isGitSyncEnabled: false }}>
-        <DeleteTemplateModal {...baseProps} />
+        <TemplateSettingsModal {...baseProps} />
       </TestWrapper>
     )
     const cancelBtn = getByRole('button', { name: 'cancel' })
@@ -58,32 +58,18 @@ describe('<DeleteTemplateModal /> tests', () => {
       fireEvent.click(cancelBtn)
     })
     await waitFor(() => expect(baseProps.onClose).toBeCalled())
-
-    const deleteBtn = getByRole('button', { name: 'Delete Selected' })
-    expect(deleteBtn).toBeDisabled()
   })
 
-  test('actual delete should work as expected', async () => {
+  test('Save button should work as expected', async () => {
     const { getByRole } = render(
       <TestWrapper defaultAppStoreValues={{ isGitSyncEnabled: false }}>
-        <DeleteTemplateModal {...baseProps} />
+        <TemplateSettingsModal {...baseProps} />
       </TestWrapper>
     )
-
-    const selectAllCheckBox = getByRole('checkbox', { name: 'Select All' })
+    const saveBtn = getByRole('button', { name: 'save' })
     act(() => {
-      fireEvent.click(selectAllCheckBox)
+      fireEvent.click(saveBtn)
     })
-
-    const deleteBtn = getByRole('button', { name: 'Delete Selected' })
-    expect(deleteBtn).not.toBeDisabled()
-    act(() => {
-      fireEvent.click(deleteBtn)
-    })
-
-    await waitFor(() => expect(findDialogContainer).toBeDefined())
-    const dialogContainer = findDialogContainer() as HTMLElement
-    fireEvent.click(getByText(dialogContainer, 'delete'))
     await waitFor(() => expect(baseProps.onSuccess).toBeCalled())
   })
 })

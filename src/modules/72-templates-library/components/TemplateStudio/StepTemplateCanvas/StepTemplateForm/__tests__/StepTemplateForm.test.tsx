@@ -58,6 +58,19 @@ describe('<StepTemplateForm /> tests', () => {
     await act(async () => {
       fireEvent.click(button as HTMLElement)
     })
-    expect(stepTemplateContextMock.updateTemplate).toBeCalled()
+    expect(stepTemplateContextMock.updateTemplate).toBeCalledWith({
+      identifier: 'Test_Template',
+      name: 'Test Template',
+      orgIdentifier: 'default',
+      projectIdentifier: 'Yogesh_Test',
+      spec: {
+        spec: { headers: [], method: 'GET', outputVariables: [], requestBody: '<+input>', url: '<+input>' },
+        timeout: '2m',
+        type: 'Http'
+      },
+      tags: {},
+      type: 'Step',
+      versionLabel: 'v1'
+    })
   })
 })

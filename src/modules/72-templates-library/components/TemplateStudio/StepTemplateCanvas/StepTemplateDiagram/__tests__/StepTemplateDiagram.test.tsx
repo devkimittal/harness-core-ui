@@ -9,19 +9,18 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { set } from 'lodash-es'
 import produce from 'immer'
-import {
-  TemplateContext,
-  TemplateContextInterface
-} from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
+import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import { TestWrapper } from '@common/utils/testUtils'
 import { StepTemplateDiagram } from '@templates-library/components/TemplateStudio/StepTemplateCanvas/StepTemplateDiagram/StepTemplateDiagram'
 import type { NGTemplateInfoConfig } from 'services/template-ng'
 import type { StepPopoverProps } from '@pipeline/components/PipelineStudio/StepPalette/StepPopover/StepPopover'
+import { getTemplateContextMock } from '@templates-library/components/TemplateStudio/SaveTemplatePopover/__tests__/stateMock'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
 
 const stepTemplateMockWithoutType = {
-  name: 'Test Harness Approval Step Template',
-  identifier: 'Test_Harness_Approval_Step_Template',
-  versionLabel: 'Version1',
+  name: 'Test Template',
+  identifier: 'Test_Template',
+  versionLabel: 'v1',
   type: 'Step',
   projectIdentifier: 'Yogesh_Test',
   orgIdentifier: 'default',
@@ -30,9 +29,9 @@ const stepTemplateMockWithoutType = {
 } as NGTemplateInfoConfig
 
 const stepTemplateMock = {
-  name: 'Test Harness Approval Step Template',
-  identifier: 'Test_Harness_Approval_Step_Template',
-  versionLabel: 'Version1',
+  name: 'Test Template',
+  identifier: 'Test_Template',
+  versionLabel: 'v1',
   type: 'Step',
   projectIdentifier: 'Yogesh_Test',
   orgIdentifier: 'default',
@@ -53,36 +52,6 @@ const stepTemplateMock = {
   }
 } as NGTemplateInfoConfig
 
-const stepStateMockWithoutType = {
-  template: stepTemplateMockWithoutType,
-  originalTemplate: stepTemplateMockWithoutType,
-  stableVersion: 'Version1',
-  versions: ['Version1', 'Version2', 'Version3'],
-  templateIdentifier: 'Test_Harness_Approval_Step_Template',
-  templateView: { isDrawerOpened: false, isYamlEditable: false, drawerData: { type: 'AddCommand' } },
-  isLoading: false,
-  isBETemplateUpdated: false,
-  isDBInitialized: true,
-  isUpdated: false,
-  isInitialized: true,
-  gitDetails: {},
-  error: ''
-}
-
-const stepTemplateContextMockWithoutType: TemplateContextInterface = {
-  state: stepStateMockWithoutType as any,
-  view: 'VISUAL',
-  isReadonly: false,
-  setView: () => void 0,
-  fetchTemplate: () => new Promise<void>(() => undefined),
-  setYamlHandler: () => undefined,
-  updateTemplate: jest.fn(),
-  updateTemplateView: jest.fn(),
-  deleteTemplateCache: () => new Promise<void>(() => undefined),
-  setLoading: () => void 0,
-  updateGitDetails: () => new Promise<void>(() => undefined)
-}
-
 jest.mock('@pipeline/components/PipelineStudio/StepPalette/StepPopover/StepPopover', () => ({
   ...(jest.requireActual('@pipeline/components/PipelineStudio/StepPalette/StepPopover/StepPopover') as any),
   StepPopover: ({ stepData }: StepPopoverProps) => {
@@ -97,6 +66,9 @@ jest.mock('@pipeline/components/PipelineStudio/StepPalette/StepPopover/StepPopov
 
 describe('<StepTemplateDiagram /> tests', () => {
   test('should match snapshot when step type is not set', async () => {
+    const stepTemplateContextMockWithoutType = produce(getTemplateContextMock(TemplateType.Step), draft => {
+      set(draft, 'state.template', stepTemplateMockWithoutType)
+    })
     const { container } = render(
       <TestWrapper>
         <TemplateContext.Provider value={stepTemplateContextMockWithoutType}>
@@ -105,9 +77,11 @@ describe('<StepTemplateDiagram /> tests', () => {
       </TestWrapper>
     )
     expect(container).toMatchSnapshot()
-    expect(stepTemplateContextMockWithoutType.updateTemplateView).toBeCalled()
   })
   test('should open step selection on load when step type is not set', async () => {
+    const stepTemplateContextMockWithoutType = produce(getTemplateContextMock(TemplateType.Step), draft => {
+      set(draft, 'state.template', stepTemplateMockWithoutType)
+    })
     render(
       <TestWrapper>
         <TemplateContext.Provider value={stepTemplateContextMockWithoutType}>
@@ -118,9 +92,8 @@ describe('<StepTemplateDiagram /> tests', () => {
     expect(stepTemplateContextMockWithoutType.updateTemplateView).toBeCalled()
   })
   test('should match snapshot when step type is set', async () => {
-    const stepTemplateContextMockWithType = produce(stepTemplateContextMockWithoutType, draft => {
+    const stepTemplateContextMockWithType = produce(getTemplateContextMock(TemplateType.Step), draft => {
       set(draft, 'state.template', stepTemplateMock)
-      set(draft, 'state.originalTemplate', stepTemplateMock)
     })
     const { container } = render(
       <TestWrapper>
