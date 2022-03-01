@@ -538,7 +538,7 @@ function FormContent({
                                   placeholder={getString('common.valuePlaceholder')}
                                   disabled={isApprovalStepFieldDisabled(readonly)}
                                   multiTextInputProps={{
-                                    allowableTypes: allowableTypes.filter(item => item !== MultiTypeInputType.RUNTIME),
+                                    allowableTypes: [MultiTypeInputType.FIXED, MultiTypeInputType.EXPRESSION],
                                     expressions
                                   }}
                                 />
