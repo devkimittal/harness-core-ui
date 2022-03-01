@@ -439,7 +439,7 @@ monitoredServices:
   filterlabel: 'Environment:'
   youHaveNoMonitoredServices: You have no monitored services
   nameValidation: Monitored Service Name is required
-  environmentValidation: '{{$.cd.pipelineSteps.environmentTab.environmentIsRequired}}'
+  environmentValidation: '{{ $.common.validation.environmentIsRequired }}'
   serviceValidation: '{{$.cd.pipelineSteps.serviceTab.serviceIsRequired}}'
   serviceAndEnvironment: Service And Environment
   monitoredServiceDetails: Monitored Service Details

@@ -44,6 +44,7 @@ import StepAWSAuthentication from '@connectors/components/CreateConnector/AWSCon
 import {
   buildArtifactoryPayload,
   buildAWSPayload,
+  buildAzurePayload,
   buildDockerPayload,
   buildGcpPayload,
   buildNexusPayload
@@ -64,6 +65,7 @@ import { DockerRegistryArtifact } from './ArtifactRepository/ArtifactLastSteps/D
 import { ECRArtifact } from './ArtifactRepository/ArtifactLastSteps/ECRArtifact/ECRArtifact'
 import { GCRImagePath } from './ArtifactRepository/ArtifactLastSteps/GCRImagePath/GCRImagePath'
 import ArtifactListView from './ArtifactListView/ArtifactListView'
+import { AcrArtifact } from './ArtifactRepository/ArtifactLastSteps/AcrArtifact/AcrArtifact'
 import type {
   ArtifactsSelectionProps,
   InitialArtifactDataType,
@@ -545,7 +547,10 @@ export default function ArtifactsSelection({
       const iconProps: IconProps = {
         name: ArtifactIconByType[selectedArtifact]
       }
-      if (selectedArtifact === ENABLED_ARTIFACT_TYPES.DockerRegistry) {
+      if (
+        selectedArtifact === ENABLED_ARTIFACT_TYPES.DockerRegistry ||
+        selectedArtifact === ENABLED_ARTIFACT_TYPES.Acr
+      ) {
         iconProps.color = Color.WHITE
       }
       return iconProps
@@ -674,6 +679,18 @@ export default function ArtifactsSelection({
             />
           </StepWizard>
         )
+      case ENABLED_ARTIFACT_TYPES.Acr:
+        return (
+          <StepWizard title={stepWizardTitle}>
+            <ConnectorDetailsStep type={ArtifactToConnectorMap[selectedArtifact]} {...connectorDetailStepProps} />
+            <AzureAuthentication name={getString('details')} {...authenticationStepProps} />
+            <DelegateSelectorStep buildPayload={buildAzurePayload} {...delegateStepProps} />
+            <VerifyOutOfClusterDelegate
+              type={ArtifactToConnectorMap[selectedArtifact]}
+              {...verifyOutofClusterDelegateProps}
+            />
+          </StepWizard>
+        )
 
       default:
         return <></>
@@ -690,6 +707,8 @@ export default function ArtifactsSelection({
         return <NexusArtifact {...artifactLastStepProps()} />
       case ENABLED_ARTIFACT_TYPES.ArtifactoryRegistry:
         return <Artifactory {...artifactLastStepProps()} />
+      case ENABLED_ARTIFACT_TYPES.Acr:
+        return <AcrArtifact {...artifactLastStepProps()} />
       case ENABLED_ARTIFACT_TYPES.DockerRegistry:
       default:
         return <DockerRegistryArtifact {...artifactLastStepProps()} />

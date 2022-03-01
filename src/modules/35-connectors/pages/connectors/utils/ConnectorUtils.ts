@@ -28,6 +28,7 @@ import type {
   ErrorTrackingConnectorDTO
 } from 'services/cd-ng'
 import { FormData, CredTypeValues, HashiCorpVaultAccessTypes } from '@connectors/interfaces/ConnectorInterface'
+import { AzureSecretKeyType } from '@connectors/components/CreateConnector/AzureConnector/StepAuth/AzureAuthentication'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'
 import { ValueType } from '@secrets/components/TextReference/TextReference'
 import { useStrings } from 'framework/strings'
@@ -624,6 +625,30 @@ export const setupArtifactoryFormData = async (
   return formData
 }
 
+export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accountId: string): Promise<FormData> => {
+  const connectorInfoSpec = connectorInfo?.spec
+  const scopeQueryParams: GetSecretV2QueryParams = {
+    accountIdentifier: accountId,
+    projectIdentifier: connectorInfo.projectIdentifier,
+    orgIdentifier: connectorInfo.orgIdentifier
+  }
+
+  const secretKey = await setSecretField(connectorInfoSpec.credential?.spec?.secretRef, scopeQueryParams)
+  const secretType = connectorInfoSpec.credential.spec.type
+
+  const formData = {
+    azureEnvironmentType: connectorInfoSpec.azureEnvironmentType,
+    type: connectorInfoSpec.credential.type,
+    clientId: connectorInfoSpec.credential.spec.clientId || undefined,
+    tenantId: connectorInfoSpec.credential.spec.tenantId || undefined,
+    secretType,
+    secretText: secretType === AzureSecretKeyType.SECRET_KEY ? secretKey : undefined,
+    secretFile: secretType === AzureSecretKeyType.KEY_CERT ? secretKey : undefined
+  }
+
+  return formData
+}
+
 export const setupAwsKmsFormData = async (connectorInfo: ConnectorInfoDTO, accountId: string): Promise<FormData> => {
   const connectorInfoSpec = connectorInfo?.spec
   const scopeQueryParams: GetSecretV2QueryParams = {
@@ -993,6 +1018,39 @@ export const buildGcpPayload = (formData: FormData) => {
               }
             : null
       }
+    }
+  }
+
+  return { connector: savedData }
+}
+
+export const buildAzurePayload = (formData: FormData) => {
+  const savedData = {
+    name: formData.name,
+    description: formData.description,
+    projectIdentifier: formData.projectIdentifier,
+    identifier: formData.identifier,
+    orgIdentifier: formData.orgIdentifier,
+    tags: formData.tags,
+    type: Connectors.AZURE,
+    spec: {
+      ...(formData?.delegateSelectors ? { delegateSelectors: formData.delegateSelectors } : {}),
+      credential:
+        formData?.type === DelegateTypes.DELEGATE_OUT_CLUSTER
+          ? {
+              type: formData.type,
+              spec: {
+                clientId: formData.clientId,
+                tenantId: formData.tenantId,
+                type: formData.secretType,
+                secretRef:
+                  formData.secretType === AzureSecretKeyType.SECRET_KEY
+                    ? formData.secretText.referenceString
+                    : formData.secretFile.referenceString
+              }
+            }
+          : { type: formData.type },
+      azureEnvironmentType: formData.azureEnvironmentType
     }
   }
 

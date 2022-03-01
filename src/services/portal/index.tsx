@@ -3751,6 +3751,7 @@ export interface ConnectorInfoDTO {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
 }
 
 export interface ConnectorValidationResult {

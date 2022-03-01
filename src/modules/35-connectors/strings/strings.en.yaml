@@ -63,6 +63,7 @@ apiKeyOrPassword: Password/Api Key
 costVisibility: Cost Visibility
 chooseMethodForK8sConnection: Choose the method for Harness to use when connecting to the cluster.
 chooseMethodForGCPConnection: Choose the method for Harness to use when connecting to GCP.
+chooseMethodForAzureConnection: Choose the method for Harness to use when connecting to Azure.
 delegateInClusterInfo: 'Use the credentials of a specific Harness Delegate (IAM role, service account, etc)'
 createConnector: 'Create a Connector'
 connectorEmptyState: 'There are no connectors in your project'
@@ -253,6 +254,22 @@ GCR:
   artifactServer: 'GCR Server'
   stepTwoName: 'Google Container Registry Details'
   registryHostname: 'GCR Registry URL'
+ACR:
+  name: ACR
+azure:
+  clientId: '{{ $.common.clientId }}'
+  clientIdPlaceholder: 'Client ID (Application ID)'
+  tenantIdPlaceholder: 'Tenant ID (Application ID)'
+  validation: 
+    environment: '{{ $.common.validation.environmentIsRequired }}'
+    clientId: '{{ $.common.validation.clientIdIsRequired }}'
+  environments:
+    azureGlobal: 'Azure Global'
+    usGov: 'US Government'
+  secretTypes:
+    label: 'Client Secret Type'
+    text: 'Secret Text'
+    file: 'Secret File'
 GCS:
   name: GCS
   fullName: Google Cloud Storage

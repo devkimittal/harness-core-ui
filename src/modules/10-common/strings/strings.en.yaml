@@ -160,6 +160,7 @@ validation:
     format: Please input valid email address
   repositoryName: Repository Name is required
   invalidYamlText: 'You have provided invalid or empty YAML. Please provide a valid YAML'
+  environmentIsRequired: 'Environment is required'
 specify: Specify
 role: Role
 projectViewer: Project Viewer

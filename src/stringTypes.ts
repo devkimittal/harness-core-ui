@@ -689,6 +689,7 @@ export interface StringsMap {
   'common.validation.email.format': string
   'common.validation.email.required': string
   'common.validation.entityIdIsRequired': string
+  'common.validation.environmentIsRequired': string
   'common.validation.fieldCannotbeLongerThanN': string
   'common.validation.fieldIsRequired': string
   'common.validation.fieldMustBeAlphanumeric': string
@@ -1330,6 +1331,7 @@ export interface StringsMap {
   'authSettings.usePublicOAuth': string
   'authSettings.whitelistedDomainsDisabled': string
   'authSettings.yourAccountWillBeLockedOut': string
+  'connectors.ACR.name': string
   'connectors.ECR.fullName': string
   'connectors.ECR.name': string
   'connectors.GCP.delegateInClusterInfo': string
@@ -1389,6 +1391,16 @@ export interface StringsMap {
   'connectors.awsKms.validation.selectDelegate': string
   'connectors.awsKms.validation.selectRegion': string
   'connectors.awsSecretManager.secretNamePrefix': string
+  'connectors.azure.clientId': string
+  'connectors.azure.clientIdPlaceholder': string
+  'connectors.azure.environments.azureGlobal': string
+  'connectors.azure.environments.usGov': string
+  'connectors.azure.secretTypes.file': string
+  'connectors.azure.secretTypes.label': string
+  'connectors.azure.secretTypes.text': string
+  'connectors.azure.tenantIdPlaceholder': string
+  'connectors.azure.validation.clientId': string
+  'connectors.azure.validation.environment': string
   'connectors.azureKeyVault.labels.fetchVault': string
   'connectors.azureKeyVault.labels.setupVault': string
   'connectors.azureKeyVault.labels.subscription': string
@@ -1722,6 +1734,7 @@ export interface StringsMap {
   'connectors.ceK8.secretCreationStep.step3': string
   'connectors.ceK8.secretCreationStep.step4': string
   'connectors.ceK8.selectConnectorLabel': string
+  'connectors.chooseMethodForAzureConnection': string
   'connectors.chooseMethodForGCPConnection': string
   'connectors.chooseMethodForK8sConnection': string
   'connectors.click': string
