@@ -106,6 +106,7 @@ export type ConnectorFilterProperties = FilterProperties & {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
   )[]
 }
 

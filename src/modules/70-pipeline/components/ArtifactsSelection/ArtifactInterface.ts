@@ -45,7 +45,7 @@ export interface ArtifactsSelectionProps {
   overrideSetIdentifier?: string
 }
 
-export type ArtifactType = 'DockerRegistry' | 'Gcr' | 'Ecr' | 'Nexus3Registry' | 'ArtifactoryRegistry'
+export type ArtifactType = 'DockerRegistry' | 'Gcr' | 'Ecr' | 'Nexus3Registry' | 'ArtifactoryRegistry' | 'Acr'
 export interface OrganizationCreationType {
   type: ArtifactType
 }

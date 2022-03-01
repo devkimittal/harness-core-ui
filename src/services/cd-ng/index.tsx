@@ -1305,6 +1305,7 @@ export interface ConnectorCatalogueItem {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
   )[]
 }
 
@@ -1376,6 +1377,7 @@ export type ConnectorFilterProperties = FilterProperties & {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
   )[]
 }
 
@@ -1424,6 +1426,7 @@ export interface ConnectorInfoDTO {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
 }
 
 export interface ConnectorResponse {
@@ -1488,6 +1491,7 @@ export interface ConnectorTypeStatistics {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
 }
 
 export interface ConnectorValidationResult {
@@ -14168,6 +14172,7 @@ export interface GetConnectorListQueryParams {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
   category?:
     | 'CLOUD_PROVIDER'
     | 'SECRET_MANAGER'
@@ -14451,6 +14456,7 @@ export interface GetAllAllowedFieldValuesQueryParams {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
 }
 
 export type GetAllAllowedFieldValuesProps = Omit<
@@ -32229,6 +32235,7 @@ export interface GetYamlSchemaQueryParams {
     | 'CustomHealth'
     | 'ServiceNow'
     | 'ErrorTracking'
+    | 'Azure'
   projectIdentifier?: string
   orgIdentifier?: string
   scope?: 'account' | 'org' | 'project' | 'unknown'
@@ -32327,6 +32334,7 @@ export interface GetYamlSnippetMetadataQueryParams {
     | 'customhealth'
     | 'servicenow'
     | 'errortracking'
+    | 'azure'
   )[]
 }
 

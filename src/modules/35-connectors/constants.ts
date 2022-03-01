@@ -92,7 +92,8 @@ export const Connectors: ConnectorType = {
   PAGER_DUTY: 'PagerDuty',
   SERVICE_NOW: 'ServiceNow',
   CUSTOM_HEALTH: 'CustomHealth',
-  ERROR_TRACKING: 'ErrorTracking'
+  ERROR_TRACKING: 'ErrorTracking',
+  AZURE: 'Azure'
 }
 
 export const ConnectorInfoText = {
