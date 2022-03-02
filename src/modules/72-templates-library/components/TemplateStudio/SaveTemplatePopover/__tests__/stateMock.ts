@@ -162,6 +162,7 @@ export const getTemplateContextMock = (type: TemplateType): TemplateContextInter
       template: stepTemplateMock,
       originalTemplate: stepTemplateMock,
       stableVersion: 'v1',
+      lastPublishedVersion: 'v3',
       versions: ['v1', 'v2', 'v3'],
       templateIdentifier: 'Test_Template',
       templateView: {
