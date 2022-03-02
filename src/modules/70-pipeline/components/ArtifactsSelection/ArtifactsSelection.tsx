@@ -41,6 +41,7 @@ import StepDockerAuthentication from '@connectors/components/CreateConnector/Doc
 import VerifyOutOfClusterDelegate from '@connectors/common/VerifyOutOfClusterDelegate/VerifyOutOfClusterDelegate'
 import GcrAuthentication from '@connectors/components/CreateConnector/GcrConnector/StepAuth/GcrAuthentication'
 import StepAWSAuthentication from '@connectors/components/CreateConnector/AWSConnector/StepAuth/StepAWSAuthentication'
+import AzureAuthentication from '@connectors/components/CreateConnector/AzureConnector/StepAuth/AzureAuthentication'
 import {
   buildArtifactoryPayload,
   buildAWSPayload,
@@ -120,6 +121,7 @@ export default function ArtifactsSelection({
   const { NG_NEXUS_ARTIFACTORY } = useFeatureFlags()
   const { stage } = getStageFromPipeline<DeploymentStageElementConfig>(selectedStageId || '')
   const deploymentType = getDeploymentType(stage, getStageFromPipeline, isPropagating)
+  const { NG_AZURE } = useFeatureFlags()
 
   useEffect(() => {
     if (isServerlessDeploymentType(deploymentType)) {
@@ -141,6 +143,10 @@ export default function ArtifactsSelection({
         allowedArtifactTypes.push(ENABLED_ARTIFACT_TYPES.ArtifactoryRegistry)
       }
     }
+    if (NG_AZURE && !allowedArtifactTypes.includes(ENABLED_ARTIFACT_TYPES.Acr)) {
+      allowedArtifactTypes.push(ENABLED_ARTIFACT_TYPES.Acr)
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deploymentType])
 

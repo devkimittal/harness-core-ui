@@ -42,7 +42,7 @@ export const ENABLED_ARTIFACT_TYPES: { [key: string]: ArtifactType } = {
   DockerRegistry: 'DockerRegistry',
   Gcr: 'Gcr',
   Ecr: 'Ecr',
-  Nexus3Registry: 'NexusRegistry',
+  Nexus3Registry: 'Nexus3Registry',
   ArtifactoryRegistry: 'ArtifactoryRegistry',
   Acr: 'Acr'
 }
