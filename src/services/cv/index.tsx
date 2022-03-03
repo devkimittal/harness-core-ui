@@ -1268,6 +1268,8 @@ export interface Error {
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
     | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
   correlationId?: string
   detailedMessage?: string
   message?: string
@@ -1608,6 +1610,8 @@ export interface Failure {
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
     | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
   correlationId?: string
   errors?: ValidationError[]
   message?: string
@@ -2299,6 +2303,7 @@ export interface MetricDefinition {
 
 export interface MetricDefinitionDTO {
   included?: boolean
+  metricIdentifier?: string
   name?: string
   path?: string
   responseJsonPath?: string
@@ -3314,6 +3319,8 @@ export interface ResponseMessage {
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
     | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
   exception?: Throwable
   failureTypes?: (
     | 'EXPIRED'
@@ -3523,6 +3530,14 @@ export interface RestResponseChangeTimeline {
     [key: string]: { [key: string]: any }
   }
   resource?: ChangeTimeline
+  responseMessages?: ResponseMessage[]
+}
+
+export interface RestResponseDataCollectionTask {
+  metaData?: {
+    [key: string]: { [key: string]: any }
+  }
+  resource?: DataCollectionTask
   responseMessages?: ResponseMessage[]
 }
 
@@ -3741,14 +3756,6 @@ export interface RestResponseListTimeSeriesRiskSummary {
     [key: string]: { [key: string]: any }
   }
   resource?: TimeSeriesRiskSummary[]
-  responseMessages?: ResponseMessage[]
-}
-
-export interface RestResponseLogAnalysisClusterWithCountDTO {
-  metaData?: {
-    [key: string]: { [key: string]: any }
-  }
-  resource?: LogAnalysisClusterWithCountDTO
   responseMessages?: ResponseMessage[]
 }
 
@@ -4950,6 +4957,7 @@ export const changeEventListPromise = (
 export interface ChangeEventTimelineQueryParams {
   serviceIdentifiers?: string[]
   envIdentifiers?: string[]
+  monitoredServiceIdentifiers?: string[]
   changeCategories?: ('Deployment' | 'Infrastructure' | 'Alert')[]
   changeSourceTypes?: ('HarnessCDNextGen' | 'PagerDuty' | 'K8sCluster' | 'HarnessCD')[]
   searchText?: string
@@ -11732,7 +11740,7 @@ export const getVerifyStepDeploymentActivitySummaryPromise = (
     GetVerifyStepDeploymentActivitySummaryPathParams
   >(getConfig('cv/api'), `/verify-step/${verifyStepExecutionId}/deployment-activity-summary`, props, signal)
 
-export interface GetVerifyStepDeploymentLogAnalysisResultQueryParams {
+export interface GetVerifyStepDeploymentLogAnalysisResultV2QueryParams {
   accountId: string
   label?: number
   filter?: string
@@ -11743,33 +11751,33 @@ export interface GetVerifyStepDeploymentLogAnalysisResultQueryParams {
   pageSize?: number
 }
 
-export interface GetVerifyStepDeploymentLogAnalysisResultPathParams {
+export interface GetVerifyStepDeploymentLogAnalysisResultV2PathParams {
   verifyStepExecutionId: string
 }
 
-export type GetVerifyStepDeploymentLogAnalysisResultProps = Omit<
+export type GetVerifyStepDeploymentLogAnalysisResultV2Props = Omit<
   GetProps<
     RestResponseLogAnalysisClusterWithCountDTO,
     unknown,
-    GetVerifyStepDeploymentLogAnalysisResultQueryParams,
-    GetVerifyStepDeploymentLogAnalysisResultPathParams
+    GetVerifyStepDeploymentLogAnalysisResultV2QueryParams,
+    GetVerifyStepDeploymentLogAnalysisResultV2PathParams
   >,
   'path'
 > &
-  GetVerifyStepDeploymentLogAnalysisResultPathParams
+  GetVerifyStepDeploymentLogAnalysisResultV2PathParams
 
 /**
  * get logs for given activity
  */
-export const GetVerifyStepDeploymentLogAnalysisResult = ({
+export const GetVerifyStepDeploymentLogAnalysisResultV2 = ({
   verifyStepExecutionId,
   ...props
-}: GetVerifyStepDeploymentLogAnalysisResultProps) => (
+}: GetVerifyStepDeploymentLogAnalysisResultV2Props) => (
   <Get<
     RestResponseLogAnalysisClusterWithCountDTO,
     unknown,
-    GetVerifyStepDeploymentLogAnalysisResultQueryParams,
-    GetVerifyStepDeploymentLogAnalysisResultPathParams
+    GetVerifyStepDeploymentLogAnalysisResultV2QueryParams,
+    GetVerifyStepDeploymentLogAnalysisResultV2PathParams
   >
     path={`/verify-step/${verifyStepExecutionId}/deployment-log-analysis-data-v2`}
     base={getConfig('cv/api')}
@@ -11777,31 +11785,31 @@ export const GetVerifyStepDeploymentLogAnalysisResult = ({
   />
 )
 
-export type UseGetVerifyStepDeploymentLogAnalysisResultProps = Omit<
+export type UseGetVerifyStepDeploymentLogAnalysisResultV2Props = Omit<
   UseGetProps<
     RestResponseLogAnalysisClusterWithCountDTO,
     unknown,
-    GetVerifyStepDeploymentLogAnalysisResultQueryParams,
-    GetVerifyStepDeploymentLogAnalysisResultPathParams
+    GetVerifyStepDeploymentLogAnalysisResultV2QueryParams,
+    GetVerifyStepDeploymentLogAnalysisResultV2PathParams
   >,
   'path'
 > &
-  GetVerifyStepDeploymentLogAnalysisResultPathParams
+  GetVerifyStepDeploymentLogAnalysisResultV2PathParams
 
 /**
  * get logs for given activity
  */
-export const useGetVerifyStepDeploymentLogAnalysisResult = ({
+export const useGetVerifyStepDeploymentLogAnalysisResultV2 = ({
   verifyStepExecutionId,
   ...props
-}: UseGetVerifyStepDeploymentLogAnalysisResultProps) =>
+}: UseGetVerifyStepDeploymentLogAnalysisResultV2Props) =>
   useGet<
     RestResponseLogAnalysisClusterWithCountDTO,
     unknown,
-    GetVerifyStepDeploymentLogAnalysisResultQueryParams,
-    GetVerifyStepDeploymentLogAnalysisResultPathParams
+    GetVerifyStepDeploymentLogAnalysisResultV2QueryParams,
+    GetVerifyStepDeploymentLogAnalysisResultV2PathParams
   >(
-    (paramsInPath: GetVerifyStepDeploymentLogAnalysisResultPathParams) =>
+    (paramsInPath: GetVerifyStepDeploymentLogAnalysisResultV2PathParams) =>
       `/verify-step/${paramsInPath.verifyStepExecutionId}/deployment-log-analysis-data-v2`,
     { base: getConfig('cv/api'), pathParams: { verifyStepExecutionId }, ...props }
   )
@@ -11809,23 +11817,23 @@ export const useGetVerifyStepDeploymentLogAnalysisResult = ({
 /**
  * get logs for given activity
  */
-export const getVerifyStepDeploymentLogAnalysisResultPromise = (
+export const getVerifyStepDeploymentLogAnalysisResultV2Promise = (
   {
     verifyStepExecutionId,
     ...props
   }: GetUsingFetchProps<
     RestResponseLogAnalysisClusterWithCountDTO,
     unknown,
-    GetVerifyStepDeploymentLogAnalysisResultQueryParams,
-    GetVerifyStepDeploymentLogAnalysisResultPathParams
+    GetVerifyStepDeploymentLogAnalysisResultV2QueryParams,
+    GetVerifyStepDeploymentLogAnalysisResultV2PathParams
   > & { verifyStepExecutionId: string },
   signal?: RequestInit['signal']
 ) =>
   getUsingFetch<
     RestResponseLogAnalysisClusterWithCountDTO,
     unknown,
-    GetVerifyStepDeploymentLogAnalysisResultQueryParams,
-    GetVerifyStepDeploymentLogAnalysisResultPathParams
+    GetVerifyStepDeploymentLogAnalysisResultV2QueryParams,
+    GetVerifyStepDeploymentLogAnalysisResultV2PathParams
   >(getConfig('cv/api'), `/verify-step/${verifyStepExecutionId}/deployment-log-analysis-data-v2`, props, signal)
 
 export interface GetVerifyStepDeploymentMetricsQueryParams {

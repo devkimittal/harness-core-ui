@@ -30,15 +30,61 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
 
     xAxis: {
       labels: { enabled: false },
+      //   categories: ['Sales', 'Marketing', 'Development', 'Customer Support', 'Information Technology', 'Administration'],
       tickmarkPlacement: 'on',
-      lineWidth: 0
+      lineWidth: 0,
+      tickAmount: 12,
+      max: 360,
+      min: 0
     },
 
     yAxis: {
       labels: { enabled: false },
-      gridLineInterpolation: 'polygon',
-      lineWidth: 0,
-      min: 0
+      plotBands: [
+        {
+          from: 0,
+          to: 33000,
+          color: '#ffffff'
+          // "outerRadius": "105%",
+          // "thickness": "50%"
+        },
+        {
+          from: 33000,
+          to: 66000,
+          color: '#FAFCFF'
+          // "outerRadius": "105%",
+          // "thickness": "50%"
+        },
+        {
+          from: 66000,
+          to: 100000,
+          color: '#EFFBFF'
+          // "outerRadius": "105%",
+          // "thickness": "50%"
+        }
+      ],
+      // "reversed": true,
+      // "min": 1,
+      //   maximum
+      max: 100000,
+      allowDecimals: false,
+      // "tickInterval": 25000,
+      // "tickAmount": 5,
+      tickPositions: [0, 33000, 66000, 100000],
+      // "tickLength": 25000,
+      // "gridLineInterpolation": "polygon",
+      gridLineColor: '#ECE6E6',
+      // "lineWidth": 1,
+      // "tickmarkPlacement": "between",
+      tickPixelInterval: 25000
+      // "tickPosition": "outside",
+      // "labels": {
+      //   "enabled": true,
+      //   "style": {
+      //     "fontWeight": "bold"
+      //   },
+      // "y": 25
+      // }
     },
 
     tooltip: {
@@ -48,29 +94,30 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
 
     series: [
       {
-        name: 'Allocated Budget',
-        data: [43000, 19000, 60000, 35000, 17000, 10000, 43000, 19000, 60000, 35000, 17000, 10000],
+        name: 'a',
+        data: [{ x: 80, y: 45444 }],
         color: 'red',
         pointPlacement: 'on',
-        clusterType: 'unknown',
-        marker: {
-          enabled: true,
-          lineWidth: 1,
-          symbol: 'circle',
-          fillColor: 'red'
-        }
+        marker: { symbol: 'circle' }
       },
       {
-        name: 'Actual Spending',
-        data: [50000, 39000, 42000, 31000, 26000, 14000],
+        name: 'b',
+        data: [{ x: 280, y: 12111 }],
         pointPlacement: 'on',
-        clusterType: 'unknown',
-        marker: {
-          enabled: true,
-          lineWidth: 1,
-          symbol: 'circle',
-          fillColor: 'red'
-        }
+        marker: { symbol: 'circle' }
+      },
+      {
+        name: 'c',
+        data: [{ x: 160, y: 30032 }],
+        pointPlacement: 'on',
+        marker: { symbol: 'circle' }
+      },
+      {
+        name: 'c',
+        data: [{ x: 240, y: 80000 }],
+        pointPlacement: 'on',
+        color: 'red',
+        marker: { symbol: 'circle' }
       }
     ],
     plotOptions: {

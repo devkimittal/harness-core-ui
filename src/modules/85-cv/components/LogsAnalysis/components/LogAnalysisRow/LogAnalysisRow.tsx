@@ -122,8 +122,6 @@ export function LogAnalysisRow(props: LogAnalysisRowProps): JSX.Element {
   const selectedIndices = useMemo(() => new Set(dataToCompare.map(d => d.index)), [dataToCompare])
 
   const onDrawerOpen = (selectedIndex: number) => {
-    console.log('selectedIndex', selectedIndex)
-
     setRiskEditModalData({
       showDrawer: true,
       selectedRowIndex: selectedIndex
