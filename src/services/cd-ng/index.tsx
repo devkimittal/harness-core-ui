@@ -1982,6 +1982,51 @@ export interface EcrResponseDTO {
   buildDetailsList?: EcrBuildDetailsDTO[]
 }
 
+export type AcrArtifactConfig = ArtifactConfig & {
+  connectorRef: string
+  subscription: string
+  registry: string
+  repository: string
+  metadata?: string
+  tag?: string
+  tagRegex?: string
+}
+
+export interface AcrBuildDetailsDTO {
+  buildUrl?: string
+  subscription: string
+  registry: string
+  repository: string
+  labels?: {
+    [key: string]: string
+  }
+  metadata?: {
+    [key: string]: string
+  }
+  tag?: string
+}
+
+export interface AcrListImagesDTO {
+  images?: string[]
+}
+
+export interface AcrListImagesDTO {
+  images?: string[]
+}
+
+export interface AcrRequestDTO {
+  subscription?: string
+  registry?: string
+  repository?: string
+  tag?: string
+  tagRegex?: string
+  tagsList?: string[]
+}
+
+export interface AcrResponseDTO {
+  buildDetailsList?: AcrBuildDetailsDTO[]
+}
+
 export interface EditionActionDTO {
   action?:
     | 'START_FREE'
@@ -5843,7 +5888,7 @@ export interface PollingResponseDTO {
 
 export interface PrimaryArtifact {
   spec: ArtifactConfig
-  type: 'DockerRegistry' | 'Gcr' | 'Ecr' | 'Nexus3Registry' | 'ArtifactoryRegistry'
+  type: 'DockerRegistry' | 'Gcr' | 'Ecr' | 'Nexus3Registry' | 'ArtifactoryRegistry' | 'Acr'
 }
 
 export interface Principal {
@@ -6231,6 +6276,27 @@ export interface ResponseEcrListImagesDTO {
 export interface ResponseEcrResponseDTO {
   correlationId?: string
   data?: EcrResponseDTO
+  metaData?: { [key: string]: any }
+  status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
+}
+
+export interface ResponseAcrResponseDTO {
+  correlationId?: string
+  data?: AcrResponseDTO
+  metaData?: { [key: string]: any }
+  status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
+}
+
+export interface ResponseAcrListImagesDTO {
+  correlationId?: string
+  data?: AcrListImagesDTO
+  metaData?: { [key: string]: any }
+  status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
+}
+
+export interface ResponseAcrBuildDetailsDTO {
+  correlationId?: string
+  data?: AcrBuildDetailsDTO
   metaData?: { [key: string]: any }
   status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
 }
@@ -8558,7 +8624,7 @@ export type ShellScriptStepInfo = StepSpecType & {
 export interface SidecarArtifact {
   identifier: string
   spec: ArtifactConfig
-  type: 'DockerRegistry' | 'Gcr' | 'Ecr' | 'Nexus3Registry' | 'ArtifactoryRegistry'
+  type: 'DockerRegistry' | 'Gcr' | 'Ecr' | 'Nexus3Registry' | 'ArtifactoryRegistry' | 'Acr'
 }
 
 export interface SidecarArtifactWrapper {
@@ -9435,6 +9501,8 @@ export type DockerRequestDTORequestBody = DockerRequestDTO
 
 export type EcrRequestDTORequestBody = EcrRequestDTO
 
+export type AcrRequestDTORequestBody = AcrRequestDTO
+
 export type EnvironmentRequestDTORequestBody = EnvironmentRequestDTO
 
 export type FilterDTORequestBody = FilterDTO
@@ -9496,6 +9564,8 @@ export type GetBuildDetailsForArtifactoryArtifactWithYamlBodyRequestBody = strin
 export type GetBuildDetailsForEcrWithYamlBodyRequestBody = string
 
 export type SubscribeBodyRequestBody = string[]
+
+export type GetBuildDetailsForAcrWithYamlBodyRequestBody = string
 
 export type UpdateWhitelistedDomainsBodyRequestBody = string[]
 
@@ -13328,6 +13398,459 @@ export const validateArtifactServerForNexusPromise = (
   getUsingFetch<ResponseBoolean, Failure | Error, ValidateArtifactServerForNexusQueryParams, void>(
     getConfig('ng/api'),
     `/artifacts/nexus/validateArtifactServer`,
+    props,
+    signal
+  )
+
+export interface GetBuildDetailsForAcrQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+  branch?: string
+  repoIdentifier?: string
+  getDefaultFromOtherRepo?: boolean
+}
+
+export type GetBuildDetailsForAcrProps = Omit<
+  GetProps<ResponseAcrResponseDTO, Failure | Error, GetBuildDetailsForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets Acr build details
+ */
+export const GetBuildDetailsForAcr = (props: GetBuildDetailsForAcrProps) => (
+  <Get<ResponseAcrResponseDTO, Failure | Error, GetBuildDetailsForAcrQueryParams, void>
+    path={`/artifacts/acr/getBuildDetails`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetBuildDetailsForAcrProps = Omit<
+  UseGetProps<ResponseAcrResponseDTO, Failure | Error, GetBuildDetailsForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets Acr build details
+ */
+export const useGetBuildDetailsForAcr = (props: UseGetBuildDetailsForAcrProps) =>
+  useGet<ResponseAcrResponseDTO, Failure | Error, GetBuildDetailsForAcrQueryParams, void>(
+    `/artifacts/acr/getBuildDetails`,
+    { base: getConfig('ng/api'), ...props }
+  )
+
+/**
+ * Gets Acr build details
+ */
+export const getBuildDetailsForAcrPromise = (
+  props: GetUsingFetchProps<ResponseAcrResponseDTO, Failure | Error, GetBuildDetailsForAcrQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseAcrResponseDTO, Failure | Error, GetBuildDetailsForAcrQueryParams, void>(
+    getConfig('ng/api'),
+    `/artifacts/acr/getBuildDetails`,
+    props,
+    signal
+  )
+
+export interface GetBuildDetailsForAcrWithYamlQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+  pipelineIdentifier: string
+  fqnPath: string
+  branch?: string
+  repoIdentifier?: string
+  getDefaultFromOtherRepo?: boolean
+}
+
+export type GetBuildDetailsForAcrWithYamlProps = Omit<
+  MutateProps<
+    ResponseEcrResponseDTO,
+    Failure | Error,
+    GetBuildDetailsForAcrWithYamlQueryParams,
+    GetBuildDetailsForAcrWithYamlBodyRequestBody,
+    void
+  >,
+  'path' | 'verb'
+>
+
+/**
+ * Gets Acr build details with yaml expression
+ */
+export const GetBuildDetailsForAcrWithYaml = (props: GetBuildDetailsForAcrWithYamlProps) => (
+  <Mutate<
+    ResponseEcrResponseDTO,
+    Failure | Error,
+    GetBuildDetailsForAcrWithYamlQueryParams,
+    GetBuildDetailsForAcrWithYamlBodyRequestBody,
+    void
+  >
+    verb="POST"
+    path={`/artifacts/acr/getBuildDetailsV2`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetBuildDetailsForAcrWithYamlProps = Omit<
+  UseMutateProps<
+    ResponseAcrResponseDTO,
+    Failure | Error,
+    GetBuildDetailsForAcrWithYamlQueryParams,
+    GetBuildDetailsForAcrWithYamlBodyRequestBody,
+    void
+  >,
+  'path' | 'verb'
+>
+
+/**
+ * Gets Acr build details with yaml expression
+ */
+export const useGetBuildDetailsForAcrWithYaml = (props: UseGetBuildDetailsForAcrWithYamlProps) =>
+  useMutate<
+    ResponseAcrResponseDTO,
+    Failure | Error,
+    GetBuildDetailsForAcrWithYamlQueryParams,
+    GetBuildDetailsForAcrWithYamlBodyRequestBody,
+    void
+  >('POST', `/artifacts/acr/getBuildDetailsV2`, { base: getConfig('ng/api'), ...props })
+
+/**
+ * Gets Acr build details with yaml expression
+ */
+export const getBuildDetailsForAcrWithYamlPromise = (
+  props: MutateUsingFetchProps<
+    ResponseAcrResponseDTO,
+    Failure | Error,
+    GetBuildDetailsForAcrWithYamlQueryParams,
+    GetBuildDetailsForAcrWithYamlBodyRequestBody,
+    void
+  >,
+  signal?: RequestInit['signal']
+) =>
+  mutateUsingFetch<
+    ResponseAcrResponseDTO,
+    Failure | Error,
+    GetBuildDetailsForAcrWithYamlQueryParams,
+    GetBuildDetailsForAcrWithYamlBodyRequestBody,
+    void
+  >('POST', getConfig('ng/api'), `/artifacts/acr/getBuildDetailsV2`, props, signal)
+
+export interface GetImagesListForAcrQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type GetImagesListForAcrProps = Omit<
+  GetProps<ResponseAcrListImagesDTO, Failure | Error, GetImagesListForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets Acr images
+ */
+export const GetImagesListForAcr = (props: GetImagesListForAcrProps) => (
+  <Get<ResponseAcrListImagesDTO, Failure | Error, GetImagesListForAcrQueryParams, void>
+    path={`/artifacts/acr/getImages`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetImagesListForAcrProps = Omit<
+  UseGetProps<ResponseAcrListImagesDTO, Failure | Error, GetImagesListForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets Acr images
+ */
+export const useGetImagesListForAcr = (props: UseGetImagesListForAcrProps) =>
+  useGet<ResponseAcrListImagesDTO, Failure | Error, GetImagesListForAcrQueryParams, void>(`/artifacts/acr/getImages`, {
+    base: getConfig('ng/api'),
+    ...props
+  })
+
+/**
+ * Gets Acr images
+ */
+export const getImagesListForAcrPromise = (
+  props: GetUsingFetchProps<ResponseAcrListImagesDTO, Failure | Error, GetImagesListForAcrQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseAcrListImagesDTO, Failure | Error, GetImagesListForAcrQueryParams, void>(
+    getConfig('ng/api'),
+    `/artifacts/acr/getImages`,
+    props,
+    signal
+  )
+
+export interface GetLastSuccessfulBuildForAcrQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type GetLastSuccessfulBuildForAcrProps = Omit<
+  MutateProps<
+    ResponseAcrBuildDetailsDTO,
+    Failure | Error,
+    GetLastSuccessfulBuildForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >,
+  'path' | 'verb'
+>
+
+/**
+ * Gets Acr last successful build
+ */
+export const GetLastSuccessfulBuildForAcr = (props: GetLastSuccessfulBuildForAcrProps) => (
+  <Mutate<
+    ResponseAcrBuildDetailsDTO,
+    Failure | Error,
+    GetLastSuccessfulBuildForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >
+    verb="POST"
+    path={`/artifacts/acr/getLastSuccessfulBuild`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetLastSuccessfulBuildForAcrProps = Omit<
+  UseMutateProps<
+    ResponseAcrBuildDetailsDTO,
+    Failure | Error,
+    GetLastSuccessfulBuildForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >,
+  'path' | 'verb'
+>
+
+/**
+ * Gets Acr last successful build
+ */
+export const useGetLastSuccessfulBuildForAcr = (props: UseGetLastSuccessfulBuildForAcrProps) =>
+  useMutate<
+    ResponseAcrBuildDetailsDTO,
+    Failure | Error,
+    GetLastSuccessfulBuildForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >('POST', `/artifacts/acr/getLastSuccessfulBuild`, { base: getConfig('ng/api'), ...props })
+
+/**
+ * Gets Acr last successful build
+ */
+export const getLastSuccessfulBuildForAcrPromise = (
+  props: MutateUsingFetchProps<
+    ResponseAcrBuildDetailsDTO,
+    Failure | Error,
+    GetLastSuccessfulBuildForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >,
+  signal?: RequestInit['signal']
+) =>
+  mutateUsingFetch<
+    ResponseAcrBuildDetailsDTO,
+    Failure | Error,
+    GetLastSuccessfulBuildForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >('POST', getConfig('ng/api'), `/artifacts/acr/getLastSuccessfulBuild`, props, signal)
+
+export interface ValidateArtifactForAcrQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type ValidateArtifactForAcrProps = Omit<
+  MutateProps<ResponseBoolean, Failure | Error, ValidateArtifactForAcrQueryParams, AcrRequestDTORequestBody, void>,
+  'path' | 'verb'
+>
+
+/**
+ * Validate Acr Artifact
+ */
+export const ValidateArtifactForAcr = (props: ValidateArtifactForAcrProps) => (
+  <Mutate<ResponseBoolean, Failure | Error, ValidateArtifactForAcrQueryParams, AcrRequestDTORequestBody, void>
+    verb="POST"
+    path={`/artifacts/acr/validateArtifact`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseValidateArtifactForAcrProps = Omit<
+  UseMutateProps<ResponseBoolean, Failure | Error, ValidateArtifactForAcrQueryParams, AcrRequestDTORequestBody, void>,
+  'path' | 'verb'
+>
+
+/**
+ * Validate Acr Artifact
+ */
+export const useValidateArtifactForAcr = (props: UseValidateArtifactForAcrProps) =>
+  useMutate<ResponseBoolean, Failure | Error, ValidateArtifactForAcrQueryParams, AcrRequestDTORequestBody, void>(
+    'POST',
+    `/artifacts/acr/validateArtifact`,
+    { base: getConfig('ng/api'), ...props }
+  )
+
+/**
+ * Validate Acr Artifact
+ */
+export const validateArtifactForAcrPromise = (
+  props: MutateUsingFetchProps<
+    ResponseBoolean,
+    Failure | Error,
+    ValidateArtifactForAcrQueryParams,
+    AcrRequestDTORequestBody,
+    void
+  >,
+  signal?: RequestInit['signal']
+) =>
+  mutateUsingFetch<ResponseBoolean, Failure | Error, ValidateArtifactForAcrQueryParams, AcrRequestDTORequestBody, void>(
+    'POST',
+    getConfig('ng/api'),
+    `/artifacts/acr/validateArtifact`,
+    props,
+    signal
+  )
+
+export interface ValidateArtifactServerForAcrQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type ValidateArtifactServerForAcrProps = Omit<
+  GetProps<ResponseBoolean, Failure | Error, ValidateArtifactServerForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Validate Acr artifact server
+ */
+export const ValidateArtifactServerForAcr = (props: ValidateArtifactServerForAcrProps) => (
+  <Get<ResponseBoolean, Failure | Error, ValidateArtifactServerForAcrQueryParams, void>
+    path={`/artifacts/acr/validateArtifactServer`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseValidateArtifactServerForAcrProps = Omit<
+  UseGetProps<ResponseBoolean, Failure | Error, ValidateArtifactServerForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Validate Acr artifact server
+ */
+export const useValidateArtifactServerForAcr = (props: UseValidateArtifactServerForAcrProps) =>
+  useGet<ResponseBoolean, Failure | Error, ValidateArtifactServerForAcrQueryParams, void>(
+    `/artifacts/acr/validateArtifactServer`,
+    { base: getConfig('ng/api'), ...props }
+  )
+
+/**
+ * Validate Acr artifact server
+ */
+export const validateArtifactServerForAcrPromise = (
+  props: GetUsingFetchProps<ResponseBoolean, Failure | Error, ValidateArtifactServerForAcrQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseBoolean, Failure | Error, ValidateArtifactServerForAcrQueryParams, void>(
+    getConfig('ng/api'),
+    `/artifacts/acr/validateArtifactServer`,
+    props,
+    signal
+  )
+
+export interface ValidateArtifactImageForAcrQueryParams {
+  subscription: string
+  registry: string
+  repository: string
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type ValidateArtifactImageForAcrProps = Omit<
+  GetProps<ResponseBoolean, Failure | Error, ValidateArtifactImageForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Validate Acr image
+ */
+export const ValidateArtifactImageForAcr = (props: ValidateArtifactImageForAcrProps) => (
+  <Get<ResponseBoolean, Failure | Error, ValidateArtifactImageForAcrQueryParams, void>
+    path={`/artifacts/acr/validateArtifactSource`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseValidateArtifactImageForAcrProps = Omit<
+  UseGetProps<ResponseBoolean, Failure | Error, ValidateArtifactImageForAcrQueryParams, void>,
+  'path'
+>
+
+/**
+ * Validate Acr image
+ */
+export const useValidateArtifactImageForAcr = (props: UseValidateArtifactImageForAcrProps) =>
+  useGet<ResponseBoolean, Failure | Error, ValidateArtifactImageForAcrQueryParams, void>(
+    `/artifacts/acr/validateArtifactSource`,
+    { base: getConfig('ng/api'), ...props }
+  )
+
+/**
+ * Validate Acr image
+ */
+export const validateArtifactImageForAcrPromise = (
+  props: GetUsingFetchProps<ResponseBoolean, Failure | Error, ValidateArtifactImageForAcrQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseBoolean, Failure | Error, ValidateArtifactImageForAcrQueryParams, void>(
+    getConfig('ng/api'),
+    `/artifacts/acr/validateArtifactSource`,
     props,
     signal
   )

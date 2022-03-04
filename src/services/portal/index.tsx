@@ -21081,6 +21081,135 @@ export const listAwsRegionsPromise = (
     signal
   )
 
+export interface ListAzureSubscriptionsQueryParams {
+  accountId?: string
+}
+
+export type ListAzureSubscriptionsProps = Omit<
+  GetProps<RestResponseListNameValuePair, unknown, ListAzureSubscriptionsQueryParams, void>,
+  'path'
+>
+
+export const ListAzureSubscriptions = (props: ListAzureSubscriptionsProps) => (
+  <Get<RestResponseListNameValuePair, unknown, ListAzureSubscriptionsQueryParams, void>
+    path={`/azurehelper/azure-subscriptions`}
+    base={getConfig('api')}
+    {...props}
+  />
+)
+
+export type UseListAzureSubscriptionsProps = Omit<
+  UseGetProps<RestResponseListNameValuePair, unknown, ListAzureSubscriptionsQueryParams, void>,
+  'path'
+>
+
+export const useListAzureSubscriptions = (props: UseListAzureSubscriptionsProps) =>
+  useGet<RestResponseListNameValuePair, unknown, ListAzureSubscriptionsQueryParams, void>(
+    `/azurehelper/azure-subscriptions`,
+    {
+      base: getConfig('api'),
+      ...props
+    }
+  )
+
+export const listAzureSubscriptionsPromise = (
+  props: GetUsingFetchProps<RestResponseListNameValuePair, unknown, ListAzureSubscriptionsQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<RestResponseListNameValuePair, unknown, ListAzureSubscriptionsQueryParams, void>(
+    getConfig('api'),
+    `/azurehelper/azure-subscriptions`,
+    props,
+    signal
+  )
+
+export interface ListAzureRegistriesQueryParams {
+  accountId?: string
+  subscription?: string
+}
+
+export type ListAzureRegistriesProps = Omit<
+  GetProps<RestResponseListNameValuePair, unknown, ListAzureRegistriesQueryParams, void>,
+  'path'
+>
+
+export const ListAzureRegistries = (props: ListAzureRegistriesProps) => (
+  <Get<RestResponseListNameValuePair, unknown, ListAzureRegistriesQueryParams, void>
+    path={`/azurehelper/azure-registries`}
+    base={getConfig('api')}
+    {...props}
+  />
+)
+
+export type UseListAzureRegistriesProps = Omit<
+  UseGetProps<RestResponseListNameValuePair, unknown, ListAzureRegistriesQueryParams, void>,
+  'path'
+>
+
+export const useListAzureRegistries = (props: UseListAzureRegistriesProps) =>
+  useGet<RestResponseListNameValuePair, unknown, ListAzureRegistriesQueryParams, void>(
+    `/azurehelper/azure-registries`,
+    {
+      base: getConfig('api'),
+      ...props
+    }
+  )
+
+export const listAzureRegistriesPromise = (
+  props: GetUsingFetchProps<RestResponseListNameValuePair, unknown, ListAzureRegistriesQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<RestResponseListNameValuePair, unknown, ListAzureRegistriesQueryParams, void>(
+    getConfig('api'),
+    `/azurehelper/azure-registries`,
+    props,
+    signal
+  )
+
+export interface ListAzureRepositoriesQueryParams {
+  accountId?: string
+  subscription?: string
+  registry?: string
+}
+
+export type ListAzureRepositoriesProps = Omit<
+  GetProps<RestResponseListNameValuePair, unknown, ListAzureRepositoriesQueryParams, void>,
+  'path'
+>
+
+export const ListAzureRepositories = (props: ListAzureRepositoriesProps) => (
+  <Get<RestResponseListNameValuePair, unknown, ListAzureRepositoriesQueryParams, void>
+    path={`/azurehelper/azure-repositories`}
+    base={getConfig('api')}
+    {...props}
+  />
+)
+
+export type UseListAzureRepositoriesProps = Omit<
+  UseGetProps<RestResponseListNameValuePair, unknown, ListAzureRepositoriesQueryParams, void>,
+  'path'
+>
+
+export const useListAzureRepositories = (props: UseListAzureRepositoriesProps) =>
+  useGet<RestResponseListNameValuePair, unknown, ListAzureRepositoriesQueryParams, void>(
+    `/azurehelper/azure-repositories`,
+    {
+      base: getConfig('api'),
+      ...props
+    }
+  )
+
+export const listAzureRepositoriesPromise = (
+  props: GetUsingFetchProps<RestResponseListNameValuePair, unknown, ListAzureRepositoriesQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<RestResponseListNameValuePair, unknown, ListAzureRepositoriesQueryParams, void>(
+    getConfig('api'),
+    `/azurehelper/azure-repositories`,
+    props,
+    signal
+  )
+
 export interface GetDelegateProfilesQueryParams {
   offset?: string
   limit?: string

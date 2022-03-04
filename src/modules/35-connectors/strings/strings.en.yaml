@@ -50,6 +50,7 @@ unableToUpdateConnector: Unable to update Connector
 encryptedAPIKeyLabel: Encrypted API Key
 encryptedAPIKeyValidation: Encrypted API Key is required.
 tenantId: Tenant Id
+subscription: Subscription
 tenantIdRequired: Tenant Id is required
 reportNameRequired: '{{ $.common.reportNameRequired }}'
 connectorAlreadyExist: Connector already exists for the cloud account
@@ -256,11 +257,15 @@ GCR:
   registryHostname: 'GCR Registry URL'
 ACR:
   name: ACR
+  subscription: '{{ $.connectors.subscription }}'
+  registry: 'Registry'
+  registryError: 'No registry found with given Subscription'
+  repositoryError: 'No repository found with given Registry'
 azure:
   clientId: '{{ $.common.clientId }}'
   clientIdPlaceholder: 'Client ID (Application ID)'
   tenantIdPlaceholder: 'Tenant ID (Application ID)'
-  validation: 
+  validation:
     environment: '{{ $.common.validation.environmentIsRequired }}'
     clientId: '{{ $.common.validation.clientIdIsRequired }}'
   environments:
@@ -488,13 +493,13 @@ ceK8:
 azureKeyVault:
   labels:
     tenantId: '{{ $.connectors.tenantId }}'
-    subscription: Subscription
+    subscription: '{{ $.connectors.subscription }}'
     vaultName: Vault Name
     fetchVault: Fetch Vault
     setupVault: Setup Vault
   validation:
     tenantId: '{{ $.connectors.tenantIdRequired }}'
-    subscription: Subscription is required
+    subscription: '{{ $.common.validation.subscription }}'
     vaultName: Vault Name is required
 ceAws:
   steps:

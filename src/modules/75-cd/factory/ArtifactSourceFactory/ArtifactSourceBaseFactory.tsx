@@ -10,6 +10,7 @@ import { DockerArtifactSource } from '@cd/components/PipelineSteps/K8sServiceSpe
 import { ECRArtifactSource } from '@cd/components/PipelineSteps/K8sServiceSpec/ArtifactSource/ECRArtifactSource/ECRArtifactSource'
 import { GCRArtifactSource } from '@cd/components/PipelineSteps/K8sServiceSpec/ArtifactSource/GCRArtifactSource/GCRArtifactSource'
 import { NexusArtifactSource } from '@cd/components/PipelineSteps/K8sServiceSpec/ArtifactSource/NexusArtifactSource/NexusArtifactSource'
+import { ACRArtifactSource } from '@cd/components/PipelineSteps/K8sServiceSpec/ArtifactSource/ACRArtifactSource/ACRArtifactSource'
 import type { ArtifactSourceBase } from './ArtifactSourceBase'
 
 export class ArtifactSourceBaseFactory {
@@ -40,4 +41,6 @@ artifactSourceBaseFactory.registerArtifactSource(new GCRArtifactSource())
 artifactSourceBaseFactory.registerArtifactSource(new ECRArtifactSource())
 artifactSourceBaseFactory.registerArtifactSource(new NexusArtifactSource())
 artifactSourceBaseFactory.registerArtifactSource(new ArtifactoryArtifactSource())
+artifactSourceBaseFactory.registerArtifactSource(new ACRArtifactSource())
+
 export default artifactSourceBaseFactory

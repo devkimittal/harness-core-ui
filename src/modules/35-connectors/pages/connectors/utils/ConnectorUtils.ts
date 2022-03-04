@@ -1864,6 +1864,8 @@ export function GetTestConnectionValidationTextByType(type: ConnectorConfigDTO['
       return getString('connectors.testConnectionStep.validationText.pagerduty')
     case Connectors.SERVICE_NOW:
       return getString('connectors.testConnectionStep.validationText.serviceNow')
+    case Connectors.AZURE:
+      return getString('connectors.testConnectionStep.validationText.azure')
     default:
       return ''
   }
