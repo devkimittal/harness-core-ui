@@ -161,6 +161,8 @@ validation:
   repositoryName: Repository Name is required
   invalidYamlText: 'You have provided invalid or empty YAML. Please provide a valid YAML'
   environmentIsRequired: 'Environment is required'
+  subscription: Subscription is required
+  repository: Repository is required
 specify: Specify
 role: Role
 projectViewer: Project Viewer
@@ -338,7 +340,7 @@ git:
     filePath: '{{$.common.git.filePath}} is required'
     commitMessage: '{{$.common.git.commitMessage}} is required'
     sameBranches: 'Source and target branches cannot be same for a pull request'
-    repoRequired: Repository is required
+    repoRequired: '{{ $.common.validation.repository }}'
     branchRequired: Branch is required
     targetBranch: Target branch is required for a pull request
     baseBranchRequired: Base branch is required
