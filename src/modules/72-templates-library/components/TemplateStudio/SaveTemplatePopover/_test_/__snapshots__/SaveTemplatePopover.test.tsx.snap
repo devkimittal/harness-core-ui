@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SaveTemplatePopover /> tests snapshot test 1`] = `
+exports[`<SaveTemplatePopover /> tests should match snapshot 1`] = `
 <div>
   <span
     class="bp3-popover-wrapper main"

@@ -13,70 +13,63 @@ import { TemplateContext } from '@templates-library/components/TemplateStudio/Te
 import { DefaultNewTemplateId } from 'framework/Templates/templates'
 import routes from '@common/RouteDefinitions'
 import { accountPathProps, pipelineModuleParams, templatePathProps } from '@common/utils/routeUtils'
-import templateContextMock from '@templates-library/components/TemplateStudio/SaveTemplatePopover/_test_/stateMock'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
+import { getTemplateContextMock } from '@templates-library/components/TemplateStudio/__tests__/stateMock'
 import { SaveTemplatePopover } from '../SaveTemplatePopover'
 
+const PATH = routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })
+const PATH_PARAMS = {
+  templateIdentifier: 'Test_Template',
+  accountId: 'accountId',
+  orgIdentifier: 'orgIdentifier',
+  projectIdentifier: 'projectIdentifier',
+  module: 'cd',
+  templateType: 'Step'
+}
+
+const stepTemplateContextMock = getTemplateContextMock(TemplateType.Step)
+
 describe('<SaveTemplatePopover /> tests', () => {
-  test('snapshot test', async () => {
+  test('should match snapshot', async () => {
     const { container } = render(
-      <TemplateContext.Provider value={templateContextMock}>
-        <TestWrapper>
+      <TestWrapper path={PATH} pathParams={PATH_PARAMS}>
+        <TemplateContext.Provider value={stepTemplateContextMock}>
           <SaveTemplatePopover />
-        </TestWrapper>
-      </TemplateContext.Provider>
+        </TemplateContext.Provider>
+      </TestWrapper>
     )
     expect(container).toMatchSnapshot()
   })
+
   test('should not show popover on click when creating a template', async () => {
     const { getByText } = render(
-      <TemplateContext.Provider value={templateContextMock}>
-        <TestWrapper
-          path={routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })}
-          pathParams={{
-            templateIdentifier: DefaultNewTemplateId,
-            accountId: 'accountId',
-            orgIdentifier: 'orgIdentifier',
-            projectIdentifier: 'projectIdentifier',
-            module: 'cd',
-            templateType: 'Step'
-          }}
-        >
+      <TestWrapper path={PATH} pathParams={{ ...PATH_PARAMS, templateIdentifier: DefaultNewTemplateId }}>
+        <TemplateContext.Provider value={stepTemplateContextMock}>
           <SaveTemplatePopover />
-        </TestWrapper>
-      </TemplateContext.Provider>
+        </TemplateContext.Provider>
+      </TestWrapper>
     )
 
     const saveButton = getByText('save')
-    expect(saveButton).toBeTruthy()
-    await act(async () => {
+    act(() => {
       fireEvent.click(saveButton)
     })
 
     const popover = findPopoverContainer()
     expect(popover).not.toBeTruthy()
   })
+
   test('should show popover on click when editing a template', async () => {
     const { getByText } = render(
-      <TemplateContext.Provider value={templateContextMock}>
-        <TestWrapper
-          path={routes.toTemplateStudio({ ...accountPathProps, ...templatePathProps, ...pipelineModuleParams })}
-          pathParams={{
-            templateIdentifier: 'templateIdentifier',
-            accountId: 'accountId',
-            orgIdentifier: 'orgIdentifier',
-            projectIdentifier: 'projectIdentifier',
-            module: 'cd',
-            templateType: 'Step'
-          }}
-        >
+      <TestWrapper path={PATH} pathParams={PATH_PARAMS}>
+        <TemplateContext.Provider value={stepTemplateContextMock}>
           <SaveTemplatePopover />
-        </TestWrapper>
-      </TemplateContext.Provider>
+        </TemplateContext.Provider>
+      </TestWrapper>
     )
 
     const saveButton = getByText('save')
-    expect(saveButton).toBeTruthy()
-    await act(async () => {
+    act(() => {
       fireEvent.click(saveButton)
     })
 

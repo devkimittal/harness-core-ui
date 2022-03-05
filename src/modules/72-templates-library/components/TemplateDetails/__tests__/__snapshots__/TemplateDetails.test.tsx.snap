@@ -463,10 +463,5 @@ exports[`<TemplateDetails /> tests should match snapshot 1`] = `
       </div>
     </div>
   </div>
-  <div
-    data-testid="location"
-  >
-    /
-  </div>
 </div>
 `;

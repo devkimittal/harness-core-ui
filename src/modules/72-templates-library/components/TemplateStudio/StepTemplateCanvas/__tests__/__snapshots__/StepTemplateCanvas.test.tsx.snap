@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StepTemplateCanvas /> test Should match snapshot 1`] = `
+<div>
+  <div
+    class="SplitPane  horizontal "
+    style="display: flex; flex: 1; height: 100%; position: absolute; outline: none; overflow: auto; user-select: text; bottom: 0px; flex-direction: column; min-height: 100%; top: 0px; width: 100%;"
+  >
+    <div
+      class="Pane horizontal Pane1  "
+      style="flex: 0 0 auto; position: relative; outline: none; height: 200px; display: flex;"
+    >
+      <div
+        class="step-template-diagram-mock"
+      />
+    </div>
+    <span
+      class="Resizer horizontal "
+      role="presentation"
+      style="display: inline-table;"
+    />
+    <div
+      class="Pane horizontal Pane2  "
+      style="flex: 1; position: relative; outline: none; overflow: initial; z-index: 2;"
+    >
+      <div
+        class="step-template-form-mock"
+      />
+    </div>
+  </div>
+</div>
+`;

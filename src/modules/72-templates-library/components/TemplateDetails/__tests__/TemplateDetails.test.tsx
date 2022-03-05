@@ -7,12 +7,11 @@
 
 import React from 'react'
 import { act, fireEvent, render } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 import { TestWrapper } from '@common/utils/testUtils'
 import MonacoEditor from '@common/components/MonacoEditor/__mocks__/MonacoEditor'
 import { mockTemplates, mockTemplatesSuccessResponse } from '@templates-library/TemplatesTestHelper'
-import { TemplateDetails, TemplateDetailsProps } from '../TemplateDetails'
+import { TemplateDetails } from '../TemplateDetails'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 jest.mock('@wings-software/monaco-yaml/lib/esm/languageservice/yamlLanguageService', () => ({
@@ -35,24 +34,15 @@ jest.mock('react-monaco-editor', () => ({
 
 jest.mock('@common/components/MonacoEditor/MonacoEditor', () => MonacoEditor)
 
-function ComponentWrapper(props: TemplateDetailsProps): React.ReactElement {
-  const location = useLocation()
-  return (
-    <React.Fragment>
-      <TemplateDetails {...props} />
-      <div data-testid="location">{`${location.pathname}${location.search}`}</div>
-    </React.Fragment>
-  )
+const baseProps = {
+  template: defaultTo(mockTemplates?.data?.content?.[0], {})
 }
 
 describe('<TemplateDetails /> tests', () => {
-  const baseProps = {
-    template: defaultTo(mockTemplates?.data?.content?.[0], {})
-  }
   test('should match snapshot', async () => {
     const { container } = render(
       <TestWrapper>
-        <ComponentWrapper {...baseProps} />
+        <TemplateDetails {...baseProps} />
       </TestWrapper>
     )
     expect(container).toMatchSnapshot()
@@ -61,7 +51,7 @@ describe('<TemplateDetails /> tests', () => {
   test('should show selected version label', async () => {
     const { getByTestId } = render(
       <TestWrapper>
-        <ComponentWrapper {...baseProps} allowStableSelection={true} />
+        <TemplateDetails {...baseProps} allowStableSelection={true} />
       </TestWrapper>
     )
     const dropValue = getByTestId('dropdown-value')
@@ -71,11 +61,11 @@ describe('<TemplateDetails /> tests', () => {
   test('should open template studio on clicking open in template studio', async () => {
     const { getByRole, getByTestId } = render(
       <TestWrapper>
-        <ComponentWrapper {...baseProps} />
+        <TemplateDetails {...baseProps} />
       </TestWrapper>
     )
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(getByRole('button', { name: 'templatesLibrary.openInTemplateStudio' }))
     })
     expect(getByTestId('location')).toMatchInlineSnapshot(`

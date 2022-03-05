@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StepTemplateForm /> tests should match snapshop 1`] = `
+<div>
+  <div
+    class="StyledProps--font StyledProps--main StyledProps--background-form"
+  >
+    <div
+      class="step-commands-mock"
+    >
+      <button>
+        onChange Button
+      </button>
+    </div>
+  </div>
+</div>
+`;

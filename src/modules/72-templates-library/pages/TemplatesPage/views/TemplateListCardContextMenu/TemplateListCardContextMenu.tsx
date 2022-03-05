@@ -19,7 +19,7 @@ import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
 import type { TemplateStudioPathProps } from '@common/interfaces/RouteInterfaces'
 import css from './TemplateListCardContextMenu.module.scss'
 
-interface ContextMenuProps extends PopoverProps {
+export interface ContextMenuProps extends PopoverProps {
   template: TemplateSummaryResponse
   onPreview?: (template: TemplateSummaryResponse) => void
   onOpenEdit?: (template: TemplateSummaryResponse) => void

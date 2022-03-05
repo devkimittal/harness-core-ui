@@ -60,7 +60,7 @@ interface TemplateWithGitContextFormProps extends NGTemplateInfoConfig {
   branch?: string
 }
 
-interface TemplateStudioSubHeaderLeftViewProps {
+export interface TemplateStudioSubHeaderLeftViewProps {
   onGitBranchChange?: (selectedFilter: GitFilterScope) => void
 }
 
