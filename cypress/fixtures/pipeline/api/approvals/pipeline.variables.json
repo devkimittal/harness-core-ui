@@ -1,0 +1,82 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "yaml": "---\npipeline:\n  name: \"zblhcUTNTACQ_5kUxHDs0g\"\n  identifier: \"test123\"\n  projectIdentifier: \"7Oi45FSpRDenEXB5eHeGSw\"\n  orgIdentifier: \"5pfAVj-jROCP08nUZXF47Q\"\n  tags:\n    __uuid: \"TuCRSeMbTXqb5ZFcG94BeA\"\n  stages:\n  - stage:\n      name: \"Ux0UG8nVSweuyLJQcohMPw\"\n      identifier: \"test\"\n      description: \"XblaR0xTSeeAFg5VAHzgGg\"\n      type: \"Approval\"\n      spec:\n        execution:\n          steps:\n          - step:\n              name: \"b6UDv3P5Sy-OduCzc0zqOA\"\n              identifier: \"approval\"\n              type: \"HarnessApproval\"\n              timeout: \"GJa--FoFTFWrZBrC7RrlyA\"\n              spec:\n                approvalMessage: \"r2HwBcoVSfuW1qzFr9lIQw\"\n                includePipelineExecutionHistory: \"Av4wbpPqSG-3RAd8JzvJ0g\"\n                approvers:\n                  minimumCount: \"fgIYAs7mTqu-NB6JkboPWg\"\n                  disallowPipelineExecutor: \"Kuux98-zTMKAM2cOkMo1iw\"\n                  __uuid: \"RXNZVQU1RTy5B44l_mgtfQ\"\n                __uuid: \"tjdr3AC9QHmYS-lVEUTwVw\"\n              __uuid: \"XUKcGjuyRFmLKQkxnd7QMg\"\n            __uuid: \"lKUmQuKgT3iLI6Rf_Tvrdw\"\n          __uuid: \"xIaAJvS8RhmwrN-tTtsd4Q\"\n        __uuid: \"m26CwdI-TdGZ54ftIVqUzQ\"\n      tags:\n        __uuid: \"ZyoSEuM3RiqBrK4Y8z62pg\"\n      failureStrategies: \"bHxnFI76QPe6AddYuJi6AA\"\n      __uuid: \"4TfgQumQQjKZgUifYRr10Q\"\n    __uuid: \"UkGXLeN9Q--Kc4CxEGtYew\"\n  __uuid: \"4Lxax3WKTMeAz4GbBq_KdA\"\n__uuid: \"WhJolc-gSxuTh_LS16Jabg\"\n",
+    "metadataMap": {
+      "r2HwBcoVSfuW1qzFr9lIQw": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.spec.execution.steps.approval.spec.approvalMessage",
+          "localName": "execution.steps.approval.spec.approvalMessage"
+        },
+        "yamlOutputProperties": null
+      },
+      "b6UDv3P5Sy-OduCzc0zqOA": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.spec.execution.steps.approval.name",
+          "localName": "execution.steps.approval.name"
+        },
+        "yamlOutputProperties": null
+      },
+      "Ux0UG8nVSweuyLJQcohMPw": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.name",
+          "localName": "stage.name"
+        },
+        "yamlOutputProperties": null
+      },
+      "XblaR0xTSeeAFg5VAHzgGg": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.description",
+          "localName": "stage.description"
+        },
+        "yamlOutputProperties": null
+      },
+      "GJa--FoFTFWrZBrC7RrlyA": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.spec.execution.steps.approval.timeout",
+          "localName": "execution.steps.approval.timeout"
+        },
+        "yamlOutputProperties": null
+      },
+      "Av4wbpPqSG-3RAd8JzvJ0g": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.spec.execution.steps.approval.spec.includePipelineExecutionHistory",
+          "localName": "execution.steps.approval.spec.includePipelineExecutionHistory"
+        },
+        "yamlOutputProperties": null
+      },
+      "XUKcGjuyRFmLKQkxnd7QMg": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test.spec.execution.steps.approval",
+          "localName": "step"
+        },
+        "yamlOutputProperties": null
+      },
+      "4Lxax3WKTMeAz4GbBq_KdA": {
+        "yamlProperties": {
+          "fqn": "pipeline",
+          "localName": "pipeline"
+        },
+        "yamlOutputProperties": null
+      },
+      "zblhcUTNTACQ_5kUxHDs0g": {
+        "yamlProperties": {
+          "fqn": "pipeline.name",
+          "localName": "pipeline.name"
+        },
+        "yamlOutputProperties": null
+      },
+      "4TfgQumQQjKZgUifYRr10Q": {
+        "yamlProperties": {
+          "fqn": "pipeline.stages.test",
+          "localName": "stage"
+        },
+        "yamlOutputProperties": null
+      }
+    },
+    "errorResponses": null,
+    "serviceExpressionPropertiesList": []
+  },
+  "metaData": null,
+  "correlationId": "c97ef8e5-ca7a-4d6a-829d-fd5a6e8fb8fc"
+}
