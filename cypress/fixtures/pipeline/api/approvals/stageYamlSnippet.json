@@ -1,0 +1,6 @@
+{
+  "status": "SUCCESS",
+  "data": "spec:\n  execution:\n    steps:\n      - step:\n          name: \"Approval\"\n          identifier: approval\n          type: HarnessApproval\n          timeout: 1d\n          spec:\n            approvalMessage: |-\n              Please review the following information\n              and approve the pipeline progression\n            includePipelineExecutionHistory: true\n            approvers:\n              minimumCount: 1\n              disallowPipelineExecutor: false\n",
+  "metaData": null,
+  "correlationId": "8fdc0af8-9a64-447e-bf73-e444f3e80d42"
+}
