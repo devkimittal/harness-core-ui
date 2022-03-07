@@ -1,0 +1,125 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "name": "Library",
+    "stepsData": [],
+    "stepCategories": [
+      {
+        "name": "Continuous Deployment",
+        "stepsData": [],
+        "stepCategories": [
+          {
+            "name": "Utilities",
+            "stepsData": [],
+            "stepCategories": [
+              {
+                "name": "Scripted",
+                "stepsData": [
+                  {
+                    "name": "Shell Script",
+                    "type": "ShellScript",
+                    "disabled": false,
+                    "featureRestrictionName": null
+                  }
+                ],
+                "stepCategories": []
+              },
+              {
+                "name": "Non-Scripted",
+                "stepsData": [
+                  {
+                    "name": "HTTP",
+                    "type": "Http",
+                    "disabled": false,
+                    "featureRestrictionName": null
+                  }
+                ],
+                "stepCategories": []
+              }
+            ]
+          },
+          {
+            "name": "Approval",
+            "stepsData": [
+              {
+                "name": "Harness Approval",
+                "type": "HarnessApproval",
+                "disabled": false,
+                "featureRestrictionName": "INTEGRATED_APPROVALS_WITH_HARNESS_UI"
+              },
+              {
+                "name": "Jira Approval",
+                "type": "JiraApproval",
+                "disabled": false,
+                "featureRestrictionName": "INTEGRATED_APPROVALS_WITH_JIRA"
+              },
+              {
+                "name": "ServiceNow Approval",
+                "type": "ServiceNowApproval",
+                "disabled": false,
+                "featureRestrictionName": "INTEGRATED_APPROVALS_WITH_SERVICE_NOW"
+              }
+            ],
+            "stepCategories": []
+          },
+          {
+            "name": "Jira",
+            "stepsData": [
+              {
+                "name": "Jira Create",
+                "type": "JiraCreate",
+                "disabled": false,
+                "featureRestrictionName": "INTEGRATED_APPROVALS_WITH_JIRA"
+              },
+              {
+                "name": "Jira Update",
+                "type": "JiraUpdate",
+                "disabled": false,
+                "featureRestrictionName": "INTEGRATED_APPROVALS_WITH_JIRA"
+              }
+            ],
+            "stepCategories": []
+          },
+          {
+            "name": "FlowControl",
+            "stepsData": [],
+            "stepCategories": [
+              {
+                "name": "Barrier",
+                "stepsData": [
+                  {
+                    "name": "Barrier",
+                    "type": "Barrier",
+                    "disabled": false,
+                    "featureRestrictionName": null
+                  }
+                ],
+                "stepCategories": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Continuous Verification",
+        "stepsData": [],
+        "stepCategories": [
+          {
+            "name": "Continuous Verification",
+            "stepsData": [
+              {
+                "name": "Verify",
+                "type": "Verify",
+                "disabled": false,
+                "featureRestrictionName": null
+              }
+            ],
+            "stepCategories": []
+          }
+        ]
+      }
+    ]
+  },
+  "metaData": null,
+  "correlationId": "24cf07fb-6136-428c-9e07-ba0822602a2f"
+}
