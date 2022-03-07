@@ -1,0 +1,578 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "totalPages": 1,
+    "totalItems": 15,
+    "pageItemCount": 15,
+    "pageSize": 50,
+    "content": [
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "test",
+          "name": "test",
+          "users": [],
+          "notificationConfigs": [],
+          "linkedSsoId": "c3QK_BW1Qim-cHvnLGhVYg",
+          "linkedSsoDisplayName": "test",
+          "ssoGroupId": "sdfsdfsfsdfsdfsdf",
+          "ssoGroupName": "sdfsdfsfsdfsdfsdf",
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": true
+        },
+        "users": [],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1645514334626
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "PrateekTest001",
+          "name": "PrateekTest001",
+          "users": [],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1644483708489
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "testug",
+          "name": "testug",
+          "users": ["HhZfN7DzRXSE0Oz4FEx_RQ"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "Kapil Digani",
+            "email": "kapil.digani+5@harness.io",
+            "uuid": "HhZfN7DzRXSE0Oz4FEx_RQ",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1644401854835
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "VenkatUG",
+          "name": "VenkatUG",
+          "users": ["KosDjkd1SoalrHauRgtBXQ", "A4u4UL57Td6Ghqj-sWFmAg", "DIzykli0SnuaYnpa5RVvFg"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "ramya.maripuri@harness.io",
+            "email": "ramya.maripuri@harness.io",
+            "uuid": "DIzykli0SnuaYnpa5RVvFg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "Mounik V V S S",
+            "email": "mounik.velavalivenkata@harness.io",
+            "uuid": "A4u4UL57Td6Ghqj-sWFmAg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "venkata.reddy@harness.io",
+            "email": "venkata.reddy@harness.io",
+            "uuid": "KosDjkd1SoalrHauRgtBXQ",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": [
+          {
+            "identifier": "role_assignment_3wvCstqbtPcn93eQSclg",
+            "roleIdentifier": "_account_admin",
+            "roleName": "Account Admin",
+            "resourceGroupIdentifier": "_all_resources_including_child_scopes",
+            "resourceGroupName": "All Resources Including Child Scopes",
+            "managedRole": true,
+            "managedRoleAssignment": false
+          }
+        ],
+        "lastModifiedAt": 1643024248459
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "scimtest",
+          "name": "scimtest",
+          "users": ["wJtuH-elSN2G3i8unbGH7A", "-i97UvqORIq937E0caMDcA"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "madhusudan.khoradiya@harness.io",
+            "email": "madhusudan.khoradiya@harness.io",
+            "uuid": "-i97UvqORIq937E0caMDcA",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "ujjawal.prasad@harness.io",
+            "email": "ujjawal.prasad@harness.io",
+            "uuid": "wJtuH-elSN2G3i8unbGH7A",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1642589148267
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "PUG001",
+          "name": "PUG001",
+          "users": [],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1642479761772
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "Test_user_group",
+          "name": "Test user group",
+          "users": ["IiTQTBpDThy-08JmIBCJXg"],
+          "notificationConfigs": [
+            {
+              "type": "EMAIL",
+              "groupEmail": "yuen.choi@harness.io"
+            }
+          ],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "yuen.choi@harness.io",
+            "email": "yuen.choi@harness.io",
+            "uuid": "IiTQTBpDThy-08JmIBCJXg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": [
+          {
+            "identifier": "role_assignment_MwxJMXXfWZiTtcrQlA61",
+            "roleIdentifier": "Special_Account_Level_Role",
+            "roleName": "Special Account Level Role",
+            "resourceGroupIdentifier": "Custom_Resource_Group",
+            "resourceGroupName": "Custom Resource Group",
+            "managedRole": false,
+            "managedRoleAssignment": false
+          },
+          {
+            "identifier": "role_assignment_1RRCxoEMewqyLix5ptIx",
+            "roleIdentifier": "_feature_flag_manage_role",
+            "roleName": "Feature Flag Manage Role",
+            "resourceGroupIdentifier": "Custom_Resource_Group",
+            "resourceGroupName": "Custom Resource Group",
+            "managedRole": true,
+            "managedRoleAssignment": false
+          },
+          {
+            "identifier": "role_assignment_cn4RETdHAM8gqDcbbY82",
+            "roleIdentifier": "_account_viewer",
+            "roleName": "Account Viewer",
+            "resourceGroupIdentifier": "_all_account_level_resources",
+            "resourceGroupName": "All Account Level Resources",
+            "managedRole": true,
+            "managedRoleAssignment": false
+          }
+        ],
+        "lastModifiedAt": 1641278898231
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "venkatUG123",
+          "name": "venkatUG123",
+          "users": ["KosDjkd1SoalrHauRgtBXQ", "A4u4UL57Td6Ghqj-sWFmAg"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "Mounik V V S S",
+            "email": "mounik.velavalivenkata@harness.io",
+            "uuid": "A4u4UL57Td6Ghqj-sWFmAg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "venkata.reddy@harness.io",
+            "email": "venkata.reddy@harness.io",
+            "uuid": "KosDjkd1SoalrHauRgtBXQ",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1640006636134
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "ug1",
+          "name": "User Group 1",
+          "users": ["OYZmp6-pQ4KBqvWIimoszw", "ODGah_FfQv--OlUmjcHGng", "8adNeKMRSn69WTL5S_uc2g"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "User Group 1",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "Sergey",
+            "email": "sergey.bobrov@harness.io",
+            "uuid": "8adNeKMRSn69WTL5S_uc2g",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "William Wissemann",
+            "email": "william.wissemann@harness.io",
+            "uuid": "ODGah_FfQv--OlUmjcHGng",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "Hodaya Gamliel",
+            "email": "hodaya.gamliel@harness.io",
+            "uuid": "OYZmp6-pQ4KBqvWIimoszw",
+            "locked": true,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1637340557364
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "Chirag_Account_UG",
+          "name": "Chirag Account UG",
+          "users": [
+            "E6racA1LRja2zxWqF_vvUg",
+            "3a--w_XwQ1uL69RXqFIeYA",
+            "OYZmp6-pQ4KBqvWIimoszw",
+            "ODGah_FfQv--OlUmjcHGng",
+            "8adNeKMRSn69WTL5S_uc2g"
+          ],
+          "notificationConfigs": [
+            {
+              "type": "EMAIL",
+              "groupEmail": "chirag.parihar@harness.io"
+            }
+          ],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "Sergey",
+            "email": "sergey.bobrov@harness.io",
+            "uuid": "8adNeKMRSn69WTL5S_uc2g",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "William Wissemann",
+            "email": "william.wissemann@harness.io",
+            "uuid": "ODGah_FfQv--OlUmjcHGng",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "Hodaya Gamliel",
+            "email": "hodaya.gamliel@harness.io",
+            "uuid": "OYZmp6-pQ4KBqvWIimoszw",
+            "locked": true,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "sahil.hindwani@harness.io",
+            "email": "sahil.hindwani@harness.io",
+            "uuid": "3a--w_XwQ1uL69RXqFIeYA",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "chirag.parihar@harness.io",
+            "email": "chirag.parihar@harness.io",
+            "uuid": "E6racA1LRja2zxWqF_vvUg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1637340557352
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "ug_hello",
+          "name": "ug hello",
+          "users": [
+            "0pApcUnmT12ft5u_B58cqQ",
+            "_QYNE3g7Rhiq-MkVN0G0Bg",
+            "TszppQ2DRsKMFXul_TGfBw",
+            "tyYb8m9ES9K709NkjHBvsg",
+            "qLoUBt8BTu6CvVgZECQoYg",
+            "U0ovlhO3RZGxDMzQSnA9jQ"
+          ],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "default",
+            "email": "default@harness.io",
+            "uuid": "U0ovlhO3RZGxDMzQSnA9jQ",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "milos.milenovic@harness.io",
+            "email": "milos.milenovic@harness.io",
+            "uuid": "qLoUBt8BTu6CvVgZECQoYg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "mile.ignjatovic@harness.io",
+            "email": "mile.ignjatovic@harness.io",
+            "uuid": "tyYb8m9ES9K709NkjHBvsg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "devanshu.agarwal@harness.io",
+            "email": "devanshu.agarwal@harness.io",
+            "uuid": "TszppQ2DRsKMFXul_TGfBw",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "deepesh.kumar@harness.io",
+            "email": "deepesh.kumar@harness.io",
+            "uuid": "_QYNE3g7Rhiq-MkVN0G0Bg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "arvind.choudhary@harness.io",
+            "email": "arvind.choudhary@harness.io",
+            "uuid": "0pApcUnmT12ft5u_B58cqQ",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1633430737762
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "asdfs",
+          "name": "asdfs",
+          "users": [
+            "-EuwbW1wRlC58bFdoKXR5w",
+            "-i97UvqORIq937E0caMDcA",
+            "0M16zKRdQrqUQ_F8cfqdAA",
+            "0RlCHpupTjqKt2HHf4sANA"
+          ],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "rohit kumar",
+            "email": "rohit.kumar@harness.io",
+            "uuid": "0RlCHpupTjqKt2HHf4sANA",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "hitesh.aringa@harness.io",
+            "email": "hitesh.aringa@harness.io",
+            "uuid": "0M16zKRdQrqUQ_F8cfqdAA",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "madhusudan.khoradiya@harness.io",
+            "email": "madhusudan.khoradiya@harness.io",
+            "uuid": "-i97UvqORIq937E0caMDcA",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          },
+          {
+            "name": "Nathan Nguyen",
+            "email": "lenathan.nguyen@harness.io",
+            "uuid": "-EuwbW1wRlC58bFdoKXR5w",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1627454068433
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "abcd",
+          "name": "abcd",
+          "users": ["AS66_cBIRnmaB-o0d6N6rg"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "swaraj.cheguri@harness.io",
+            "email": "swaraj.cheguri@harness.io",
+            "uuid": "AS66_cBIRnmaB-o0d6N6rg",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1627453342815
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "arvindtest",
+          "name": "arvind-test",
+          "users": ["0pApcUnmT12ft5u_B58cqQ"],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [
+          {
+            "name": "arvind.choudhary@harness.io",
+            "email": "arvind.choudhary@harness.io",
+            "uuid": "0pApcUnmT12ft5u_B58cqQ",
+            "locked": false,
+            "disabled": false,
+            "externallyManaged": false
+          }
+        ],
+        "roleAssignmentsMetadataDTO": null,
+        "lastModifiedAt": 1618922618756
+      },
+      {
+        "userGroupDTO": {
+          "accountIdentifier": "px7xd_BFRCi-pfWPYXVjvw",
+          "identifier": "ug2",
+          "name": "User Group 2",
+          "users": [],
+          "notificationConfigs": [],
+          "externallyManaged": false,
+          "description": "User Group 2",
+          "tags": {},
+          "ssoLinked": false
+        },
+        "users": [],
+        "roleAssignmentsMetadataDTO": [
+          {
+            "identifier": "role_assignment_gJr96eEwOBjB12ohztlm",
+            "roleIdentifier": "_account_viewer",
+            "roleName": "Account Viewer",
+            "resourceGroupIdentifier": "_all_account_level_resources",
+            "resourceGroupName": "All Account Level Resources",
+            "managedRole": true,
+            "managedRoleAssignment": false
+          }
+        ],
+        "lastModifiedAt": 1617963035052
+      }
+    ],
+    "pageIndex": 0,
+    "empty": false
+  },
+  "metaData": null,
+  "correlationId": "8d1443f2-c568-498e-8b63-867797bb4f1b"
+}
