@@ -14,7 +14,7 @@ import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import { TemplatesListView } from '@templates-library/pages/TemplatesPage/views/TemplatesListView/TemplatesListView'
 
 export interface TemplatesViewProps {
-  data?: PageTemplateSummaryResponse
+  data: PageTemplateSummaryResponse
   selectedIdentifier?: string
   gotoPage: (pageNumber: number) => void
   onSelect: (template: TemplateSummaryResponse) => void

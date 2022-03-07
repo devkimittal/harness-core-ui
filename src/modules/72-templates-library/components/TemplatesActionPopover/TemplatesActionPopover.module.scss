@@ -26,27 +26,20 @@
             p {
               color: var(--grey-100) !important;
             }
-
             :global(.bp3-icon) {
               color: var(--grey-200) !important;
             }
-
             &.active {
               background: var(--primary-7);
-
               p {
                 color: var(--white) !important;
               }
             }
-
             &.disabled {
-              cursor: not-allowed;
-
               p {
                 color: var(--grey-400) !important;
               }
             }
-
             &:hover:local:not(.active, .disabled) {
               background-color: rgba(138, 155, 168, 0.15) !important;
             }
@@ -100,7 +93,7 @@
               }
             }
             &.disabled {
-              cursor: not-allowed;
+              pointer-events: none;
               p {
                 color: var(--grey-400) !important;
               }

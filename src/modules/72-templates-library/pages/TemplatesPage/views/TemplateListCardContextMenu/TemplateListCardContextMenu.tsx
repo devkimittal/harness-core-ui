@@ -6,12 +6,16 @@
  */
 
 import React from 'react'
-import { Button, IconName } from '@wings-software/uicore'
+import { Button } from '@wings-software/uicore'
 import type { PopoverProps } from '@wings-software/uicore/dist/components/Popover/Popover'
 import { useParams } from 'react-router-dom'
 import { Classes } from '@blueprintjs/core'
+import { defaultTo } from 'lodash-es'
 import { useStrings } from 'framework/strings'
-import { TemplatesActionPopover } from '@templates-library/components/TemplatesActionPopover/TemplatesActionPopover'
+import {
+  TemplateMenuItem,
+  TemplatesActionPopover
+} from '@templates-library/components/TemplatesActionPopover/TemplatesActionPopover'
 import type { TemplateSummaryResponse } from 'services/template-ng'
 import { usePermission } from '@rbac/hooks/usePermission'
 import { ResourceType } from '@rbac/interfaces/ResourceType'
@@ -21,10 +25,10 @@ import css from './TemplateListCardContextMenu.module.scss'
 
 export interface ContextMenuProps extends PopoverProps {
   template: TemplateSummaryResponse
-  onPreview?: (template: TemplateSummaryResponse) => void
-  onOpenEdit?: (template: TemplateSummaryResponse) => void
-  onOpenSettings?: (templateIdentifier: string) => void
-  onDelete?: (template: TemplateSummaryResponse) => void
+  onPreview: (template: TemplateSummaryResponse) => void
+  onOpenEdit: (template: TemplateSummaryResponse) => void
+  onOpenSettings: (templateIdentifier: string) => void
+  onDelete: (template: TemplateSummaryResponse) => void
   className?: string
 }
 
@@ -52,14 +56,14 @@ export const TemplateListCardContextMenu: React.FC<ContextMenuProps> = (props): 
     },
     [orgIdentifier, projectIdentifier, accountId, templateIdentifier]
   )
-  const getItems = (): { icon: IconName; label: string; disabled: boolean; onClick: () => void }[] => {
+  const items = React.useMemo((): TemplateMenuItem[] => {
     return [
       {
         icon: 'main-view',
         label: getString('connectors.ceAws.crossAccountRoleExtention.step1.p2'),
         disabled: !canView,
         onClick: () => {
-          onPreview?.(template)
+          onPreview(template)
         }
       },
       {
@@ -67,7 +71,7 @@ export const TemplateListCardContextMenu: React.FC<ContextMenuProps> = (props): 
         label: getString('templatesLibrary.openEditTemplate'),
         disabled: !canEdit,
         onClick: () => {
-          onOpenEdit?.(template)
+          onOpenEdit(template)
         }
       },
       {
@@ -75,7 +79,7 @@ export const TemplateListCardContextMenu: React.FC<ContextMenuProps> = (props): 
         label: getString('templatesLibrary.templateSettings'),
         disabled: !canEdit,
         onClick: () => {
-          onOpenSettings?.(template.identifier || '')
+          onOpenSettings(defaultTo(template.identifier, ''))
         }
       },
       {
@@ -83,16 +87,16 @@ export const TemplateListCardContextMenu: React.FC<ContextMenuProps> = (props): 
         label: getString('templatesLibrary.deleteTemplate'),
         disabled: !canDelete,
         onClick: () => {
-          onDelete?.(template)
+          onDelete(template)
         }
       }
     ]
-  }
+  }, [canView, canEdit, canDelete, onPreview, onOpenEdit, onOpenSettings, onDelete, template])
 
   return (
     <TemplatesActionPopover
       open={menuOpen}
-      items={getItems()}
+      items={items}
       setMenuOpen={setMenuOpen}
       className={className}
       portalClassName={Classes.DARK}

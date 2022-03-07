@@ -9,6 +9,7 @@ import React from 'react'
 import type { CellProps, Column, Renderer } from 'react-table'
 import { Color, Container, Layout, TableV2, Text } from '@wings-software/uicore'
 import { Position } from '@blueprintjs/core'
+import { defaultTo } from 'lodash-es'
 import { TemplateListCardContextMenu } from '@templates-library/pages/TemplatesPage/views/TemplateListCardContextMenu/TemplateListCardContextMenu'
 import { useStrings } from 'framework/strings'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'
@@ -18,6 +19,7 @@ import type { TemplatesViewProps } from '@templates-library/pages/TemplatesPage/
 import { TagsPopover } from '@common/components'
 import { Badge } from '@pipeline/pages/utils/Badge/Badge'
 import GitDetailsColumn from '@common/components/Table/GitDetailsColumn/GitDetailsColumn'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
 import css from './TemplatesListView.module.scss'
 
 type CustomColumn<T extends Record<string, any>> = Column<T> & {
@@ -25,21 +27,25 @@ type CustomColumn<T extends Record<string, any>> = Column<T> & {
   onOpenEdit?: (template: TemplateSummaryResponse) => void
   onOpenSettings?: (templateIdentifier: string) => void
   onDelete?: (template: TemplateSummaryResponse) => void
-  onDeleteTemplate?: (commitMsg: string, versions?: string[]) => Promise<void>
 }
 
 const RenderColumnMenu: Renderer<CellProps<TemplateSummaryResponse>> = ({ row, column }) => {
   const data = row.original
-
+  const onPreview = (column as CustomColumn<TemplateSummaryResponse>).onPreview
+  const onOpenEdit = (column as CustomColumn<TemplateSummaryResponse>).onOpenEdit
+  const onOpenSettings = (column as CustomColumn<TemplateSummaryResponse>).onOpenSettings
+  const onDelete = (column as CustomColumn<TemplateSummaryResponse>).onDelete
   return (
     <Layout.Horizontal style={{ justifyContent: 'flex-end' }}>
-      <TemplateListCardContextMenu
-        template={data}
-        onPreview={(column as CustomColumn<TemplateSummaryResponse>).onPreview}
-        onOpenEdit={(column as CustomColumn<TemplateSummaryResponse>).onOpenEdit}
-        onOpenSettings={(column as CustomColumn<TemplateSummaryResponse>).onOpenSettings}
-        onDelete={(column as CustomColumn<TemplateSummaryResponse>).onDelete}
-      />
+      {onPreview && onOpenEdit && onOpenSettings && onDelete && (
+        <TemplateListCardContextMenu
+          template={data}
+          onPreview={onPreview}
+          onOpenEdit={onOpenEdit}
+          onOpenSettings={onOpenSettings}
+          onDelete={onDelete}
+        />
+      )}
     </Layout.Horizontal>
   )
 }
@@ -47,7 +53,7 @@ const RenderColumnMenu: Renderer<CellProps<TemplateSummaryResponse>> = ({ row, c
 const RenderColumnType: Renderer<CellProps<TemplateSummaryResponse>> = ({ row }) => {
   const data = row.original
   const templateEntityType = data.templateEntityType
-  const style = templateColorStyleMap[templateEntityType || 'Step']
+  const style = templateColorStyleMap[defaultTo(templateEntityType, TemplateType.Step)]
 
   return (
     <Layout.Horizontal
@@ -91,13 +97,15 @@ const RenderColumnTemplate: Renderer<CellProps<TemplateSummaryResponse>> = ({ ro
               >
                 <Text color={Color.GREY_800}>{getString('nameLabel', { name: data.name })}</Text>
                 <br />
-                <Text lineClamp={1}>{getString('descriptionLabel', { description: data.description || '-' })}</Text>
+                <Text lineClamp={1}>
+                  {getString('descriptionLabel', { description: defaultTo(data.description, '-') })}
+                </Text>
               </Layout.Vertical>
             }
           >
             {data.name}
           </Text>
-          {data.tags && Object.keys(data.tags || {}).length ? <TagsPopover tags={data.tags} /> : null}
+          {data.tags && Object.keys(data.tags).length && <TagsPopover tags={data.tags} />}
         </Layout.Horizontal>
         <Text tooltipProps={{ position: Position.BOTTOM }} color={Color.GREY_400} font={{ size: 'small' }}>
           {getString('idLabel', { id: data.identifier })}
@@ -204,14 +212,14 @@ export const TemplatesListView: React.FC<TemplatesViewProps> = (props): JSX.Elem
     <TableV2<TemplateSummaryResponse>
       className={css.table}
       columns={columns}
-      data={data?.content || []}
+      data={defaultTo(data.content, [])}
       onRowClick={item => onSelect(item)}
       pagination={{
         className: css.pagination,
-        itemCount: data?.totalElements || 0,
-        pageSize: data?.size || 10,
-        pageCount: data?.totalPages || -1,
-        pageIndex: data?.number || 0,
+        itemCount: defaultTo(data.totalElements, 0),
+        pageSize: defaultTo(data.size, 20),
+        pageCount: defaultTo(data.totalPages, 0),
+        pageIndex: defaultTo(data.number, 0),
         gotoPage
       }}
       getRowClassName={row => (row.original.identifier === selectedIdentifier ? css.selected : '')}

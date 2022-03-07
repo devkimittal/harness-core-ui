@@ -7,13 +7,14 @@
 
 import React from 'react'
 import { render } from '@testing-library/react'
+import { defaultTo } from 'lodash-es'
 import { TemplatesGridView } from '@templates-library/pages/TemplatesPage/views/TemplatesGridView/TemplatesGridView'
 import { mockTemplates } from '@templates-library/TemplatesTestHelper'
 import { TestWrapper } from '@common/utils/testUtils'
 import type { TemplatesViewProps } from '@templates-library/pages/TemplatesPage/views/TemplatesView'
 
 const baseProps: TemplatesViewProps = {
-  data: mockTemplates.data,
+  data: defaultTo(mockTemplates.data, {}),
   gotoPage: jest.fn(),
   onSelect: jest.fn()
 }

@@ -20,7 +20,7 @@ export interface ResultsViewHeaderProps {
 export default function ResultsViewHeader(props: ResultsViewHeaderProps): React.ReactElement {
   const { templateData, setSort, setPage } = props
   const { getString } = useStrings()
-  const getSortOptions = React.useCallback(() => {
+  const sortOption = React.useMemo(() => {
     return [
       {
         label: getString('lastUpdatedSort'),
@@ -37,31 +37,37 @@ export default function ResultsViewHeader(props: ResultsViewHeaderProps): React.
       }
     ]
   }, [])
-  const [selectedSort, setSelectedSort] = React.useState<SelectOption>(getSortOptions()[0])
+  const [selectedSort, setSelectedSort] = React.useState<SelectOption>(sortOption[0])
+
+  const onDropDownChange = React.useCallback(
+    item => {
+      if (item.value === SortFields.AZ09) {
+        setSort([SortFields.Name, Sort.ASC])
+      } else if (item.value === SortFields.ZA90) {
+        setSort([SortFields.Name, Sort.DESC])
+      } else {
+        setSort([SortFields.LastUpdatedAt, Sort.DESC])
+      }
+      setPage(0)
+      setSelectedSort(item)
+    },
+    [setSort, setPage]
+  )
+
   return (
     <Container>
       <Layout.Horizontal spacing="large" padding={{ top: 'large', bottom: 'large' }} flex={{ alignItems: 'center' }}>
         <Text color={Color.GREY_800} iconProps={{ size: 14 }}>
-          {getString('total')}: {templateData?.totalElements}
+          {getString('total')}: {templateData.totalElements}
         </Text>
         <DropDown
-          items={getSortOptions()}
+          items={sortOption}
           value={selectedSort.value.toString()}
           filterable={false}
           width={180}
           icon={'main-sort'}
           iconProps={{ size: 16, color: Color.GREY_400 }}
-          onChange={item => {
-            if (item.value === SortFields.AZ09) {
-              setSort([SortFields.Name, Sort.ASC])
-            } else if (item.value === SortFields.ZA90) {
-              setSort([SortFields.Name, Sort.DESC])
-            } else if (item.value === SortFields.LastUpdatedAt) {
-              setSort([SortFields.LastUpdatedAt, Sort.DESC])
-            }
-            setPage(0)
-            setSelectedSort(item)
-          }}
+          onChange={onDropDownChange}
         />
       </Layout.Horizontal>
     </Container>

@@ -21,12 +21,12 @@ export interface TemplateMenuItem {
 
 export interface TemplatesActionPopoverProps extends PopoverProps {
   open?: boolean
-  items?: TemplateMenuItem[]
+  items: TemplateMenuItem[]
   setMenuOpen: (flag: boolean) => void
   className?: string
 }
 export const TemplatesActionPopover = (props: React.PropsWithChildren<TemplatesActionPopoverProps>) => {
-  const { items, open, children, setMenuOpen, className, content, portalClassName, ...popoverProps } = props
+  const { items, open, children, setMenuOpen, className, portalClassName, ...popoverProps } = props
 
   return (
     <Popover
@@ -40,30 +40,24 @@ export const TemplatesActionPopover = (props: React.PropsWithChildren<TemplatesA
       {...popoverProps}
     >
       {children}
-      {content ? (
-        content
-      ) : items ? (
-        <Menu onClick={e => e.stopPropagation()}>
-          {items?.map(item => {
-            return (
-              <li
-                key={item.label}
-                className={cx(css.menuItem, { [css.disabled]: item.disabled })}
-                onClick={e => {
-                  e.stopPropagation()
-                  if (!item.disabled) {
-                    item.onClick()
-                    setMenuOpen(false)
-                  }
-                }}
-              >
-                {item.icon && <Icon name={item.icon} size={12} />}
-                <Text lineClamp={1}>{item.label}</Text>
-              </li>
-            )
-          })}
-        </Menu>
-      ) : null}
+      <Menu onClick={e => e.stopPropagation()}>
+        {items.map(item => {
+          return (
+            <li
+              key={item.label}
+              className={cx(css.menuItem, { [css.disabled]: item.disabled })}
+              onClick={e => {
+                e.stopPropagation()
+                item.onClick()
+                setMenuOpen(false)
+              }}
+            >
+              {item.icon && <Icon name={item.icon} size={12} />}
+              <Text lineClamp={1}>{item.label}</Text>
+            </li>
+          )
+        })}
+      </Menu>
     </Popover>
   )
 }

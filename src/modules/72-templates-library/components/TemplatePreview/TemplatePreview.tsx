@@ -26,17 +26,7 @@ export const TemplatePreview = (props: PreviewInterface): JSX.Element => {
       className={cx(css.preview, className)}
       padding={{ top: 'huge', bottom: 'huge' }}
     >
-      {previewValues && (
-        <TemplateCard
-          template={{
-            ...previewValues,
-            gitDetails: {
-              repoIdentifier: (previewValues as NGTemplateInfoConfigWithGitDetails)?.repo,
-              branch: (previewValues as NGTemplateInfoConfigWithGitDetails)?.branch
-            }
-          }}
-        />
-      )}
+      {previewValues && <TemplateCard template={previewValues} />}
     </Layout.Horizontal>
   )
 }

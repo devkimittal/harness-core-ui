@@ -26,17 +26,17 @@ import css from './TemplateCard.module.scss'
 
 export interface TemplateCardProps {
   template: NGTemplateInfoConfigWithGitDetails | TemplateSummaryResponse
-  onSelect?: (template: NGTemplateInfoConfig | TemplateSummaryResponse) => void
+  onSelect?: (template: NGTemplateInfoConfigWithGitDetails | TemplateSummaryResponse) => void
   isSelected?: boolean
-  onPreview?: (template: NGTemplateInfoConfig | TemplateSummaryResponse) => void
-  onOpenEdit?: (template: NGTemplateInfoConfig | TemplateSummaryResponse) => void
+  onPreview?: (template: NGTemplateInfoConfigWithGitDetails | TemplateSummaryResponse) => void
+  onOpenEdit?: (template: NGTemplateInfoConfigWithGitDetails | TemplateSummaryResponse) => void
   onOpenSettings?: (templateIdentifier: string) => void
-  onDelete?: (template: TemplateSummaryResponse) => void
+  onDelete?: (template: NGTemplateInfoConfigWithGitDetails | TemplateSummaryResponse) => void
 }
 
 export function TemplateCard(props: TemplateCardProps): JSX.Element {
   const { getString } = useStrings()
-  const { template, onSelect, isSelected, onPreview, onOpenEdit, onOpenSettings, onDelete } = props
+  const { template, onSelect = noop, isSelected, onPreview, onOpenEdit, onOpenSettings, onDelete } = props
 
   const { isGitSyncEnabled } = useAppStore()
   const { gitSyncRepos, loadingRepos } = useGitSyncStore()
@@ -44,7 +44,6 @@ export function TemplateCard(props: TemplateCardProps): JSX.Element {
   const templateEntityType =
     (template as TemplateSummaryResponse)?.templateEntityType || (template as NGTemplateInfoConfig)?.type
   const style = templateColorStyleMap[templateEntityType]
-  const showMenu = !onPreview && !onOpenEdit && !onOpenSettings && !onDelete
   const repoIdentifier =
     (template as TemplateSummaryResponse)?.gitDetails?.repoIdentifier ||
     (template as NGTemplateInfoConfigWithGitDetails)?.repo
@@ -54,19 +53,17 @@ export function TemplateCard(props: TemplateCardProps): JSX.Element {
 
   return (
     <Container className={cx(css.container, { [css.bordered]: !!onSelect }, { [css.selected]: !!isSelected })}>
-      <Card className={css.templateCard} onClick={() => onSelect?.(template)}>
-        {!showMenu ? (
+      <Card className={css.templateCard} onClick={() => onSelect(template)}>
+        {onPreview && onOpenEdit && onOpenSettings && onDelete && (
           <TemplateListCardContextMenu
             template={template}
-            onPreview={onPreview || noop}
-            onOpenEdit={onOpenEdit || noop}
-            onOpenSettings={onOpenSettings || noop}
-            onDelete={onDelete || noop}
+            onPreview={onPreview}
+            onOpenEdit={onOpenEdit}
+            onOpenSettings={onOpenSettings}
+            onDelete={onDelete}
             className={css.actionButton}
             position={Position.RIGHT_TOP}
           />
-        ) : (
-          <div />
         )}
         <Container margin={{ right: 'small' }}>
           <Layout.Horizontal spacing={'small'} margin={{ bottom: 'small' }} flex>

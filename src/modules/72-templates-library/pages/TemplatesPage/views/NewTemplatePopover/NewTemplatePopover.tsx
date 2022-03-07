@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Position } from '@blueprintjs/core'
+import { Classes, Position } from '@blueprintjs/core'
 import { Button, ButtonVariation } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
 import { merge, noop } from 'lodash-es'
@@ -87,6 +87,7 @@ function NewTemplatePopoverWrapper(): React.ReactElement {
       minimal={true}
       items={getMenu()}
       position={Position.BOTTOM}
+      portalClassName={Classes.DARK}
       disabled={!canEdit || !templatesEnabled}
       setMenuOpen={setMenuOpen}
       usePortal={false}

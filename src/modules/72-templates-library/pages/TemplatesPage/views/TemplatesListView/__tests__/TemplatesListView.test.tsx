@@ -7,20 +7,29 @@
 
 import React from 'react'
 import { act, fireEvent, render } from '@testing-library/react'
-import { noop } from 'lodash-es'
+import { noop, defaultTo } from 'lodash-es'
 import { mockTemplates } from '@templates-library/TemplatesTestHelper'
 import { TemplatesListView } from '@templates-library/pages/TemplatesPage/views/TemplatesListView/TemplatesListView'
 import { TestWrapper } from '@common/utils/testUtils'
 import type { TemplatesViewProps } from '@templates-library/pages/TemplatesPage/views/TemplatesView'
+import { gitConfigs, sourceCodeManagers } from '@connectors/mocks/mock'
+import * as cdng from 'services/cd-ng'
+
+jest.spyOn(cdng, 'useListGitSync').mockImplementation((): any => {
+  return { data: gitConfigs, refetch: jest.fn(), loading: false }
+})
+jest.spyOn(cdng, 'useGetSourceCodeManagers').mockImplementation((): any => {
+  return { data: sourceCodeManagers, refetch: jest.fn(), loading: false }
+})
 
 const baseProps: TemplatesViewProps = {
-  data: mockTemplates.data,
+  data: defaultTo(mockTemplates.data, {}),
   gotoPage: jest.fn(),
   onSelect: jest.fn()
 }
 
 describe('<TemplatesListView /> tests', () => {
-  test('should match snapshot without three dots', async () => {
+  test('should match snapshot without three dots', () => {
     const { container } = render(
       <TestWrapper>
         <TemplatesListView {...baseProps} />
@@ -29,7 +38,16 @@ describe('<TemplatesListView /> tests', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should match snapshot with three dots', async () => {
+  test('should match snapshot without three dots and a template is selected', () => {
+    const { container } = render(
+      <TestWrapper>
+        <TemplatesListView {...baseProps} selectedIdentifier={'manjutesttemplate'} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should match snapshot with three dots', () => {
     const { container } = render(
       <TestWrapper>
         <TemplatesListView {...baseProps} onPreview={noop} onOpenEdit={noop} onOpenSettings={noop} onDelete={noop} />
@@ -38,7 +56,25 @@ describe('<TemplatesListView /> tests', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should call onSelect with correct when item is clicked', async () => {
+  test('should match snapshot without three dots when git sync is enabled', () => {
+    const { container } = render(
+      <TestWrapper defaultAppStoreValues={{ isGitSyncEnabled: true }}>
+        <TemplatesListView {...baseProps} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should match snapshot with three dots when git sync is enabled', () => {
+    const { container } = render(
+      <TestWrapper defaultAppStoreValues={{ isGitSyncEnabled: true }}>
+        <TemplatesListView {...baseProps} onPreview={noop} onOpenEdit={noop} onOpenSettings={noop} onDelete={noop} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should call onSelect with correct when item is clicked', () => {
     const { container } = render(
       <TestWrapper>
         <TemplatesListView {...baseProps} />

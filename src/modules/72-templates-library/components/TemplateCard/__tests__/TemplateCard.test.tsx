@@ -12,9 +12,26 @@ import produce from 'immer'
 import { mockTemplates } from '@templates-library/TemplatesTestHelper'
 import { TestWrapper } from '@common/utils/testUtils'
 import { TemplateCard, TemplateCardProps } from '@templates-library/components/TemplateCard/TemplateCard'
+import type { NGTemplateInfoConfigWithGitDetails } from 'framework/Templates/TemplateConfigModal/TemplateConfigModal'
 
 const baseProps: TemplateCardProps = {
   template: defaultTo(mockTemplates.data?.content?.[0], {})
+}
+
+const baseProps1: TemplateCardProps = {
+  template: {
+    orgIdentifier: 'default',
+    projectIdentifier: 'Templateproject',
+    identifier: 'manjutesttemplate',
+    name: 'manju-test-template-qq-12344',
+    description:
+      'Flink is a versatile framework, supporting many different deployment scenarios in a mix and match fashion.',
+    tags: { QAR: '', 'Internal 1': '', 'Canary 1': '', BLUE: '', 'Tag A': '' },
+    versionLabel: 'v4',
+    type: 'Step',
+    repo: 'repo',
+    branch: 'branch'
+  } as NGTemplateInfoConfigWithGitDetails
 }
 
 jest.mock(
@@ -30,6 +47,24 @@ jest.mock(
 )
 
 describe('<TemplateCard /> tests', () => {
+  test('should match snapshot', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <TemplateCard {...baseProps} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should match snapshot with template as NGTemplateInfoConfigWithGitDetails', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <TemplateCard {...baseProps1} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
   test('should match snapshot test with git sync enabled', async () => {
     const props = produce(baseProps, draft => {
       set(draft, 'template.gitDetails', {
