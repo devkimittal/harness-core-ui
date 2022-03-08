@@ -11,6 +11,7 @@ import { noop } from 'lodash-es'
 import * as Yup from 'yup'
 import { IconName, GroupedThumbnailSelect } from '@wings-software/uicore'
 import { useStrings, UseStringsReturn } from 'framework/strings'
+import { useFeatureFlags } from '@common/hooks/useFeatureFlag'
 import { StageErrorContext } from '@pipeline/context/StageErrorContext'
 import { DeployTabs } from '@cd/components/PipelineStudio/DeployStageSetupShell/DeployStageSetupShellUtils'
 import { InfraDeploymentType } from '@cd/components/PipelineSteps/PipelineStepsUtil'
@@ -44,6 +45,7 @@ interface SelectDeploymentTypeProps {
 
 export default function SelectDeploymentType(props: SelectDeploymentTypeProps): JSX.Element {
   const { selectedInfrastructureType, onChange, isReadonly } = props
+  const { NG_AZURE } = useFeatureFlags()
   const { getString } = useStrings()
   const infraGroups: InfrastructureGroup[] = [
     {
@@ -58,13 +60,26 @@ export default function SelectDeploymentType(props: SelectDeploymentTypeProps): 
     },
     {
       groupLabel: getString('pipelineSteps.deploy.infrastructure.viaCloudProvider'),
-      items: [
-        {
-          label: getString('pipelineSteps.deploymentTypes.gk8engine'),
-          icon: 'google-kubernetes-engine',
-          value: InfraDeploymentType.KubernetesGcp
-        }
-      ]
+      items: NG_AZURE
+        ? [
+            {
+              label: getString('pipelineSteps.deploymentTypes.gk8engine'),
+              icon: 'google-kubernetes-engine',
+              value: InfraDeploymentType.KubernetesGcp
+            },
+            {
+              label: getString('pipelineSteps.deploymentTypes.azure'),
+              icon: 'service-azure',
+              value: InfraDeploymentType.Azure
+            }
+          ]
+        : [
+            {
+              label: getString('pipelineSteps.deploymentTypes.gk8engine'),
+              icon: 'google-kubernetes-engine',
+              value: InfraDeploymentType.KubernetesGcp
+            }
+          ]
     }
   ]
 

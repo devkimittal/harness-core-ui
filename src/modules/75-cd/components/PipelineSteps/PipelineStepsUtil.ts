@@ -22,7 +22,8 @@ const releaseNameRegex = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a
 
 export enum InfraDeploymentType {
   KubernetesDirect = 'KubernetesDirect',
-  KubernetesGcp = 'KubernetesGcp'
+  KubernetesGcp = 'KubernetesGcp',
+  Azure = 'Azure'
 }
 
 export function getNameSpaceSchema(

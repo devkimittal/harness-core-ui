@@ -7,6 +7,7 @@
 
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 
+import { AzureInfrastructureSpec } from './AzureInfrastructureSpec/AzureInfrastructureSpec'
 import { HttpStep } from './HttpStep/HttpStep'
 import { K8RolloutDeployStep } from './K8sRolloutDeployStep/K8sRolloutDeployStep'
 import { ShellScriptStep } from './ShellScriptStep/ShellScriptStep'
@@ -32,6 +33,7 @@ import { InfraProvisioning } from './InfraProvisioning/InfraProvisioning'
 import { GcpInfrastructureSpec } from './GcpInfrastructureSpec/GcpInfrastructureSpec'
 import { PolicyStep } from './PolicyStep/PolicyStep'
 
+factory.registerStep(new AzureInfrastructureSpec())
 factory.registerStep(new HttpStep())
 factory.registerStep(new K8RolloutDeployStep())
 factory.registerStep(new K8sRollingRollbackStep())

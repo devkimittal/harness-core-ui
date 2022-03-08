@@ -24,6 +24,7 @@ import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import type { InfraProvisioningData } from '@cd/components/PipelineSteps/InfraProvisioning/InfraProvisioning'
 import type { GcpInfrastructureSpec } from '@cd/components/PipelineSteps/GcpInfrastructureSpec/GcpInfrastructureSpec'
+import type { AzureInfrastructureSpec } from '@cd/components/PipelineSteps/AzureInfrastructureSpec/AzureInfrastructureSpec'
 import { useStrings } from 'framework/strings'
 import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
 import { StepWidget } from '@pipeline/components/AbstractSteps/StepWidget'
@@ -33,6 +34,7 @@ import { StageErrorContext } from '@pipeline/context/StageErrorContext'
 import { useValidationErrors } from '@pipeline/components/PipelineStudio/PiplineHooks/useValidationErrors'
 import type { DeploymentStageElementConfig, StageElementWrapper } from '@pipeline/utils/pipelineTypes'
 import SelectDeploymentType from '@cd/components/PipelineStudio/DeployInfraSpecifications/SelectInfrastructureType/SelectInfrastructureType'
+import { InfraDeploymentType } from '@cd/components/PipelineSteps/PipelineStepsUtil'
 import { Scope } from '@common/interfaces/SecretsInterface'
 import { StageType } from '@pipeline/utils/stageHelpers'
 import stageCss from '../DeployStageSetupShell/DeployStage.module.scss'
@@ -253,7 +255,7 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
     const type = infrastructure?.type || deploymentType
     const allowSimultaneousDeployments = get(stageData, 'stage.spec.infrastructure.allowSimultaneousDeployments', false)
     switch (type) {
-      case 'KubernetesDirect': {
+      case InfraDeploymentType.KubernetesDirect: {
         const connectorRef = infrastructure?.spec?.connectorRef
         const namespace = infrastructure?.spec?.namespace
         const releaseName = infrastructure?.spec?.releaseName ?? DEFAULT_RELEASE_NAME
@@ -264,7 +266,21 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
           allowSimultaneousDeployments
         }
       }
-      case 'KubernetesGcp': {
+      case InfraDeploymentType.KubernetesGcp: {
+        const connectorRef = infrastructure?.spec?.connectorRef
+        const namespace = infrastructure?.spec?.namespace
+        const releaseName = infrastructure?.spec?.releaseName ?? DEFAULT_RELEASE_NAME
+        const cluster = infrastructure?.spec?.cluster
+
+        return {
+          connectorRef,
+          namespace,
+          releaseName,
+          cluster,
+          allowSimultaneousDeployments
+        }
+      }
+      case InfraDeploymentType.Azure: {
         const connectorRef = infrastructure?.spec?.connectorRef
         const namespace = infrastructure?.spec?.namespace
         const releaseName = infrastructure?.spec?.releaseName ?? DEFAULT_RELEASE_NAME
@@ -286,7 +302,7 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
 
   const getClusterConfigurationStep = (type: string): React.ReactElement => {
     switch (type) {
-      case 'KubernetesDirect': {
+      case InfraDeploymentType.KubernetesDirect: {
         return (
           <StepWidget<K8SDirectInfrastructure>
             factory={factory}
@@ -304,13 +320,13 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
                   releaseName: value.releaseName,
                   allowSimultaneousDeployments: value.allowSimultaneousDeployments
                 },
-                'KubernetesDirect'
+                InfraDeploymentType.KubernetesDirect
               )
             }
           />
         )
       }
-      case 'KubernetesGcp': {
+      case InfraDeploymentType.KubernetesGcp: {
         return (
           <StepWidget<GcpInfrastructureSpec>
             factory={factory}
@@ -329,14 +345,39 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
                   releaseName: value.releaseName,
                   allowSimultaneousDeployments: value.allowSimultaneousDeployments
                 },
-                'KubernetesGcp'
+                InfraDeploymentType.KubernetesGcp
+              )
+            }
+          />
+        )
+      }
+      case InfraDeploymentType.Azure: {
+        return (
+          <StepWidget<AzureInfrastructureSpec>
+            factory={factory}
+            key={stage?.stage?.identifier}
+            readonly={isReadonly}
+            initialValues={initialInfrastructureDefinitionValues as AzureInfrastructureSpec}
+            type={StepType.Azure}
+            stepViewType={StepViewType.Edit}
+            allowableTypes={allowableTypes}
+            onUpdate={value =>
+              onUpdateInfrastructureDefinition(
+                {
+                  connectorRef: value.connectorRef,
+                  cluster: value.cluster,
+                  namespace: value.namespace,
+                  releaseName: value.releaseName,
+                  allowSimultaneousDeployments: value.allowSimultaneousDeployments
+                },
+                'Azure'
               )
             }
           />
         )
       }
       default: {
-        return <div>Undefined deployment type</div>
+        return <div>{getString('cd.steps.common.undefinedType')}</div>
       }
     }
   }
