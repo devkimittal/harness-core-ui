@@ -28,7 +28,6 @@ import type {
   ErrorTrackingConnectorDTO
 } from 'services/cd-ng'
 import { FormData, CredTypeValues, HashiCorpVaultAccessTypes } from '@connectors/interfaces/ConnectorInterface'
-import { AzureSecretKeyType } from '@connectors/components/CreateConnector/AzureConnector/StepAuth/AzureAuthentication'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'
 import { ValueType } from '@secrets/components/TextReference/TextReference'
 import { useStrings } from 'framework/strings'
@@ -45,6 +44,11 @@ export interface DelegateCardInterface {
 
 export interface CredentialType {
   [key: string]: AwsCredential['type']
+}
+
+export const AzureSecretKeyType = {
+  SECRET_KEY: 'SecretKey',
+  KEY_CERT: 'KeyCert'
 }
 
 export const GCP_AUTH_TYPE = {
