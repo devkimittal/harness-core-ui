@@ -50,7 +50,7 @@ interface StepConfigureProps {
 }
 
 interface AzureFormInterface {
-  type: string | undefined
+  authType: string | undefined
   azureEnvironmentType: string | undefined
   clientId: string | undefined
   tenantId: string | undefined
@@ -96,7 +96,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
   ]
 
   const defaultInitialFormData: AzureFormInterface = {
-    type: undefined,
+    authType: undefined,
     azureEnvironmentType: environments.AZURE_GLOBAL,
     clientId: undefined,
     tenantId: undefined,
@@ -110,6 +110,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
 
   useEffect(() => {
     if (loadingConnectorSecrets && props.isEditMode) {
+      /* istanbul ignore else */
       if (props.connectorInfo) {
         setupAzureFormData(props.connectorInfo, accountId).then(data => {
           setInitialValues(data as AzureFormInterface)
@@ -141,19 +142,19 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
         }}
         formName="azureAuthForm"
         validationSchema={Yup.object().shape({
-          type: Yup.string().required(getString('connectors.chooseMethodForAzureConnection')),
+          authType: Yup.string().required(getString('connectors.chooseMethodForAzureConnection')),
           azureEnvironmentType: Yup.string().required(getString('connectors.azure.validation.environment')),
           clientId: Yup.string().required(getString('connectors.azure.validation.clientId')),
           tenantId: Yup.string().required(getString('connectors.tenantIdRequired')),
           secretType: Yup.string().required(getString('connectors.tenantIdRequired')),
           secretText: Yup.object().when(['type', 'secretType'], {
-            is: (type, secretType) =>
-              type === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.SECRET_KEY,
+            is: (authType, secretType) =>
+              authType === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.SECRET_KEY,
             then: Yup.object().required(getString('common.validation.clientSecretRequired'))
           }),
           secretFile: Yup.object().when(['type', 'secretType'], {
-            is: (type, secretType) =>
-              type === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.KEY_CERT,
+            is: (authType, secretType) =>
+              authType === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.KEY_CERT,
             then: Yup.object().required(getString('common.validation.clientSecretRequired'))
           })
         })}
@@ -164,13 +165,13 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
             <Container>
               <ThumbnailSelect
                 items={DelegateCards.map(card => ({ label: card.info, value: card.type }))}
-                name="type"
+                name="authType"
                 size="large"
                 onChange={type => {
-                  formikProps?.setFieldValue('type', type)
+                  formikProps?.setFieldValue('authType', type)
                 }}
               />
-              {DelegateTypes.DELEGATE_OUT_CLUSTER === formikProps.values.type ? (
+              {DelegateTypes.DELEGATE_OUT_CLUSTER === formikProps.values.authType ? (
                 <>
                   <FormInput.Select
                     name="azureEnvironmentType"

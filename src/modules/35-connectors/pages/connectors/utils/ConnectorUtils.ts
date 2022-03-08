@@ -642,7 +642,7 @@ export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accoun
 
   const formData = {
     azureEnvironmentType: connectorInfoSpec.azureEnvironmentType,
-    type: connectorInfoSpec.credential.type,
+    authType: connectorInfoSpec.credential.type,
     clientId: connectorInfoSpec.credential.spec.clientId || undefined,
     tenantId: connectorInfoSpec.credential.spec.tenantId || undefined,
     secretType,
@@ -1040,9 +1040,9 @@ export const buildAzurePayload = (formData: FormData) => {
     spec: {
       ...(formData?.delegateSelectors ? { delegateSelectors: formData.delegateSelectors } : {}),
       credential:
-        formData?.type === DelegateTypes.DELEGATE_OUT_CLUSTER
+        formData?.authType === DelegateTypes.DELEGATE_OUT_CLUSTER
           ? {
-              type: formData.type,
+              type: formData.authType,
               spec: {
                 clientId: formData.clientId,
                 tenantId: formData.tenantId,
@@ -1053,7 +1053,7 @@ export const buildAzurePayload = (formData: FormData) => {
                     : formData.secretFile.referenceString
               }
             }
-          : { type: formData.type },
+          : { type: formData.authType },
       azureEnvironmentType: formData.azureEnvironmentType
     }
   }
