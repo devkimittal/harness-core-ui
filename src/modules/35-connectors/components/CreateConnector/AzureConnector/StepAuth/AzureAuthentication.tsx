@@ -25,7 +25,8 @@ import { useParams } from 'react-router-dom'
 import {
   DelegateTypes,
   DelegateCardInterface,
-  setupAzureFormData
+  setupAzureFormData,
+  AzureSecretKeyType
 } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'
 import type { ConnectorConfigDTO, ConnectorInfoDTO } from 'services/cd-ng'
@@ -33,11 +34,6 @@ import type { ConnectorConfigDTO, ConnectorInfoDTO } from 'services/cd-ng'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import SecretInput from '@secrets/components/SecretInput/SecretInput'
 import { useStrings } from 'framework/strings'
-
-export const AzureSecretKeyType = {
-  SECRET_KEY: 'SecretKey',
-  KEY_CERT: 'KeyCert'
-}
 
 interface AzureAuthenticationProps {
   name: string
