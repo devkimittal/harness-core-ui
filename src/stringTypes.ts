@@ -3398,6 +3398,7 @@ export interface StringsMap {
   'cd.steps.common.clusterDetails': string
   'cd.steps.common.releaseNamePlaceholder': string
   'cd.steps.common.selectOrEnterClusterPlaceholder': string
+  'cd.steps.common.undefinedType': string
   'cd.steps.kubernetesGcpStep.stepName': string
   'cd.terraformVarFiles': string
   'cd.testConnectionStepName': string
@@ -7699,6 +7700,10 @@ export interface StringsMap {
    * @deprecated migrate this string to module level file
    */
   'pipelineSteps.deploy.serviceSpecifications.useFromStageLabel': string
+  /**
+   * @deprecated migrate this string to module level file
+   */
+  'pipelineSteps.deploymentTypes.azure': string
   /**
    * @deprecated migrate this string to module level file
    */

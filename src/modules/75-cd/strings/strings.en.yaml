@@ -11,6 +11,7 @@ steps:
     clusterDetails: Cluster Details
     selectOrEnterClusterPlaceholder: Select or add cluster
     releaseNamePlaceholder: Enter Release Name
+    undefinedType: Undefined deployment type
   kubernetesGcpStep:
     stepName: Specify your GCP Connector
 folderPath: Folder Path
