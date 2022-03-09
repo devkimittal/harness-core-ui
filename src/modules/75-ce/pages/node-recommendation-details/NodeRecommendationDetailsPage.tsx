@@ -40,10 +40,7 @@ const NodeRecommendationDetailsPage = () => {
   const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
 
   const breadCrumbLinks = useMemo(() => {
-    return [
-      { url: routes.toCERecommendations({ accountId }), label: getString('ce.recommendation.sideNavText') },
-      { url: '', label: recommendationName }
-    ]
+    return [{ url: routes.toCERecommendations({ accountId }), label: getString('ce.recommendation.sideNavText') }]
   }, [])
 
   const [{ data, fetching }] = useFetchRecommendationQuery({

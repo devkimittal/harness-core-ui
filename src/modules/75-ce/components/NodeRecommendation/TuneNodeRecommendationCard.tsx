@@ -18,23 +18,67 @@ import {
   ButtonVariation
 } from '@wings-software/uicore'
 import { Slider } from '@blueprintjs/core'
-
+import { isEqual } from 'lodash-es'
 import { useStrings } from 'framework/strings'
 import { Action, ACTIONS, IState } from '@ce/components/NodeRecommendation/NodeRecommendation'
 import css from './NodeRecommendation.module.scss'
+
+const addBufferToValue = (bufferPercentage: number, value: number): number =>
+  +(((100 + bufferPercentage) / 100) * value).toFixed(2)
+
+interface TuneRecommendationCardHeaderProps {
+  cardVisible: boolean
+  toggleCardVisible: () => void
+}
+
+export const TuneRecommendationCardHeader: React.FC<TuneRecommendationCardHeaderProps> = ({
+  cardVisible,
+  toggleCardVisible
+}) => {
+  const { getString } = useStrings()
+
+  return (
+    <Container padding="medium" flex={{ justifyContent: 'space-between' }}>
+      <Text
+        className={css.pointer}
+        font={{ variation: FontVariation.H6 }}
+        color={cardVisible ? Color.GREY_700 : Color.PRIMARY_7}
+        onClick={toggleCardVisible}
+      >
+        {getString('ce.nodeRecommendation.setInstancePreferences')}
+      </Text>
+      <Icon
+        name={cardVisible ? 'caret-up' : 'caret-down'}
+        onClick={toggleCardVisible}
+        color={Color.PRIMARY_7}
+        className={css.pointer}
+      />
+    </Container>
+  )
+}
 
 interface TuneRecommendationCardProps {
   state: IState
   dispatch: React.Dispatch<Action>
   buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
+  showInstanceFamiliesModal: () => void
+  initialState: IState
+  updatedState: IState
+  updateRecommendationDetails: () => void
 }
 
-const addBufferToValue = (bufferPercentage: number, value: number): number =>
-  +(((100 + bufferPercentage) / 100) * value).toFixed(2)
-
-const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
-  const { state, dispatch, buffer, setBuffer } = props
+export const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
+  const {
+    state,
+    dispatch,
+    buffer,
+    setBuffer,
+    showInstanceFamiliesModal,
+    initialState,
+    updateRecommendationDetails,
+    updatedState
+  } = props
   const { getString } = useStrings()
 
   return (
@@ -61,6 +105,15 @@ const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
             <Nodes state={state} dispatch={dispatch} />
           </Layout.Horizontal>
         </Container>
+        <InstanceFamilies showInstanceFamiliesModal={showInstanceFamiliesModal} state={state} />
+        <ApplyPreferencesButtonGroup
+          dispatch={dispatch}
+          setBuffer={setBuffer}
+          state={state}
+          initialState={initialState}
+          updatedState={updatedState}
+          updateRecommendationDetails={updateRecommendationDetails}
+        />
       </Layout.Vertical>
     </Container>
   )
@@ -240,4 +293,93 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
   )
 }
 
-export default TuneRecommendationCard
+const InstanceFamilies = ({
+  state,
+  showInstanceFamiliesModal
+}: {
+  state: IState
+  showInstanceFamiliesModal: () => void
+}) => {
+  const { getString } = useStrings()
+
+  return (
+    <Container>
+      <Container margin={{ bottom: 'small' }}>
+        <Text inline font={{ variation: FontVariation.SMALL_SEMI }}>
+          {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
+        </Text>
+        {state.includeSeries.length || state.includeTypes.length ? (
+          <Button
+            inline
+            variation={ButtonVariation.LINK}
+            icon="edit"
+            onClick={showInstanceFamiliesModal}
+            iconProps={{ size: 12 }}
+          >
+            {getString('edit')}
+          </Button>
+        ) : null}
+      </Container>
+      {state.includeSeries.length || state.includeTypes.length ? (
+        <TextInput
+          value={[...state.includeSeries, ...state.includeTypes].toString()}
+          contentEditable={false}
+          className={css.instaceFamilyInput}
+          readOnly
+        />
+      ) : null}
+      <Button
+        icon="plus"
+        variation={ButtonVariation.LINK}
+        margin={{ bottom: 'small' }}
+        onClick={showInstanceFamiliesModal}
+      >
+        {getString('ce.nodeRecommendation.addPreferredInstanceFamilies')}
+      </Button>
+    </Container>
+  )
+}
+
+const ApplyPreferencesButtonGroup = ({
+  updateRecommendationDetails,
+  state,
+  initialState,
+  updatedState,
+  dispatch,
+  setBuffer
+}: {
+  updateRecommendationDetails: () => void
+  state: IState
+  initialState: IState
+  updatedState: IState
+  dispatch: React.Dispatch<Action>
+  setBuffer: React.Dispatch<React.SetStateAction<number>>
+}) => {
+  const { getString } = useStrings()
+
+  return (
+    <Layout.Horizontal spacing="small">
+      <Button
+        variation={ButtonVariation.PRIMARY}
+        onClick={updateRecommendationDetails}
+        disabled={isEqual(state, updatedState)}
+      >
+        {getString('ce.nodeRecommendation.applyPreferences')}
+      </Button>
+      {!isEqual(state, initialState) ? (
+        <Button
+          variation={ButtonVariation.SECONDARY}
+          onClick={() => {
+            setBuffer(0)
+            dispatch({
+              type: ACTIONS.RESET_TO_DEFAULT,
+              data: initialState
+            })
+          }}
+        >
+          {getString('ce.recommendation.detailsPage.resetRecommendationText')}
+        </Button>
+      ) : null}
+    </Layout.Horizontal>
+  )
+}
