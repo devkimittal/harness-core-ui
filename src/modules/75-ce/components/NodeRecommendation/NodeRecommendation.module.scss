@@ -70,7 +70,7 @@
   }
 
   .cards {
-    margin-top: var(--spacing-large) !important;
+    margin-top: var(--spacing-medium) !important;
     display: grid;
     grid-template-columns: 180px 30px 180px 30px 180px 180px 60px;
   }
@@ -141,6 +141,10 @@
   }
 
   .card.noBgColor {
+    .cardItem:nth-child(1) {
+      padding: 0 !important;
+      height: 22px !important;
+    }
     .cardItem:nth-child(even) {
       background-color: rgba(243, 243, 250, 0.8);
     }
@@ -150,6 +154,10 @@
   }
 
   .card.white {
+    .cardItem:nth-child(1) {
+      padding: 0 !important;
+      height: 22px !important;
+    }
     .cardItem:nth-child(even) {
       background-color: var(--grey-50);
     }
@@ -160,6 +168,11 @@
   }
 
   .card.blue {
+    .cardItem:nth-child(2) {
+      padding: 0 !important;
+      height: 22px !important;
+    }
+
     .cardItem:nth-child(2n + 1) {
       background-color: var(--primary-1);
     }

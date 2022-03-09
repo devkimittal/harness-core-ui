@@ -14,12 +14,10 @@ import {
   FontVariation,
   Card,
   Button,
-  Checkbox,
   ButtonVariation,
   ButtonSize,
   Icon,
-  Tabs,
-  TextInput
+  Tabs
 } from '@wings-software/uicore'
 import { Dialog, Position, Toaster } from '@blueprintjs/core'
 import { useModalHook } from '@harness/use-modal'
@@ -40,7 +38,10 @@ import {
   RecommendationDetailsSavingsCard,
   RecommendationDetailsSpendCard
 } from '@ce/components/RecommendationDetailsSummaryCards/RecommendationDetailsSummaryCards'
-import TuneNodeRecommendationCard from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
+import {
+  TuneRecommendationCardHeader,
+  TuneRecommendationCard
+} from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
@@ -161,7 +162,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
 
   const [buffer, setBuffer] = useState(0)
-  const [autoScaling, setAutoScaling] = useState(false)
+  // const [autoScaling, setAutoScaling] = useState(false)
   const [tuneRecomVisible, setTuneRecomVisible] = useState(true)
 
   const {
@@ -389,73 +390,30 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             <img src={resourceUtilizationNodeCount} />
           </Layout.Vertical>
         </Layout.Horizontal>
-        <Text font={{ variation: FontVariation.H5 }} padding={{ bottom: 'small' }}>
+        <Text font={{ variation: FontVariation.H5 }} padding={{ top: 'xsmall' }}>
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
-        <Layout.Horizontal style={{ alignItems: 'center' }}>
+        {/* <Layout.Horizontal style={{ alignItems: 'center' }}>
           <Checkbox checked={autoScaling} onChange={() => setAutoScaling(!autoScaling)} />
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.nodeRecommendation.autoScaling')}</Text>
-        </Layout.Horizontal>
+        </Layout.Horizontal> */}
         <Card className={css.tuneRecommendationCard}>
-          <Container padding="medium" flex={{ justifyContent: 'space-between' }}>
-            <Text
-              className={css.pointer}
-              font={{ variation: FontVariation.H6 }}
-              color={tuneRecomVisible ? Color.GREY_700 : Color.PRIMARY_7}
-              onClick={() => setTuneRecomVisible(prevState => !prevState)}
-            >
-              {getString('ce.nodeRecommendation.setInstancePreferences')}
-            </Text>
-            <Icon
-              name={tuneRecomVisible ? 'caret-up' : 'caret-down'}
-              onClick={() => setTuneRecomVisible(prevState => !prevState)}
-              color={Color.PRIMARY_7}
-              className={css.pointer}
-            />
-          </Container>
+          <TuneRecommendationCardHeader
+            cardVisible={tuneRecomVisible}
+            toggleCardVisible={() => setTuneRecomVisible(prevState => !prevState)}
+          />
           {tuneRecomVisible ? (
             <Container padding="medium" background={Color.PRIMARY_1}>
-              <TuneNodeRecommendationCard state={state} dispatch={dispatch} buffer={buffer} setBuffer={setBuffer} />
-              <Container margin={{ bottom: 'small', top: 'medium' }}>
-                <Text inline font={{ variation: FontVariation.SMALL_SEMI }}>
-                  {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
-                </Text>
-                <Button inline variation={ButtonVariation.LINK} icon="edit" onClick={showModal}>
-                  {getString('edit')}
-                </Button>
-              </Container>
-              <TextInput
-                value={[...state.includeSeries, ...state.includeTypes].toString()}
-                contentEditable={false}
-                className={css.instaceFamilyInput}
-                readOnly
+              <TuneRecommendationCard
+                state={state}
+                dispatch={dispatch}
+                buffer={buffer}
+                setBuffer={setBuffer}
+                showInstanceFamiliesModal={showModal}
+                initialState={initialState}
+                updatedState={updatedState}
+                updateRecommendationDetails={updateRecommendationDetails}
               />
-              <Button icon="plus" variation={ButtonVariation.LINK} margin={{ bottom: 'medium' }} onClick={showModal}>
-                {getString('ce.nodeRecommendation.addPreferredInstanceFamilies')}
-              </Button>
-              <Layout.Horizontal spacing="small">
-                <Button
-                  variation={ButtonVariation.PRIMARY}
-                  onClick={updateRecommendationDetails}
-                  disabled={isEqual(state, updatedState)}
-                >
-                  {getString('ce.nodeRecommendation.applyPreferences')}
-                </Button>
-                {!isEqual(state, initialState) ? (
-                  <Button
-                    variation={ButtonVariation.SECONDARY}
-                    onClick={() => {
-                      setBuffer(0)
-                      dispatch({
-                        type: ACTIONS.RESET_TO_DEFAULT,
-                        data: initialState
-                      })
-                    }}
-                  >
-                    {getString('ce.recommendation.detailsPage.resetRecommendationText')}
-                  </Button>
-                ) : null}
-              </Layout.Horizontal>
             </Container>
           ) : null}
         </Card>
