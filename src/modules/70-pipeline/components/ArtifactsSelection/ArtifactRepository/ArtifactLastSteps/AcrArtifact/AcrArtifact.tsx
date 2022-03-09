@@ -50,8 +50,8 @@ import { ArtifactIdentifierValidation, ModalViewFor, tagOptions } from '../../..
 import { NoTagResults } from '../ArtifactImagePathTagView/ArtifactImagePathTagView'
 import SideCarArtifactIdentifier from '../SideCarArtifactIdentifier'
 import css from '../../ArtifactConnector.module.scss'
-// eslint-disable-next-line react/function-component-definition
-export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProps> = ({
+
+export function AcrArtifact({
   context,
   handleSubmit,
   expressions,
@@ -62,7 +62,7 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
   artifactIdentifiers,
   isReadonly = false,
   selectedArtifact
-}: StepProps<ConnectorConfigDTO> & ImagePathProps): React.ReactElement => {
+}: StepProps<ConnectorConfigDTO> & ImagePathProps): React.ReactElement {
   const { getString } = useStrings()
   const { accountId, projectIdentifier, orgIdentifier } = useParams<ProjectPathProps>()
   const { repoIdentifier, branch } = useQueryParams<GitQueryParams>()
@@ -151,7 +151,7 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
   useEffect(() => {
     const subscriptionValues = defaultTo(data?.resource, []).map(subsciption => ({
       value: subsciption.value,
-      label: subsciption.name
+      label: subsciption.value
     }))
     setSubscriptions(subscriptionValues as SelectOption[])
   }, [data?.resource])
@@ -185,7 +185,11 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
 
   useEffect(() => {
     const options =
-      defaultTo(registiresData?.resource, []).map(name => ({ label: name.value, value: name.value })) || []
+      defaultTo(registiresData?.resource, []).map(registry => ({
+        label: registry.value,
+        value: registry.value
+      })) || /* istanbul ignore next */ []
+
     setRegistries(options)
   }, [registiresData])
 
@@ -221,8 +225,10 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
 
   useEffect(() => {
     const options =
-      defaultTo(repositoriesData?.resource, []).map(name => ({ label: name.value, value: name.value })) ||
-      /* istanbul ignore next */ []
+      defaultTo(repositoriesData?.resource, []).map(repository => ({
+        label: repository.value,
+        value: repository.value
+      })) || /* istanbul ignore next */ []
     setRepositories(options)
   }, [repositoriesData])
 
@@ -251,17 +257,17 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
       initialValues,
       selectedArtifact as ArtifactType,
       context === ModalViewFor.SIDECAR
-    )
+    ) as ACRArtifactType
     const specValues = get(initialValues, 'spec', null)
+
     if (getMultiTypeFromValue(specValues?.subscription) === MultiTypeInputType.FIXED) {
       values.subscription = subscriptions.find(subscription => subscription.value === specValues?.subscription)
-        ?.value as string
     }
     if (getMultiTypeFromValue(specValues?.registry) === MultiTypeInputType.FIXED) {
-      values.registry = registries.find(registry => registry.value === specValues?.registry)?.value as string
+      values.registry = registries.find(registry => registry.value === specValues?.registry)
     }
     if (getMultiTypeFromValue(specValues?.repository) === MultiTypeInputType.FIXED) {
-      values.repository = repositories.find(repository => repository.value === specValues?.repository)?.value as string
+      values.repository = repositories.find(repository => repository.value === specValues?.repository)
     }
     return values
   }, [context, initialValues, subscriptions, registries, repositories, selectedArtifact])
@@ -306,18 +312,6 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
     </div>
   ))
 
-  const repositoryItemRenderer = memoize((item: { label: string }, { handleClick }) => (
-    <div key={item.label.toString()}>
-      <Menu.Item text={item.label} disabled={loadingRepositories} onClick={handleClick} />
-    </div>
-  ))
-
-  const registryItemRenderer = memoize((item: { label: string }, { handleClick }) => (
-    <div key={item.label.toString()}>
-      <Menu.Item text={item.label} disabled={loadingRegistries} onClick={handleClick} />
-    </div>
-  ))
-
   return (
     <Layout.Vertical spacing="medium" className={css.firstep}>
       <Text font={{ variation: FontVariation.H3 }} margin={{ bottom: 'medium' }}>
@@ -336,242 +330,243 @@ export const AcrArtifact: React.FC<StepProps<ConnectorConfigDTO> & ImagePathProp
         }}
         enableReinitialize={true}
       >
-        {formik => (
-          <Form>
-            {(formikRef.current = formik)}
-            <div className={css.connectorForm}>
-              {context === ModalViewFor.SIDECAR && <SideCarArtifactIdentifier />}
-              <div className={css.imagePathContainer}>
-                <FormInput.MultiTypeInput
-                  name="subscription"
-                  selectItems={subscriptions}
-                  multiTypeInputProps={{
-                    onChange: () => {
-                      tagList.length && setTagList([])
-                      resetTag(formik)
-                    },
-                    selectProps: {
-                      defaultSelectedItem: subscriptions.find(
-                        subscription => subscription.value === formik.values.subscription
-                      ),
-                      items: subscriptions
-                    }
-                  }}
-                  label={getString('connectors.ACR.subscription')}
-                  placeholder={getString('select')}
-                />
+        {formik => {
+          formikRef.current = formik
+          return (
+            <Form>
+              <div className={css.connectorForm}>
+                {context === ModalViewFor.SIDECAR && <SideCarArtifactIdentifier />}
+                <div className={css.imagePathContainer}>
+                  <FormInput.MultiTypeInput
+                    name="subscription"
+                    selectItems={subscriptions}
+                    multiTypeInputProps={{
+                      onChange: () => {
+                        tagList.length && setTagList([])
+                        resetTag(formik)
+                      },
+                      selectProps: {
+                        defaultSelectedItem: formik.values.subscription,
+                        items: subscriptions
+                      }
+                    }}
+                    label={getString('connectors.ACR.subscription')}
+                    placeholder={getString('select')}
+                  />
 
-                {getMultiTypeFromValue(formik.values.subscription) === MultiTypeInputType.RUNTIME && (
-                  <div className={css.configureOptions}>
+                  {getMultiTypeFromValue(formik.values.subscription) === MultiTypeInputType.RUNTIME && (
+                    <div className={css.configureOptions}>
+                      <ConfigureOptions
+                        value={formik.values?.subscription as string}
+                        type="String"
+                        variableName="subscription"
+                        showRequiredField={false}
+                        showDefaultField={false}
+                        showAdvanced={true}
+                        onChange={value => {
+                          formik.setFieldValue('subscription', value)
+                        }}
+                        isReadonly={isReadonly}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className={css.imagePathContainer}>
+                  <FormInput.MultiTypeInput
+                    name="registry"
+                    selectItems={registries}
+                    disabled={loadingRegistries || isReadonly}
+                    placeholder={loadingRegistries ? getString('loading') : getString('select')}
+                    multiTypeInputProps={{
+                      onChange: () => {
+                        tagList.length && setTagList([])
+                        resetTag(formik)
+                      },
+                      expressions,
+                      disabled: isReadonly,
+                      selectProps: {
+                        defaultSelectedItem: formik.values.registry,
+                        items: registries,
+                        addClearBtn: !(loadingRegistries || isReadonly),
+                        noResults: (
+                          <Text padding={'small'}>
+                            {get(registriesError, 'data.message', null) || getString('connectors.ACR.registryError')}
+                          </Text>
+                        )
+                      },
+                      allowableTypes
+                    }}
+                    label={getString('connectors.ACR.registry')}
+                  />
+                  {getMultiTypeFromValue(formik.values.registry) === MultiTypeInputType.RUNTIME && (
                     <ConfigureOptions
-                      value={formik.values?.subscription as string}
+                      value={formik.values.registry || ''}
                       type="String"
-                      variableName="subscription"
+                      variableName="registry"
                       showRequiredField={false}
                       showDefaultField={false}
                       showAdvanced={true}
                       onChange={value => {
-                        formik.setFieldValue('subscription', value)
+                        formik.setFieldValue('registry', value)
                       }}
                       isReadonly={isReadonly}
                     />
-                  </div>
-                )}
-              </div>
-              <div className={css.imagePathContainer}>
-                <FormInput.MultiTypeInput
-                  name="registry"
-                  selectItems={registries}
-                  disabled={loadingRegistries || isReadonly}
-                  placeholder={loadingRegistries ? getString('loading') : getString('select')}
-                  multiTypeInputProps={{
-                    onChange: () => {
-                      tagList.length && setTagList([])
-                      resetTag(formik)
-                    },
-                    expressions,
-                    disabled: isReadonly,
-                    selectProps: {
-                      items: registries,
-                      itemRenderer: registryItemRenderer,
-                      addClearBtn: !(loadingRegistries || isReadonly),
-                      noResults: (
-                        <Text padding={'small'}>
-                          {get(registriesError, 'data.message', null) || getString('connectors.ACR.registryError')}
-                        </Text>
-                      )
-                    },
-                    allowableTypes
-                  }}
-                  label={getString('connectors.ACR.registry')}
-                />
-                {getMultiTypeFromValue(formik.values.registry) === MultiTypeInputType.RUNTIME && (
-                  <ConfigureOptions
-                    value={formik.values.registry || ''}
-                    type="String"
-                    variableName="registry"
-                    showRequiredField={false}
-                    showDefaultField={false}
-                    showAdvanced={true}
-                    onChange={value => {
-                      formik.setFieldValue('registry', value)
-                    }}
-                    isReadonly={isReadonly}
-                  />
-                )}
-              </div>
-              <div className={css.imagePathContainer}>
-                <FormInput.MultiTypeInput
-                  name="repository"
-                  selectItems={repositories}
-                  disabled={loadingRepositories || isReadonly}
-                  placeholder={loadingRepositories ? getString('loading') : getString('select')}
-                  multiTypeInputProps={{
-                    onChange: () => {
-                      tagList.length && setTagList([])
-                      resetTag(formik)
-                    },
-                    expressions,
-                    disabled: isReadonly,
-                    selectProps: {
-                      items: repositories,
-                      itemRenderer: repositoryItemRenderer,
-                      addClearBtn: !(loadingRepositories || isReadonly),
-                      noResults: (
-                        <Text padding={'small'}>
-                          {get(repositoriesError, 'data.message', null) || getString('connectors.ACR.repositoryError')}
-                        </Text>
-                      )
-                    },
-                    allowableTypes
-                  }}
-                  label={getString('repository')}
-                />
-                {getMultiTypeFromValue(formik.values.repository) === MultiTypeInputType.RUNTIME && (
-                  <ConfigureOptions
-                    value={formik.values.repository || ''}
-                    type="String"
-                    variableName="repository"
-                    showRequiredField={false}
-                    showDefaultField={false}
-                    showAdvanced={true}
-                    onChange={value => {
-                      formik.setFieldValue('repository', value)
-                    }}
-                    isReadonly={isReadonly}
-                  />
-                )}
-              </div>
-              <div className={css.tagGroup}>
-                <FormInput.RadioGroup
-                  name="tagType"
-                  radioGroup={{ inline: true }}
-                  items={tagOptions}
-                  className={css.radioGroup}
-                />
-              </div>
-              {formik.values?.tagType === 'value' ? (
+                  )}
+                </div>
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
-                    selectItems={tags}
-                    disabled={isTagDisabled(formik?.values)}
-                    helperText={
-                      getMultiTypeFromValue(formik.values?.tag) === MultiTypeInputType.FIXED &&
-                      selectedArtifact &&
-                      getHelpeTextForTags(
-                        helperTextData(selectedArtifact, formik, getConnectorIdValue(prevStepData)),
-                        getString
-                      )
-                    }
+                    name="repository"
+                    selectItems={repositories}
+                    disabled={loadingRepositories || isReadonly}
+                    placeholder={loadingRepositories ? getString('loading') : getString('select')}
                     multiTypeInputProps={{
-                      expressions,
-                      allowableTypes,
-                      selectProps: {
-                        defaultSelectedItem: formik.values?.tag,
-                        noResults: <NoTagResults tagError={acrTagError} />,
-                        items: tags,
-                        addClearBtn: true,
-                        itemRenderer: tagItemRenderer,
-                        allowCreatingNewItems: true
+                      onChange: () => {
+                        tagList.length && setTagList([])
+                        resetTag(formik)
                       },
-                      onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
-                        if (
-                          e?.target?.type !== 'text' ||
-                          (e?.target?.type === 'text' && e?.target?.placeholder === EXPRESSION_STRING)
-                        ) {
-                          return
-                        }
-                        fetchTags(formik.values.subscription, formik.values.registry, formik.values.repository)
-                      }
+                      expressions,
+                      disabled: isReadonly,
+                      selectProps: {
+                        items: repositories,
+                        defaultSelectedItem: formik.values.repository,
+                        addClearBtn: !(loadingRepositories || isReadonly),
+                        noResults: (
+                          <Text padding={'small'}>
+                            {get(repositoriesError, 'data.message', null) ||
+                              getString('connectors.ACR.repositoryError')}
+                          </Text>
+                        )
+                      },
+                      allowableTypes
                     }}
-                    label={getString('tagLabel')}
-                    name="tag"
-                    className={css.tagInputButton}
+                    label={getString('repository')}
                   />
-
-                  {getMultiTypeFromValue(formik.values.tag) === MultiTypeInputType.RUNTIME && (
-                    <div className={css.configureOptions}>
-                      <ConfigureOptions
-                        value={formik.values.tag}
-                        type="String"
-                        variableName="tag"
-                        showRequiredField={false}
-                        showDefaultField={false}
-                        showAdvanced={true}
-                        onChange={value => {
-                          formik.setFieldValue('tag', value)
-                        }}
-                        isReadonly={isReadonly}
-                      />
-                    </div>
+                  {getMultiTypeFromValue(formik.values.repository) === MultiTypeInputType.RUNTIME && (
+                    <ConfigureOptions
+                      value={formik.values.repository || ''}
+                      type="String"
+                      variableName="repository"
+                      showRequiredField={false}
+                      showDefaultField={false}
+                      showAdvanced={true}
+                      onChange={value => {
+                        formik.setFieldValue('repository', value)
+                      }}
+                      isReadonly={isReadonly}
+                    />
                   )}
                 </div>
-              ) : null}
-
-              {formik.values?.tagType === 'regex' ? (
-                <div className={css.imagePathContainer}>
-                  <FormInput.MultiTextInput
-                    label={getString('tagRegex')}
-                    name="tagRegex"
-                    placeholder={getString('pipeline.artifactsSelection.existingDocker.enterTagRegex')}
-                    multiTextInputProps={{ expressions, allowableTypes }}
+                <div className={css.tagGroup}>
+                  <FormInput.RadioGroup
+                    name="tagType"
+                    radioGroup={{ inline: true }}
+                    items={tagOptions}
+                    className={css.radioGroup}
                   />
-                  {getMultiTypeFromValue(formik.values.tagRegex) === MultiTypeInputType.RUNTIME && (
-                    <div className={css.configureOptions}>
-                      <ConfigureOptions
-                        value={formik.values.tagRegex}
-                        type="String"
-                        variableName="tagRegex"
-                        showRequiredField={false}
-                        showDefaultField={false}
-                        showAdvanced={true}
-                        onChange={value => {
-                          formik.setFieldValue('tagRegex', value)
-                        }}
-                        isReadonly={isReadonly}
-                      />
-                    </div>
-                  )}
                 </div>
-              ) : null}
-            </div>
+                {formik.values?.tagType === 'value' ? (
+                  <div className={css.imagePathContainer}>
+                    <FormInput.MultiTypeInput
+                      selectItems={tags}
+                      disabled={isTagDisabled(formik?.values)}
+                      helperText={
+                        getMultiTypeFromValue(formik.values?.tag) === MultiTypeInputType.FIXED &&
+                        selectedArtifact &&
+                        getHelpeTextForTags(
+                          helperTextData(selectedArtifact, formik, getConnectorIdValue(prevStepData)),
+                          getString
+                        )
+                      }
+                      multiTypeInputProps={{
+                        expressions,
+                        allowableTypes,
+                        selectProps: {
+                          defaultSelectedItem: formik.values?.tag,
+                          noResults: <NoTagResults tagError={acrTagError} />,
+                          items: tags,
+                          addClearBtn: true,
+                          itemRenderer: tagItemRenderer,
+                          allowCreatingNewItems: true
+                        },
+                        onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+                          if (
+                            e?.target?.type !== 'text' ||
+                            (e?.target?.type === 'text' && e?.target?.placeholder === EXPRESSION_STRING)
+                          ) {
+                            return
+                          }
+                          fetchTags(formik.values.subscription, formik.values.registry, formik.values.repository)
+                        }
+                      }}
+                      label={getString('tagLabel')}
+                      name="tag"
+                      className={css.tagInputButton}
+                    />
 
-            <Layout.Horizontal spacing="medium">
-              <Button
-                variation={ButtonVariation.SECONDARY}
-                text={getString('back')}
-                icon="chevron-left"
-                onClick={() => previousStep?.(prevStepData)}
-              />
-              <Button
-                variation={ButtonVariation.PRIMARY}
-                type="submit"
-                text={getString('submit')}
-                rightIcon="chevron-right"
-              />
-            </Layout.Horizontal>
-          </Form>
-        )}
+                    {getMultiTypeFromValue(formik.values.tag) === MultiTypeInputType.RUNTIME && (
+                      <div className={css.configureOptions}>
+                        <ConfigureOptions
+                          value={formik.values.tag}
+                          type="String"
+                          variableName="tag"
+                          showRequiredField={false}
+                          showDefaultField={false}
+                          showAdvanced={true}
+                          onChange={value => {
+                            formik.setFieldValue('tag', value)
+                          }}
+                          isReadonly={isReadonly}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+
+                {formik.values?.tagType === 'regex' ? (
+                  <div className={css.imagePathContainer}>
+                    <FormInput.MultiTextInput
+                      label={getString('tagRegex')}
+                      name="tagRegex"
+                      placeholder={getString('pipeline.artifactsSelection.existingDocker.enterTagRegex')}
+                      multiTextInputProps={{ expressions, allowableTypes }}
+                    />
+                    {getMultiTypeFromValue(formik.values.tagRegex) === MultiTypeInputType.RUNTIME && (
+                      <div className={css.configureOptions}>
+                        <ConfigureOptions
+                          value={formik.values.tagRegex}
+                          type="String"
+                          variableName="tagRegex"
+                          showRequiredField={false}
+                          showDefaultField={false}
+                          showAdvanced={true}
+                          onChange={value => {
+                            formik.setFieldValue('tagRegex', value)
+                          }}
+                          isReadonly={isReadonly}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+
+              <Layout.Horizontal spacing="medium">
+                <Button
+                  variation={ButtonVariation.SECONDARY}
+                  text={getString('back')}
+                  icon="chevron-left"
+                  onClick={() => previousStep?.(prevStepData)}
+                />
+                <Button
+                  variation={ButtonVariation.PRIMARY}
+                  type="submit"
+                  text={getString('submit')}
+                  rightIcon="chevron-right"
+                />
+              </Layout.Horizontal>
+            </Form>
+          )
+        }}
       </Formik>
     </Layout.Vertical>
   )

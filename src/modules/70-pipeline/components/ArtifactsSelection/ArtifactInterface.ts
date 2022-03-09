@@ -86,9 +86,9 @@ export interface ACRArtifactType {
   tag: any
   tagRegex: any
   tagType: TagTypes
-  repository?: string
-  subscription?: string
-  registry?: string
+  repository?: any
+  subscription?: any
+  registry?: any
 }
 
 export interface ImagePathProps {
