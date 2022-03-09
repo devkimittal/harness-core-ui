@@ -21,7 +21,6 @@ import {
 } from '@wings-software/uicore'
 import { Dialog, Position, Toaster } from '@blueprintjs/core'
 import { useModalHook } from '@harness/use-modal'
-import moment from 'moment'
 import { isEqual } from 'lodash-es'
 import pDebounce from 'p-debounce'
 import { useToaster } from '@common/exports'
@@ -29,7 +28,7 @@ import { useToaster } from '@common/exports'
 import useDidMountEffect from '@ce/common/useDidMountEffect'
 
 import type { TimeRangeValue } from '@ce/types'
-import { GET_DATE_RANGE } from '@ce/utils/momentUtils'
+import { getTimePeriodString, GET_DATE_RANGE } from '@ce/utils/momentUtils'
 import type { NodeRecommendationDto, RecommendationOverviewStats } from 'services/ce/services'
 import { useStrings } from 'framework/strings'
 import Recommender from '@ce/components/NodeRecommendation/Recommender'
@@ -44,6 +43,7 @@ import {
 } from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
+import { calculateSavingsPercentage } from '@ce/utils/recommendationUtils'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
 import resourceUtilizationCpu from './images/resource-utilization-cpu.svg'
 import resourceUtilizationMem from './images/resource-utilization-memory.svg'
@@ -302,17 +302,19 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
                 )}
                 withoutRecommendationAmount={formatCost(recommendationStats?.totalMonthlyCost)}
                 title={`${getString('ce.recommendation.listPage.monthlyPotentialCostText')}`}
-                spentBy={moment(timeRangeFilter[1]).format('MMM DD')}
+                spentBy={getTimePeriodString(timeRangeFilter[1], 'MMM DD')}
               />
             </Container>
             <Container>
               <RecommendationDetailsSavingsCard
                 amount={formatCost(recommendationStats?.totalMonthlySaving)}
                 title={getString('ce.recommendation.listPage.monthlySavingsText')}
-                amountSubTitle={`(${Math.floor(
-                  (recommendationStats?.totalMonthlySaving / recommendationStats?.totalMonthlyCost) * 100
-                )}%)`}
-                subTitle={`${moment(timeRangeFilter[0]).format('MMM DD')} - ${moment(timeRangeFilter[1]).format(
+                amountSubTitle={calculateSavingsPercentage(
+                  recommendationStats?.totalMonthlySaving,
+                  recommendationStats?.totalMonthlyCost
+                )}
+                subTitle={`${getTimePeriodString(timeRangeFilter[0], 'MMM DD')} - ${getTimePeriodString(
+                  timeRangeFilter[1],
                   'MMM DD'
                 )}`}
               />

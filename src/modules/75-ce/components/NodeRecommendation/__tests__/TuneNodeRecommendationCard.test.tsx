@@ -8,7 +8,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
-import TuneRecommendationCard from '../TuneNodeRecommendationCard'
+import { TuneRecommendationCard } from '../TuneNodeRecommendationCard'
 
 const mockState = {
   minCpu: 44,
@@ -27,7 +27,16 @@ describe('test cases for tune recommendation card', () => {
   test('should be able to render tune recommendation card', async () => {
     const { container } = render(
       <TestWrapper>
-        <TuneRecommendationCard buffer={0} dispatch={jest.fn()} setBuffer={jest.fn()} state={mockState} />
+        <TuneRecommendationCard
+          buffer={0}
+          dispatch={jest.fn()}
+          setBuffer={jest.fn()}
+          state={mockState}
+          initialState={mockState}
+          showInstanceFamiliesModal={jest.fn()}
+          updateRecommendationDetails={jest.fn()}
+          updatedState={mockState}
+        />
       </TestWrapper>
     )
 

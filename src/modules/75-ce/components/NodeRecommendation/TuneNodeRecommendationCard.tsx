@@ -20,11 +20,9 @@ import {
 import { Slider } from '@blueprintjs/core'
 import { isEqual } from 'lodash-es'
 import { useStrings } from 'framework/strings'
+import { addBufferToValue } from '@ce/utils/recommendationUtils'
 import { Action, ACTIONS, IState } from '@ce/components/NodeRecommendation/NodeRecommendation'
 import css from './NodeRecommendation.module.scss'
-
-const addBufferToValue = (bufferPercentage: number, value: number): number =>
-  +(((100 + bufferPercentage) / 100) * value).toFixed(2)
 
 interface TuneRecommendationCardHeaderProps {
   cardVisible: boolean
