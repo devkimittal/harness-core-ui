@@ -40,7 +40,7 @@ export const TuneRecommendationCardHeader: React.FC<TuneRecommendationCardHeader
       <Text
         className={css.pointer}
         font={{ variation: FontVariation.H6 }}
-        color={cardVisible ? Color.GREY_700 : Color.PRIMARY_7}
+        color={cardVisible ? Color.GREY_800 : Color.PRIMARY_7}
         onClick={toggleCardVisible}
       >
         {getString('ce.nodeRecommendation.setInstancePreferences')}
@@ -80,7 +80,7 @@ export const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
   const { getString } = useStrings()
 
   return (
-    <Container className={css.preferences}>
+    <Container className={css.preferences} padding="medium" background={Color.PRIMARY_1}>
       <Layout.Vertical spacing="medium">
         <Container>
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>
@@ -180,7 +180,11 @@ const Buffer = ({
     <Container width="60%">
       <Layout.Vertical spacing="xxsmall">
         <Layout.Horizontal style={{ justifyContent: 'space-between' }}>
-          <Text font={{ variation: FontVariation.SMALL_SEMI }} rightIcon="info" rightIconProps={{ size: 12 }}>
+          <Text
+            font={{ variation: FontVariation.SMALL_SEMI }}
+            rightIcon="info"
+            rightIconProps={{ size: 12, color: Color.GREY_800 }}
+          >
             {getString('ce.nodeRecommendation.buffer')}
           </Text>
           <Text font={{ variation: FontVariation.SMALL_SEMI }} color={Color.GREY_400}>{`${buffer}%`}</Text>
@@ -195,11 +199,11 @@ const Buffer = ({
           onRelease={val => {
             dispatch({
               type: ACTIONS.SUM_CPUS,
-              data: addBufferToValue(val, recomDetails.sumCpu)
+              data: addBufferToValue(recomDetails.sumCpu, val)
             })
             dispatch({
               type: ACTIONS.SUM_MEM,
-              data: addBufferToValue(val, recomDetails.sumMem)
+              data: addBufferToValue(recomDetails.sumMem, val)
             })
           }}
           className={css.bufferSlider}

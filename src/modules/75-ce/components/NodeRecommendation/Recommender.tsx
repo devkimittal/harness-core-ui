@@ -93,12 +93,13 @@ const Recommender = (props: RecommenderProps) => {
         demand: getEstimatedSavingsFor(CardType.RECOMMENDED_ON_DEMAND),
         renderer: (value, type) => {
           const v = value[type!]
-          const isRecommendation = type === CardType.RECOMMENDED_SPOT || type === CardType.RECOMMENDED_ON_DEMAND
+          const isAmount =
+            type === CardType.CURRENT || type === CardType.RECOMMENDED_SPOT || type === CardType.RECOMMENDED_ON_DEMAND
           const isLabel = type === CardType.LABEL
 
-          let color = 'grey700'
-          if (isRecommendation) {
-            color = v < 0 ? 'red500' : 'green700'
+          let color = Color.GREY_700
+          if (isAmount) {
+            color = v < 0 ? Color.RED_500 : Color.GREEN_700
           }
 
           return (
@@ -126,6 +127,7 @@ const Recommender = (props: RecommenderProps) => {
           return (
             <Container>
               <Text
+                color={Color.GREY_700}
                 font={{
                   variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H6
                 }}
@@ -133,7 +135,7 @@ const Recommender = (props: RecommenderProps) => {
                 {v}
               </Text>
               {!isLabel ? (
-                <Text font={{ variation: FontVariation.TINY_SEMI, align: 'center' }}>
+                <Text color={Color.GREY_700} font={{ variation: FontVariation.TINY_SEMI, align: 'center' }}>
                   {type === CardType.CURRENT
                     ? getCpusAndMemoryPerVm(details?.current)
                     : getCpusAndMemoryPerVm(details?.recommended)}
@@ -154,6 +156,7 @@ const Recommender = (props: RecommenderProps) => {
 
           return (
             <Text
+              color={Color.GREY_700}
               font={{
                 variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H6
               }}
@@ -197,7 +200,14 @@ const Recommender = (props: RecommenderProps) => {
           const v = value[type!]
           const isLabel = type === CardType.LABEL
 
-          return <Text font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL_BOLD }}>{v}</Text>
+          return (
+            <Text
+              color={Color.GREY_700}
+              font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL_BOLD }}
+            >
+              {v}
+            </Text>
+          )
         }
       }
     ]
@@ -302,7 +312,11 @@ const Card = (props: CardProps) => {
         return typeof d.renderer === 'function' ? (
           <div className={cardStyles}>{d.renderer(d, type!)}</div>
         ) : (
-          <Text className={cardStyles} font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL }}>
+          <Text
+            className={cardStyles}
+            color={Color.GREY_700}
+            font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL }}
+          >
             {d[type!]}
           </Text>
         )

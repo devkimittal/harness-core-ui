@@ -15,7 +15,7 @@ import {
   Card,
   Button,
   ButtonVariation,
-  ButtonSize,
+  // ButtonSize,
   Icon,
   Tabs
 } from '@wings-software/uicore'
@@ -352,9 +352,9 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
               {getString('ce.nodeRecommendation.resourceUtilInLast', { timeRange: timeRange.label.toLowerCase() })}
             </Text>
           </Container>
-          <Button size={ButtonSize.SMALL} variation={ButtonVariation.SECONDARY}>
+          {/* <Button size={ButtonSize.SMALL} variation={ButtonVariation.SECONDARY}>
             {getString('ce.recommendation.detailsPage.viewMoreDetailsText')}
-          </Button>
+          </Button> */}
         </Layout.Horizontal>
         <Layout.Horizontal padding={{ top: 'large' }} flex={{ justifyContent: 'space-between' }}>
           <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -405,18 +405,16 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             toggleCardVisible={() => setTuneRecomVisible(prevState => !prevState)}
           />
           {tuneRecomVisible ? (
-            <Container padding="medium" background={Color.PRIMARY_1}>
-              <TuneRecommendationCard
-                state={state}
-                dispatch={dispatch}
-                buffer={buffer}
-                setBuffer={setBuffer}
-                showInstanceFamiliesModal={showModal}
-                initialState={initialState}
-                updatedState={updatedState}
-                updateRecommendationDetails={updateRecommendationDetails}
-              />
-            </Container>
+            <TuneRecommendationCard
+              state={state}
+              dispatch={dispatch}
+              buffer={buffer}
+              setBuffer={setBuffer}
+              showInstanceFamiliesModal={showModal}
+              initialState={initialState}
+              updatedState={updatedState}
+              updateRecommendationDetails={updateRecommendationDetails}
+            />
           ) : null}
         </Card>
       </Layout.Vertical>
