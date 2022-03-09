@@ -1,0 +1,1236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test cases for instance family modal tab should be able to render instance family modal tab 1`] = `
+<div>
+  <div
+    class="StyledProps--font StyledProps--main StyledProps--flex"
+    style="overflow: scroll; border: 1px solid #d9dae6;"
+  >
+    <table
+      role="table"
+    >
+      <thead>
+        <tr
+          class="headerGroup"
+          role="row"
+        >
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-4
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-32
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-8
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-112
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-2
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-16
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                c2d-highcpu-56
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                e2-highcpu-4
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                e2-highcpu-2
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                e2-highcpu-8
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                e2-highcpu-32
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                e2-highcpu-16
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-8
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-2
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-96
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-4
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-32
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-16
+              </p>
+            </div>
+          </th>
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main columnCheckbox"
+              >
+                <label
+                  class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <span
+                    class="bp3-control-indicator"
+                  />
+                </label>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                n1-highcpu-64
+              </p>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        role="rowgroup"
+      >
+        <tr
+          role="row"
+        >
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main rowHeader StyledProps--padding-small"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main rowCheckboxContainer"
+              >
+                <div
+                  class="StyledProps--font StyledProps--main rowCheckbox"
+                >
+                  <label
+                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                  >
+                    <input
+                      type="checkbox"
+                    />
+                    <span
+                      class="bp3-control-indicator"
+                    />
+                  </label>
+                </div>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+              >
+                c2d
+              </p>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+        </tr>
+        <tr
+          role="row"
+        >
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main rowHeader StyledProps--padding-small"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main rowCheckboxContainer"
+              >
+                <div
+                  class="StyledProps--font StyledProps--main rowCheckbox"
+                >
+                  <label
+                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                  >
+                    <input
+                      type="checkbox"
+                    />
+                    <span
+                      class="bp3-control-indicator"
+                    />
+                  </label>
+                </div>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+              >
+                e2
+              </p>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+        </tr>
+        <tr
+          role="row"
+        >
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main rowHeader StyledProps--padding-small"
+              style="align-items: center;"
+            >
+              <div
+                class="StyledProps--font StyledProps--main rowCheckboxContainer"
+              >
+                <div
+                  class="StyledProps--font StyledProps--main rowCheckbox"
+                >
+                  <label
+                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                  >
+                    <input
+                      type="checkbox"
+                    />
+                    <span
+                      class="bp3-control-indicator"
+                    />
+                  </label>
+                </div>
+              </div>
+              <p
+                class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+              >
+                n1
+              </p>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          />
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class=""
+            role="cell"
+          >
+            <div
+              class="StyledProps--font StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-center StyledProps--flex-alignItems-center"
+            >
+              <label
+                class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+              >
+                <input
+                  type="checkbox"
+                />
+                <span
+                  class="bp3-control-indicator"
+                />
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

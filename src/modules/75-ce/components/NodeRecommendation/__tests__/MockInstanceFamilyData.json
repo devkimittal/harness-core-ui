@@ -1,0 +1,85 @@
+{
+  "categoryDetails": {
+    "Compute optimized": {
+      "c2d": [
+        "c2d-highcpu-4",
+        "c2d-highcpu-32",
+        "c2d-highcpu-8",
+        "c2d-highcpu-112",
+        "c2d-highcpu-2",
+        "c2d-highcpu-16",
+        "c2d-highcpu-56"
+      ],
+      "e2": ["e2-highcpu-4", "e2-highcpu-2", "e2-highcpu-8", "e2-highcpu-32", "e2-highcpu-16"],
+      "n1": [
+        "n1-highcpu-8",
+        "n1-highcpu-2",
+        "n1-highcpu-96",
+        "n1-highcpu-4",
+        "n1-highcpu-32",
+        "n1-highcpu-16",
+        "n1-highcpu-64"
+      ]
+    },
+    "General purpose": {
+      "a2": ["a2-highgpu-1g", "a2-highgpu-8g", "a2-highgpu-2g", "a2-highgpu-4g", "a2-megagpu-16g"],
+      "c2d": [
+        "c2d-standard-2",
+        "c2d-standard-4",
+        "c2d-standard-112",
+        "c2d-standard-56",
+        "c2d-standard-8",
+        "c2d-standard-32",
+        "c2d-standard-16"
+      ],
+      "e2": [
+        "e2-standard-32",
+        "e2-standard-16",
+        "e2-standard-8",
+        "e2-standard-2",
+        "e2-medium",
+        "e2-micro",
+        "e2-small",
+        "e2-standard-4"
+      ]
+    },
+    "Memory optimized": {
+      "c2d": [
+        "c2d-highmem-112",
+        "c2d-highmem-32",
+        "c2d-highmem-16",
+        "c2d-highmem-2",
+        "c2d-highmem-8",
+        "c2d-highmem-4",
+        "c2d-highmem-56"
+      ],
+      "e2": ["e2-highmem-4", "e2-highmem-16", "e2-highmem-2", "e2-highmem-8"]
+    }
+  },
+  "seriesDetails": [
+    {
+      "series": "c2d",
+      "category": "General purpose",
+      "instanceTypes": [
+        "c2d-standard-2",
+        "c2d-standard-4",
+        "c2d-standard-112",
+        "c2d-standard-56",
+        "c2d-standard-8",
+        "c2d-standard-32",
+        "c2d-standard-16"
+      ]
+    },
+    {
+      "series": "f1",
+      "category": "General purpose",
+      "instanceTypes": ["f1-micro"]
+    },
+    {
+      "series": "c2",
+      "category": "General purpose",
+      "instanceTypes": ["c2-standard-8", "c2-standard-16", "c2-standard-4", "c2-standard-30", "c2-standard-60"]
+    }
+  ],
+  "scrapingTime": "1646725371329"
+}
