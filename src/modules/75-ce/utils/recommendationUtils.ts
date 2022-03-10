@@ -6,7 +6,7 @@
  */
 
 export const addBufferToValue = (value: number, bufferPercentage: number): number =>
-  ((100 + bufferPercentage) / 100) * value
+  +(((100 + bufferPercentage) / 100) * value).toFixed(2)
 
 export const calculateSavingsPercentage = (savings: number, totalCost: number): string =>
   `(${Math.floor((savings / totalCost) * 100)}%)`

@@ -415,7 +415,7 @@ exports[`test cases for Recommendation details Page should be able to render the
                       class="StyledProps--font StyledProps--main StyledProps--font-mono StyledProps--font-variation-body StyledProps--color StyledProps--color-green700 StyledProps--padding-left-xsmall"
                       data-testid="requestId-cpuVal"
                     >
-                      44m
+                      40m
                     </p>
                   </div>
                 </div>
@@ -1237,7 +1237,7 @@ exports[`test cases for Recommendation details Page should be able to render the
                       class="StyledProps--font StyledProps--main StyledProps--font-mono StyledProps--font-variation-body StyledProps--color StyledProps--color-green700 StyledProps--padding-left-xsmall"
                       data-testid="requestId-cpuVal"
                     >
-                      44m
+                      40m
                     </p>
                   </div>
                 </div>
