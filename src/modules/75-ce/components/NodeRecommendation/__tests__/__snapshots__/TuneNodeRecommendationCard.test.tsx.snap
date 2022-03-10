@@ -17,8 +17,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
           ce.nodeRecommendation.prefResourceNeeds
         </p>
         <div
-          class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main StyledProps--flex StyledProps--margin-top-small"
-          css="spaceBetween"
+          class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main spaceBetween StyledProps--flex StyledProps--margin-top-small"
         >
           <div
             class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main"
@@ -30,8 +29,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
                 class="Layout--vertical Layout--layout-spacing-small StyledProps--main"
               >
                 <div
-                  class="StyledProps--font StyledProps--main StyledProps--flex"
-                  css="spaceBetween"
+                  class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                 >
                   <span
                     class="StyledProps--font StyledProps--main StyledProps--padding-right-small StyledProps--inline StyledProps--color StyledProps--color-grey500 StyledProps--font-variation-small-semi"
@@ -53,8 +51,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
                   </div>
                 </div>
                 <div
-                  class="StyledProps--font StyledProps--main StyledProps--flex"
-                  css="spaceBetween"
+                  class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                 >
                   <span
                     class="StyledProps--font StyledProps--main StyledProps--padding-right-small StyledProps--inline StyledProps--color StyledProps--color-grey500 StyledProps--font-variation-small-semi"
@@ -209,8 +206,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
                 ce.nodeRecommendation.largestWorkloadReq
               </p>
               <div
-                class="StyledProps--font StyledProps--main StyledProps--flex"
-                css="spaceBetween"
+                class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                 style="width: 75%;"
               >
                 <span
@@ -233,8 +229,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
                 </div>
               </div>
               <div
-                class="StyledProps--font StyledProps--main StyledProps--flex"
-                css="spaceBetween"
+                class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                 style="width: 75%;"
               >
                 <span
@@ -404,8 +399,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
 exports[`test cases for tune recommendation card should be able to render tune recommendation card header 1`] = `
 <div>
   <div
-    class="StyledProps--font StyledProps--main StyledProps--padding-medium StyledProps--flex"
-    css="spaceBetween"
+    class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
   >
     <p
       class="StyledProps--font StyledProps--main pointer StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey800"
@@ -438,8 +432,7 @@ exports[`test cases for tune recommendation card should be able to render tune r
 exports[`test cases for tune recommendation card tune recommendation card  hidden 1`] = `
 <div>
   <div
-    class="StyledProps--font StyledProps--main StyledProps--padding-medium StyledProps--flex"
-    css="spaceBetween"
+    class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
   >
     <p
       class="StyledProps--font StyledProps--main pointer StyledProps--font-variation-h6 StyledProps--color StyledProps--color-primary7"

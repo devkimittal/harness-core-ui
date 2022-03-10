@@ -10,7 +10,7 @@ import { Container, Text, Color, FontVariation, Checkbox, Layout } from '@harnes
 import { CellProps, useTable, Column } from 'react-table'
 import cx from 'classnames'
 import { flatten } from 'lodash-es'
-import { Action, ACTIONS, IState } from '../NodeRecommendation/NodeRecommendation'
+import { Action, ACTIONS, IState } from '@ce/components/NodeRecommendation/constants'
 
 import css from './InstanceFamiliesModalTab.module.scss'
 

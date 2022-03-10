@@ -20,9 +20,18 @@
   }
 }
 
-.chartContainer {
+.resourceUtilizationCharts {
+  padding-top: var(--spacing-large);
   justify-content: space-between;
-  align-items: flex-start;
+
+  .chartContainer {
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .chartLabel {
+    padding-bottom: var(--spacing-medium);
+  }
 }
 
 .minNodeContainer {

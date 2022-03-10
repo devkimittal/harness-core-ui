@@ -45,40 +45,8 @@ import { useGetSeries } from 'services/ce/publicPricingService'
 import { calculateSavingsPercentage } from '@ce/utils/recommendationUtils'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
 import ResourceUtilizationCharts from './ResourceUtilizationCharts'
+import { ACTIONS, Action, IState } from './constants'
 import css from './NodeRecommendation.module.scss'
-
-export interface IState {
-  minCpu: number
-  minMem: number
-  sumCpu: number
-  sumMem: number
-  maxNodes: number
-  minNodes: number
-  includeTypes: string[]
-  includeSeries: string[]
-  excludeTypes: string[]
-  excludeSeries: string[]
-}
-
-export enum ACTIONS {
-  'SUM_CPUS',
-  'SUM_MEM',
-  'MIN_CPUS',
-  'MIN_MEM',
-  'MIN_NODES',
-  'MAX_NODES',
-  'INCLUDE_TYPES',
-  'INCLUDE_SERIES',
-  'EXCLUDE_TYPES',
-  'EXCLUDE_SERIES',
-  'CLEAR_INSTACE_FAMILY',
-  'RESET_TO_DEFAULT'
-}
-
-export interface Action {
-  type: ACTIONS
-  data: any
-}
 
 const insertOrRemoveIntoArray = (array: string[], val: string): string[] =>
   array.indexOf(val) > -1 ? array.filter(ele => ele !== val) : [...array, val]
