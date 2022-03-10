@@ -35,6 +35,9 @@ interface CardRow {
   renderer?: (data: CardRow, type: CardType) => React.ReactNode
 }
 
+const instaceFamLabelStringKey = 'ce.nodeRecommendation.instanceFam'
+const nodeCountLabelStringKey = 'ce.nodeRecommendation.nodeCount'
+
 const Recommender = (props: RecommenderProps) => {
   const { getString } = useStrings()
   const { stats, details, loading } = props
@@ -98,21 +101,15 @@ const Recommender = (props: RecommenderProps) => {
         demand: getEstimatedSavingsFor(CardType.RECOMMENDED_ON_DEMAND),
         renderer: (value, type) => {
           const v = value[type!]
-          const isAmount =
-            type === CardType.CURRENT || type === CardType.RECOMMENDED_SPOT || type === CardType.RECOMMENDED_ON_DEMAND
           const isLabel = type === CardType.LABEL
 
-          let color = Color.GREY_700
-          if (isAmount) {
-            color = v < 0 ? Color.RED_500 : Color.GREEN_700
-          }
+          const color = isLabel ? Color.GREY_700 : v < 0 ? Color.RED_500 : Color.GREEN_700
 
           return (
             <Text
               color={color}
               font={{
-                weight: 'bold',
-                size: isLabel ? 'small' : 'medium'
+                variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H5
               }}
             >
               {isLabel ? v : formatCost(+v)}
@@ -121,13 +118,15 @@ const Recommender = (props: RecommenderProps) => {
         }
       },
       {
-        label: getString('ce.nodeRecommendation.instanceFam'),
+        label: getString(instaceFamLabelStringKey),
         current: get(details.current, vmTypePropertyPath, ''),
         spot: get(details.recommended, vmTypePropertyPath, ''),
         demand: get(details.recommended, vmTypePropertyPath, ''),
         renderer: (value, type) => {
           const v = value[type!]
           const isLabel = type === CardType.LABEL
+
+          const vmDetails = type === CardType.CURRENT ? details?.current : details?.recommended
 
           return (
             <Container>
@@ -141,9 +140,7 @@ const Recommender = (props: RecommenderProps) => {
               </Text>
               {!isLabel ? (
                 <Text color={Color.GREY_700} font={{ variation: FontVariation.TINY_SEMI, align: 'center' }}>
-                  {type === CardType.CURRENT
-                    ? getCpusAndMemoryPerVm(details?.current)
-                    : getCpusAndMemoryPerVm(details?.recommended)}
+                  {getCpusAndMemoryPerVm(vmDetails)}
                 </Text>
               ) : null}
             </Container>
@@ -151,7 +148,7 @@ const Recommender = (props: RecommenderProps) => {
         }
       },
       {
-        label: getString('ce.nodeRecommendation.nodeCount'),
+        label: getString(nodeCountLabelStringKey),
         current: get(details.current, sumNodesPropertyPath, 0),
         spot: get(details.recommended, sumNodesPropertyPath, 0),
         demand: get(details.recommended, sumNodesPropertyPath, 0),
@@ -292,13 +289,12 @@ const Card = (props: CardProps) => {
       {isRecommendationCard && <div className={css.cardOverlay} />}
       {data.map(d => {
         const isInstaceFamilyCardOnDemand =
-          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.instanceFam')
+          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString(instaceFamLabelStringKey)
         const isInstaceFamilyCardSpot =
-          type === CardType.RECOMMENDED_SPOT && d.label === getString('ce.nodeRecommendation.instanceFam')
+          type === CardType.RECOMMENDED_SPOT && d.label === getString(instaceFamLabelStringKey)
         const isNodeCountCardDemand =
-          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.nodeCount')
-        const isNodeCountCardSpot =
-          type === CardType.RECOMMENDED_SPOT && d.label === getString('ce.nodeRecommendation.nodeCount')
+          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString(nodeCountLabelStringKey)
+        const isNodeCountCardSpot = type === CardType.RECOMMENDED_SPOT && d.label === getString(nodeCountLabelStringKey)
         const isEstimatedSavingsCardOnDemand =
           type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.estimatedSavings')
         const isEstimatedSavingsCardSpot =
