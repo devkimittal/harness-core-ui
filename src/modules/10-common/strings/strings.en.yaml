@@ -6,6 +6,7 @@ setup: Setup
 agent: Agent
 application: Application
 certificate: Certificate
+secret: Secret
 notEnabled: 'Not Enabled'
 apiStatus: 'API Status'
 gpgkey: 'GPG Key'

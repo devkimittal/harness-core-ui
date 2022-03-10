@@ -11,14 +11,14 @@ import {
   Button,
   Formik,
   Text,
-  FormikForm as Form,
   StepProps,
   Container,
   PageSpinner,
   ThumbnailSelect,
   FontVariation,
   FormInput,
-  SelectOption
+  SelectOption,
+  ButtonVariation
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
@@ -34,6 +34,8 @@ import type { ConnectorConfigDTO, ConnectorInfoDTO } from 'services/cd-ng'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import SecretInput from '@secrets/components/SecretInput/SecretInput'
 import { useStrings } from 'framework/strings'
+import commonStyles from '@connectors/components/CreateConnector/commonSteps/ConnectorCommonStyles.module.scss'
+import css from '../CreateAzureConnector.module.scss'
 
 interface AzureAuthenticationProps {
   name: string
@@ -86,12 +88,12 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
 
   const secretKeyOptions: SelectOption[] = [
     {
-      label: getString('connectors.azure.secretTypes.text'),
-      value: AzureSecretKeyType.SECRET_KEY
+      label: getString('connectors.azure.auth.secret'),
+      value: AzureSecretKeyType.SECRET
     },
     {
-      label: getString('connectors.azure.secretTypes.file'),
-      value: AzureSecretKeyType.KEY_CERT
+      label: getString('connectors.azure.auth.certificate'),
+      value: AzureSecretKeyType.CERT
     }
   ]
 
@@ -100,7 +102,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
     azureEnvironmentType: environments.AZURE_GLOBAL,
     clientId: undefined,
     tenantId: undefined,
-    secretType: AzureSecretKeyType.SECRET_KEY,
+    secretType: AzureSecretKeyType.SECRET,
     secretText: undefined,
     secretFile: undefined
   }
@@ -131,7 +133,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
   return loadingConnectorSecrets ? (
     <PageSpinner />
   ) : (
-    <Layout.Vertical spacing="medium">
+    <Layout.Vertical spacing="medium" className={css.secondStep}>
       <Text font={{ variation: FontVariation.H3 }} tooltipProps={{ dataTooltipId: 'azureAuthenticationDetails' }}>
         {getString('details')}
       </Text>
@@ -147,22 +149,22 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
           clientId: Yup.string().required(getString('connectors.azure.validation.clientId')),
           tenantId: Yup.string().required(getString('connectors.tenantIdRequired')),
           secretType: Yup.string().required(getString('connectors.tenantIdRequired')),
-          secretText: Yup.object().when(['type', 'secretType'], {
+          secretText: Yup.object().when(['authType', 'secretType'], {
             is: (authType, secretType) =>
-              authType === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.SECRET_KEY,
-            then: Yup.object().required(getString('common.validation.clientSecretRequired'))
+              authType === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.SECRET,
+            then: Yup.object().required(getString('connectors.azure.validation.secret'))
           }),
-          secretFile: Yup.object().when(['type', 'secretType'], {
+          secretFile: Yup.object().when(['authType', 'secretType'], {
             is: (authType, secretType) =>
-              authType === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.KEY_CERT,
-            then: Yup.object().required(getString('common.validation.clientSecretRequired'))
+              authType === DelegateTypes.DELEGATE_OUT_CLUSTER && secretType === AzureSecretKeyType.CERT,
+            then: Yup.object().required(getString('connectors.azure.validation.certificate'))
           })
         })}
         onSubmit={handleSubmit}
       >
         {formikProps => (
-          <Form>
-            <Container>
+          <>
+            <Container className={css.clusterWrapper}>
               <ThumbnailSelect
                 items={DelegateCards.map(card => ({ label: card.info, value: card.type }))}
                 name="authType"
@@ -172,7 +174,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                 }}
               />
               {DelegateTypes.DELEGATE_OUT_CLUSTER === formikProps.values.authType ? (
-                <>
+                <Layout.Vertical style={{ width: '42%' }}>
                   <FormInput.Select
                     name="azureEnvironmentType"
                     label={getString('environment')}
@@ -188,22 +190,51 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                     placeholder={getString('connectors.tenantId')}
                     label={getString('connectors.azure.tenantIdPlaceholder')}
                   />
-                  <FormInput.Select
-                    name="secretType"
-                    label={getString('connectors.azure.secretTypes.label')}
-                    items={secretKeyOptions}
-                  />
-                  {formikProps.values.secretType === AzureSecretKeyType.SECRET_KEY && (
-                    <SecretInput name={'secretText'} label={getString('common.clientSecret')} />
+                  <Container className={css.authHeaderRow}>
+                    <Text
+                      font={{ variation: FontVariation.H6 }}
+                      inline
+                      tooltipProps={{ dataTooltipId: 'acrAuthTooltip' }}
+                    >
+                      {getString('authentication')}
+                    </Text>
+                    <FormInput.Select
+                      name="secretType"
+                      items={secretKeyOptions}
+                      disabled={false}
+                      className={commonStyles.authTypeSelect}
+                    />
+                  </Container>
+                  {formikProps.values.secretType === AzureSecretKeyType.SECRET && (
+                    <SecretInput name={'secretText'} label={getString('connectors.azure.auth.secret')} />
                   )}
-                  {formikProps.values.secretType === AzureSecretKeyType.KEY_CERT && (
-                    <SecretInput name={'secretFile'} label={getString('common.clientSecret')} type={'SecretFile'} />
+                  {formikProps.values.secretType === AzureSecretKeyType.CERT && (
+                    <SecretInput
+                      name={'secretFile'}
+                      label={getString('connectors.azure.auth.certificate')}
+                      type={'SecretFile'}
+                    />
                   )}
-                </>
+                </Layout.Vertical>
               ) : null}
             </Container>
-            <Button type="submit" intent="primary" text={getString('continue')} rightIcon="chevron-right" />
-          </Form>
+            <Layout.Horizontal padding={{ top: 'small' }} spacing="medium">
+              <Button
+                text={getString('back')}
+                icon="chevron-left"
+                variation={ButtonVariation.SECONDARY}
+                onClick={() => props?.previousStep?.(props?.prevStepData)}
+                data-name="artifactoryBackButton"
+              />
+              <Button
+                type="submit"
+                variation={ButtonVariation.PRIMARY}
+                onClick={formikProps.submitForm}
+                text={getString('continue')}
+                rightIcon="chevron-right"
+              />
+            </Layout.Horizontal>
+          </>
         )}
       </Formik>
     </Layout.Vertical>

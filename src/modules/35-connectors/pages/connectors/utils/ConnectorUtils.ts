@@ -47,8 +47,8 @@ export interface CredentialType {
 }
 
 export const AzureSecretKeyType = {
-  SECRET_KEY: 'SecretKey',
-  KEY_CERT: 'KeyCert'
+  SECRET: 'Secret',
+  CERT: 'Certificate'
 }
 
 export const GCP_AUTH_TYPE = {
@@ -637,8 +637,13 @@ export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accoun
     orgIdentifier: connectorInfo.orgIdentifier
   }
 
-  const secretKey = await setSecretField(connectorInfoSpec.credential?.spec?.secretRef, scopeQueryParams)
-  const secretType = connectorInfoSpec.credential.spec.type
+  const secretType = connectorInfoSpec.credential.spec.auth.type
+  const secretKey = await setSecretField(
+    secretType === AzureSecretKeyType.SECRET
+      ? connectorInfoSpec.credential.spec.auth.spec.secretRef
+      : connectorInfoSpec.credential.spec.auth.spec.certificateRef,
+    scopeQueryParams
+  )
 
   const formData = {
     azureEnvironmentType: connectorInfoSpec.azureEnvironmentType,
@@ -646,8 +651,8 @@ export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accoun
     clientId: connectorInfoSpec.credential.spec.clientId || undefined,
     tenantId: connectorInfoSpec.credential.spec.tenantId || undefined,
     secretType,
-    secretText: secretType === AzureSecretKeyType.SECRET_KEY ? secretKey : undefined,
-    secretFile: secretType === AzureSecretKeyType.KEY_CERT ? secretKey : undefined
+    secretText: secretType === AzureSecretKeyType.SECRET ? secretKey : undefined,
+    secretFile: secretType === AzureSecretKeyType.CERT ? secretKey : undefined
   }
 
   return formData
@@ -1046,11 +1051,17 @@ export const buildAzurePayload = (formData: FormData) => {
               spec: {
                 clientId: formData.clientId,
                 tenantId: formData.tenantId,
-                type: formData.secretType,
-                secretRef:
-                  formData.secretType === AzureSecretKeyType.SECRET_KEY
-                    ? formData.secretText.referenceString
-                    : formData.secretFile.referenceString
+                auth: {
+                  type: formData.secretType,
+                  spec:
+                    formData.secretType === AzureSecretKeyType.SECRET
+                      ? {
+                          secretRef: formData.secretText.referenceString
+                        }
+                      : {
+                          certificateRef: formData.secretFile.referenceString
+                        }
+                }
               }
             }
           : { type: formData.authType },
@@ -1689,6 +1700,7 @@ export const getIconByType = (type: ConnectorInfoDTO['type'] | undefined): IconN
     case Connectors.AWS_SECRET_MANAGER:
       return 'aws-secret-manager'
     case Connectors.CE_AZURE:
+    case Connectors.AZURE:
       return 'service-azure'
     case Connectors.DATADOG:
       return 'service-datadog'

@@ -545,6 +545,7 @@ export interface StringsMap {
   'common.scope': string
   'common.searchPlaceholder': string
   'common.seconds': string
+  'common.secret': string
   'common.secretKey': string
   'common.secrets': string
   'common.seeDetails': string
@@ -1397,16 +1398,17 @@ export interface StringsMap {
   'connectors.awsKms.validation.selectDelegate': string
   'connectors.awsKms.validation.selectRegion': string
   'connectors.awsSecretManager.secretNamePrefix': string
+  'connectors.azure.auth.certificate': string
+  'connectors.azure.auth.secret': string
   'connectors.azure.clientId': string
   'connectors.azure.clientIdPlaceholder': string
   'connectors.azure.environments.azureGlobal': string
   'connectors.azure.environments.usGov': string
-  'connectors.azure.secretTypes.file': string
-  'connectors.azure.secretTypes.label': string
-  'connectors.azure.secretTypes.text': string
   'connectors.azure.tenantIdPlaceholder': string
+  'connectors.azure.validation.certificate': string
   'connectors.azure.validation.clientId': string
   'connectors.azure.validation.environment': string
+  'connectors.azure.validation.secret': string
   'connectors.azureKeyVault.labels.fetchVault': string
   'connectors.azureKeyVault.labels.setupVault': string
   'connectors.azureKeyVault.labels.subscription': string
@@ -1988,6 +1990,7 @@ export interface StringsMap {
   'connectors.title.awsCodeCommit': string
   'connectors.title.awsKms': string
   'connectors.title.awsSecretManager': string
+  'connectors.title.azure': string
   'connectors.title.azureKeyVault': string
   'connectors.title.bitbucketConnector': string
   'connectors.title.ceAws': string

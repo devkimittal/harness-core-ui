@@ -539,7 +539,7 @@ noProjects: No Projects found
 noRoles: No Roles Found
 string: 'String'
 number: 'Number'
-secretType: 'Secret'
+secretType: '{{ $.common.secret }}'
 list: 'List'
 map: 'Map'
 HTTP: 'HTTP'
