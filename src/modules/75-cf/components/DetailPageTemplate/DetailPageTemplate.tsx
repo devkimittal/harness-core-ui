@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Container, Layout, Text, IconName, Color, Icon } from '@wings-software/uicore'
+import { Container, Layout, Text, IconName, Color, Icon, Page } from '@wings-software/uicore'
 import { TagsViewer } from '@common/components/TagsViewer/TagsViewer'
 import { IdentifierText } from '@cf/components/IdentifierText/IdentifierText'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
@@ -44,8 +44,32 @@ export const DetailPageTemplate: React.FC<DetailPageTemplateProps> = ({
 }) => {
   const headerHeight = tags?.length ? HEADER_HEIGHT : HEADER_HEIGHT_NO_TAGS
 
+  // title: React.ReactNode
+  // toolbar?: React.ReactNode
+  // content?: React.ReactNode
+  // size?: 'small' | 'standard' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+  // className?: string
+  // breadcrumbs?: React.ReactNode
+  // testId?: string
+
   return (
     <>
+      <Page.Header
+        title={title}
+        toolbar={headerExtras}
+        size="xlarge"
+        testId="detail-page-template"
+        breadcrumbs={
+          <NGBreadcrumbs
+            customPathParams={{ module: 'cf' }}
+            links={breadcrumbs.map(({ title: label, url }) => ({ label, url }))}
+          />
+        }
+        content={subTitle}
+      >
+        <h1>page banner content</h1>
+        {subTitle}
+      </Page.Header>
       <Container
         height={headerHeight}
         padding={{ top: 'large', right: 'xlarge', bottom: 'large', left: 'xlarge' }}
