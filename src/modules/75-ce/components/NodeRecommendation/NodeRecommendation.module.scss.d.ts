@@ -24,6 +24,7 @@ declare const styles: {
   readonly cardOverlay: string
   readonly cards: string
   readonly chartContainer: string
+  readonly chartLabel: string
   readonly comparisonCtn: string
   readonly input: string
   readonly instaceFamilyInput: string
@@ -37,6 +38,7 @@ declare const styles: {
   readonly pointer: string
   readonly preferences: string
   readonly recommendationCategory: string
+  readonly resourceUtilizationCharts: string
   readonly spaceBetween: string
   readonly title: string
   readonly toaster: string

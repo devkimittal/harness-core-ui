@@ -21,7 +21,7 @@ import { Slider } from '@blueprintjs/core'
 import { isEqual } from 'lodash-es'
 import { useStrings } from 'framework/strings'
 import { addBufferToValue } from '@ce/utils/recommendationUtils'
-import { Action, ACTIONS, IState } from '@ce/components/NodeRecommendation/NodeRecommendation'
+import { ACTIONS, Action, IState } from './constants'
 import css from './NodeRecommendation.module.scss'
 
 interface TuneRecommendationCardHeaderProps {

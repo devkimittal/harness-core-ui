@@ -613,8 +613,7 @@ exports[`test cases for node recommendations details should be able to render no
       class="bp3-card bp3-elevation-0 Card--card tuneRecommendationCard"
     >
       <div
-        class="StyledProps--font StyledProps--main StyledProps--padding-medium StyledProps--flex"
-        css="spaceBetween"
+        class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
       >
         <p
           class="StyledProps--font StyledProps--main pointer StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey800"
@@ -656,8 +655,7 @@ exports[`test cases for node recommendations details should be able to render no
               ce.nodeRecommendation.prefResourceNeeds
             </p>
             <div
-              class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main StyledProps--flex StyledProps--margin-top-small"
-              css="spaceBetween"
+              class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main spaceBetween StyledProps--flex StyledProps--margin-top-small"
             >
               <div
                 class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main"
@@ -669,8 +667,7 @@ exports[`test cases for node recommendations details should be able to render no
                     class="Layout--vertical Layout--layout-spacing-small StyledProps--main"
                   >
                     <div
-                      class="StyledProps--font StyledProps--main StyledProps--flex"
-                      css="spaceBetween"
+                      class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                     >
                       <span
                         class="StyledProps--font StyledProps--main StyledProps--padding-right-small StyledProps--inline StyledProps--color StyledProps--color-grey500 StyledProps--font-variation-small-semi"
@@ -692,8 +689,7 @@ exports[`test cases for node recommendations details should be able to render no
                       </div>
                     </div>
                     <div
-                      class="StyledProps--font StyledProps--main StyledProps--flex"
-                      css="spaceBetween"
+                      class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                     >
                       <span
                         class="StyledProps--font StyledProps--main StyledProps--padding-right-small StyledProps--inline StyledProps--color StyledProps--color-grey500 StyledProps--font-variation-small-semi"
@@ -848,8 +844,7 @@ exports[`test cases for node recommendations details should be able to render no
                     ce.nodeRecommendation.largestWorkloadReq
                   </p>
                   <div
-                    class="StyledProps--font StyledProps--main StyledProps--flex"
-                    css="spaceBetween"
+                    class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                     style="width: 75%;"
                   >
                     <span
@@ -872,8 +867,7 @@ exports[`test cases for node recommendations details should be able to render no
                     </div>
                   </div>
                   <div
-                    class="StyledProps--font StyledProps--main StyledProps--flex"
-                    css="spaceBetween"
+                    class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                     style="width: 75%;"
                   >
                     <span

@@ -26,9 +26,9 @@ const ResourceUtilizationCharts = (props: ResourceUtilizationChartsProps) => {
   const { getString } = useStrings()
 
   return (
-    <Layout.Horizontal padding={{ top: 'large' }} flex={{ justifyContent: 'space-between' }}>
+    <Layout.Horizontal flex className={css.resourceUtilizationCharts}>
       <Layout.Vertical height="100%" flex className={css.chartContainer}>
-        <Container padding={{ bottom: 'medium' }}>
+        <Container className={css.chartLabel}>
           <Text inline font={{ variation: FontVariation.SMALL }}>
             {getString('delegate.delegateCPU')}
           </Text>
@@ -36,17 +36,17 @@ const ResourceUtilizationCharts = (props: ResourceUtilizationChartsProps) => {
         </Container>
         <img src={resourceUtilizationCpu} />
       </Layout.Vertical>
-      <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <Container padding={{ bottom: 'medium' }}>
+      <Layout.Vertical height="100%" flex className={css.chartContainer}>
+        <Container className={css.chartLabel}>
           <Text inline font={{ variation: FontVariation.SMALL }}>
             {getString('ce.recommendation.recommendationChart.memoryLabelRegular')}
           </Text>
-          <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+sumMem}GiB`}</Text>
+          <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${sumMem}GiB`}</Text>
         </Container>
         <img src={resourceUtilizationMem} />
       </Layout.Vertical>
-      <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <Container padding={{ bottom: 'medium' }}>
+      <Layout.Vertical height="100%" flex className={css.chartContainer}>
+        <Container className={css.chartLabel}>
           <Text inline font={{ variation: FontVariation.SMALL }}>
             {getString('ce.nodeRecommendation.nodeCount')}
           </Text>
