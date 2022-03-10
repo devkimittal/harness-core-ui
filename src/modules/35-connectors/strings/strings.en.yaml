@@ -109,6 +109,7 @@ title:
   ceAws: 'AWS Connector '
   gcpKms: GCP Key Management Service
   errorTracking: 'Error Tracking'
+  azure: 'Azure Cloud Provider'
 name_labels:
   Kubernetes: 'Kubernetes Connector Name'
   HttpHelmRepo: 'Helm Http Connector Name'
@@ -268,13 +269,14 @@ azure:
   validation:
     environment: '{{ $.common.validation.environmentIsRequired }}'
     clientId: '{{ $.common.validation.clientIdIsRequired }}'
+    secret: 'Secret is required'
+    certificate: 'Certificate is required'
   environments:
     azureGlobal: 'Azure Global'
     usGov: 'US Government'
-  secretTypes:
-    label: 'Client Secret Type'
-    text: 'Secret Text'
-    file: 'Secret File'
+  auth:
+    secret: '{{ $.common.secret }}'
+    certificate: '{{ $.common.certificate }}'
 GCS:
   name: GCS
   fullName: Google Cloud Storage
