@@ -51,7 +51,7 @@ const ResourceUtilizationCharts = (props: ResourceUtilizationChartsProps) => {
             {getString('ce.nodeRecommendation.nodeCount')}
           </Text>
           <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>
-            {minNodes}
+            {` ${minNodes}`}
           </Text>
         </Container>
         <img src={resourceUtilizationNodeCount} />

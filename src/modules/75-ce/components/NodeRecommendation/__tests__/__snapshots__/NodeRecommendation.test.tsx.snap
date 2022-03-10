@@ -535,14 +535,14 @@ exports[`test cases for node recommendations details should be able to render no
       </div>
     </div>
     <div
-      class="Layout--horizontal StyledProps--main StyledProps--padding-top-large StyledProps--flex StyledProps--flex-justifyContent-space-between"
+      class="Layout--horizontal StyledProps--main resourceUtilizationCharts StyledProps--flex"
     >
       <div
         class="Layout--vertical StyledProps--main chartContainer StyledProps--flex"
         style="height: 100%;"
       >
         <div
-          class="StyledProps--font StyledProps--main StyledProps--padding-bottom-medium"
+          class="StyledProps--font StyledProps--main chartLabel"
         >
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
@@ -560,11 +560,11 @@ exports[`test cases for node recommendations details should be able to render no
         />
       </div>
       <div
-        class="Layout--vertical StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-space-between StyledProps--flex-alignItems-flex-start"
+        class="Layout--vertical StyledProps--main chartContainer StyledProps--flex"
         style="height: 100%;"
       >
         <div
-          class="StyledProps--font StyledProps--main StyledProps--padding-bottom-medium"
+          class="StyledProps--font StyledProps--main chartLabel"
         >
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
@@ -582,11 +582,11 @@ exports[`test cases for node recommendations details should be able to render no
         />
       </div>
       <div
-        class="Layout--vertical StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-space-between StyledProps--flex-alignItems-flex-start"
+        class="Layout--vertical StyledProps--main chartContainer StyledProps--flex"
         style="height: 100%;"
       >
         <div
-          class="StyledProps--font StyledProps--main StyledProps--padding-bottom-medium"
+          class="StyledProps--font StyledProps--main chartLabel"
         >
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
@@ -596,7 +596,7 @@ exports[`test cases for node recommendations details should be able to render no
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey400"
           >
-            3
+             3
           </span>
         </div>
         <img

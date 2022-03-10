@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Container,
   Layout,
@@ -96,7 +96,13 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
                 <Icon name="plus" size={12} color={Color.GREY_700} />
               </Container>
             </Layout.Horizontal>
-            <Buffer state={state} dispatch={dispatch} buffer={buffer} setBuffer={setBuffer} />
+            <Buffer
+              state={state}
+              dispatch={dispatch}
+              buffer={buffer}
+              setBuffer={setBuffer}
+              updatedState={updatedState}
+            />
           </Layout.Horizontal>
           <Layout.Horizontal padding={{ top: 'medium' }} spacing="medium">
             <LargestResources state={state} dispatch={dispatch} />
@@ -166,15 +172,16 @@ const Buffer = ({
   dispatch,
   state,
   buffer,
-  setBuffer
+  setBuffer,
+  updatedState
 }: {
   dispatch: React.Dispatch<Action>
   state: IState
   buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
+  updatedState: IState
 }) => {
   const { getString } = useStrings()
-  const [recomDetails] = useState(state)
 
   return (
     <Container width="60%">
@@ -199,22 +206,22 @@ const Buffer = ({
           onRelease={val => {
             dispatch({
               type: ACTIONS.SUM_CPUS,
-              data: addBufferToValue(recomDetails.sumCpu, val)
+              data: addBufferToValue(state.sumCpu, val)
             })
             dispatch({
               type: ACTIONS.SUM_MEM,
-              data: addBufferToValue(recomDetails.sumMem, val)
+              data: addBufferToValue(state.sumMem, val)
             })
           }}
           className={css.bufferSlider}
         />
         <Container>
-          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString('delegate.delegateCPU')}: ${
-            Math.floor((100 + buffer) * state.sumCpu) / 100
-          } vCPU `}</Text>
-          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString('ce.nodeRecommendation.ram')}: ${
-            Math.floor((100 + buffer) * state.sumMem) / 100
-          } GiB`}</Text>
+          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
+            'delegate.delegateCPU'
+          )}: ${addBufferToValue(updatedState.sumCpu, buffer)} vCPU `}</Text>
+          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
+            'ce.nodeRecommendation.ram'
+          )}: ${addBufferToValue(updatedState.sumMem, buffer)} GiB`}</Text>
         </Container>
       </Layout.Vertical>
     </Container>
@@ -274,6 +281,7 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
             onClick={() => {
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes - 1 })
             }}
+            disabled={state.minNodes <= 0}
           />
           <TextInput
             value={`${state.minNodes}`}
