@@ -15,13 +15,12 @@ import {
   Card,
   Button,
   ButtonVariation,
-  // ButtonSize,
   Icon,
   Tabs
 } from '@wings-software/uicore'
 import { Dialog, Position, Toaster } from '@blueprintjs/core'
 import { useModalHook } from '@harness/use-modal'
-import { isEqual } from 'lodash-es'
+import { defaultTo, isEqual } from 'lodash-es'
 import pDebounce from 'p-debounce'
 import { useToaster } from '@common/exports'
 
@@ -39,16 +38,13 @@ import {
 } from '@ce/components/RecommendationDetailsSummaryCards/RecommendationDetailsSummaryCards'
 import {
   TuneRecommendationCardHeader,
-  TuneRecommendationCard
+  TuneRecommendationCardBody
 } from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
 import { calculateSavingsPercentage } from '@ce/utils/recommendationUtils'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
-import resourceUtilizationCpu from './images/resource-utilization-cpu.svg'
-import resourceUtilizationMem from './images/resource-utilization-memory.svg'
-import resourceUtilizationNodeCount from './images/resource-utilization-node-count.svg'
-
+import ResourceUtilizationCharts from './ResourceUtilizationCharts'
 import css from './NodeRecommendation.module.scss'
 
 export interface IState {
@@ -162,7 +158,6 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
 
   const [buffer, setBuffer] = useState(0)
-  // const [autoScaling, setAutoScaling] = useState(false)
   const [tuneRecomVisible, setTuneRecomVisible] = useState(true)
 
   const {
@@ -201,15 +196,15 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const [updatedState, setUpdatedState] = useState(initialState)
 
   const { mutate: fetchNewRecommendation, loading } = useRecommendCluster({
-    provider: provider || '',
-    region: region || '',
-    service: service || ''
+    provider: defaultTo(provider, ''),
+    region: defaultTo(region, ''),
+    service: defaultTo(service, '')
   })
 
   const { data: seriesData, loading: seriesDataLoading } = useGetSeries({
-    provider: provider || '',
-    service: service || '',
-    region: region || ''
+    provider: defaultTo(provider, ''),
+    service: defaultTo(service, ''),
+    region: defaultTo(region, '')
   })
 
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
@@ -224,14 +219,14 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         ...recomDetails,
         recommended: { ...recomDetails.recommended, ...response }
       } as NodeRecommendationDto
-      // TODO: check how we can avoid it.
+
       if (!isEqual(recomDetails, newState)) {
         setRecomDetails(newState)
       }
 
       UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
     } catch (e) {
-      showError('Error in fetching recommended cluster')
+      showError(getString('ce.nodeRecommendation.fetchRecommendationError'))
     }
   }
 
@@ -321,28 +316,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
             </Container>
           </Layout.Horizontal>
           <Recommender stats={recommendationStats} details={recomDetails} loading={loading} />
-          <Container margin="medium" className={css.tuneRecomInfoContainer} padding="medium" background={Color.BLUE_50}>
-            <Layout.Horizontal spacing="xsmall">
-              <Icon name="info-messaging" />
-              <Container>
-                <Text inline color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
-                  {getString('ce.nodeRecommendation.tuneRecommendationsInfo1')}
-                </Text>
-                <Text
-                  inline
-                  color={Color.PRIMARY_7}
-                  font={{ variation: FontVariation.SMALL }}
-                  onClick={() => setTuneRecomVisible(true)}
-                  className={css.pointer}
-                >
-                  {getString('ce.recommendation.detailsPage.tuneRecommendations').toLowerCase()}
-                </Text>
-                <Text inline color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
-                  {getString('ce.nodeRecommendation.tuneRecommendationsInfo2')}
-                </Text>
-              </Container>
-            </Layout.Horizontal>
-          </Container>
+          <TuneRecommendationHelpText toggleCardVisible={() => setTuneRecomVisible(prevState => !prevState)} />
         </Card>
       </Layout.Vertical>
       <Layout.Vertical spacing="large" padding="xlarge">
@@ -352,60 +326,22 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
               {getString('ce.nodeRecommendation.resourceUtilInLast', { timeRange: timeRange.label.toLowerCase() })}
             </Text>
           </Container>
-          {/* <Button size={ButtonSize.SMALL} variation={ButtonVariation.SECONDARY}>
-            {getString('ce.recommendation.detailsPage.viewMoreDetailsText')}
-          </Button> */}
         </Layout.Horizontal>
-        <Layout.Horizontal padding={{ top: 'large' }} flex={{ justifyContent: 'space-between' }}>
-          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <Container padding={{ bottom: 'medium' }}>
-              <Text inline font={{ variation: FontVariation.SMALL }}>
-                {getString('delegate.delegateCPU')}
-              </Text>
-              <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumCpu || 0).toFixed(
-                2
-              )}vCPU`}</Text>
-            </Container>
-            <img src={resourceUtilizationCpu} />
-          </Layout.Vertical>
-
-          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <Container padding={{ bottom: 'medium' }}>
-              <Text inline font={{ variation: FontVariation.SMALL }}>
-                {getString('ce.recommendation.recommendationChart.memoryLabelRegular')}
-              </Text>
-              <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>{` ${+(sumMem || 0).toFixed(
-                2
-              )}GiB`}</Text>
-            </Container>
-            <img src={resourceUtilizationMem} />
-          </Layout.Vertical>
-          <Layout.Vertical height="100%" flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <Container padding={{ bottom: 'medium' }}>
-              <Text inline font={{ variation: FontVariation.SMALL }}>
-                {getString('ce.nodeRecommendation.nodeCount')}
-              </Text>
-              <Text inline font={{ variation: FontVariation.H6 }} color={Color.GREY_400}>
-                {` ${+(minNodes || 0).toFixed(2)}`}
-              </Text>
-            </Container>
-            <img src={resourceUtilizationNodeCount} />
-          </Layout.Vertical>
-        </Layout.Horizontal>
+        <ResourceUtilizationCharts
+          sumCpu={+defaultTo(sumCpu, 0).toFixed(2)}
+          sumMem={+defaultTo(sumMem, 0).toFixed(2)}
+          minNodes={+defaultTo(minNodes, 0).toFixed(2)}
+        />
         <Text font={{ variation: FontVariation.H5 }} padding={{ top: 'xsmall' }}>
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
-        {/* <Layout.Horizontal style={{ alignItems: 'center' }}>
-          <Checkbox checked={autoScaling} onChange={() => setAutoScaling(!autoScaling)} />
-          <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.nodeRecommendation.autoScaling')}</Text>
-        </Layout.Horizontal> */}
         <Card className={css.tuneRecommendationCard}>
           <TuneRecommendationCardHeader
             cardVisible={tuneRecomVisible}
             toggleCardVisible={() => setTuneRecomVisible(prevState => !prevState)}
           />
           {tuneRecomVisible ? (
-            <TuneRecommendationCard
+            <TuneRecommendationCardBody
               state={state}
               dispatch={dispatch}
               buffer={buffer}
@@ -423,3 +359,32 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 }
 
 export default NodeRecommendationDetails
+
+const TuneRecommendationHelpText = ({ toggleCardVisible }: { toggleCardVisible: () => void }) => {
+  const { getString } = useStrings()
+
+  return (
+    <Container margin="medium" className={css.tuneRecomInfoContainer} padding="medium" background={Color.BLUE_50}>
+      <Layout.Horizontal spacing="xsmall">
+        <Icon name="info-messaging" />
+        <Container>
+          <Text inline color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
+            {getString('ce.nodeRecommendation.tuneRecommendationsInfo1')}
+          </Text>
+          <Text
+            inline
+            color={Color.PRIMARY_7}
+            font={{ variation: FontVariation.SMALL }}
+            onClick={toggleCardVisible}
+            className={css.pointer}
+          >
+            {getString('ce.recommendation.detailsPage.tuneRecommendations').toLowerCase()}
+          </Text>
+          <Text inline color={Color.GREY_700} font={{ variation: FontVariation.SMALL }}>
+            {getString('ce.nodeRecommendation.tuneRecommendationsInfo2')}
+          </Text>
+        </Container>
+      </Layout.Horizontal>
+    </Container>
+  )
+}

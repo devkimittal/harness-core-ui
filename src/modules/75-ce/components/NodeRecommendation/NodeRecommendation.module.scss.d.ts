@@ -23,6 +23,7 @@ declare const styles: {
   readonly cardLoadingContainer: string
   readonly cardOverlay: string
   readonly cards: string
+  readonly chartContainer: string
   readonly comparisonCtn: string
   readonly input: string
   readonly instaceFamilyInput: string
@@ -36,6 +37,7 @@ declare const styles: {
   readonly pointer: string
   readonly preferences: string
   readonly recommendationCategory: string
+  readonly spaceBetween: string
   readonly title: string
   readonly toaster: string
   readonly tuneRecomInfoContainer: string

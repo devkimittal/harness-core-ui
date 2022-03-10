@@ -36,7 +36,7 @@ export const TuneRecommendationCardHeader: React.FC<TuneRecommendationCardHeader
   const { getString } = useStrings()
 
   return (
-    <Container padding="medium" flex={{ justifyContent: 'space-between' }}>
+    <Container padding="medium" flex className={css.spaceBetween}>
       <Text
         className={css.pointer}
         font={{ variation: FontVariation.H6 }}
@@ -55,7 +55,7 @@ export const TuneRecommendationCardHeader: React.FC<TuneRecommendationCardHeader
   )
 }
 
-interface TuneRecommendationCardProps {
+interface TuneRecommendationCardBodyProps {
   state: IState
   dispatch: React.Dispatch<Action>
   buffer: number
@@ -66,7 +66,7 @@ interface TuneRecommendationCardProps {
   updateRecommendationDetails: () => void
 }
 
-export const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
+export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProps) => {
   const {
     state,
     dispatch,
@@ -86,7 +86,7 @@ export const TuneRecommendationCard = (props: TuneRecommendationCardProps) => {
           <Text font={{ variation: FontVariation.SMALL_SEMI }}>
             {getString('ce.nodeRecommendation.prefResourceNeeds')}
           </Text>
-          <Layout.Horizontal flex={{ justifyContent: 'space-between' }} spacing="medium" margin={{ top: 'small' }}>
+          <Layout.Horizontal flex className={css.spaceBetween} spacing="medium" margin={{ top: 'small' }}>
             <Layout.Horizontal spacing="medium">
               <Resources state={state} dispatch={dispatch} />
               <Container flex={{ justifyContent: 'center' }}>
@@ -123,7 +123,7 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
   return (
     <Container>
       <Layout.Vertical spacing="small">
-        <Container flex={{ justifyContent: 'space-between' }}>
+        <Container flex className={css.spaceBetween}>
           <Text
             padding={{ right: 'small' }}
             inline
@@ -140,7 +140,7 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             }
           />
         </Container>
-        <Container flex={{ justifyContent: 'space-between' }}>
+        <Container flex className={css.spaceBetween}>
           <Text
             padding={{ right: 'small' }}
             inline
@@ -229,7 +229,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
         <Text font={{ variation: FontVariation.SMALL_SEMI }}>
           {getString('ce.nodeRecommendation.largestWorkloadReq')}
         </Text>
-        <Container flex={{ justifyContent: 'space-between' }} width="75%">
+        <Container flex className={css.spaceBetween} width="75%">
           <Text inline color={Color.GREY_500} font={{ variation: FontVariation.SMALL_SEMI }}>
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
@@ -241,7 +241,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             }
           />
         </Container>
-        <Container flex={{ justifyContent: 'space-between' }} width="75%">
+        <Container flex className={css.spaceBetween} width="75%">
           <Text inline color={Color.GREY_500} font={{ variation: FontVariation.SMALL_SEMI }}>
             {getString('ce.nodeRecommendation.mem')}
           </Text>
