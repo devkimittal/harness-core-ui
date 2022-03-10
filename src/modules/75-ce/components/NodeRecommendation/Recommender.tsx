@@ -7,7 +7,7 @@
 
 import React, { useMemo } from 'react'
 import cx from 'classnames'
-import { get } from 'lodash-es'
+import { defaultTo, get } from 'lodash-es'
 
 import { Container, Icon, Text, Color, FontVariation } from '@wings-software/uicore'
 
@@ -47,7 +47,7 @@ const Recommender = (props: RecommenderProps) => {
   }, [])
 
   const data: CardRow[] = useMemo(() => {
-    const curInstanceType = details.current?.instanceCategory || ''
+    const curInstanceType = defaultTo(details.current?.instanceCategory, '')
     const getCostPerNodePerHour = (obj: RecommendationResponse | null) => {
       if (curInstanceType === 'ON_DEMAND') {
         return get(obj, 'nodePools[0].vm.onDemandPrice', 0)
@@ -57,12 +57,12 @@ const Recommender = (props: RecommenderProps) => {
     }
 
     const getMonthlyCostFor = (type: CardType) => {
-      const mp = details.recommended?.accuracy?.masterPrice || 0
+      const mp = defaultTo(details.recommended?.accuracy?.masterPrice, 0)
       if (type === CardType.RECOMMENDED_SPOT) {
-        return (mp + (details.recommended?.accuracy?.spotPrice || 0)) * 24 * 30
+        return (mp + defaultTo(details.recommended?.accuracy?.spotPrice, 0)) * 24 * 30
       }
 
-      return (mp + (details.recommended?.accuracy?.workerPrice || 0)) * 24 * 30
+      return (mp + defaultTo(details.recommended?.accuracy?.workerPrice, 0)) * 24 * 30
     }
 
     const getEstimatedSavingsFor = (type: CardType) => {
@@ -74,6 +74,11 @@ const Recommender = (props: RecommenderProps) => {
       vmDetails && vmDetails.nodePools?.length
         ? `(CPU: ${vmDetails.nodePools[0]?.vm?.cpusPerVm} Mem: ${vmDetails.nodePools[0]?.vm?.cpusPerVm})`
         : null
+
+    const vmTypePropertyPath = 'nodePools[0].vm.type'
+    const sumNodesPropertyPath = 'nodePools[0].sumNodes'
+    const cpusPerVmPropertyPath = 'nodePools[0].vm.cpusPerVm'
+    const memPerVmPropertyPath = 'nodePools[0].vm.memPerVm'
 
     return [
       {
@@ -117,9 +122,9 @@ const Recommender = (props: RecommenderProps) => {
       },
       {
         label: getString('ce.nodeRecommendation.instanceFam'),
-        current: get(details.current, 'nodePools[0].vm.type', ''),
-        spot: get(details.recommended, 'nodePools[0].vm.type', ''),
-        demand: get(details.recommended, 'nodePools[0].vm.type', ''),
+        current: get(details.current, vmTypePropertyPath, ''),
+        spot: get(details.recommended, vmTypePropertyPath, ''),
+        demand: get(details.recommended, vmTypePropertyPath, ''),
         renderer: (value, type) => {
           const v = value[type!]
           const isLabel = type === CardType.LABEL
@@ -147,9 +152,9 @@ const Recommender = (props: RecommenderProps) => {
       },
       {
         label: getString('ce.nodeRecommendation.nodeCount'),
-        current: get(details.current, 'nodePools[0].sumNodes', 0),
-        spot: get(details.recommended, 'nodePools[0].sumNodes', 0),
-        demand: get(details.recommended, 'nodePools[0].sumNodes', 0),
+        current: get(details.current, sumNodesPropertyPath, 0),
+        spot: get(details.recommended, sumNodesPropertyPath, 0),
+        demand: get(details.recommended, sumNodesPropertyPath, 0),
         renderer: (value, type) => {
           const v = value[type!]
           const isLabel = type === CardType.LABEL
@@ -168,16 +173,16 @@ const Recommender = (props: RecommenderProps) => {
       },
       {
         label: getString('ce.nodeRecommendation.cpus'),
-        current: get(details.current, 'nodePools[0].vm.cpusPerVm', 0).toFixed(2),
-        spot: get(details.recommended, 'nodePools[0].vm.cpusPerVm', 0).toFixed(2),
-        demand: get(details.recommended, 'nodePools[0].vm.cpusPerVm', 0).toFixed(2)
+        current: get(details.current, cpusPerVmPropertyPath, 0).toFixed(2),
+        spot: get(details.recommended, cpusPerVmPropertyPath, 0).toFixed(2),
+        demand: get(details.recommended, cpusPerVmPropertyPath, 0).toFixed(2)
       },
 
       {
         label: getString('ce.nodeRecommendation.memory'),
-        current: get(details.current, 'nodePools[0].vm.memPerVm', 0).toFixed(2),
-        spot: get(details.recommended, 'nodePools[0].vm.memPerVm', 0).toFixed(2),
-        demand: get(details.recommended, 'nodePools[0].vm.memPerVm', 0).toFixed(2)
+        current: get(details.current, memPerVmPropertyPath, 0).toFixed(2),
+        spot: get(details.recommended, memPerVmPropertyPath, 0).toFixed(2),
+        demand: get(details.recommended, memPerVmPropertyPath, 0).toFixed(2)
       },
       {
         label: getString('ce.nodeRecommendation.costPerHour'),
@@ -187,9 +192,9 @@ const Recommender = (props: RecommenderProps) => {
       },
       {
         label: getString('regionLabel'),
-        current: details.current?.region || '',
-        spot: details.recommended?.region || '',
-        demand: details.recommended?.region || ''
+        current: defaultTo(details.current?.region, ''),
+        spot: defaultTo(details.recommended?.region, ''),
+        demand: defaultTo(details.recommended?.region, '')
       },
       {
         label: getString('ce.nodeRecommendation.monthlyCost'),

@@ -8,7 +8,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
-import { TuneRecommendationCard } from '../TuneNodeRecommendationCard'
+import { TuneRecommendationCardBody, TuneRecommendationCardHeader } from '../TuneNodeRecommendationCard'
 
 const mockState = {
   minCpu: 44,
@@ -23,11 +23,36 @@ const mockState = {
   excludeSeries: []
 }
 
+jest.mock('framework/strings', () => ({
+  ...(jest.requireActual('framework/strings') as any),
+  useStrings: jest.fn().mockReturnValue({
+    getString: jest.fn().mockImplementation(val => val)
+  })
+}))
+
 describe('test cases for tune recommendation card', () => {
+  test('should be able to render tune recommendation card header', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <TuneRecommendationCardHeader cardVisible={true} toggleCardVisible={jest.fn()} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('tune recommendation card  hidden', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <TuneRecommendationCardHeader cardVisible={false} toggleCardVisible={jest.fn()} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
   test('should be able to render tune recommendation card', async () => {
     const { container } = render(
       <TestWrapper>
-        <TuneRecommendationCard
+        <TuneRecommendationCardBody
           buffer={0}
           dispatch={jest.fn()}
           setBuffer={jest.fn()}

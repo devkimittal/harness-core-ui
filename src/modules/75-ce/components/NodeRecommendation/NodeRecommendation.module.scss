@@ -14,6 +14,15 @@
     width: 60px;
     height: 24px;
   }
+
+  .spaceBetween {
+    justify-content: space-between;
+  }
+}
+
+.chartContainer {
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .minNodeContainer {
