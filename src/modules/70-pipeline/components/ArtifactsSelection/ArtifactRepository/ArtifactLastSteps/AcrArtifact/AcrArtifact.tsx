@@ -117,9 +117,9 @@ export function AcrArtifact({
     error: acrTagError
   } = useGetBuildDetailsForAcr({
     queryParams: {
-      subscription: lastQueryData.subscription,
-      registry: lastQueryData.registry,
-      repository: lastQueryData.repository,
+      subscription: lastQueryData?.subscription,
+      registry: lastQueryData?.registry,
+      repository: lastQueryData?.repository,
       connectorRef: getConnectorRefQueryData(),
       accountIdentifier: accountId,
       orgIdentifier,
@@ -168,10 +168,10 @@ export function AcrArtifact({
 
   useEffect(() => {
     if (
-      initialValues.subscription &&
-      getMultiTypeFromValue(initialValues.subscription) === MultiTypeInputType.FIXED &&
-      initialValues.registry &&
-      getMultiTypeFromValue(initialValues.registry) === MultiTypeInputType.FIXED
+      initialValues?.subscription &&
+      getMultiTypeFromValue(initialValues?.subscription) === MultiTypeInputType.FIXED &&
+      initialValues?.registry &&
+      getMultiTypeFromValue(initialValues?.registry) === MultiTypeInputType.FIXED
     ) {
       refetchRegistries({
         queryParams: {
@@ -181,7 +181,7 @@ export function AcrArtifact({
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialValues.subscription, initialValues.registry])
+  }, [initialValues?.subscription, initialValues?.registry])
 
   useEffect(() => {
     const options =
@@ -205,23 +205,23 @@ export function AcrArtifact({
 
   useEffect(() => {
     if (
-      initialValues.subscription &&
-      getMultiTypeFromValue(initialValues.subscription) === MultiTypeInputType.FIXED &&
-      initialValues.registry &&
-      getMultiTypeFromValue(initialValues.registry) === MultiTypeInputType.FIXED &&
-      initialValues.repository &&
-      getMultiTypeFromValue(initialValues.repository) === MultiTypeInputType.FIXED
+      initialValues?.subscription &&
+      getMultiTypeFromValue(initialValues?.subscription) === MultiTypeInputType.FIXED &&
+      initialValues?.registry &&
+      getMultiTypeFromValue(initialValues?.registry) === MultiTypeInputType.FIXED &&
+      initialValues?.repository &&
+      getMultiTypeFromValue(initialValues?.repository) === MultiTypeInputType.FIXED
     ) {
       refetchRepositories({
         queryParams: {
           accountId,
-          subscription: formikRef.current?.values.subscription,
-          registry: formikRef.current?.values.registry
+          subscription: formikRef.current?.values?.subscription,
+          registry: formikRef.current?.values?.registry
         }
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialValues.subscription, initialValues.registry, initialValues.repository])
+  }, [initialValues?.subscription, initialValues?.registry, initialValues?.repository])
 
   useEffect(() => {
     const options =
@@ -240,16 +240,16 @@ export function AcrArtifact({
   const canFetchTags = useCallback(
     (subscription: string, registry: string, repository: string): boolean =>
       !!(
-        (lastQueryData.subscription !== subscription ||
-          lastQueryData.registry !== registry ||
-          lastQueryData.repository !== repository) &&
+        (lastQueryData?.subscription !== subscription ||
+          lastQueryData?.registry !== registry ||
+          lastQueryData?.repository !== repository) &&
         shouldFetchTags(prevStepData, [subscription, registry, repository])
       ),
     [lastQueryData, prevStepData]
   )
 
   const isTagDisabled = useCallback((formikValue): boolean => {
-    return !checkIfQueryParamsisNotEmpty([formikValue.subscription, formikValue.registry, formikValue.repository])
+    return !checkIfQueryParamsisNotEmpty([formikValue?.subscription, formikValue?.registry, formikValue?.repository])
   }, [])
 
   const getInitialValues = useCallback((): ACRArtifactType => {
