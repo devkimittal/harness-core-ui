@@ -22,7 +22,17 @@ export const mockConnectorSecretKey = {
         delegateSelectors: ['dummyDelegateSelector'],
         credential: {
           type: 'ManualConfig',
-          spec: { clientId: 'clientId', tenantId: 'tenantId', type: 'KeyCert', secretRef: 'account.mnfbjfjsecretKey' }
+          spec: {
+            auth: {
+              type: 'Secret',
+              spec: {
+                secretRef: 'account.mnfbjfjsecretKey'
+              }
+            },
+
+            clientId: 'clientId',
+            tenantId: 'tenantId'
+          }
         },
         azureEnvironmentType: 'AZURE'
       }
@@ -47,7 +57,17 @@ export const mockConnectorSecretFile = {
         delegateSelectors: ['dummyDelegateSelector'],
         credential: {
           type: 'ManualConfig',
-          spec: { clientId: 'clientId', tenantId: 'tenantId', type: 'SecretKey', secretRef: 'account.mnfbjfjsecretKey' }
+          spec: {
+            auth: {
+              type: 'Certificate',
+              spec: {
+                certificateRef: 'account.mnfbjfjsecretKey'
+              }
+            },
+
+            clientId: 'clientId',
+            tenantId: 'tenantId'
+          }
         },
         azureEnvironmentType: 'AZURE'
       }
