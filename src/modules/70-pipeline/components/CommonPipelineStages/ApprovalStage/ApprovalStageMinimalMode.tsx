@@ -101,7 +101,7 @@ export function ApprovalStageMinimalMode(props: ApprovalStageMinimalModeProps): 
               {getString('pipelineSteps.build.create.aboutYourStage')}
             </Text>
 
-            {contextType === PipelineContextType.Pipeline &&
+            {contextType !== PipelineContextType.StageTemplate &&
               (template ? (
                 <NameId
                   identifierProps={{

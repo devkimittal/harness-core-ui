@@ -14,7 +14,7 @@ export function getNameAndIdentifierSchema(
   getString: UseStringsReturn['getString'],
   contextType?: string
 ): { [key: string]: yup.Schema<string | undefined> } {
-  return contextType === PipelineContextType.Pipeline
+  return contextType !== PipelineContextType.StageTemplate
     ? {
         name: NameSchemaWithoutHook(getString, {
           requiredErrorMsg: getString('pipelineSteps.build.create.stageNameRequiredError')

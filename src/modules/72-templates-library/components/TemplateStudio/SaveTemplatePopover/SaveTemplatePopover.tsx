@@ -25,7 +25,9 @@ import type { Failure } from 'services/template-ng'
 import { DefaultNewTemplateId } from 'framework/Templates/templates'
 import { AppStoreContext } from 'framework/AppStore/AppStoreContext'
 import useCommentModal from '@common/hooks/CommentModal/useCommentModal'
+import { TemplateType } from '@templates-library/utils/templatesUtils'
 import css from './SaveTemplatePopover.module.scss'
+
 export interface GetErrorResponse extends Omit<Failure, 'errors'> {
   errors?: FormikErrors<unknown>
 }
@@ -158,7 +160,7 @@ export function SaveTemplatePopover(props: SaveTemplatePopoverProps): React.Reac
         ? [
             {
               label: getString('save'),
-              disabled: isEmpty(get(template.spec, 'type')),
+              disabled: isEmpty(get(template.spec, 'type')) && template.type !== TemplateType.Pipeline,
               onClick: onSave
             }
           ]
