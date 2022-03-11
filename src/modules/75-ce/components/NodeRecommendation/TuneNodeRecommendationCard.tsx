@@ -88,7 +88,7 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
           </Text>
           <Layout.Horizontal flex className={css.spaceBetween} spacing="medium" margin={{ top: 'small' }}>
             <Layout.Horizontal spacing="medium">
-              <Resources state={state} dispatch={dispatch} />
+              <Resources state={updatedState} dispatch={dispatch} />
               <Container flex={{ justifyContent: 'center' }}>
                 <Container style={{ borderWidth: 1, borderStyle: 'solid', borderLeft: 0, width: 14, height: 60 }} />
               </Container>
@@ -96,13 +96,7 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
                 <Icon name="plus" size={12} color={Color.GREY_700} />
               </Container>
             </Layout.Horizontal>
-            <Buffer
-              state={state}
-              dispatch={dispatch}
-              buffer={buffer}
-              setBuffer={setBuffer}
-              updatedState={updatedState}
-            />
+            <Buffer state={state} buffer={buffer} setBuffer={setBuffer} />
           </Layout.Horizontal>
           <Layout.Horizontal padding={{ top: 'medium' }} spacing="medium">
             <LargestResources state={state} dispatch={dispatch} />
@@ -112,6 +106,7 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
         <InstanceFamilies showInstanceFamiliesModal={showInstanceFamiliesModal} state={state} />
         <ApplyPreferencesButtonGroup
           dispatch={dispatch}
+          buffer={buffer}
           setBuffer={setBuffer}
           state={state}
           initialState={initialState}
@@ -169,17 +164,13 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
 }
 
 const Buffer = ({
-  dispatch,
-  state,
   buffer,
   setBuffer,
-  updatedState
+  state
 }: {
-  dispatch: React.Dispatch<Action>
-  state: IState
   buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
-  updatedState: IState
+  state: IState
 }) => {
   const { getString } = useStrings()
 
@@ -203,25 +194,15 @@ const Buffer = ({
           labelRenderer={false}
           value={buffer}
           onChange={val => setBuffer(val)}
-          onRelease={val => {
-            dispatch({
-              type: ACTIONS.SUM_CPUS,
-              data: addBufferToValue(state.sumCpu, val)
-            })
-            dispatch({
-              type: ACTIONS.SUM_MEM,
-              data: addBufferToValue(state.sumMem, val)
-            })
-          }}
           className={css.bufferSlider}
         />
         <Container>
           <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
             'delegate.delegateCPU'
-          )}: ${addBufferToValue(updatedState.sumCpu, buffer)} vCPU `}</Text>
+          )}: ${addBufferToValue(state.sumCpu, buffer)} vCPU `}</Text>
           <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
             'ce.nodeRecommendation.ram'
-          )}: ${addBufferToValue(updatedState.sumMem, buffer)} GiB`}</Text>
+          )}: ${addBufferToValue(state.sumMem, buffer)} GiB`}</Text>
         </Container>
       </Layout.Vertical>
     </Container>
@@ -241,10 +222,10 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
           <TextInput
-            defaultValue={`${state.minCpu}`}
+            defaultValue={`${state.maxCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MIN_CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.MAX_CPUS, data: +e.target.value })
             }
           />
         </Container>
@@ -253,10 +234,10 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             {getString('ce.nodeRecommendation.mem')}
           </Text>
           <TextInput
-            defaultValue={`${state.minMem}`}
+            defaultValue={`${state.maxMemory}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MIN_MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.MAX_MEM, data: +e.target.value })
             }
           />
         </Container>
@@ -356,6 +337,7 @@ const ApplyPreferencesButtonGroup = ({
   initialState,
   updatedState,
   dispatch,
+  buffer,
   setBuffer
 }: {
   updateRecommendationDetails: () => void
@@ -363,6 +345,7 @@ const ApplyPreferencesButtonGroup = ({
   initialState: IState
   updatedState: IState
   dispatch: React.Dispatch<Action>
+  buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const { getString } = useStrings()
@@ -372,7 +355,11 @@ const ApplyPreferencesButtonGroup = ({
       <Button
         variation={ButtonVariation.PRIMARY}
         onClick={updateRecommendationDetails}
-        disabled={isEqual(state, updatedState)}
+        disabled={
+          isEqual(state, updatedState) &&
+          addBufferToValue(state.sumCpu, buffer) === updatedState.sumCpu &&
+          addBufferToValue(state.sumMem, buffer) === updatedState.sumMem
+        }
       >
         {getString('ce.nodeRecommendation.applyPreferences')}
       </Button>

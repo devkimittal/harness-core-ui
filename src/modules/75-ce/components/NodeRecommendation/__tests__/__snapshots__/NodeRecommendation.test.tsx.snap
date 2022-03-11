@@ -67,7 +67,7 @@ exports[`test cases for node recommendations details should be able to render no
                 class="cardItem"
               >
                 <p
-                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-grey700 StyledProps--font-weight-bold StyledProps--font-size-small"
+                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-grey700 StyledProps--font-variation-small-semi"
                 >
                   ce.nodeRecommendation.estimatedSavings
                 </p>
@@ -171,7 +171,7 @@ exports[`test cases for node recommendations details should be able to render no
                 class="cardItem"
               >
                 <p
-                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-green700 StyledProps--font-weight-bold StyledProps--font-size-medium"
+                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-green700 StyledProps--font-variation-h5"
                 >
                   $0.00
                 </p>
@@ -283,7 +283,7 @@ exports[`test cases for node recommendations details should be able to render no
                 class="cardItem borderTopLeft"
               >
                 <p
-                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-green700 StyledProps--font-weight-bold StyledProps--font-size-medium"
+                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-green700 StyledProps--font-variation-h5"
                 >
                   $144.00
                 </p>
@@ -364,7 +364,7 @@ exports[`test cases for node recommendations details should be able to render no
                 class="cardItem borderTopRight"
               >
                 <p
-                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-red500 StyledProps--font-weight-bold StyledProps--font-size-medium"
+                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-red500 StyledProps--font-variation-h5"
                 >
                   -$504.00
                 </p>

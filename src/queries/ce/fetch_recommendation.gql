@@ -61,6 +61,10 @@ query FetchRecommendation(
     }
 
     ... on NodeRecommendationDTO {
+      totalResourceUsage {
+        maxcpu
+        maxmemory
+      }
       current {
         instanceCategory
         nodePools {

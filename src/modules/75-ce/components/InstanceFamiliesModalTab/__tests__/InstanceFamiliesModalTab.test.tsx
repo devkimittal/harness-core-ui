@@ -13,11 +13,10 @@ import MockInstanceFamilyData from '@ce/components/NodeRecommendation/__tests__/
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab'
 
 const mockState = {
-  minCpu: 44,
-  minMem: 100,
+  maxCpu: 44,
+  maxMemory: 100,
   sumCpu: 30,
   sumMem: 120,
-  maxNodes: 12,
   minNodes: 10,
   includeTypes: [],
   includeSeries: [],

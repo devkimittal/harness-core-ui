@@ -10,3 +10,31 @@ export const addBufferToValue = (value: number, bufferPercentage: number): numbe
 
 export const calculateSavingsPercentage = (savings: number, totalCost: number): string =>
   `(${Math.floor((savings / totalCost) * 100)}%)`
+
+export const isResourceConsistent = (sumCpu: number, sumMemory: number, maxCpu: number, maxMemory: number): boolean => {
+  const isInconsistent = Math.round(sumCpu) < Math.round(maxCpu) || Math.round(sumMemory) < Math.round(maxMemory)
+
+  const anyZero =
+    Math.round(sumCpu) == 0 || Math.round(sumMemory) == 0 || Math.round(maxCpu) == 0 || Math.round(maxMemory) == 0
+
+  return !isInconsistent || !anyZero
+}
+
+export const calculateNodes = (
+  sumCpu: number,
+  sumMemory: number,
+  maxCpu: number,
+  maxMemory: number,
+  minNodes: number
+): { maximumNodes: number; minimumNodes: number } => {
+  let minimumNodes = minNodes || 3
+
+  let maximumNodes = Math.min(Math.floor(sumCpu / maxCpu), Math.floor(sumMemory / maxMemory))
+  maximumNodes = Math.max(maximumNodes, 1)
+
+  if (maximumNodes < minNodes) {
+    minimumNodes = maximumNodes
+  }
+
+  return { maximumNodes, minimumNodes }
+}

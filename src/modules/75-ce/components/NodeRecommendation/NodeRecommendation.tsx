@@ -28,7 +28,7 @@ import useDidMountEffect from '@ce/common/useDidMountEffect'
 
 import type { TimeRangeValue } from '@ce/types'
 import { getTimePeriodString, GET_DATE_RANGE } from '@ce/utils/momentUtils'
-import type { NodeRecommendationDto, RecommendationOverviewStats } from 'services/ce/services'
+import type { NodeRecommendationDto, RecommendationOverviewStats, TotalResourceUsage } from 'services/ce/services'
 import { useStrings } from 'framework/strings'
 import Recommender from '@ce/components/NodeRecommendation/Recommender'
 import formatCost from '@ce/utils/formatCost'
@@ -42,7 +42,12 @@ import {
 } from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
-import { calculateSavingsPercentage } from '@ce/utils/recommendationUtils'
+import {
+  addBufferToValue,
+  calculateNodes,
+  calculateSavingsPercentage,
+  isResourceConsistent
+} from '@ce/utils/recommendationUtils'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
 import ResourceUtilizationCharts from './ResourceUtilizationCharts'
 import { ACTIONS, Action, IState } from './constants'
@@ -59,10 +64,10 @@ const reducer = (state: IState, action: Action) => {
       return { ...state, sumCpu: data }
     case ACTIONS.SUM_MEM:
       return { ...state, sumMem: data }
-    case ACTIONS.MIN_CPUS:
-      return { ...state, minCpu: data }
-    case ACTIONS.MIN_MEM:
-      return { ...state, minMem: data }
+    case ACTIONS.MAX_CPUS:
+      return { ...state, maxCpu: data }
+    case ACTIONS.MAX_MEM:
+      return { ...state, maxMemory: data }
     case ACTIONS.MIN_NODES:
       return { ...state, minNodes: data }
     case ACTIONS.MAX_NODES:
@@ -128,26 +133,17 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const [buffer, setBuffer] = useState(0)
   const [tuneRecomVisible, setTuneRecomVisible] = useState(true)
 
-  const {
-    minCpu,
-    sumCpu,
-    minMem,
-    sumMem,
-    maxNodes,
-    minNodes,
-    includeTypes,
-    includeSeries,
-    excludeTypes,
-    excludeSeries
-  } = (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
+  const { sumCpu, sumMem, minNodes, includeTypes, includeSeries, excludeTypes, excludeSeries } =
+    (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
+  const { maxcpu, maxmemory } = (recommendationDetails.totalResourceUsage || {}) as TotalResourceUsage
+
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
   const initialState = {
-    minCpu: +(minCpu || 0).toFixed(2),
-    minMem: +(minMem || 0).toFixed(2),
+    maxCpu: +(maxcpu || 0).toFixed(2),
+    maxMemory: +(maxmemory || 0).toFixed(2),
     sumCpu: +(sumCpu || 0).toFixed(2),
     sumMem: +(sumMem || 0).toFixed(2),
-    maxNodes: +(maxNodes || 0).toFixed(2),
     minNodes: +(minNodes || 0).toFixed(2),
     includeTypes: includeTypes || [],
     includeSeries: includeSeries || [],
@@ -178,23 +174,46 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
   const updateRecommendationDetails = async () => {
-    setUpdatedState(state)
+    const sumCpuWithBuffer = addBufferToValue(state.sumCpu, buffer)
+    const sumMemWithBuffer = addBufferToValue(state.sumMem, buffer)
 
-    const payload = { ...recommendationDetails.resourceRequirement, ...state }
-    try {
-      const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
-      const newState = {
-        ...recomDetails,
-        recommended: { ...recomDetails.recommended, ...response }
-      } as NodeRecommendationDto
+    if (isResourceConsistent(sumCpuWithBuffer, sumMemWithBuffer, state.maxCpu, state.maxMemory)) {
+      setUpdatedState(state)
 
-      if (!isEqual(recomDetails, newState)) {
-        setRecomDetails(newState)
+      const { maximumNodes, minimumNodes } = calculateNodes(
+        sumCpuWithBuffer,
+        sumMemWithBuffer,
+        state.maxCpu,
+        state.maxMemory,
+        state.minNodes
+      )
+
+      const payload = {
+        ...recommendationDetails.resourceRequirement,
+        ...state,
+        sumCpu: sumCpuWithBuffer,
+        sumMem: sumMemWithBuffer,
+        maxNodes: maximumNodes,
+        minNodes: minimumNodes
       }
 
-      UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
-    } catch (e) {
-      showError(getString('ce.nodeRecommendation.fetchRecommendationError'))
+      try {
+        const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
+        const newState = {
+          ...recomDetails,
+          recommended: { ...recomDetails.recommended, ...response }
+        } as NodeRecommendationDto
+
+        if (!isEqual(recomDetails, newState)) {
+          setRecomDetails(newState)
+        }
+
+        UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
+      } catch (e) {
+        showError(getString('ce.nodeRecommendation.fetchRecommendationError'))
+      }
+    } else {
+      showError('Inconsistent resource requirements')
     }
   }
 

@@ -6,11 +6,10 @@
  */
 
 export interface IState {
-  minCpu: number
-  minMem: number
+  maxCpu: number
+  maxMemory: number
   sumCpu: number
   sumMem: number
-  maxNodes: number
   minNodes: number
   includeTypes: string[]
   includeSeries: string[]
@@ -21,8 +20,8 @@ export interface IState {
 export enum ACTIONS {
   'SUM_CPUS',
   'SUM_MEM',
-  'MIN_CPUS',
-  'MIN_MEM',
+  'MAX_CPUS',
+  'MAX_MEM',
   'MIN_NODES',
   'MAX_NODES',
   'INCLUDE_TYPES',

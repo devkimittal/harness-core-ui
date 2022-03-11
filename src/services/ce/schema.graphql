@@ -369,6 +369,7 @@ type NodeRecommendationDTO {
   nodePoolId: NodePoolId
   recommended: RecommendationResponse
   resourceRequirement: RecommendClusterRequest
+  totalResourceUsage: TotalResourceUsage
 }
 
 type PerspectiveData {
@@ -554,7 +555,9 @@ type Query {
   "Top panel stats API, aggregated"
   recommendationStatsV2(filter: K8sRecommendationFilterDTOInput = {}): RecommendationOverviewStats
   "The list of all types of recommendations for overview page"
-  recommendationsV2(filter: K8sRecommendationFilterDTOInput = { limit: 10, offset: 0 }): RecommendationsDTO
+  recommendationsV2(
+    filter: K8sRecommendationFilterDTOInput = { limit: 10, minSaving: 0.0, offset: 0 }
+  ): RecommendationsDTO
 }
 
 type RecommendClusterRequest {
@@ -663,6 +666,13 @@ type StorageDetails {
 type TimeSeriesDataPoints {
   time: Long!
   values: [DataPoint]!
+}
+
+type TotalResourceUsage {
+  maxcpu: Float!
+  maxmemory: Float!
+  sumcpu: Float!
+  summemory: Float!
 }
 
 type VirtualMachine {

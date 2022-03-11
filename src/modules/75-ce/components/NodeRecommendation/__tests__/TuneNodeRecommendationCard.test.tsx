@@ -9,13 +9,13 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
 import { TuneRecommendationCardBody, TuneRecommendationCardHeader } from '../TuneNodeRecommendationCard'
+import type { IState } from '../constants'
 
 const mockState = {
-  minCpu: 44,
-  minMem: 100,
+  maxCpu: 44,
+  maxMemory: 100,
   sumCpu: 30,
   sumMem: 120,
-  maxNodes: 12,
   minNodes: 10,
   includeTypes: [],
   includeSeries: [],
@@ -57,10 +57,10 @@ describe('test cases for tune recommendation card', () => {
           dispatch={jest.fn()}
           setBuffer={jest.fn()}
           state={mockState}
-          initialState={mockState}
+          initialState={mockState as IState}
           showInstanceFamiliesModal={jest.fn()}
           updateRecommendationDetails={jest.fn()}
-          updatedState={mockState}
+          updatedState={mockState as IState}
         />
       </TestWrapper>
     )

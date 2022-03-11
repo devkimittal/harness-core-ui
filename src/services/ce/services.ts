@@ -1,10 +1,3 @@
-/*
- * Copyright 2022 Harness Inc. All rights reserved.
- * Use of this source code is governed by the PolyForm Shield 1.0.0 license
- * that can be found in the licenses directory at the root of this repository, also available at
- * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
- */
-
 import gql from 'graphql-tag'
 import * as Urql from 'urql'
 export type Maybe<T> = T | null
@@ -787,6 +780,10 @@ export const FetchRecommendationDocument = gql`
         }
       }
       ... on NodeRecommendationDTO {
+        totalResourceUsage {
+          maxcpu
+          maxmemory
+        }
         current {
           instanceCategory
           nodePools {
@@ -1762,6 +1759,7 @@ export type FetchRecommendationQuery = {
     | {
         __typename?: 'NodeRecommendationDTO'
         id: string | null
+        totalResourceUsage: { __typename?: 'TotalResourceUsage'; maxcpu: number; maxmemory: number } | null
         current: {
           __typename?: 'RecommendationResponse'
           instanceCategory: InstanceCategory | null
@@ -2562,6 +2560,7 @@ export type NodeRecommendationDto = {
   nodePoolId: Maybe<NodePoolId>
   recommended: Maybe<RecommendationResponse>
   resourceRequirement: Maybe<RecommendClusterRequest>
+  totalResourceUsage: Maybe<TotalResourceUsage>
 }
 
 export type PerspectiveData = {
@@ -3080,6 +3079,14 @@ export type TimeSeriesDataPoints = {
   __typename?: 'TimeSeriesDataPoints'
   time: Scalars['Long']
   values: Array<Maybe<DataPoint>>
+}
+
+export type TotalResourceUsage = {
+  __typename?: 'TotalResourceUsage'
+  maxcpu: Scalars['Float']
+  maxmemory: Scalars['Float']
+  sumcpu: Scalars['Float']
+  summemory: Scalars['Float']
 }
 
 export enum ViewChartType {
