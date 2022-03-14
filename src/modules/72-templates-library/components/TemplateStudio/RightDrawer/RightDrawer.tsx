@@ -5,37 +5,84 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { SyntheticEvent } from 'react'
+import React, { SyntheticEvent, useMemo } from 'react'
 import { Drawer, Position } from '@blueprintjs/core'
-import { Button } from '@wings-software/uicore'
+import { Button, Color, FontVariation, Icon, Layout, Text } from '@wings-software/uicore'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'
 import { StageType } from '@pipeline/utils/stageHelpers'
+import { useStrings } from 'framework/strings'
 import type { StepData } from '@pipeline/components/AbstractSteps/AbstractStepFactory'
 import { StepPalette } from '@pipeline/components/PipelineStudio/StepPalette/StepPalette'
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import { DrawerSizes, DrawerTypes } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateActions'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
-import type { StepElementConfig } from 'services/cd-ng'
-import type { ModulePathParams } from '@common/interfaces/RouteInterfaces'
+import type { StepElementConfig, EntityGitDetails } from 'services/cd-ng'
+import type { NGTemplateInfoConfig } from 'services/template-ng'
+import type { ModulePathParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { useFeatureFlags } from '@common/hooks/useFeatureFlag'
 import { getAllStepPaletteModuleInfos, getStepPaletteModuleInfosFromStage } from '@pipeline/utils/stepUtils'
 import type { StepPalleteModuleInfo } from 'services/pipeline-ng'
 import TemplateVariablesWrapper from '@templates-library/components/TemplateStudio/TemplateVariables/TemplateVariables'
+import { TemplateInputs } from '@templates-library/components/TemplateInputs/TemplateInputs'
 import css from './RightDrawer.module.scss'
+
+type TemplateDetails = NGTemplateInfoConfig & {
+  accountId: string
+  gitDetails: EntityGitDetails
+  templateEntityType: 'Step' | 'Stage'
+}
+
+interface Props {
+  templateDetails: TemplateDetails
+}
+
+function TemplateInputsWrapper(props: Props) {
+  const { templateDetails } = props
+  const { getString } = useStrings()
+
+  const TemplateInputsHeader = (
+    <Layout.Horizontal padding="xlarge" border={{ bottom: true, color: Color.GREY_200 }}>
+      <Icon name="question" size={24} color={Color.PRIMARY_7} margin={{ right: 'small' }} />
+      <Text font={{ variation: FontVariation.H4 }}>{getString('templatesLibrary.templateInputs')}</Text>
+    </Layout.Horizontal>
+  )
+  return (
+    <Layout.Vertical>
+      {TemplateInputsHeader}
+      <TemplateInputs template={templateDetails} />
+    </Layout.Vertical>
+  )
+}
 
 export const RightDrawer: React.FC = (): JSX.Element => {
   const {
     state: {
       templateView: { drawerData, isDrawerOpened },
-      templateView
+      templateView,
+      template,
+      gitDetails
     },
     updateTemplateView
   } = React.useContext(TemplateContext)
   const { type, data, ...restDrawerProps } = drawerData
-  const { module } = useParams<ModulePathParams>()
+  const { module, accountId } = useParams<ModulePathParams & ProjectPathProps>()
   const { CDNG_ENABLED, CING_ENABLED } = useFeatureFlags()
   const [stepPaletteModuleInfos, setStepPaletteModuleInfos] = React.useState<StepPalleteModuleInfo[]>([])
+
+  const selectedTemplateDetails = useMemo(
+    () => ({
+      identifier: template.identifier,
+      name: template.name,
+      accountId: accountId,
+      orgIdentifier: template.orgIdentifier,
+      projectIdentifier: template.projectIdentifier,
+      versionLabel: template.versionLabel,
+      templateEntityType: template.type,
+      gitDetails
+    }),
+    [template, accountId]
+  ) as TemplateDetails
 
   const closeDrawer = (e?: SyntheticEvent<HTMLElement, Event> | undefined): void => {
     e?.persist()
@@ -105,6 +152,7 @@ export const RightDrawer: React.FC = (): JSX.Element => {
         />
       )}
       {type === DrawerTypes.TemplateVariables && <TemplateVariablesWrapper />}
+      {type === DrawerTypes.TemplateInputs && <TemplateInputsWrapper templateDetails={selectedTemplateDetails} />}
     </Drawer>
   )
 }

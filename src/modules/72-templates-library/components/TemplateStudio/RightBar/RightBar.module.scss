@@ -32,9 +32,11 @@
     --background-color-hover: var(--primary-6) !important;
 
     &:hover {
-      --right-bar-icon: var(--white);
-      span {
-        color: var(--white) !important;
+      &:not([disabled]) {
+        --right-bar-icon: var(--white);
+        span {
+          color: var(--white) !important;
+        }
       }
     }
 

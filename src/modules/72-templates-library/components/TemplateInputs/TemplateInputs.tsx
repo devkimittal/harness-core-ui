@@ -19,13 +19,13 @@ import { parse } from 'yaml'
 import { Color } from '@harness/design-system'
 import { defaultTo, noop } from 'lodash-es'
 import cx from 'classnames'
-import { TemplateSummaryResponse, useGetTemplateInputSetYaml } from 'services/template-ng'
+import { NGTemplateInfoConfig, TemplateSummaryResponse, useGetTemplateInputSetYaml } from 'services/template-ng'
 import type { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { StepViewType } from '@pipeline/components/AbstractSteps/Step'
 import { StepWidget } from '@pipeline/components/AbstractSteps/StepWidget'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { PageSpinner, useToaster } from '@common/components'
-import type { StageElementConfig, StepElementConfig, StageElementWrapperConfig } from 'services/cd-ng'
+import type { StageElementConfig, StepElementConfig, StageElementWrapperConfig, EntityGitDetails } from 'services/cd-ng'
 import MultiTypeDelegateSelector from '@common/components/MultiTypeDelegateSelector/MultiTypeDelegateSelector'
 import { useStrings } from 'framework/strings'
 import { StageForm } from '@pipeline/components/PipelineInputSetForm/PipelineInputSetForm'
@@ -35,8 +35,14 @@ import { getTemplateNameWithLabel } from '@pipeline/utils/templateUtils'
 import css from './TemplateInputs.module.scss'
 import stepCss from '@pipeline/components/PipelineSteps/Steps/Steps.module.scss'
 
+type TemplateInfo = NGTemplateInfoConfig & {
+  accountId: string
+  gitDetails: EntityGitDetails
+  templateEntityType: 'Step' | 'Stage'
+}
+
 export interface TemplateInputsProps {
-  template: TemplateSummaryResponse
+  template: TemplateSummaryResponse | TemplateInfo
 }
 
 export const TemplateInputs: React.FC<TemplateInputsProps> = props => {

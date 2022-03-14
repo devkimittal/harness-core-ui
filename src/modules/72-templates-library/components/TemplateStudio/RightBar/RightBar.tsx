@@ -21,10 +21,19 @@ export const RightBar = (): JSX.Element => {
       templateView: {
         drawerData: { type }
       },
-      templateView
+      templateView,
+      isUpdated
     },
     updateTemplateView
   } = React.useContext(TemplateContext)
+
+  const openTemplatesInputDrawer = React.useCallback(() => {
+    updateTemplateView({
+      ...templateView,
+      isDrawerOpened: true,
+      drawerData: { type: DrawerTypes.TemplateInputs }
+    })
+  }, [templateView, updateTemplateView])
 
   const openVariablesDrawer = React.useCallback(() => {
     updateTemplateView({
@@ -36,6 +45,18 @@ export const RightBar = (): JSX.Element => {
 
   return (
     <div className={css.rightBar}>
+      <Button
+        className={cx(css.iconButton, { [css.selected]: type === DrawerTypes.TemplateInputs })}
+        onClick={openTemplatesInputDrawer}
+        variation={ButtonVariation.TERTIARY}
+        font={{ weight: 'semi-bold', size: 'xsmall' }}
+        icon="question"
+        withoutCurrentColor={true}
+        iconProps={{ size: 28 }}
+        text={getString('templatesLibrary.templateInputs')}
+        data-testid="template-inputs"
+        disabled={isUpdated}
+      />
       <Button
         className={cx(css.iconButton, { [css.selected]: type === DrawerTypes.TemplateVariables })}
         onClick={openVariablesDrawer}
