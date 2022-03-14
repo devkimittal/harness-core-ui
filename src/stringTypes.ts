@@ -3447,6 +3447,7 @@ export interface StringsMap {
   'ce.budgets.listPage.timePeriodRemaining': string
   'ce.budgets.listPage.title': string
   'ce.budgets.sideNavText': string
+  'ce.businessMapping.sideNavText': string
   'ce.ceTrialHomePage.modal.description': string
   'ce.ceTrialHomePage.modal.title': string
   'ce.ceTrialHomePage.modal.welcome': string

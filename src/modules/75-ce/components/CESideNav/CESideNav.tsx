@@ -134,6 +134,7 @@ const SideNavItems = () => {
   const { getString } = useStrings()
   const { trackEvent } = useTelemetry()
   const isAnomaliesEnabled = useFeatureFlag(FeatureFlag.CCM_ANOMALY_DETECTION_NG)
+  const isBusinessMappingEnabled = useFeatureFlag(FeatureFlag.BUSINESS_MAPPING)
 
   return (
     <Layout.Vertical spacing="small">
@@ -174,6 +175,12 @@ const SideNavItems = () => {
               label={getString('ce.co.accessPoint.loadbalancers')}
               to={routes.toCECOAccessPoints({ accountId })}
             />
+            {isBusinessMappingEnabled ? (
+              <SidebarLink
+                label={getString('ce.businessMapping.sideNavText')}
+                to={routes.toBusinessMapping({ accountId })}
+              />
+            ) : null}
           </Layout.Vertical>
         </NavExpandable>
       </React.Fragment>

@@ -47,6 +47,7 @@ import BudgetDetails from './pages/budget-details/BudgetDetails'
 import NodeDetailsPage from './pages/node-details/NodeDetailsPage'
 import AnomaliesOverviewPage from './pages/anomalies-overview/AnomaliesOverviewPage'
 import formatCost from './utils/formatCost'
+import BusinessMapping from './pages/business-mapping/BusinessMapping'
 
 featureFactory.registerFeaturesByModule('ce', {
   features: [FeatureIdentifier.PERSPECTIVES],
@@ -395,6 +396,15 @@ const CERoutes: React.FC = () => {
           exact
         >
           <AnomaliesOverviewPage />
+        </RouteWithLayout>
+
+        <RouteWithLayout
+          licenseRedirectData={licenseRedirectData}
+          sidebarProps={CESideNavProps}
+          path={routes.toBusinessMapping({ ...accountPathProps })}
+          exact
+        >
+          <BusinessMapping />
         </RouteWithLayout>
         <RouteWithLayout
           licenseRedirectData={licenseRedirectData}

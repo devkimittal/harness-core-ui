@@ -836,3 +836,5 @@ anomalyDetection:
     countText: '{{ count }} Anomalies'
     anomaliesRedirectionText: View anomalies
     filterText: Apply anomaly filters
+businessMapping:
+  sideNavText: 'Business Mapping'
