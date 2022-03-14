@@ -139,6 +139,8 @@ export const getIconForTemplate = (
       return factory.getStepIcon(type)
     case TemplateType.Stage:
       return defaultTo(stagesCollection.getStageAttributes(type, getString)?.icon, 'disable')
+    case TemplateType.Pipeline:
+      return 'pipeline'
     default:
       return 'disable'
   }

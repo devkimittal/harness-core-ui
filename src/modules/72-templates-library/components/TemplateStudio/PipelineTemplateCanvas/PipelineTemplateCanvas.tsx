@@ -10,22 +10,25 @@ import { useParams } from 'react-router-dom'
 import { omit, set } from 'lodash-es'
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import type { GitQueryParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
-import { useQueryParams } from '@common/hooks'
+import { useGlobalEventListener, useQueryParams } from '@common/hooks'
 import { TemplatePipelineProvider } from '@pipeline/components/TemplatePipelineContext'
 import { sanitize } from '@common/utils/JSONUtils'
 import type { PipelineInfoConfig } from 'services/cd-ng'
 import StageBuilder from '@pipeline/components/PipelineStudio/StageBuilder/StageBuilder'
 import { PipelineContextType } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
 import { TemplateDrawer } from '@templates-library/components/TemplateDrawer/TemplateDrawer'
-import { RightDrawer } from '@pipeline/components/PipelineStudio/RightDrawer/RightDrawer'
+import { RightBar as PipelineStudioRightBar } from '@pipeline/components/PipelineStudio/RightBar/RightBar'
+import { RightDrawer } from '@templates-library/components/TemplateStudio/RightDrawer/RightDrawer'
+import { DrawerTypes } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateActions'
 
 export const DefaultNewPipelineName = 'Pipeline Name'
 export const DefaultNewPipelineId = 'pipeline_name'
 
 const PipelineTemplateCanvas = () => {
   const {
-    state: { template, isLoading, isUpdated },
+    state: { template, isLoading, isUpdated, templateView },
     updateTemplate,
+    updateTemplateView,
     isReadonly
   } = React.useContext(TemplateContext)
   const { accountId, projectIdentifier, orgIdentifier } = useParams<ProjectPathProps>()
@@ -51,6 +54,18 @@ const PipelineTemplateCanvas = () => {
     await updateTemplate(template)
   }
 
+  const openVariablesDrawer = React.useCallback(() => {
+    updateTemplateView({
+      ...templateView,
+      isDrawerOpened: true,
+      drawerData: { type: DrawerTypes.TemplateVariables }
+    })
+  }, [templateView, updateTemplateView])
+
+  useGlobalEventListener('OPEN_PIPELINE_TEMPLATE_VARIABLES', () => {
+    openVariablesDrawer()
+  })
+
   if (pipeline) {
     return (
       <TemplatePipelineProvider
@@ -61,8 +76,9 @@ const PipelineTemplateCanvas = () => {
         isReadOnly={isReadonly}
       >
         <StageBuilder />
-        <RightDrawer />
+        <PipelineStudioRightBar />
         <TemplateDrawer />
+        <RightDrawer />
       </TemplatePipelineProvider>
     )
   } else {
