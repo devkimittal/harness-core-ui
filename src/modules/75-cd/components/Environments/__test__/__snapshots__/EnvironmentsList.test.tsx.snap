@@ -261,7 +261,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main"
                 >
-                  preProduction
+                  cd.preProduction
                 </p>
               </div>
               <div
@@ -594,7 +594,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main"
                 >
-                  preProduction
+                  cd.preProduction
                 </p>
               </div>
               <div
@@ -965,7 +965,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main"
                 >
-                  preProduction
+                  cd.preProduction
                 </p>
               </div>
               <div
@@ -1424,7 +1424,7 @@ exports[`EnvironmentList Should open Add Environment Modal on click 1`] = `
                         <p
                           class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--color StyledProps--color-black"
                         >
-                          preProduction
+                          cd.preProduction
                         </p>
                       </div>
                       <input

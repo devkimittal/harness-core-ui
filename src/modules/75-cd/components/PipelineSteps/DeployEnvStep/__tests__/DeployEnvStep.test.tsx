@@ -116,7 +116,7 @@ describe('Test DeployEnvironment Step', () => {
       }
     ])
     fireEvent.click(getByText(dialog!, 'Change'))
-    fireEvent.click(getByLabelText('preProduction'))
+    fireEvent.click(getByLabelText('cd.preProduction'))
     await act(async () => {
       fireEvent.click(getByText(dialog!, 'save'))
     })

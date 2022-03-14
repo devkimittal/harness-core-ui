@@ -96,6 +96,9 @@ const yamlBuilderReadOnlyModeProps: YamlBuilderProps = {
   }
 }
 
+// SONAR recommendation
+const flexStart = 'flex-start'
+
 const cleanData = (values: ServiceRequestDTO): ServiceRequestDTO => {
   const newDescription = values.description?.toString().trim()
   const newId = values.identifier?.toString().trim()
@@ -214,7 +217,7 @@ export const NewEditServiceModal: React.FC<NewEditServiceModalProps> = ({
   return (
     <>
       <Container className={css.yamlToggle}>
-        <Layout.Horizontal flex={{ justifyContent: 'flex-start' }} padding-top="8px">
+        <Layout.Horizontal flex={{ justifyContent: flexStart }} padding-top="8px">
           <VisualYamlToggle
             selectedView={selectedView}
             onChange={nextMode => {
@@ -547,7 +550,7 @@ export const DeployServiceWidget: React.FC<DeployServiceProps> = ({
             <Layout.Horizontal
               className={css.formRow}
               spacing="medium"
-              flex={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}
+              flex={{ alignItems: flexStart, justifyContent: flexStart }}
             >
               <FormInput.MultiTypeInput
                 tooltipProps={{ dataTooltipId: 'specifyYourService' }}

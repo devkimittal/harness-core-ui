@@ -330,7 +330,7 @@ exports[`Test DeployEnvironment Step should render edit Environment view (enviro
                         <p
                           class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--color StyledProps--color-black"
                         >
-                          preProduction
+                          cd.preProduction
                         </p>
                       </div>
                       <input
@@ -711,7 +711,7 @@ exports[`Test DeployEnvironment Step should render environment view and save 1`]
                         <p
                           class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--color StyledProps--color-black"
                         >
-                          preProduction
+                          cd.preProduction
                         </p>
                       </div>
                       <input
@@ -1023,7 +1023,7 @@ exports[`render modal  NewEditEnvironmentModal 1`] = `
                       <p
                         class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--color StyledProps--color-black"
                       >
-                        preProduction
+                        cd.preProduction
                       </p>
                     </div>
                     <input

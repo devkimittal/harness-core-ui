@@ -100,6 +100,8 @@ const yamlBuilderReadOnlyModeProps: YamlBuilderProps = {
     removeEmptyArray: false
   }
 }
+// SONAR recommendation
+const flexStart = 'flex-start'
 
 const cleanData = (values: EnvironmentResponseDTO): EnvironmentRequestDTO => {
   const newDescription = values.description?.toString().trim()
@@ -228,7 +230,7 @@ export const NewEditEnvironmentModal: React.FC<NewEditEnvironmentModalProps> = (
   return (
     <>
       <Container className={css.yamlToggleEnv}>
-        <Layout.Horizontal flex={{ justifyContent: 'flex-start' }} padding-top="8px">
+        <Layout.Horizontal flex={{ justifyContent: flexStart }} padding-top="8px">
           <VisualYamlToggle
             selectedView={selectedView}
             onChange={nextMode => {
@@ -569,7 +571,7 @@ export const DeployEnvironmentWidget: React.FC<DeployEnvironmentProps> = ({
               <Layout.Horizontal
                 className={css.formRow}
                 spacing="medium"
-                flex={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                flex={{ alignItems: flexStart, justifyContent: flexStart }}
               >
                 <FormInput.MultiTypeInput
                   label={getString('cd.pipelineSteps.environmentTab.specifyYourEnvironment')}
