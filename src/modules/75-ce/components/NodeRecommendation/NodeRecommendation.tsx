@@ -43,9 +43,10 @@ import {
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
 import {
+  addBufferToState,
   addBufferToValue,
-  calculateNodes,
   calculateSavingsPercentage,
+  convertStateToRecommendClusterPayload,
   isResourceConsistent
 } from '@ce/utils/recommendationUtils'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
@@ -178,24 +179,13 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     const sumMemWithBuffer = addBufferToValue(state.sumMem, buffer)
 
     if (isResourceConsistent(sumCpuWithBuffer, sumMemWithBuffer, state.maxCpu, state.maxMemory)) {
-      setUpdatedState(state)
+      setUpdatedState(addBufferToState(state, buffer))
 
-      const { maximumNodes, minimumNodes } = calculateNodes(
-        sumCpuWithBuffer,
-        sumMemWithBuffer,
-        state.maxCpu,
-        state.maxMemory,
-        state.minNodes
+      const payload = convertStateToRecommendClusterPayload(
+        state,
+        (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest,
+        buffer
       )
-
-      const payload = {
-        ...recommendationDetails.resourceRequirement,
-        ...state,
-        sumCpu: sumCpuWithBuffer,
-        sumMem: sumMemWithBuffer,
-        maxNodes: maximumNodes,
-        minNodes: minimumNodes
-      }
 
       try {
         const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
@@ -309,7 +299,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
       <Layout.Vertical spacing="large" padding="xlarge">
         <Layout.Horizontal flex={{ justifyContent: 'space-between' }}>
           <Container>
-            <Text font={{ variation: FontVariation.H6 }}>
+            <Text font={{ variation: FontVariation.H6 }} tooltipProps={{ dataTooltipId: 'resourceUtilisation' }}>
               {getString('ce.nodeRecommendation.resourceUtilInLast', { timeRange: timeRange.label.toLowerCase() })}
             </Text>
           </Container>

@@ -220,12 +220,20 @@ const Recommender = (props: RecommenderProps) => {
       <Container>
         <Container className={css.cardCategory}>
           <Container />
-          <Text color={Color.GREY_700} font={{ variation: FontVariation.H5, align: 'center' }}>
+          <Text
+            color={Color.GREY_700}
+            font={{ variation: FontVariation.H5, align: 'center' }}
+            tooltipProps={{ dataTooltipId: 'currentDetails' }}
+          >
             {getString('common.current')}
           </Text>
           <Container />
           <Container className={css.recommendationCategory}>
-            <Text color={Color.GREY_700} font={{ variation: FontVariation.H5 }}>
+            <Text
+              color={Color.GREY_700}
+              font={{ variation: FontVariation.H5 }}
+              tooltipProps={{ dataTooltipId: 'recommendedDetails' }}
+            >
               {getString('ce.nodeRecommendation.recommended')}
             </Text>
           </Container>

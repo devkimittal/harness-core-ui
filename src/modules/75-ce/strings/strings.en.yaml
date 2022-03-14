@@ -780,7 +780,7 @@ nodeRecommendation:
   largestWorkloadReq: 'Largest Workload Requirements'
   prefMinNodeCount: 'Preferred Minimum Node Count'
   ram: 'RAM'
-  resourceUtilInLast: 'Resource Utilisation in the {{ timeRange }}'
+  resourceUtilInLast: 'Resource Utilization in the {{ timeRange }}'
   instaceFamiliesModalDesc: 'You can specify Preferred Instance Families for Compute Optimised or Storage Optimised Performance. The alogrithm will create a recommendation out of this pool of preferred instances that is most economical to you.'
   updatePreferences: 'Recommendations updated by preferences set.'
   fetchRecommendationError: 'Error in fetching recommended cluster'

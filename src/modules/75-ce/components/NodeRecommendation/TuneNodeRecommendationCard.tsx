@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Container,
   Layout,
@@ -83,7 +83,7 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
     <Container className={css.preferences} padding="medium" background={Color.PRIMARY_1}>
       <Layout.Vertical spacing="medium">
         <Container>
-          <Text font={{ variation: FontVariation.SMALL_SEMI }}>
+          <Text font={{ variation: FontVariation.SMALL_SEMI }} tooltipProps={{ dataTooltipId: 'prefResourceNeeds' }}>
             {getString('ce.nodeRecommendation.prefResourceNeeds')}
           </Text>
           <Layout.Horizontal flex className={css.spaceBetween} spacing="medium" margin={{ top: 'small' }}>
@@ -106,12 +106,12 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
         <InstanceFamilies showInstanceFamiliesModal={showInstanceFamiliesModal} state={state} />
         <ApplyPreferencesButtonGroup
           dispatch={dispatch}
-          buffer={buffer}
           setBuffer={setBuffer}
           state={state}
           initialState={initialState}
           updatedState={updatedState}
           updateRecommendationDetails={updateRecommendationDetails}
+          buffer={buffer}
         />
       </Layout.Vertical>
     </Container>
@@ -120,6 +120,9 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
 
 const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: IState }) => {
   const { getString } = useStrings()
+
+  const [sumCpuVal, setSumCpuVal] = useState(String(state.sumCpu))
+  const [sumMemVal, setSumMemVal] = useState(String(state.sumMem))
 
   return (
     <Container>
@@ -134,11 +137,12 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
           <TextInput
-            defaultValue={`${state.sumCpu}`}
+            value={sumCpuVal}
             wrapperClassName={css.input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSumCpuVal(e.target.value)
               dispatch({ type: ACTIONS.SUM_CPUS, data: +e.target.value })
-            }
+            }}
           />
         </Container>
         <Container flex className={css.spaceBetween}>
@@ -151,11 +155,12 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             {getString('ce.nodeRecommendation.mem')}
           </Text>
           <TextInput
-            defaultValue={`${state.sumMem}`}
+            value={sumMemVal}
             wrapperClassName={css.input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSumMemVal(e.target.value)
               dispatch({ type: ACTIONS.SUM_MEM, data: +e.target.value })
-            }
+            }}
           />
         </Container>
       </Layout.Vertical>
@@ -164,13 +169,13 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
 }
 
 const Buffer = ({
+  state,
   buffer,
-  setBuffer,
-  state
+  setBuffer
 }: {
+  state: IState
   buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
-  state: IState
 }) => {
   const { getString } = useStrings()
 
@@ -182,6 +187,7 @@ const Buffer = ({
             font={{ variation: FontVariation.SMALL_SEMI }}
             rightIcon="info"
             rightIconProps={{ size: 12, color: Color.GREY_800 }}
+            tooltipProps={{ dataTooltipId: 'buffer' }}
           >
             {getString('ce.nodeRecommendation.buffer')}
           </Text>
@@ -211,10 +217,14 @@ const Buffer = ({
 
 const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: IState }) => {
   const { getString } = useStrings()
+
+  // const [maxCpuVal, setMaxCpuVal] = useState(state.maxCpu)
+  // const [maxMemVal, setMaxMemVal] = useState(state.maxMemory)
+
   return (
     <Container>
       <Layout.Vertical spacing="small">
-        <Text font={{ variation: FontVariation.SMALL_SEMI }}>
+        <Text font={{ variation: FontVariation.SMALL_SEMI }} tooltipProps={{ dataTooltipId: 'largestWorkloadReq' }}>
           {getString('ce.nodeRecommendation.largestWorkloadReq')}
         </Text>
         <Container flex className={css.spaceBetween} width="75%">
@@ -252,7 +262,7 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
   return (
     <Container padding={{ left: 'large' }}>
       <Layout.Vertical spacing="small">
-        <Text font={{ variation: FontVariation.SMALL_SEMI }}>
+        <Text font={{ variation: FontVariation.SMALL_SEMI }} tooltipProps={{ dataTooltipId: 'prefMinNodeCount' }}>
           {getString('ce.nodeRecommendation.prefMinNodeCount')}
         </Text>
         <Layout.Horizontal spacing="small" className={css.minNodeContainer}>
@@ -296,7 +306,11 @@ const InstanceFamilies = ({
   return (
     <Container>
       <Container margin={{ bottom: 'small' }}>
-        <Text inline font={{ variation: FontVariation.SMALL_SEMI }}>
+        <Text
+          inline
+          font={{ variation: FontVariation.SMALL_SEMI }}
+          tooltipProps={{ dataTooltipId: 'preferredInstanceFamilies' }}
+        >
           {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
         </Text>
         {state.includeSeries.length || state.includeTypes.length ? (
@@ -337,29 +351,31 @@ const ApplyPreferencesButtonGroup = ({
   initialState,
   updatedState,
   dispatch,
-  buffer,
-  setBuffer
+  setBuffer,
+  buffer
 }: {
   updateRecommendationDetails: () => void
   state: IState
   initialState: IState
   updatedState: IState
   dispatch: React.Dispatch<Action>
-  buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
+  buffer: number
 }) => {
   const { getString } = useStrings()
+
+  const stateWithBuffer = {
+    ...state,
+    sumCpu: addBufferToValue(state.sumCpu, buffer),
+    sumMem: addBufferToValue(state.sumMem, buffer)
+  }
 
   return (
     <Layout.Horizontal spacing="small">
       <Button
         variation={ButtonVariation.PRIMARY}
         onClick={updateRecommendationDetails}
-        disabled={
-          isEqual(state, updatedState) &&
-          addBufferToValue(state.sumCpu, buffer) === updatedState.sumCpu &&
-          addBufferToValue(state.sumMem, buffer) === updatedState.sumMem
-        }
+        disabled={isEqual(stateWithBuffer, updatedState)}
       >
         {getString('ce.nodeRecommendation.applyPreferences')}
       </Button>

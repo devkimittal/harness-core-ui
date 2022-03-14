@@ -58,6 +58,23 @@ export enum TimeRangeType {
   'LAST_30' = 'LAST_30'
 }
 
+export type NodepoolTimeRangeValue = {
+  label: NodepoolTimeRange
+  value: NodepoolTimeRangeType
+}
+
+export enum NodepoolTimeRange {
+  'LAST_DAY' = 'LAST DAY',
+  'LAST_7' = 'LAST 7 DAYS',
+  'LAST_30' = 'LAST 30 DAYS'
+}
+
+export enum NodepoolTimeRangeType {
+  'LAST_DAY' = 'LAST_DAY',
+  'LAST_7' = 'LAST_7',
+  'LAST_30' = 'LAST_30'
+}
+
 export enum CCM_PAGE_TYPE {
   Workload = 'WORKLOAD',
   Node = 'NODE'
