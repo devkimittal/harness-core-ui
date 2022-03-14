@@ -89,7 +89,7 @@ const withActions = withTableData<
 
 export const EnvironmentTypes = withEnvironment(({ environment }) => {
   const { getString } = useStrings()
-  return <Text>{getString(environment.type === EnvironmentType.PRODUCTION ? 'production' : 'preProduction')}</Text>
+  return <Text>{getString(environment.type === EnvironmentType.PRODUCTION ? 'production' : 'cd.preProduction')}</Text>
 })
 
 export const EnvironmentMenu = withActions(({ environment, actions }) => {

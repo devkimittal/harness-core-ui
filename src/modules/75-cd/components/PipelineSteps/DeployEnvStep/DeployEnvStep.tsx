@@ -192,7 +192,7 @@ export const NewEditEnvironmentModal: React.FC<NewEditEnvironmentModalProps> = (
       value: 'Production'
     },
     {
-      label: getString('preProduction'),
+      label: getString('cd.preProduction'),
       value: 'PreProduction'
     }
   ]

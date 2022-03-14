@@ -24,6 +24,7 @@ serviceCreated: '{{ $.common.serviceCreated }}'
 serviceUpdated: '{{ $.common.serviceUpdated }}'
 environmentCreated: '{{ $.common.environmentCreated }}'
 environmentUpdated: '{{ $.common.environmentUpdated }}'
+preProduction: PreProduction
 environmentDelete: 'Delete Environment '
 environments:
   delete:

@@ -3326,6 +3326,7 @@ export interface StringsMap {
   'cd.pipelineSteps.serviceTab.serviceIsRequired': string
   'cd.pipelineSteps.serviceTab.specifyYourService': string
   'cd.pipelineSteps.serviceTab.stageOverrides': string
+  'cd.preProduction': string
   'cd.releaseNameValidation': string
   'cd.requiredPermissions': string
   'cd.resourceCannotBeEmpty': string
@@ -8129,10 +8130,6 @@ export interface StringsMap {
    * @deprecated migrate this string to module level file
    */
   'pre-flight-check.verifyingPipelineInputs': string
-  /**
-   * @deprecated migrate this string to module level file
-   */
-  preProduction: string
   /**
    * @deprecated migrate this string to module level file
    */
