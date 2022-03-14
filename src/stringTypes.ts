@@ -2133,6 +2133,8 @@ export interface StringsMap {
   'dashboards.homePage.removeTagFromFilter': string
   'dashboards.homePage.searchPlaceholder': string
   'dashboards.modules.harness': string
+  'dashboards.moveModal.moveToFolder': string
+  'dashboards.moveModal.submitFail': string
   'dashboards.resourceModal.folderDetail': string
   'dashboards.resourceModal.folders': string
   'dashboards.sideNav.byHarness': string

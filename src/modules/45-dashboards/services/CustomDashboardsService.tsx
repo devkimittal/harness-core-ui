@@ -135,3 +135,23 @@ export const useDeleteDashboard = (accountId: string): DeleteDashboardResponse =
   })
   return { mutate, loading }
 }
+
+export interface MoveDashboardResponseData {
+  resource: string
+}
+
+export interface MoveDashboardResponse {
+  mutate: (props: { dashboardId: string; folderId: string }) => Promise<MoveDashboardResponseData>
+  loading: boolean
+}
+
+export const useMoveDashboard = (accountId: string): MoveDashboardResponse => {
+  const { mutate, loading } = useMutate({
+    verb: 'POST',
+    path: 'gateway/dashboard/move',
+    queryParams: {
+      accountId: accountId
+    }
+  })
+  return { mutate, loading }
+}

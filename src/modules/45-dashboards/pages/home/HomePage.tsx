@@ -47,9 +47,10 @@ import routes from '@common/RouteDefinitions'
 
 import { useStrings } from 'framework/strings'
 
-import { useDeleteDashboard, useCloneDashboard } from '@dashboards/services/CustomDashboardsService'
+import { useCloneDashboard, useDeleteDashboard } from '@dashboards/services/CustomDashboardsService'
 import { useDashboardsContext } from '../DashboardsContext'
 import FilterTagsSideBar from './FilterTagsSideBar'
+import MoveDashboardForm from './MoveDashboardForm'
 import moduleTagCss from '@dashboards/common/ModuleTags.module.scss'
 import css from './HomePage.module.scss'
 
@@ -310,9 +311,10 @@ export interface DashboardCardInterface {
   dashboard: DashboardInterface
   clone: (dashboardId: string) => Promise<void>
   deleteById: (dashboardId: string) => Promise<void>
+  moveDashboard: (dashboardId: string) => void
 }
 
-const DashboardCard: React.FC<DashboardCardInterface> = ({ dashboard, clone, deleteById }) => {
+const DashboardCard: React.FC<DashboardCardInterface> = ({ dashboard, clone, deleteById, moveDashboard }) => {
   const { getString } = useStrings()
   const { accountId, folderId } = useParams<{ accountId: string; folderId: string }>()
   const history = useHistory()
@@ -351,20 +353,36 @@ const DashboardCard: React.FC<DashboardCardInterface> = ({ dashboard, clone, del
                 }}
               />
               {dashboard?.type === dashboardType.ACCOUNT && (
-                <RbacMenuItem
-                  text={getString('delete')}
-                  onClick={e => {
-                    e.stopPropagation()
-                    setMenuOpen(false)
-                    deleteById(dashboard.id)
-                  }}
-                  permission={{
-                    permission: PermissionIdentifier.EDIT_DASHBOARD,
-                    resource: {
-                      resourceType: ResourceType.DASHBOARDS
-                    }
-                  }}
-                />
+                <>
+                  <RbacMenuItem
+                    text={getString('delete')}
+                    onClick={e => {
+                      e.stopPropagation()
+                      setMenuOpen(false)
+                      deleteById(dashboard.id)
+                    }}
+                    permission={{
+                      permission: PermissionIdentifier.EDIT_DASHBOARD,
+                      resource: {
+                        resourceType: ResourceType.DASHBOARDS
+                      }
+                    }}
+                  />
+                  <RbacMenuItem
+                    text={getString('common.move')}
+                    onClick={e => {
+                      e.stopPropagation()
+                      setMenuOpen(false)
+                      moveDashboard(dashboard.id)
+                    }}
+                    permission={{
+                      permission: PermissionIdentifier.EDIT_DASHBOARD,
+                      resource: {
+                        resourceType: ResourceType.DASHBOARDS
+                      }
+                    }}
+                  />
+                </>
               )}
             </Menu>
           }
@@ -464,16 +482,30 @@ const HomePage: React.FC = () => {
                 }
               }}
             />
-            <RbacMenuItem
-              text={getString('delete')}
-              onClick={() => deleteById(data.id)}
-              permission={{
-                permission: PermissionIdentifier.EDIT_DASHBOARD,
-                resource: {
-                  resourceType: ResourceType.DASHBOARDS
-                }
-              }}
-            />
+            {data?.type === dashboardType.ACCOUNT && (
+              <>
+                <RbacMenuItem
+                  text={getString('delete')}
+                  onClick={() => deleteById(data.id)}
+                  permission={{
+                    permission: PermissionIdentifier.EDIT_DASHBOARD,
+                    resource: {
+                      resourceType: ResourceType.DASHBOARDS
+                    }
+                  }}
+                />
+                <RbacMenuItem
+                  text={getString('common.move')}
+                  onClick={() => moveDashboard(data.id)}
+                  permission={{
+                    permission: PermissionIdentifier.EDIT_DASHBOARD,
+                    resource: {
+                      resourceType: ResourceType.DASHBOARDS
+                    }
+                  }}
+                />
+              </>
+            )}
           </Menu>
         }
         menuPopoverProps={{
@@ -597,6 +629,45 @@ const HomePage: React.FC = () => {
   React.useEffect(() => {
     setFilteredList(dashboardList?.resource)
   }, [dashboardList])
+
+  const [selectedDashboard, setSelectedDashboard] = useState<string>()
+
+  const [showMoveModal, hideMoveModal] = useModalHook(
+    () => (
+      <Dialog
+        isOpen={true}
+        enforceFocus={false}
+        onClose={() => {
+          hideMoveModal()
+        }}
+        className={cx(css.dashboardDialog, Classes.DIALOG)}
+      >
+        <MoveDashboardForm
+          formData={{}}
+          handleViewChange={{}}
+          hideModal={hideMoveModal}
+          name={getString('dashboards.createModal.stepOne')}
+          dashboardId={selectedDashboard}
+        />
+
+        <Button
+          minimal
+          icon="cross"
+          iconProps={{ size: 18 }}
+          onClick={() => {
+            hideMoveModal()
+          }}
+          className={css.crossIcon}
+        />
+      </Dialog>
+    ),
+    [selectedDashboard]
+  )
+
+  const moveDashboard = (dashboardId: string) => {
+    setSelectedDashboard(dashboardId)
+    showMoveModal()
+  }
 
   const [showModal, hideModal] = useModalHook(
     () => (
@@ -759,7 +830,12 @@ const HomePage: React.FC = () => {
               gutter={25}
               items={filteredDashboardList}
               renderItem={(dashboard: DashboardInterface) => (
-                <DashboardCard dashboard={dashboard} clone={clone} deleteById={deleteById} />
+                <DashboardCard
+                  dashboard={dashboard}
+                  clone={clone}
+                  deleteById={deleteById}
+                  moveDashboard={moveDashboard}
+                />
               )}
               keyOf={dashboard => dashboard?.id}
             />
