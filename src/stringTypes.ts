@@ -535,6 +535,7 @@ export interface StringsMap {
   'common.resourceCenter.ticketmenu.ticketsDesc': string
   'common.resourceCenter.title': string
   'common.resourceGroupLabel': string
+  'common.resourceGroupPlaceholder': string
   'common.resourceLabel': string
   'common.resourceTypeLabel': string
   'common.role': string
@@ -607,6 +608,7 @@ export interface StringsMap {
   'common.submittingRequest': string
   'common.submittingRequestToGitViaDelegate': string
   'common.subscribed': string
+  'common.subscriptionPlaceholder': string
   'common.subscriptions.banner.trial': string
   'common.subscriptions.ccm.cloudSpend': string
   'common.subscriptions.cd.serviceInstances': string
@@ -1337,8 +1339,11 @@ export interface StringsMap {
   'connectors.ACR.name': string
   'connectors.ACR.registry': string
   'connectors.ACR.registryError': string
+  'connectors.ACR.registryPlaceholder': string
   'connectors.ACR.repositoryError': string
+  'connectors.ACR.repositoryPlaceholder': string
   'connectors.ACR.subscription': string
+  'connectors.ACR.subscriptionPlaceholder': string
   'connectors.ECR.fullName': string
   'connectors.ECR.name': string
   'connectors.GCP.delegateInClusterInfo': string
@@ -3338,6 +3343,8 @@ export interface StringsMap {
   'cd.pipelineSteps.executionTab.stepsCount': string
   'cd.pipelineSteps.infraTab.clusterError': string
   'cd.pipelineSteps.infraTab.deploymentType': string
+  'cd.pipelineSteps.infraTab.resourceGroupError': string
+  'cd.pipelineSteps.infraTab.subscriptionError': string
   'cd.pipelineSteps.serviceTab.aboutYourService': string
   'cd.pipelineSteps.serviceTab.deploymentTypeRequired': string
   'cd.pipelineSteps.serviceTab.differentService': string
@@ -3397,6 +3404,8 @@ export interface StringsMap {
   'cd.setupGitOpsServerStep': string
   'cd.specifyTfVarStore': string
   'cd.stepName': string
+  'cd.steps.azureInfraStep.resourceGroupPlaceholder': string
+  'cd.steps.azureInfraStep.subscriptionPlaceholder': string
   'cd.steps.common.clusterDetails': string
   'cd.steps.common.releaseNamePlaceholder': string
   'cd.steps.common.selectOrEnterClusterPlaceholder': string

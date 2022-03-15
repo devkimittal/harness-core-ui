@@ -259,8 +259,11 @@ GCR:
 ACR:
   name: ACR
   subscription: '{{ $.connectors.subscription }}'
+  subscriptionPlaceholder: '{{ $.common.subscriptionPlaceholder }}'
   registry: 'Registry'
+  registryPlaceholder: 'Select Registry'
   registryError: 'No registry found with given Subscription'
+  repositoryPlaceholder: 'Select Repository'
   repositoryError: 'No repository found with given Registry'
 azure:
   clientId: '{{ $.common.clientId }}'

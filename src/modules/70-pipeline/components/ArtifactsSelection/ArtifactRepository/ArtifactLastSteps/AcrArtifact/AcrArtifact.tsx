@@ -351,7 +351,7 @@ export function AcrArtifact({
                       }
                     }}
                     label={getString('connectors.ACR.subscription')}
-                    placeholder={getString('select')}
+                    placeholder={getString('connectors.ACR.subscriptionPlaceholder')}
                   />
 
                   {getMultiTypeFromValue(formik.values.subscription) === MultiTypeInputType.RUNTIME && (
@@ -376,7 +376,9 @@ export function AcrArtifact({
                     name="registry"
                     selectItems={registries}
                     disabled={loadingRegistries || isReadonly}
-                    placeholder={loadingRegistries ? getString('loading') : getString('select')}
+                    placeholder={
+                      loadingRegistries ? getString('loading') : getString('connectors.ACR.registryPlaceholder')
+                    }
                     multiTypeInputProps={{
                       onChange: () => {
                         tagList.length && setTagList([])
@@ -418,7 +420,9 @@ export function AcrArtifact({
                     name="repository"
                     selectItems={repositories}
                     disabled={loadingRepositories || isReadonly}
-                    placeholder={loadingRepositories ? getString('loading') : getString('select')}
+                    placeholder={
+                      loadingRepositories ? getString('loading') : getString('connectors.ACR.repositoryPlaceholder')
+                    }
                     multiTypeInputProps={{
                       onChange: () => {
                         tagList.length && setTagList([])
