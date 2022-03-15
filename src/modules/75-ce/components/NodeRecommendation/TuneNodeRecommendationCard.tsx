@@ -117,6 +117,7 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
           initialState={initialState}
           updatedState={updatedState}
           updateRecommendationDetails={updateRecommendationDetails}
+          buffer={buffer}
         />
       </Layout.Vertical>
     </Container>
@@ -169,11 +170,9 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
 }
 
 const Buffer = ({
-  dispatch,
   state,
   buffer,
-  setBuffer,
-  updatedState
+  setBuffer
 }: {
   dispatch: React.Dispatch<Action>
   state: IState
@@ -203,25 +202,15 @@ const Buffer = ({
           labelRenderer={false}
           value={buffer}
           onChange={val => setBuffer(val)}
-          onRelease={val => {
-            dispatch({
-              type: ACTIONS.SUM_CPUS,
-              data: addBufferToValue(state.sumCpu, val)
-            })
-            dispatch({
-              type: ACTIONS.SUM_MEM,
-              data: addBufferToValue(state.sumMem, val)
-            })
-          }}
           className={css.bufferSlider}
         />
         <Container>
           <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
             'delegate.delegateCPU'
-          )}: ${addBufferToValue(updatedState.sumCpu, buffer)} vCPU `}</Text>
+          )}: ${addBufferToValue(state.sumCpu, buffer)} vCPU `}</Text>
           <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
             'ce.nodeRecommendation.ram'
-          )}: ${addBufferToValue(updatedState.sumMem, buffer)} GiB`}</Text>
+          )}: ${addBufferToValue(state.sumMem, buffer)} GiB`}</Text>
         </Container>
       </Layout.Vertical>
     </Container>
@@ -356,27 +345,35 @@ const ApplyPreferencesButtonGroup = ({
   initialState,
   updatedState,
   dispatch,
-  setBuffer
+  setBuffer,
+  buffer
 }: {
   updateRecommendationDetails: () => void
   state: IState
   initialState: IState
   updatedState: IState
   dispatch: React.Dispatch<Action>
+  buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const { getString } = useStrings()
+
+  const stateWithBuffer = {
+    ...state,
+    sumCpu: addBufferToValue(state.sumCpu, buffer),
+    sumMem: addBufferToValue(state.sumMem, buffer)
+  }
 
   return (
     <Layout.Horizontal spacing="small">
       <Button
         variation={ButtonVariation.PRIMARY}
         onClick={updateRecommendationDetails}
-        disabled={isEqual(state, updatedState)}
+        disabled={isEqual(stateWithBuffer, updatedState)}
       >
         {getString('ce.nodeRecommendation.applyPreferences')}
       </Button>
-      {!isEqual(state, initialState) ? (
+      {!isEqual(stateWithBuffer, initialState) ? (
         <Button
           variation={ButtonVariation.SECONDARY}
           onClick={() => {

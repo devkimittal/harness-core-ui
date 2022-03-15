@@ -42,7 +42,11 @@ import {
 } from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
-import { calculateSavingsPercentage } from '@ce/utils/recommendationUtils'
+import {
+  addBufferToState,
+  calculateSavingsPercentage,
+  convertStateToRecommendClusterPayload
+} from '@ce/utils/recommendationUtils'
 import { InstanceFamiliesModalTab } from '../InstanceFamiliesModalTab/InstanceFamiliesModalTab'
 import ResourceUtilizationCharts from './ResourceUtilizationCharts'
 import { ACTIONS, Action, IState } from './constants'
@@ -178,9 +182,14 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
   const updateRecommendationDetails = async () => {
-    setUpdatedState(state)
+    setUpdatedState(addBufferToState(state, buffer))
 
-    const payload = { ...recommendationDetails.resourceRequirement, ...state }
+    const payload = convertStateToRecommendClusterPayload(
+      state,
+      (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest,
+      buffer
+    )
+
     try {
       const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
       const newState = {
