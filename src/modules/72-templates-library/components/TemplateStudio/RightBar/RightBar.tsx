@@ -50,7 +50,7 @@ export const RightBar = (): JSX.Element => {
         onClick={openTemplatesInputDrawer}
         variation={ButtonVariation.TERTIARY}
         font={{ weight: 'semi-bold', size: 'xsmall' }}
-        icon="question"
+        icon="template-inputs"
         withoutCurrentColor={true}
         iconProps={{ size: 28 }}
         text={getString('templatesLibrary.templateInputs')}

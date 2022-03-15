@@ -43,7 +43,7 @@ function TemplateInputsWrapper(props: Props) {
 
   const TemplateInputsHeader = (
     <Layout.Horizontal padding="xlarge" border={{ bottom: true, color: Color.GREY_200 }}>
-      <Icon name="question" size={24} color={Color.PRIMARY_7} margin={{ right: 'small' }} />
+      <Icon name="template-inputs" size={24} color={Color.PRIMARY_7} margin={{ right: 'small' }} />
       <Text font={{ variation: FontVariation.H4 }}>{getString('templatesLibrary.templateInputs')}</Text>
     </Layout.Horizontal>
   )
