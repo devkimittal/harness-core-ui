@@ -34,10 +34,11 @@ const PipelineTemplateCanvas = () => {
   const { accountId, projectIdentifier, orgIdentifier } = useParams<ProjectPathProps>()
   const { branch, repoIdentifier } = useQueryParams<GitQueryParams>()
 
-  const createPipelineFromTemplate = React.useCallback(
-    () => ({ ...template.spec, name: DefaultNewPipelineName, identifier: DefaultNewPipelineId }),
-    [template.spec]
-  )
+  const createPipelineFromTemplate = () => ({
+    ...template.spec,
+    name: DefaultNewPipelineName,
+    identifier: DefaultNewPipelineId
+  })
 
   const [pipeline, setPipeline] = React.useState<PipelineInfoConfig>(createPipelineFromTemplate())
 
@@ -54,13 +55,13 @@ const PipelineTemplateCanvas = () => {
     await updateTemplate(template)
   }
 
-  const openVariablesDrawer = React.useCallback(() => {
+  const openVariablesDrawer = () => {
     updateTemplateView({
       ...templateView,
       isDrawerOpened: true,
       drawerData: { type: DrawerTypes.TemplateVariables }
     })
-  }, [templateView, updateTemplateView])
+  }
 
   useGlobalEventListener('OPEN_PIPELINE_TEMPLATE_VARIABLES', () => {
     openVariablesDrawer()

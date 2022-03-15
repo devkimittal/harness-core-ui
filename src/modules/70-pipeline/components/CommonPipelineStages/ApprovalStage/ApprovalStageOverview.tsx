@@ -14,10 +14,7 @@ import { Accordion, Card, Container, FormikForm, HarnessDocTooltip, Layout, Text
 import { FontVariation } from '@harness/design-system'
 import { NameIdDescriptionTags } from '@common/components/NameIdDescriptionTags/NameIdDescriptionTags'
 import { useStrings } from 'framework/strings'
-import {
-  PipelineContextType,
-  usePipelineContext
-} from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
+import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
 import { isDuplicateStageId } from '@pipeline/components/PipelineStudio/StageBuilder/StageBuilderUtil'
 import { StepWidget } from '@pipeline/components/AbstractSteps/StepWidget'
 import type { CustomVariablesData } from '@pipeline/components/PipelineSteps/Steps/CustomVariables/CustomVariableEditable'
@@ -28,6 +25,7 @@ import { usePipelineVariables } from '@pipeline/components/PipelineVariablesCont
 import type { AllNGVariables } from '@pipeline/utils/types'
 import type { ApprovalStageElementConfig } from '@pipeline/utils/pipelineTypes'
 import { getNameAndIdentifierSchema } from '@pipeline/utils/tempates'
+import { isContextTypeNotStageTemplate } from '@pipeline/components/PipelineStudio/PipelineUtils'
 import type { ApprovalStageOverviewProps } from './types'
 import css from './ApprovalStageOverview.module.scss'
 
@@ -93,7 +91,7 @@ export function ApprovalStageOverview(props: ApprovalStageOverviewProps): React.
           >
             {formikProps => (
               <FormikForm>
-                {contextType !== PipelineContextType.StageTemplate && (
+                {isContextTypeNotStageTemplate(contextType) && (
                   <Card className={cx(css.sectionCard)}>
                     <NameIdDescriptionTags
                       formikProps={formikProps}

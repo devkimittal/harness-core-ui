@@ -26,10 +26,7 @@ import { produce } from 'immer'
 import { parse } from 'yaml'
 import type { PipelineInfoConfig } from 'services/cd-ng'
 import { ConnectorInfoDTO, useGetConnector } from 'services/cd-ng'
-import {
-  PipelineContextType,
-  usePipelineContext
-} from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
+import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
 import { useStrings } from 'framework/strings'
 import {
   ConnectorReferenceField,
@@ -50,6 +47,7 @@ import { useGitScope } from '@pipeline/utils/CIUtils'
 import type { BuildStageElementConfig, StageElementWrapper } from '@pipeline/utils/pipelineTypes'
 import type { TemplateSummaryResponse } from 'services/template-ng'
 import { createTemplate, getTemplateNameWithLabel } from '@pipeline/utils/templateUtils'
+import { isContextTypeNotStageTemplate } from '@pipeline/components/PipelineStudio/PipelineUtils'
 import css from './EditStageView.module.scss'
 
 export interface EditStageView {
@@ -150,14 +148,14 @@ export const EditStageView: React.FC<EditStageView> = ({ data, template, onSubmi
   const validationSchema = () =>
     Yup.lazy((values: Values): any =>
       Yup.object().shape({
-        ...(contextType !== PipelineContextType.StageTemplate && {
+        ...(isContextTypeNotStageTemplate(contextType) && {
           name: NameSchemaWithoutHook(getString, {
             requiredErrorMsg: getString('fieldRequired', { field: getString('stageNameLabel') })
           }),
           identifier: IdentifierSchemaWithoutHook(getString)
         }),
         ...(!codebase &&
-          contextType !== PipelineContextType.StageTemplate &&
+          isContextTypeNotStageTemplate(contextType) &&
           values.cloneCodebase && {
             connectorRef: Yup.mixed().required(getString('fieldRequired', { field: getString('connector') })),
             ...(connectionType === 'Account' && {
@@ -237,7 +235,7 @@ export const EditStageView: React.FC<EditStageView> = ({ data, template, onSubmi
               >
                 {getString('pipelineSteps.build.create.aboutYourStage')}
               </Text>
-              {contextType !== PipelineContextType.StageTemplate &&
+              {isContextTypeNotStageTemplate(contextType) &&
                 (template ? (
                   <NameId
                     identifierProps={{
@@ -284,7 +282,7 @@ export const EditStageView: React.FC<EditStageView> = ({ data, template, onSubmi
                 </div>
               )}
               {/* We don't need to configure CI Codebase if it is already configured or we are skipping Clone Codebase step */}
-              {!codebase && formikProps.values.cloneCodebase && contextType !== PipelineContextType.StageTemplate && (
+              {!codebase && formikProps.values.cloneCodebase && isContextTypeNotStageTemplate(contextType) && (
                 <div className={css.configureCodebase}>
                   <Text
                     font={{ size: 'normal', weight: 'semi-bold' }}
