@@ -4710,6 +4710,16 @@ export type K8sDeleteStepInfo = StepSpecType & {
   skipDryRun?: boolean
 }
 
+export type AzureInfrastructure = Infrastructure & {
+  connectorRef: string
+  subscription: string
+  cluster: string
+  resourceGroup: string
+  namespace: string
+  releaseName: string
+  metadata?: string
+}
+
 export type K8sGcpInfrastructure = Infrastructure & {
   cluster: string
   connectorRef: string
