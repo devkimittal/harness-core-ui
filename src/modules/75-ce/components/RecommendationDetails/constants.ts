@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { TimeRange, TimeRangeType } from '@ce/types'
+import { TimeRange, TimeRangeType, NodepoolTimeRange, NodepoolTimeRangeType } from '@ce/types'
 
 export const ViewTimeRange = [
   {
@@ -15,6 +15,21 @@ export const ViewTimeRange = [
   {
     label: TimeRange.LAST_30,
     value: TimeRangeType.LAST_30
+  }
+]
+
+export const ViewNodepoolTimeRange = [
+  {
+    label: NodepoolTimeRange.LAST_DAY,
+    value: NodepoolTimeRangeType.LAST_DAY
+  },
+  {
+    label: NodepoolTimeRange.LAST_7,
+    value: NodepoolTimeRangeType.LAST_7
+  },
+  {
+    label: NodepoolTimeRange.LAST_30,
+    value: NodepoolTimeRangeType.LAST_30
   }
 ]
 

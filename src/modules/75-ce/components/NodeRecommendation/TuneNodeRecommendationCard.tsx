@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Container,
   Layout,
@@ -66,7 +66,7 @@ interface TuneRecommendationCardBodyProps {
   updateRecommendationDetails: () => void
 }
 
-export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProps) => {
+export const TuneRecommendationCardBody: React.FC<TuneRecommendationCardBodyProps> = props => {
   const {
     state,
     dispatch,
@@ -88,7 +88,7 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
           </Text>
           <Layout.Horizontal flex className={css.spaceBetween} spacing="medium" margin={{ top: 'small' }}>
             <Layout.Horizontal spacing="medium">
-              <Resources state={updatedState} dispatch={dispatch} />
+              <Resources state={state} dispatch={dispatch} />
               <Container flex={{ justifyContent: 'center' }}>
                 <Container style={{ borderWidth: 1, borderStyle: 'solid', borderLeft: 0, width: 14, height: 60 }} />
               </Container>
@@ -118,11 +118,8 @@ export const TuneRecommendationCardBody = (props: TuneRecommendationCardBodyProp
   )
 }
 
-const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: IState }) => {
+const Resources: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> = ({ dispatch, state }) => {
   const { getString } = useStrings()
-
-  const [sumCpuVal, setSumCpuVal] = useState(String(state.sumCpu))
-  const [sumMemVal, setSumMemVal] = useState(String(state.sumMem))
 
   return (
     <Container>
@@ -137,12 +134,11 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
           <TextInput
-            value={sumCpuVal}
+            value={`${state.sumCpu}`}
             wrapperClassName={css.input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSumCpuVal(e.target.value)
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.SUM_CPUS, data: +e.target.value })
-            }}
+            }
           />
         </Container>
         <Container flex className={css.spaceBetween}>
@@ -155,12 +151,11 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
             {getString('ce.nodeRecommendation.mem')}
           </Text>
           <TextInput
-            value={sumMemVal}
+            value={`${state.sumMem}`}
             wrapperClassName={css.input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSumMemVal(e.target.value)
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.SUM_MEM, data: +e.target.value })
-            }}
+            }
           />
         </Container>
       </Layout.Vertical>
@@ -168,15 +163,11 @@ const Resources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; stat
   )
 }
 
-const Buffer = ({
-  state,
-  buffer,
-  setBuffer
-}: {
+const Buffer: React.FC<{
   state: IState
   buffer: number
   setBuffer: React.Dispatch<React.SetStateAction<number>>
-}) => {
+}> = ({ state, buffer, setBuffer }) => {
   const { getString } = useStrings()
 
   return (
@@ -215,11 +206,8 @@ const Buffer = ({
   )
 }
 
-const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: IState }) => {
+const LargestResources: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> = ({ dispatch, state }) => {
   const { getString } = useStrings()
-
-  // const [maxCpuVal, setMaxCpuVal] = useState(state.maxCpu)
-  // const [maxMemVal, setMaxMemVal] = useState(state.maxMemory)
 
   return (
     <Container>
@@ -232,7 +220,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             {getString('ce.nodeRecommendation.cpus')}
           </Text>
           <TextInput
-            defaultValue={`${state.maxCpu}`}
+            value={`${state.maxCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.MAX_CPUS, data: +e.target.value })
@@ -244,7 +232,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
             {getString('ce.nodeRecommendation.mem')}
           </Text>
           <TextInput
-            defaultValue={`${state.maxMemory}`}
+            value={`${state.maxMemory}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.MAX_MEM, data: +e.target.value })
@@ -256,7 +244,7 @@ const LargestResources = ({ dispatch, state }: { dispatch: React.Dispatch<Action
   )
 }
 
-const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: IState }) => {
+const Nodes: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> = ({ dispatch, state }) => {
   const { getString } = useStrings()
 
   return (
@@ -294,13 +282,10 @@ const Nodes = ({ dispatch, state }: { dispatch: React.Dispatch<Action>; state: I
   )
 }
 
-const InstanceFamilies = ({
-  state,
-  showInstanceFamiliesModal
-}: {
+const InstanceFamilies: React.FC<{
   state: IState
   showInstanceFamiliesModal: () => void
-}) => {
+}> = ({ state, showInstanceFamiliesModal }) => {
   const { getString } = useStrings()
 
   return (
@@ -345,15 +330,7 @@ const InstanceFamilies = ({
   )
 }
 
-const ApplyPreferencesButtonGroup = ({
-  updateRecommendationDetails,
-  state,
-  initialState,
-  updatedState,
-  dispatch,
-  setBuffer,
-  buffer
-}: {
+const ApplyPreferencesButtonGroup: React.FC<{
   updateRecommendationDetails: () => void
   state: IState
   initialState: IState
@@ -361,7 +338,7 @@ const ApplyPreferencesButtonGroup = ({
   dispatch: React.Dispatch<Action>
   setBuffer: React.Dispatch<React.SetStateAction<number>>
   buffer: number
-}) => {
+}> = ({ updateRecommendationDetails, state, initialState, updatedState, dispatch, setBuffer, buffer }) => {
   const { getString } = useStrings()
 
   const stateWithBuffer = {
@@ -379,7 +356,7 @@ const ApplyPreferencesButtonGroup = ({
       >
         {getString('ce.nodeRecommendation.applyPreferences')}
       </Button>
-      {!isEqual(state, initialState) ? (
+      {!isEqual(stateWithBuffer, initialState) ? (
         <Button
           variation={ButtonVariation.SECONDARY}
           onClick={() => {

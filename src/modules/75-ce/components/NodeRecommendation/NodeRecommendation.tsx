@@ -26,9 +26,14 @@ import { useToaster } from '@common/exports'
 
 import useDidMountEffect from '@ce/common/useDidMountEffect'
 
-import type { TimeRangeValue } from '@ce/types'
-import { getTimePeriodString, GET_DATE_RANGE } from '@ce/utils/momentUtils'
-import type { NodeRecommendationDto, RecommendationOverviewStats, TotalResourceUsage } from 'services/ce/services'
+import { NodepoolTimeRangeType, NodepoolTimeRangeValue } from '@ce/types'
+import { getTimePeriodString, GET_NODEPOOL_DATE_RANGE } from '@ce/utils/momentUtils'
+import type {
+  NodeRecommendationDto,
+  RecommendationOverviewStats,
+  RecommendNodePoolClusterRequest,
+  TotalResourceUsage
+} from 'services/ce/services'
 import { useStrings } from 'framework/strings'
 import Recommender from '@ce/components/NodeRecommendation/Recommender'
 import formatCost from '@ce/utils/formatCost'
@@ -103,6 +108,15 @@ const reducer = (state: IState, action: Action) => {
       }
     case ACTIONS.RESET_TO_DEFAULT:
       return data
+    case ACTIONS.UPDATE_TIME_RANGE:
+      return {
+        ...state,
+        sumCpu: data.sumCpu,
+        sumMem: data.sumMem,
+        minNodes: data.minNodes,
+        maxCpu: data.maxCpu,
+        maxMemory: data.maxMemory
+      }
     default:
       return state
   }
@@ -116,41 +130,63 @@ export const UpdatePreferenceToaster = Toaster.create({
 interface NodeRecommendationDetailsProps {
   recommendationStats: RecommendationOverviewStats
   recommendationDetails: NodeRecommendationDto
-  timeRange: TimeRangeValue
+  timeRange: NodepoolTimeRangeValue
   recommendationName: string
+  nodeRecommendationRequestData: RecommendNodePoolClusterRequest
 }
 
 const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   recommendationDetails,
   recommendationStats,
   timeRange,
-  recommendationName
+  recommendationName,
+  nodeRecommendationRequestData
 }) => {
   const { getString } = useStrings()
   const { showError } = useToaster()
 
-  const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
+  const timeRangeFilter = GET_NODEPOOL_DATE_RANGE[timeRange.value]
 
   const [buffer, setBuffer] = useState(0)
   const [tuneRecomVisible, setTuneRecomVisible] = useState(true)
 
-  const { sumCpu, sumMem, minNodes, includeTypes, includeSeries, excludeTypes, excludeSeries } =
-    (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest
-  const { maxcpu, maxmemory } = (recommendationDetails.totalResourceUsage || {}) as TotalResourceUsage
+  const { includeTypes, includeSeries, excludeTypes, excludeSeries } = (recommendationDetails.resourceRequirement ||
+    {}) as RecommendClusterRequest
+
+  const {
+    sumCpu = 0,
+    sumMem = 0,
+    minNodes = 0,
+    maxcpu = 0,
+    maxmemory = 0
+  } = useMemo(() => {
+    const recommendClusterRequest = ((timeRange.value === NodepoolTimeRangeType.LAST_DAY
+      ? recommendationDetails.resourceRequirement
+      : nodeRecommendationRequestData.recommendClusterRequest) || {}) as RecommendClusterRequest
+
+    const totalResourceUsage = ((timeRange.value === NodepoolTimeRangeType.LAST_DAY
+      ? recommendationDetails.totalResourceUsage
+      : nodeRecommendationRequestData.totalResourceUsage) || {}) as TotalResourceUsage
+
+    return { ...recommendClusterRequest, ...totalResourceUsage }
+  }, [timeRange])
 
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
-  const initialState = {
-    maxCpu: +(maxcpu || 0).toFixed(2),
-    maxMemory: +(maxmemory || 0).toFixed(2),
-    sumCpu: +(sumCpu || 0).toFixed(2),
-    sumMem: +(sumMem || 0).toFixed(2),
-    minNodes: +(minNodes || 0).toFixed(2),
-    includeTypes: includeTypes || [],
-    includeSeries: includeSeries || [],
-    excludeTypes: excludeTypes || [],
-    excludeSeries: excludeSeries || []
-  }
+  const initialState = useMemo(
+    () => ({
+      maxCpu: +maxcpu.toFixed(2),
+      maxMemory: +maxmemory.toFixed(2),
+      sumCpu: +sumCpu.toFixed(2),
+      sumMem: +sumMem.toFixed(2),
+      minNodes: +minNodes.toFixed(2),
+      includeTypes: includeTypes || [],
+      includeSeries: includeSeries || [],
+      excludeTypes: excludeTypes || [],
+      excludeSeries: excludeSeries || []
+    }),
+    [timeRange]
+  )
 
   const [recomDetails, setRecomDetails] = useState(recommendationDetails)
   const [state, dispatch] = useReducer(
@@ -208,8 +244,23 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   }
 
   useDidMountEffect(() => {
+    dispatch({
+      type: ACTIONS.UPDATE_TIME_RANGE,
+      data: {
+        maxCpu: +maxcpu.toFixed(2),
+        maxMemory: +maxmemory.toFixed(2),
+        sumCpu: +sumCpu.toFixed(2),
+        sumMem: +sumMem.toFixed(2),
+        minNodes: +minNodes.toFixed(2)
+      }
+    })
+
     updateRecommendationDetails()
-  }, [])
+  }, [timeRange])
+
+  // useDidMountEffect(() => {
+  //   updateRecommendationDetails()
+  // }, [])
 
   const [showModal, hideModal] = useModalHook(() => {
     return (

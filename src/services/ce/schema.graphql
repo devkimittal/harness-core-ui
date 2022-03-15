@@ -478,7 +478,7 @@ type Query {
     nodePoolId: NodePoolIdInput!
     "defaults to Now().minusDays(7)"
     startTime: OffsetDateTime
-  ): RecommendClusterRequest
+  ): RecommendNodePoolClusterRequest
   "Table for perspective"
   overviewTimeSeriesStats(
     aggregateFunction: [QLCEViewAggregationInput]
@@ -575,6 +575,11 @@ type RecommendClusterRequest {
   sumGpu: Long
   sumMem: Float
   zone: String
+}
+
+type RecommendNodePoolClusterRequest {
+  recommendClusterRequest: RecommendClusterRequest
+  totalResourceUsage: TotalResourceUsage
 }
 
 type RecommendationItemDTO {

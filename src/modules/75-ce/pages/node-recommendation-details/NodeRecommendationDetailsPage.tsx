@@ -10,20 +10,22 @@ import { useParams } from 'react-router-dom'
 import { Layout, Text, Color, FontVariation, Card, Popover, Container } from '@wings-software/uicore'
 import { Position, Menu, MenuItem } from '@blueprintjs/core'
 
-import { TimeRange, TimeRangeType, TimeRangeValue } from '@ce/types'
-import { GET_DATE_RANGE } from '@ce/utils/momentUtils'
+import { NodepoolTimeRange, NodepoolTimeRangeType, NodepoolTimeRangeValue } from '@ce/types'
+import { GET_NODEPOOL_DATE_RANGE } from '@ce/utils/momentUtils'
 import { Page } from '@common/exports'
 import {
   NodeRecommendationDto,
   RecommendationItemDto,
   RecommendationOverviewStats,
+  RecommendNodePoolClusterRequest,
   ResourceType,
+  useFetchNodeRecommendationRequestQuery,
   useFetchRecommendationQuery
 } from 'services/ce/services'
 import routes from '@common/RouteDefinitions'
 import { useStrings } from 'framework/strings'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
-import { ViewTimeRange } from '@ce/components/RecommendationDetails/constants'
+import { ViewNodepoolTimeRange } from '@ce/components/RecommendationDetails/constants'
 import NodeRecommendationDetails from '@ce/components/NodeRecommendation/NodeRecommendation'
 import css from './NodeRecommendationDetailsPage.module.scss'
 
@@ -36,8 +38,11 @@ interface Params {
 const NodeRecommendationDetailsPage = () => {
   const { getString } = useStrings()
   const { recommendation, accountId, recommendationName } = useParams<Params>()
-  const [timeRange, setTimeRange] = useState<TimeRangeValue>({ value: TimeRangeType.LAST_7, label: TimeRange.LAST_7 })
-  const timeRangeFilter = GET_DATE_RANGE[timeRange.value]
+  const [timeRange, setTimeRange] = useState<NodepoolTimeRangeValue>({
+    value: NodepoolTimeRangeType.LAST_DAY,
+    label: NodepoolTimeRange.LAST_DAY
+  })
+  const timeRangeFilter = GET_NODEPOOL_DATE_RANGE[timeRange.value]
 
   const breadCrumbLinks = useMemo(() => {
     return [{ url: routes.toCERecommendations({ accountId }), label: getString('ce.recommendation.sideNavText') }]
@@ -55,12 +60,23 @@ const NodeRecommendationDetailsPage = () => {
   const nodePoolData =
     (data?.recommendationsV2?.items?.length && data?.recommendationsV2?.items[0]) || ({} as RecommendationItemDto)
 
-  if (fetching) {
-    return <Page.Spinner />
-  }
-
   const recommendationStats = (data?.recommendationStatsV2 || {}) as RecommendationOverviewStats
   const recommendationDetails = (data?.recommendationDetails || {}) as NodeRecommendationDto
+
+  const clusterId = recommendationDetails.nodePoolId?.clusterid
+
+  const [{ data: nodeRecommendationRequestData, fetching: nodeRecommendationDataFetching }] =
+    useFetchNodeRecommendationRequestQuery({
+      variables: {
+        nodePoolId: { clusterid: clusterId || '', nodepoolname: recommendationName },
+        startTime: timeRangeFilter[0],
+        endTime: timeRangeFilter[1]
+      }
+    })
+
+  if (fetching || nodeRecommendationDataFetching) {
+    return <Page.Spinner />
+  }
 
   return (
     <>
@@ -93,7 +109,7 @@ const NodeRecommendationDetailsPage = () => {
               }}
               content={
                 <Menu>
-                  {ViewTimeRange.map(viewTimeRange => (
+                  {ViewNodepoolTimeRange.map(viewTimeRange => (
                     <MenuItem
                       onClick={() => {
                         setTimeRange(viewTimeRange)
@@ -124,6 +140,9 @@ const NodeRecommendationDetailsPage = () => {
             recommendationDetails={recommendationDetails}
             timeRange={timeRange}
             recommendationName={recommendationName}
+            nodeRecommendationRequestData={
+              nodeRecommendationRequestData?.nodeRecommendationRequest as RecommendNodePoolClusterRequest
+            }
           />
         </Container>
       </Page.Body>

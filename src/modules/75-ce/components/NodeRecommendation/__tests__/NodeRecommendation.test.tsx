@@ -10,8 +10,12 @@ import { render } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
 
 import MockRecommendationData from '@ce/pages/node-recommendation-details/__test__/NodeRecommendationResponse.json'
-import type { NodeRecommendationDto, RecommendationOverviewStats } from 'services/ce/services'
-import { TimeRange, TimeRangeType } from '@ce/types'
+import type {
+  NodeRecommendationDto,
+  RecommendationOverviewStats,
+  RecommendNodePoolClusterRequest
+} from 'services/ce/services'
+import { NodepoolTimeRange, NodepoolTimeRangeType } from '@ce/types'
 import NodeRecommendationDetails from '../NodeRecommendation'
 import MockInstanceFamilyData from './MockInstanceFamilyData.json'
 
@@ -42,6 +46,11 @@ jest.mock('services/ce/publicPricingService', () => ({
   }))
 }))
 
+const mockNodeRecommendationRequestData = {
+  recommendClusterRequest: { sumCpu: 1, sumMem: 1, minNodes: 3 },
+  totalResourceUsage: { maxcpu: 4, maxmemory: 10 }
+}
+
 describe('test cases for node recommendations details', () => {
   test('should be able to render node recommendations details', async () => {
     const { container } = render(
@@ -50,7 +59,8 @@ describe('test cases for node recommendations details', () => {
           recommendationDetails={MockRecommendationData.data.recommendationDetails as NodeRecommendationDto}
           recommendationName="MOCK_RECOMMENDATION"
           recommendationStats={MockRecommendationData.data.recommendationStatsV2 as RecommendationOverviewStats}
-          timeRange={{ value: TimeRangeType.LAST_7, label: TimeRange.LAST_7 }}
+          timeRange={{ value: NodepoolTimeRangeType.LAST_7, label: NodepoolTimeRange.LAST_7 }}
+          nodeRecommendationRequestData={mockNodeRecommendationRequestData as RecommendNodePoolClusterRequest}
         />
       </TestWrapper>
     )

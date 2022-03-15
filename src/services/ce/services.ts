@@ -217,6 +217,35 @@ export const FetchCcmMetaDataDocument = gql`
 export function useFetchCcmMetaDataQuery(options?: Omit<Urql.UseQueryArgs<FetchCcmMetaDataQueryVariables>, 'query'>) {
   return Urql.useQuery<FetchCcmMetaDataQuery>({ query: FetchCcmMetaDataDocument, ...options })
 }
+export const FetchNodeRecommendationRequestDocument = gql`
+  query FetchNodeRecommendationRequest(
+    $nodePoolId: NodePoolIdInput!
+    $startTime: OffsetDateTime!
+    $endTime: OffsetDateTime!
+  ) {
+    nodeRecommendationRequest(nodePoolId: $nodePoolId, startTime: $startTime, endTime: $endTime) {
+      recommendClusterRequest {
+        maxNodes
+        minNodes
+        sumCpu
+        sumMem
+      }
+      totalResourceUsage {
+        maxcpu
+        maxmemory
+      }
+    }
+  }
+`
+
+export function useFetchNodeRecommendationRequestQuery(
+  options: Omit<Urql.UseQueryArgs<FetchNodeRecommendationRequestQueryVariables>, 'query'> = {}
+) {
+  return Urql.useQuery<FetchNodeRecommendationRequestQuery>({
+    query: FetchNodeRecommendationRequestDocument,
+    ...options
+  })
+}
 export const FetchNodeSummaryDocument = gql`
   query FetchNodeSummary(
     $filters: [QLCEViewFilterWrapperInput]
@@ -1316,6 +1345,27 @@ export type FetchCcmMetaDataQuery = {
     defaultGcpPerspectiveId: string | null
     defaultClusterPerspectiveId: string | null
   } | null
+}
+
+export type FetchNodeRecommendationRequestQueryVariables = Exact<{
+  nodePoolId: NodePoolIdInput
+  startTime: Scalars['OffsetDateTime']
+  endTime: Scalars['OffsetDateTime']
+}>
+
+export type FetchNodeRecommendationRequestQuery = {
+  __typename?: 'Query'
+  nodeRecommendationRequest: Maybe<{
+    __typename?: 'RecommendNodePoolClusterRequest'
+    recommendClusterRequest: Maybe<{
+      __typename?: 'RecommendClusterRequest'
+      maxNodes: Maybe<any>
+      minNodes: Maybe<any>
+      sumCpu: Maybe<number>
+      sumMem: Maybe<number>
+    }>
+    totalResourceUsage: Maybe<{ __typename?: 'TotalResourceUsage'; maxcpu: number; maxmemory: number }>
+  }>
 }
 
 export type FetchNodeSummaryQueryVariables = Exact<{
@@ -2770,7 +2820,7 @@ export type Query = {
   /** Fetch CCM MetaData for account */
   ccmMetaData: Maybe<CcmMetaData>
   instancedata: Maybe<InstanceDataDemo>
-  nodeRecommendationRequest: Maybe<RecommendClusterRequest>
+  nodeRecommendationRequest: Maybe<RecommendNodePoolClusterRequest>
   /** Table for perspective */
   overviewTimeSeriesStats: Maybe<PerspectiveTimeSeriesData>
   /** Fields for perspective explorer */
@@ -2962,6 +3012,12 @@ export type RecommendClusterRequest = {
   sumGpu: Maybe<Scalars['Long']>
   sumMem: Maybe<Scalars['Float']>
   zone: Maybe<Scalars['String']>
+}
+
+export type RecommendNodePoolClusterRequest = {
+  __typename?: 'RecommendNodePoolClusterRequest'
+  recommendClusterRequest: Maybe<RecommendClusterRequest>
+  totalResourceUsage: Maybe<TotalResourceUsage>
 }
 
 export type RecommendationItemDto = {

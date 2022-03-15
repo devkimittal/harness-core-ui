@@ -29,7 +29,8 @@ export enum ACTIONS {
   'EXCLUDE_TYPES',
   'EXCLUDE_SERIES',
   'CLEAR_INSTACE_FAMILY',
-  'RESET_TO_DEFAULT'
+  'RESET_TO_DEFAULT',
+  'UPDATE_TIME_RANGE'
 }
 
 export interface Action {

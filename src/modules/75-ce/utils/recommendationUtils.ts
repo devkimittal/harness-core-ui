@@ -46,7 +46,7 @@ export const convertStateToRecommendClusterPayload = (
   state: IState,
   resourceRequirement: RecommendClusterRequest,
   buffer: number
-) => {
+): RecommendClusterRequest => {
   const sumCpuWithBuffer = addBufferToValue(state.sumCpu, buffer)
   const sumMemWithBuffer = addBufferToValue(state.sumMem, buffer)
 
@@ -62,7 +62,7 @@ export const convertStateToRecommendClusterPayload = (
     ...resourceRequirement,
     ...state,
     sumCpu: sumCpuWithBuffer,
-    sumMemL: sumMemWithBuffer,
+    sumMem: sumMemWithBuffer,
     minCpu: state.maxCpu,
     minMem: state.maxMemory,
     maxNodes: maximumNodes,

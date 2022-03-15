@@ -6,7 +6,7 @@
  */
 
 import moment from 'moment'
-import { TimeRangeFilterType, TimeRangeType } from '@ce/types'
+import { TimeRangeFilterType, TimeRangeType, NodepoolTimeRangeType } from '@ce/types'
 
 export const todayInUTC = () => moment.utc()
 export const yesterdayInUTC = () => moment().utc().subtract(1, 'days')
@@ -14,6 +14,14 @@ export const yesterdayInUTC = () => moment().utc().subtract(1, 'days')
 export const GET_DATE_RANGE = {
   [TimeRangeType.LAST_7]: [todayInUTC().subtract(6, 'days').startOf('day').format(), todayInUTC().format()],
   [TimeRangeType.LAST_30]: [
+    todayInUTC().subtract(30, 'days').startOf('day').format(),
+    todayInUTC().subtract(1, 'days').format()
+  ]
+}
+export const GET_NODEPOOL_DATE_RANGE = {
+  [NodepoolTimeRangeType.LAST_DAY]: [todayInUTC().subtract(1, 'days').startOf('day').format(), todayInUTC().format()],
+  [NodepoolTimeRangeType.LAST_7]: [todayInUTC().subtract(6, 'days').startOf('day').format(), todayInUTC().format()],
+  [NodepoolTimeRangeType.LAST_30]: [
     todayInUTC().subtract(30, 'days').startOf('day').format(),
     todayInUTC().subtract(1, 'days').format()
   ]
