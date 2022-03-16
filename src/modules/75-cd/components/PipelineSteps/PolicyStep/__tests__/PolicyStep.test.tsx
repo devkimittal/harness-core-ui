@@ -84,6 +84,27 @@ describe('Test Policy Step', () => {
     expect(container).toMatchSnapshot()
   })
 
+  test('render variable view', () => {
+    const initialValues = {
+      name: 'Policy Step',
+      identifier: 'PolicyStep',
+      type: StepType.Policy,
+      timeout: '10m',
+      spec: {
+        policySets: ['acc.pol1', 'org.pol2', 'pol3'],
+        type: 'Custom',
+        policySpec: {
+          payload: 'Some Custom input'
+        }
+      }
+    }
+    const { container } = render(
+      <TestStepWidget initialValues={initialValues} type={StepType.Policy} stepViewType={StepViewType.InputVariable} />
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
   test('form produces correct data', async () => {
     const onChange = jest.fn()
     const onUpdate = jest.fn()

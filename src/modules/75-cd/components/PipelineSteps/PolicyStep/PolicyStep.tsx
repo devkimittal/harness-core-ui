@@ -21,11 +21,13 @@ import { PipelineStep } from '@pipeline/components/PipelineSteps/PipelineStep'
 
 import type { PolicyStepData, PolicyStepFormData } from './PolicyStepTypes'
 import PolicyInputSetStep from './PolicyInputSetStep'
+import { PolicyStepVariablesView, PolicyStepVariablesViewProps } from './PolicyStepVariablesView'
 import { PolicyStepWidgetWithRef } from './PolicyStepWidget'
 
 export class PolicyStep extends PipelineStep<PolicyStepData> {
   constructor() {
     super()
+    this._hasStepVariables = true
   }
 
   protected type = StepType.Policy
@@ -58,7 +60,8 @@ export class PolicyStep extends PipelineStep<PolicyStepData> {
       isNewStep,
       readonly,
       inputSetData,
-      allowableTypes
+      allowableTypes,
+      customStepProps
     } = props
 
     if (stepViewType === StepViewType.InputSet || stepViewType === StepViewType.DeploymentForm) {
@@ -69,6 +72,12 @@ export class PolicyStep extends PipelineStep<PolicyStepData> {
           path={inputSetData?.path || ''}
           allowableTypes={allowableTypes}
         />
+      )
+    }
+
+    if (stepViewType === StepViewType.InputVariable) {
+      return (
+        <PolicyStepVariablesView {...(customStepProps as PolicyStepVariablesViewProps)} originalData={initialValues} />
       )
     }
 

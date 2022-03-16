@@ -1102,6 +1102,8 @@ exports[`Test Policy Step render runtime inputs in edit step 1`] = `
 </div>
 `;
 
+exports[`Test Policy Step render variable view 1`] = `<div />`;
+
 exports[`Test Policy Step renders deployment form 1`] = `
 <div>
   <div
