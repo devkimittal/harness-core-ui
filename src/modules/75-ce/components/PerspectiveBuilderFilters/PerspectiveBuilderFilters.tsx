@@ -22,7 +22,7 @@ interface FiltersProps {
   fieldValuesList: QlceViewFieldIdentifierData[]
   removeEntireRow: () => void
   filterValue: ViewCondition[] | undefined
-  setFieldValue: any
+  setFieldValue: (id: number, data: Omit<PillData, 'type'>) => void
   timeRange: TimeRangeFilterType
   fieldName: string
 }

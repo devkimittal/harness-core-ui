@@ -19,6 +19,7 @@ import { USER_JOURNEY_EVENTS } from '@ce/TrackingEventsConstants'
 import { perspectiveDefaultTimeRangeMapper } from '@ce/utils/perspectiveUtils'
 import { CE_DATE_FORMAT_INTERNAL, DATE_RANGE_SHORTCUTS } from '@ce/utils/momentUtils'
 import PerspectiveBuilderFilters from '../PerspectiveBuilderFilters/PerspectiveBuilderFilters'
+import type { PillData } from '../PerspectiveBuilderFilters/PerspectiveBuilderFilter'
 import css from './PerspectiveFilters.module.scss'
 
 interface PerspectiveFiltersProps {
@@ -91,9 +92,9 @@ const PerspectiveFiltersNew: React.FC<PerspectiveFiltersProps> = ({ formikProps 
                   arrayHelper.remove(index)
                 }
 
-                const setField = (id, data) => {
+                const setField: (id: number, data: Omit<PillData, 'type'>) => void = (id, pillData) => {
                   const setFieldValue = formikProps.setFieldValue
-                  setFieldValue(`viewRules[${indexCopy}].viewConditions[${id}]`, data)
+                  setFieldValue(`viewRules[${indexCopy}].viewConditions[${id}]`, pillData)
                 }
 
                 return (
