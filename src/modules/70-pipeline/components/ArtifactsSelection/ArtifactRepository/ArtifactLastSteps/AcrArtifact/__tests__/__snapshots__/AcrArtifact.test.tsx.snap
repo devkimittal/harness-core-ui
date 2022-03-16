@@ -68,7 +68,7 @@ exports[`Acr Artifact tests Should match snapshot 1`] = `
               >
                 <span
                   class="Tooltip--acenter"
-                  data-tooltip-id="acrArtifact_subscription"
+                  data-tooltip-id="acrtArtifactSubscription"
                 >
                   connectors.ACR.subscription
                 </span>
@@ -96,7 +96,7 @@ exports[`Acr Artifact tests Should match snapshot 1`] = `
                           autocomplete="off"
                           class="bp3-input"
                           name="subscription"
-                          placeholder="select"
+                          placeholder="connectors.ACR.subscriptionPlaceholder"
                           style="padding-right: 0px;"
                           type="text"
                           value=""
@@ -171,7 +171,7 @@ exports[`Acr Artifact tests Should match snapshot 1`] = `
               >
                 <span
                   class="Tooltip--acenter"
-                  data-tooltip-id="acrArtifact_registry"
+                  data-tooltip-id="acrtArtifactRegistry"
                 >
                   connectors.ACR.registry
                 </span>
@@ -199,7 +199,7 @@ exports[`Acr Artifact tests Should match snapshot 1`] = `
                           autocomplete="off"
                           class="bp3-input"
                           name="registry"
-                          placeholder="select"
+                          placeholder="connectors.ACR.registryPlaceholder"
                           style="padding-right: 0px;"
                           type="text"
                           value=""
@@ -274,7 +274,7 @@ exports[`Acr Artifact tests Should match snapshot 1`] = `
               >
                 <span
                   class="Tooltip--acenter"
-                  data-tooltip-id="acrArtifact_repository"
+                  data-tooltip-id="acrtArtifactRepository"
                 >
                   repository
                 </span>
@@ -302,7 +302,7 @@ exports[`Acr Artifact tests Should match snapshot 1`] = `
                           autocomplete="off"
                           class="bp3-input"
                           name="repository"
-                          placeholder="select"
+                          placeholder="connectors.ACR.repositoryPlaceholder"
                           style="padding-right: 0px;"
                           type="text"
                           value=""
@@ -658,7 +658,7 @@ exports[`Acr Artifact tests Should render correctly in edit case 1`] = `
               >
                 <span
                   class="Tooltip--acenter"
-                  data-tooltip-id="acrArtifact_subscription"
+                  data-tooltip-id="acrtArtifactSubscription"
                 >
                   connectors.ACR.subscription
                 </span>
@@ -686,7 +686,7 @@ exports[`Acr Artifact tests Should render correctly in edit case 1`] = `
                           autocomplete="off"
                           class="bp3-input"
                           name="subscription"
-                          placeholder="select"
+                          placeholder="connectors.ACR.subscriptionPlaceholder"
                           style="padding-right: 0px;"
                           type="text"
                           value=""
@@ -761,7 +761,7 @@ exports[`Acr Artifact tests Should render correctly in edit case 1`] = `
               >
                 <span
                   class="Tooltip--acenter"
-                  data-tooltip-id="acrArtifact_registry"
+                  data-tooltip-id="acrtArtifactRegistry"
                 >
                   connectors.ACR.registry
                 </span>
@@ -789,7 +789,7 @@ exports[`Acr Artifact tests Should render correctly in edit case 1`] = `
                           autocomplete="off"
                           class="bp3-input"
                           name="registry"
-                          placeholder="select"
+                          placeholder="connectors.ACR.registryPlaceholder"
                           style="padding-right: 0px;"
                           type="text"
                           value=""
@@ -864,7 +864,7 @@ exports[`Acr Artifact tests Should render correctly in edit case 1`] = `
               >
                 <span
                   class="Tooltip--acenter"
-                  data-tooltip-id="acrArtifact_repository"
+                  data-tooltip-id="acrtArtifactRepository"
                 >
                   repository
                 </span>
@@ -892,7 +892,7 @@ exports[`Acr Artifact tests Should render correctly in edit case 1`] = `
                           autocomplete="off"
                           class="bp3-input"
                           name="repository"
-                          placeholder="select"
+                          placeholder="connectors.ACR.repositoryPlaceholder"
                           style="padding-right: 0px;"
                           type="text"
                           value=""

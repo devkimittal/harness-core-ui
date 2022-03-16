@@ -261,7 +261,7 @@ ACR:
   subscription: '{{ $.connectors.subscription }}'
   subscriptionPlaceholder: '{{ $.common.subscriptionPlaceholder }}'
   registry: 'Registry'
-  registryPlaceholder: 'Select Registry'
+  registryPlaceholder: 'Select or add Registry'
   registryError: 'No registry found with given Subscription'
   repositoryPlaceholder: 'Select or add Repository'
   repositoryError: 'No repository found with given Registry'

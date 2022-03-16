@@ -9,7 +9,7 @@ dashboard:
 steps:
   common:
     clusterDetails: Cluster Details
-    selectOrEnterClusterPlaceholder: Select or add cluster
+    selectOrEnterClusterPlaceholder: Select or add Cluster
     releaseNamePlaceholder: Enter Release Name
     undefinedType: Undefined deployment type
   kubernetesGcpStep:
