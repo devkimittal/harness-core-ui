@@ -263,7 +263,7 @@ ACR:
   registry: 'Registry'
   registryPlaceholder: 'Select Registry'
   registryError: 'No registry found with given Subscription'
-  repositoryPlaceholder: 'Select Repository'
+  repositoryPlaceholder: 'Select or add Repository'
   repositoryError: 'No repository found with given Registry'
 azure:
   clientId: '{{ $.common.clientId }}'

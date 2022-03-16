@@ -70,6 +70,36 @@ type AzureInfrastructureTemplate = { [key in keyof AzureInfrastructure]: string 
 function getValidationSchema(getString: UseStringsReturn['getString']): Yup.ObjectSchema {
   return Yup.object().shape({
     connectorRef: getConnectorSchema(getString),
+    subscription: Yup.lazy((value): Yup.Schema<unknown> => {
+      /* istanbul ignore else */ if (typeof value === 'string') {
+        return Yup.string().required(getString('connectors.ACR.subscription'))
+      }
+      return Yup.object().test({
+        test(valueObj: SelectOption): boolean | Yup.ValidationError {
+          if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
+            return this.createError({
+              message: getString('fieldRequired', { field: getString('connectors.ACR.subscription') })
+            })
+          }
+          return true
+        }
+      })
+    }),
+    resourceGroup: Yup.lazy((value): Yup.Schema<unknown> => {
+      /* istanbul ignore else */ if (typeof value === 'string') {
+        return Yup.string().required(getString('common.resourceGroupLabel'))
+      }
+      return Yup.object().test({
+        test(valueObj: SelectOption): boolean | Yup.ValidationError {
+          if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
+            return this.createError({
+              message: getString('fieldRequired', { field: getString('common.resourceGroupLabel') })
+            })
+          }
+          return true
+        }
+      })
+    }),
     cluster: Yup.lazy((value): Yup.Schema<unknown> => {
       /* istanbul ignore else */ if (typeof value === 'string') {
         return Yup.string().required(getString('common.cluster'))
@@ -398,7 +428,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       noResults: (
                         <Text padding={'small'}>
                           {get(subscriptionsError, 'data.message', null) ||
-                            // todo: add error
                             getString('cd.pipelineSteps.infraTab.subscriptionError')}
                         </Text>
                       )

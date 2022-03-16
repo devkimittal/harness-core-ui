@@ -16,7 +16,7 @@ steps:
     stepName: Specify your GCP Connector
   azureInfraStep:
     subscriptionPlaceholder: '{{ $.common.subscriptionPlaceholder }}'
-    resourceGroupPlaceholder: '{{ $.common.resourceGroupPlaceholder }}'
+    resourceGroupPlaceholder: 'Select or add Resource Group'
 folderPath: Folder Path
 filePathPlaceholder: 'Enter path within manifest folder'
 resourceCannotBeEmpty: 'Resource cannot be empty'

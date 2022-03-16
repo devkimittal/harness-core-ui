@@ -174,7 +174,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                 }}
               />
               {DelegateTypes.DELEGATE_OUT_CLUSTER === formikProps.values.authType ? (
-                <Layout.Vertical style={{ width: '42%' }}>
+                <Layout.Vertical>
                   <FormInput.Select
                     name="azureEnvironmentType"
                     label={getString('environment')}

@@ -184,7 +184,7 @@ resourceGroup:
   confirmDeleteTitle: 'Delete Resource Group'
   deletedMessage: 'Resource Group {{name}} deleted'
   limitAccess: 'To limit access to specific set of {{name}}, add them as a list.'
-  selectResourceGroup: '{{ $.common.resourceGroupPlaceholder }}'
+  selectResourceGroup: 'Select Resource Group'
   add: '+ Add {{name}}'
   all: 'All {{name}}'
   noResourceGroupTypes: 'No Resource Group types available'

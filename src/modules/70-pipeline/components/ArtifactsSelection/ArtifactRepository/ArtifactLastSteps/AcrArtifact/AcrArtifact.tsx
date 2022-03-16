@@ -339,6 +339,9 @@ export function AcrArtifact({
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
                     name="subscription"
+                    tooltipProps={{
+                      dataTooltipId: 'acrtArtifactSubscription'
+                    }}
                     selectItems={subscriptions}
                     multiTypeInputProps={{
                       onChange: () => {
@@ -347,7 +350,8 @@ export function AcrArtifact({
                       },
                       selectProps: {
                         defaultSelectedItem: formik.values.subscription,
-                        items: subscriptions
+                        items: subscriptions,
+                        allowCreatingNewItems: true
                       }
                     }}
                     label={getString('connectors.ACR.subscription')}
@@ -374,6 +378,9 @@ export function AcrArtifact({
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
                     name="registry"
+                    tooltipProps={{
+                      dataTooltipId: 'acrtArtifactRegistry'
+                    }}
                     selectItems={registries}
                     disabled={loadingRegistries || isReadonly}
                     placeholder={
@@ -389,6 +396,7 @@ export function AcrArtifact({
                       selectProps: {
                         defaultSelectedItem: formik.values.registry,
                         items: registries,
+                        allowCreatingNewItems: true,
                         addClearBtn: !(loadingRegistries || isReadonly),
                         noResults: (
                           <Text padding={'small'}>
@@ -418,6 +426,9 @@ export function AcrArtifact({
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
                     name="repository"
+                    tooltipProps={{
+                      dataTooltipId: 'acrtArtifactRepository'
+                    }}
                     selectItems={repositories}
                     disabled={loadingRepositories || isReadonly}
                     placeholder={
@@ -432,6 +443,7 @@ export function AcrArtifact({
                       disabled: isReadonly,
                       selectProps: {
                         items: repositories,
+                        allowCreatingNewItems: true,
                         defaultSelectedItem: formik.values.repository,
                         addClearBtn: !(loadingRepositories || isReadonly),
                         noResults: (
