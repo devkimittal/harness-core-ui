@@ -6381,6 +6381,13 @@ export interface ResponseGcpResponseDTO {
   status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
 }
 
+export interface ResponseAzureResponseDTO {
+  correlationId?: string
+  data?: string[]
+  metaData?: { [key: string]: any }
+  status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
+}
+
 export interface ResponseGcrBuildDetailsDTO {
   correlationId?: string
   data?: GcrBuildDetailsDTO
@@ -19399,6 +19406,165 @@ export const getClusterNamesForGcpPromise = (
   getUsingFetch<ResponseGcpResponseDTO, Failure | Error, GetClusterNamesForGcpQueryParams, void>(
     getConfig('ng/api'),
     `/gcp/clusters`,
+    props,
+    signal
+  )
+
+export interface GetSubscriptionsForAzureQueryParams {
+  connectorRef: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type GetSubscriptionsForAzureProps = Omit<
+  GetProps<ResponseAzureResponseDTO, Failure | Error, GetSubscriptionsForAzureQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets azure subscriptions
+ */
+export const GetSubscriptionsForAzure = (props: GetSubscriptionsForAzureProps) => (
+  <Get<ResponseAzureResponseDTO, Failure | Error, GetSubscriptionsForAzureQueryParams, void>
+    path={`/azure/subscriptions`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetSubscriptionsForAzureProps = Omit<
+  UseGetProps<ResponseAzureResponseDTO, Failure | Error, GetSubscriptionsForAzureQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets azure subscriptions
+ */
+export const useGetSubscriptionsForAzure = (props: UseGetSubscriptionsForAzureProps) =>
+  useGet<ResponseAzureResponseDTO, Failure | Error, GetSubscriptionsForAzureQueryParams, void>(`/azure/subscriptions`, {
+    base: getConfig('ng/api'),
+    ...props
+  })
+
+/**
+ * Gets azure subscriptions
+ */
+export const getSubscriptionsForAzurePromise = (
+  props: GetUsingFetchProps<ResponseAzureResponseDTO, Failure | Error, GetSubscriptionsForAzureQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseAzureResponseDTO, Failure | Error, GetSubscriptionsForAzureQueryParams, void>(
+    getConfig('ng/api'),
+    `/azure/subscriptions`,
+    props,
+    signal
+  )
+
+export interface GetResourceGroupsForAzureQueryParams {
+  connectorRef: string
+  subscription: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type GetResourceGroupsForAzureProps = Omit<
+  GetProps<ResponseAzureResponseDTO, Failure | Error, GetResourceGroupsForAzureQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets azure resource groups
+ */
+export const GetResourceGroupsForAzure = (props: GetResourceGroupsForAzureProps) => (
+  <Get<ResponseAzureResponseDTO, Failure | Error, GetResourceGroupsForAzureQueryParams, void>
+    path={`/azure/resource-groups`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetResourceGroupsForAzureProps = Omit<
+  UseGetProps<ResponseAzureResponseDTO, Failure | Error, GetResourceGroupsForAzureQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets azure resource groups
+ */
+export const useGetResourceGroupsForAzure = (props: UseGetResourceGroupsForAzureProps) =>
+  useGet<ResponseAzureResponseDTO, Failure | Error, GetResourceGroupsForAzureQueryParams, void>(
+    `/azure/resource-groups`,
+    {
+      base: getConfig('ng/api'),
+      ...props
+    }
+  )
+
+/**
+ * Gets azure resource groups
+ */
+export const getResourceGroupsForAzurePromise = (
+  props: GetUsingFetchProps<ResponseAzureResponseDTO, Failure | Error, GetResourceGroupsForAzureQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseAzureResponseDTO, Failure | Error, GetResourceGroupsForAzureQueryParams, void>(
+    getConfig('ng/api'),
+    `/azure/resource-groups`,
+    props,
+    signal
+  )
+
+export interface GetClustersForAzureQueryParams {
+  connectorRef: string
+  subscription: string
+  resourceGroup: string
+  accountIdentifier: string
+  orgIdentifier: string
+  projectIdentifier: string
+}
+
+export type GetClustersForAzureProps = Omit<
+  GetProps<ResponseAzureResponseDTO, Failure | Error, GetClustersForAzureQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets azure clusters
+ */
+export const GetClustersForAzure = (props: GetClustersForAzureProps) => (
+  <Get<ResponseAzureResponseDTO, Failure | Error, GetClustersForAzureQueryParams, void>
+    path={`/azure/clusters`}
+    base={getConfig('ng/api')}
+    {...props}
+  />
+)
+
+export type UseGetClustersForAzureProps = Omit<
+  UseGetProps<ResponseAzureResponseDTO, Failure | Error, GetClustersForAzureQueryParams, void>,
+  'path'
+>
+
+/**
+ * Gets azure clusters
+ */
+export const useGetClustersForAzure = (props: UseGetClustersForAzureProps) =>
+  useGet<ResponseAzureResponseDTO, Failure | Error, GetClustersForAzureQueryParams, void>(`/azure/clusters`, {
+    base: getConfig('ng/api'),
+    ...props
+  })
+
+/**
+ * Gets azure clusters
+ */
+export const getClustersForAzurePromise = (
+  props: GetUsingFetchProps<ResponseAzureResponseDTO, Failure | Error, GetClustersForAzureQueryParams, void>,
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<ResponseAzureResponseDTO, Failure | Error, GetClustersForAzureQueryParams, void>(
+    getConfig('ng/api'),
+    `/azure/clusters`,
     props,
     signal
   )

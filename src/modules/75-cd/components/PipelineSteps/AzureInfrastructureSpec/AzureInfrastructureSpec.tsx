@@ -33,8 +33,12 @@ import { useVariablesExpression } from '@pipeline/components/PipelineStudio/Pipl
 import {
   getConnectorListV2Promise,
   AzureInfrastructure,
-  useGetClusterNamesForGcp,
-  getClusterNamesForGcpPromise
+  useGetSubscriptionsForAzure,
+  useGetResourceGroupsForAzure,
+  useGetClustersForAzure,
+  getSubscriptionsForAzurePromise,
+  getResourceGroupsForAzurePromise,
+  getClustersForAzurePromise
 } from 'services/cd-ng'
 import {
   ConnectorReferenceDTO,
@@ -161,16 +165,14 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
     loading: loadingSubscriptionsData,
     error: subscriptionsError
     // todo: add subcription API call
-  } = useGetClusterNamesForGcp({
+  } = useGetSubscriptionsForAzure({
     lazy: true,
     debounce: 300
   })
 
   useEffect(() => {
     const options =
-      // todo: replace clusterNames
-      subscriptionsData?.data?.clusterNames?.map(name => ({ label: name, value: name })) ||
-      /* istanbul ignore next */ []
+      subscriptionsData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setSubscriptions(options)
   }, [subscriptionsData])
 
@@ -194,16 +196,14 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
     loading: loadingResourceGroupsData,
     error: resourceGroupsError
     // todo: add clusters API call
-  } = useGetClusterNamesForGcp({
+  } = useGetResourceGroupsForAzure({
     lazy: true,
     debounce: 300
   })
 
   useEffect(() => {
     const options =
-      // todo: replace clusterNames
-      resourceGroupData?.data?.clusterNames?.map(name => ({ label: name, value: name })) ||
-      /* istanbul ignore next */ []
+      resourceGroupData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setResourceGroups(options)
   }, [resourceGroupData])
 
@@ -219,9 +219,8 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
           accountIdentifier: accountId,
           projectIdentifier,
           orgIdentifier,
-          connectorRef: initialValues.connectorRef
-          // todo: uncomment
-          // subscription: initialValues.subscription,
+          connectorRef: initialValues.connectorRef,
+          subscription: initialValues.subscription
         }
       })
     }
@@ -234,15 +233,13 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
     loading: loadingClustersData,
     error: clustersError
     // todo: add clusters API call for azure
-  } = useGetClusterNamesForGcp({
+  } = useGetClustersForAzure({
     lazy: true,
     debounce: 300
   })
 
   useEffect(() => {
-    const options =
-      // todo: replace clusterNames
-      clustersData?.data?.clusterNames?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
+    const options = clustersData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setClusters(options)
   }, [clustersData])
 
@@ -260,10 +257,9 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
           accountIdentifier: accountId,
           projectIdentifier,
           orgIdentifier,
-          connectorRef: initialValues.connectorRef
-          // todo: uncomment
-          // subscription: initialValues.subscription,
-          // resourceGroup: initialValues.resourceGroup
+          connectorRef: initialValues.connectorRef,
+          subscription: initialValues.subscription,
+          resourceGroup: initialValues.resourceGroup
         }
       })
     }
@@ -339,9 +335,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                   placeholder={getString('connectors.selectConnector')}
                   disabled={readonly}
                   accountIdentifier={accountId}
-                  tooltipProps={{
-                    dataTooltipId: 'azureInfraConnector'
-                  }}
                   multiTypeProps={{ expressions, allowableTypes }}
                   projectIdentifier={projectIdentifier}
                   orgIdentifier={orgIdentifier}
@@ -407,9 +400,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
               <Layout.Horizontal className={css.formRow} spacing="medium">
                 <FormInput.MultiTypeInput
                   name="subscription"
-                  tooltipProps={{
-                    dataTooltipId: 'azureInfraSubscription'
-                  }}
                   className={css.inputWidth}
                   selectItems={subscriptions}
                   disabled={loadingSubscriptionsData || readonly}
@@ -459,9 +449,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
               <Layout.Horizontal className={css.formRow} spacing="medium">
                 <FormInput.MultiTypeInput
                   name="resourceGroup"
-                  tooltipProps={{
-                    dataTooltipId: 'azureInfraResourceGroup'
-                  }}
                   className={css.inputWidth}
                   selectItems={resourceGroups}
                   disabled={loadingResourceGroupsData || readonly}
@@ -510,9 +497,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
               <Layout.Horizontal className={css.formRow} spacing="medium">
                 <FormInput.MultiTypeInput
                   name="cluster"
-                  tooltipProps={{
-                    dataTooltipId: 'azureInfraCluster'
-                  }}
                   className={css.inputWidth}
                   selectItems={clusters}
                   disabled={loadingClustersData || readonly}
@@ -557,9 +541,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
               <Layout.Horizontal className={css.formRow} spacing="medium">
                 <FormInput.MultiTextInput
                   name="namespace"
-                  tooltipProps={{
-                    dataTooltipId: 'AzureInfraNamespace'
-                  }}
                   className={css.inputWidth}
                   label={getString('common.namespace')}
                   placeholder={getString('pipeline.infraSpecifications.namespacePlaceholder')}
@@ -594,9 +575,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                     <Layout.Horizontal className={css.formRow} spacing="medium">
                       <FormInput.MultiTextInput
                         name="releaseName"
-                        tooltipProps={{
-                          dataTooltipId: 'azureInfraReleasename'
-                        }}
                         className={css.inputWidth}
                         label={getString('common.releaseName')}
                         placeholder={getString('cd.steps.common.releaseNamePlaceholder')}
@@ -667,8 +645,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
     refetch: refetchSubscriptionsData,
     loading: loadingSubscriptionsData,
     error: subscriptionsError
-    // todo: add subcription API call
-  } = useGetClusterNamesForGcp({
+  } = useGetSubscriptionsForAzure({
     lazy: true,
     debounce: 300
   })
@@ -676,8 +653,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
   useEffect(() => {
     const options =
       // todo: replace clusterNames
-      subscriptionsData?.data?.clusterNames?.map(name => ({ label: name, value: name })) ||
-      /* istanbul ignore next */ []
+      subscriptionsData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setSubscriptions(options)
   }, [subscriptionsData])
 
@@ -701,8 +677,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
     refetch: refetchResourceGroups,
     loading: loadingResourceGroupsData,
     error: resourceGroupsError
-    // todo: add clusters API call
-  } = useGetClusterNamesForGcp({
+  } = useGetResourceGroupsForAzure({
     lazy: true,
     debounce: 300
   })
@@ -710,8 +685,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
   useEffect(() => {
     const options =
       // todo: replace clusterNames
-      resourceGroupData?.data?.clusterNames?.map(name => ({ label: name, value: name })) ||
-      /* istanbul ignore next */ []
+      resourceGroupData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setResourceGroups(options)
   }, [resourceGroupData])
 
@@ -729,9 +703,8 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
           accountIdentifier: accountId,
           projectIdentifier,
           orgIdentifier,
-          connectorRef: initialValues.connectorRef
-          // todo: uncomment
-          // subscription
+          connectorRef,
+          subscription
         }
       })
       // reset resource groups on connectorRef or subscription change
@@ -753,13 +726,13 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
     refetch: refetchClusterNames,
     loading: loadingClusterNames,
     error: clustersError
-  } = useGetClusterNamesForGcp({
+  } = useGetClustersForAzure({
     lazy: true,
     debounce: 300
   })
 
   useEffect(() => {
-    const options = clustersData?.data?.clusterNames?.map(name => ({ label: name, value: name }))
+    const options = clustersData?.data?.map(name => ({ label: name, value: name }))
     setClusters(defaultTo(options, []))
   }, [clustersData])
 
@@ -781,10 +754,9 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
           accountIdentifier: accountId,
           projectIdentifier,
           orgIdentifier,
-          connectorRef
-          // todo: uncomment
-          // subscription,
-          // resourceGroup
+          connectorRef,
+          subscription,
+          resourceGroup
         }
       })
 
@@ -817,16 +789,13 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
             accountIdentifier={accountId}
             projectIdentifier={projectIdentifier}
             orgIdentifier={orgIdentifier}
-            tooltipProps={{
-              dataTooltipId: 'azureInfraConnector'
-            }}
             name={`${path}.connectorRef`}
             label={getString('connector')}
             enableConfigureOptions={false}
             placeholder={getString('connectors.selectConnector')}
             disabled={readonly}
             multiTypeProps={{ allowableTypes, expressions }}
-            type={'AzureKeyVault'}
+            type={Connectors.AZURE}
             setRefValue
             onChange={(selected, _typeValue, type) => {
               const item = selected as unknown as { record?: ConnectorReferenceDTO; scope: Scope }
@@ -836,7 +805,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
                     ? `${item.scope}.${item?.record?.identifier}`
                     : item.record?.identifier
                 if (connectorRefValue) {
-                  refetchClusterNames({
+                  refetchSubscriptionsData({
                     queryParams: {
                       accountIdentifier: accountId,
                       projectIdentifier,
@@ -846,7 +815,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
                   })
                 }
               } else {
-                setClusters([])
+                setSubscriptions([])
               }
             }}
             gitScope={{ repo: defaultTo(repoIdentifier, ''), branch, getDefaultFromOtherRepo: true }}
@@ -1109,8 +1078,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
         obj?.spec?.connectorRef &&
         getMultiTypeFromValue(obj.spec?.connectorRef) === MultiTypeInputType.FIXED
       ) {
-        // todo: add API call for subscriptions
-        return getClusterNamesForGcpPromise({
+        return getSubscriptionsForAzurePromise({
           queryParams: {
             accountIdentifier: accountId,
             orgIdentifier,
@@ -1120,7 +1088,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
         }).then(response => {
           const data =
             // change clusterNames
-            response?.data?.clusterNames?.map(subscription => ({
+            response?.data?.map(subscription => ({
               label: subscription,
               insertText: subscription,
               kind: CompletionItemKind.Field
@@ -1161,19 +1129,18 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
         getMultiTypeFromValue(obj.spec?.subscription) === MultiTypeInputType.FIXED
       ) {
         // todo: add API call for resource group
-        return getClusterNamesForGcpPromise({
+        return getResourceGroupsForAzurePromise({
           queryParams: {
             accountIdentifier: accountId,
             orgIdentifier,
             projectIdentifier,
-            connectorRef: obj.spec?.connectorRef
-            // uncomment subscription param
-            // subscription: obj.spec?.subscription
+            connectorRef: obj.spec?.connectorRef,
+            subscription: obj.spec?.subscription
           }
         }).then(response => {
           const data =
             // change clusterNames
-            response?.data?.clusterNames?.map(resourceGroup => ({
+            response?.data?.map(resourceGroup => ({
               label: resourceGroup,
               insertText: resourceGroup,
               kind: CompletionItemKind.Field
@@ -1215,19 +1182,18 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
         obj?.spec?.resourceGroup &&
         getMultiTypeFromValue(obj.spec?.resourceGroup) === MultiTypeInputType.FIXED
       ) {
-        return getClusterNamesForGcpPromise({
+        return getClustersForAzurePromise({
           queryParams: {
             accountIdentifier: accountId,
             orgIdentifier,
             projectIdentifier,
-            connectorRef: obj.spec?.connectorRef
-            // todo: remove comment
-            // subscription: obj.spec?.subscription,
-            // resourceGroup: obj.spec?.resourceGroup
+            connectorRef: obj.spec?.connectorRef,
+            subscription: obj.spec?.subscription,
+            resourceGroup: obj.spec?.resourceGroup
           }
         }).then(response => {
           const data =
-            response?.data?.clusterNames?.map(cluster => ({
+            response?.data?.map(cluster => ({
               label: cluster,
               insertText: cluster,
               kind: CompletionItemKind.Field

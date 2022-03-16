@@ -339,9 +339,6 @@ export function AcrArtifact({
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
                     name="subscription"
-                    tooltipProps={{
-                      dataTooltipId: 'acrtArtifactSubscription'
-                    }}
                     selectItems={subscriptions}
                     multiTypeInputProps={{
                       onChange: () => {
@@ -378,9 +375,6 @@ export function AcrArtifact({
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
                     name="registry"
-                    tooltipProps={{
-                      dataTooltipId: 'acrtArtifactRegistry'
-                    }}
                     selectItems={registries}
                     disabled={loadingRegistries || isReadonly}
                     placeholder={
@@ -426,9 +420,6 @@ export function AcrArtifact({
                 <div className={css.imagePathContainer}>
                   <FormInput.MultiTypeInput
                     name="repository"
-                    tooltipProps={{
-                      dataTooltipId: 'acrtArtifactRepository'
-                    }}
                     selectItems={repositories}
                     disabled={loadingRepositories || isReadonly}
                     placeholder={

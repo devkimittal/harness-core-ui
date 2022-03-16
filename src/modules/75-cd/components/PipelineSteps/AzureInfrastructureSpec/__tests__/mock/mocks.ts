@@ -1,11 +1,41 @@
 /*
- * Copyright 2021 Harness Inc. All rights reserved.
+ * Copyright 2022 Harness Inc. All rights reserved.
  * Use of this source code is governed by the PolyForm Shield 1.0.0 license
  * that can be found in the licenses directory at the root of this repository, also available at
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-export const ConnectorsResponse = {
+import type { UseGetReturnData } from '@common/utils/testUtils'
+import type { ResponseAzureResponseDTO } from 'services/cd-ng'
+
+export const connectorResponse = {
+  loading: false,
+  refetch: jest.fn(),
+  error: null,
+  data: {
+    status: 'SUCCESS',
+    data: {
+      connector: {
+        name: 'connectorRef',
+        identifier: 'connectorRef',
+        description: '',
+        tags: {},
+        type: 'Azure',
+        spec: {
+          credential: {
+            type: 'ManualConfig',
+            spec: {
+              masterUrl: 'master',
+              auth: { type: 'UsernamePassword', spec: { username: 'usr', passwordRef: 'account.test' } }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+export const connectorsResponse = {
   loading: false,
   refetch: jest.fn(),
   error: null,
@@ -60,5 +90,38 @@ export const ConnectorsResponse = {
         }
       ]
     }
+  }
+}
+
+export const resourceGroupsResponse: UseGetReturnData<ResponseAzureResponseDTO> = {
+  loading: false,
+  refetch: jest.fn(),
+  error: null,
+  data: {
+    status: 'SUCCESS',
+    data: ['rg1', 'rg2'],
+    correlationId: '33715e30-e0cd-408c-ad82-a412161733c2'
+  }
+}
+
+export const subscriptionsResponse: UseGetReturnData<ResponseAzureResponseDTO> = {
+  loading: false,
+  refetch: jest.fn(),
+  error: null,
+  data: {
+    status: 'SUCCESS',
+    data: ['sub1', 'sub2'],
+    correlationId: '33715e30-e0cd-408c-ad82-a412161733c2'
+  }
+}
+
+export const clustersResponse: UseGetReturnData<ResponseAzureResponseDTO> = {
+  loading: false,
+  refetch: jest.fn(),
+  error: null,
+  data: {
+    status: 'SUCCESS',
+    data: ['us-west2/abc', 'us-west1-b/qwe'],
+    correlationId: '33715e30-e0cd-408c-ad82-a412161733c2'
   }
 }
