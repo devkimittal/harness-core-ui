@@ -269,3 +269,15 @@ export const getQueryFiltersFromPerspectiveResponse: (
 
   return updatedQueryParam
 }
+
+export const EMPTY_PERSPECTIVE_RULE = {
+  type: 'VIEW_ID_CONDITION',
+  viewField: {
+    fieldId: '',
+    fieldName: '',
+    identifier: '',
+    identifierName: ''
+  },
+  viewOperator: 'IN',
+  values: []
+}

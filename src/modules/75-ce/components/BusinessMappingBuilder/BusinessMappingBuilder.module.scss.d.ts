@@ -7,9 +7,6 @@
  **/
 // this is an auto-generated file, do not update this manually
 declare const styles: {
-  readonly costBucketNameContainet: string
-  readonly drag: string
-  readonly mainContainer: string
-  readonly nameInput: string
+  readonly container: string
 }
 export default styles

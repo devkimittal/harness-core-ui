@@ -3447,6 +3447,15 @@ export interface StringsMap {
   'ce.budgets.listPage.timePeriodRemaining': string
   'ce.budgets.listPage.title': string
   'ce.budgets.sideNavText': string
+  'ce.businessMapping.costBucket.inputName': string
+  'ce.businessMapping.costBucket.newButtonText': string
+  'ce.businessMapping.costBucket.title': string
+  'ce.businessMapping.sharedCostBucket.inputName': string
+  'ce.businessMapping.sharedCostBucket.newButtonText': string
+  'ce.businessMapping.sharedCostBucket.sharingStrategy.equal': string
+  'ce.businessMapping.sharedCostBucket.sharingStrategy.fixed': string
+  'ce.businessMapping.sharedCostBucket.sharingStrategy.proportional': string
+  'ce.businessMapping.sharedCostBucket.title': string
   'ce.businessMapping.sideNavText': string
   'ce.ceTrialHomePage.modal.description': string
   'ce.ceTrialHomePage.modal.title': string

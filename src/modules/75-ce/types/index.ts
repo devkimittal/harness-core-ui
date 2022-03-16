@@ -108,3 +108,8 @@ export interface DNSLinkSetupFormVal {
   dnsProvider: string
   route53Account: string | undefined
 }
+
+export enum CostBucketWidgetType {
+  CostBucket = 'CostBucket',
+  SharedCostBucket = 'ShareCostBucket'
+}

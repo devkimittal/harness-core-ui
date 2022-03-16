@@ -838,3 +838,15 @@ anomalyDetection:
     filterText: Apply anomaly filters
 businessMapping:
   sideNavText: 'Business Mapping'
+  costBucket:
+    title: 'Define Cost Buckets'
+    newButtonText: 'New Cost Bucket'
+    inputName: Cost Bucket Name
+  sharedCostBucket:
+    title: Define Shared Cost Buckets
+    newButtonText: New Shared Bucket
+    inputName: Shared Bucket Name
+    sharingStrategy:
+      equal: Equally Split between Cost Buckets
+      proportional: Proportionally split between Cost Buckets
+      fixed: Fixed percentage per Cost Bucket (Coming Soon)

@@ -1,30 +1,56 @@
 import { Collapse } from '@blueprintjs/core'
-import {
-  Container,
-  Card,
-  Layout,
-  FlexExpander,
-  Icon,
-  Text,
-  Button,
-  Color,
-  FontVariation,
-  ButtonSize
-} from '@harness/uicore'
+import { Container, Card, Layout, FlexExpander, Text, Button, FontVariation, ButtonSize } from '@harness/uicore'
 import { FieldArray } from 'formik'
 
 import React, { useState } from 'react'
+import { EMPTY_PERSPECTIVE_RULE } from '@ce/utils/perspectiveUtils'
+import type { CostBucketWidgetType } from '@ce/types'
+import { useStrings } from 'framework/strings'
 import CostBucketBuilder from '../CostBucketBuilder'
+import { getCostBucketTitleMap, getNewBucketButtonText } from '../constants'
 import css from './CostBucketStep.module.scss'
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
+import { onDragEnd } from '@pipeline/components/InputSetSelector/utils'
 
-const CostBucketStep = ({ formikProps, fieldValuesList }) => {
+interface CostBucketStepProps {
+  formikProps: any
+  fieldValuesList: any
+  namespace: string
+  value: any
+  isSharedCost?: boolean
+  widgetType: CostBucketWidgetType
+}
+
+const CostBucketStep: (props: CostBucketStepProps) => React.ReactElement = ({
+  formikProps,
+  fieldValuesList,
+  namespace,
+  value,
+  isSharedCost,
+  widgetType
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
+  const { getString } = useStrings()
+  const titleMap = getCostBucketTitleMap(getString)
+  const newBucketButtonText = getNewBucketButtonText(getString)
+
+  const onDragEnd = () => {}
   return (
     <Card className={css.container}>
       <FieldArray
-        name="costTargets"
+        name={namespace}
         render={arrayHelper => {
-          const costTargetsValue = formikProps.values.costTargets
+          const addNewCostBucket = () => {
+            arrayHelper.push({
+              name: '',
+              rules: [
+                {
+                  viewConditions: [EMPTY_PERSPECTIVE_RULE]
+                }
+              ]
+            })
+          }
+
           return (
             <Container>
               <Container>
@@ -50,37 +76,16 @@ const CostBucketStep = ({ formikProps, fieldValuesList }) => {
                     }}
                     font={{ variation: FontVariation.CARD_TITLE }}
                   >
-                    Define Cost Buckets
+                    {titleMap[widgetType]}
                   </Text>
                   <FlexExpander />
-                  {costTargetsValue.length > 0 ? (
+                  {value.length > 0 ? (
                     <Button
                       icon="plus"
-                      text="New Cost Bucket"
+                      text={newBucketButtonText[widgetType]}
                       minimal
                       size={ButtonSize.SMALL}
-                      onClick={() => {
-                        arrayHelper.push({
-                          name: '',
-                          rules: [
-                            {
-                              viewConditions: [
-                                {
-                                  type: 'VIEW_ID_CONDITION',
-                                  viewField: {
-                                    fieldId: '',
-                                    fieldName: '',
-                                    identifier: '',
-                                    identifierName: ''
-                                  },
-                                  viewOperator: 'IN',
-                                  values: []
-                                }
-                              ]
-                            }
-                          ]
-                        })
-                      }}
+                      onClick={addNewCostBucket}
                     />
                   ) : null}
                 </Layout.Horizontal>
@@ -95,52 +100,53 @@ const CostBucketStep = ({ formikProps, fieldValuesList }) => {
                     top: true
                   }}
                 >
-                  {costTargetsValue.map((value, index) => {
-                    const removeCostBucket = () => {
-                      arrayHelper.remove(index)
-                    }
-                    return (
-                      <CostBucketBuilder
-                        key={`cost-filter-${index}`}
-                        removeCostBucket={removeCostBucket}
-                        value={value}
-                        index={index}
-                        fieldValuesList={fieldValuesList}
-                        setFieldValue={formikProps.setFieldValue}
-                      />
-                    )
-                  })}
-                  {costTargetsValue.length < 1 ? (
+                  <DragDropContext
+                    onDragEnd={(result: DropResult) => {
+                      if (!result.destination) {
+                        return
+                      }
+                      const res = Array.from(value)
+                      const [removed] = res.splice(result.source.index, 1)
+                      res.splice(result.destination.index, 0, removed)
+                      formikProps.setFieldValue(namespace, res as any)
+                    }}
+                  >
+                    <Droppable droppableId={`droppable-${namespace}`} type={`cost-bucket-${namespace}`}>
+                      {provided => (
+                        <div ref={provided.innerRef}>
+                          {value.map((value, index) => {
+                            const removeCostBucket = () => {
+                              arrayHelper.remove(index)
+                            }
+                            return (
+                              <CostBucketBuilder
+                                namespace={namespace}
+                                key={`${namespace}-${index}`}
+                                removeCostBucket={removeCostBucket}
+                                value={value}
+                                index={index}
+                                fieldValuesList={fieldValuesList}
+                                setFieldValue={formikProps.setFieldValue}
+                                isSharedCost={isSharedCost}
+                                widgetType={widgetType}
+                              />
+                            )
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                  {value.length < 1 ? (
                     <Button
                       icon="plus"
-                      text="New Cost Bucket"
+                      text={newBucketButtonText[widgetType]}
                       minimal
                       margin={{
                         top: 'medium'
                       }}
                       size={ButtonSize.SMALL}
-                      onClick={() => {
-                        arrayHelper.push({
-                          name: '',
-                          rules: [
-                            {
-                              viewConditions: [
-                                {
-                                  type: 'VIEW_ID_CONDITION',
-                                  viewField: {
-                                    fieldId: '',
-                                    fieldName: '',
-                                    identifier: '',
-                                    identifierName: ''
-                                  },
-                                  viewOperator: 'IN',
-                                  values: []
-                                }
-                              ]
-                            }
-                          ]
-                        })
-                      }}
+                      onClick={addNewCostBucket}
                     />
                   ) : null}
                 </Container>
