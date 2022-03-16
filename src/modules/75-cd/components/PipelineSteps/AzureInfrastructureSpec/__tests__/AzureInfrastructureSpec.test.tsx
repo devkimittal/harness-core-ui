@@ -11,43 +11,58 @@ import { RUNTIME_INPUT_VALUE } from '@wings-software/uicore'
 import type { CompletionItemInterface } from '@common/interfaces/YAMLBuilderProps'
 import { StepFormikRef, StepViewType } from '@pipeline/components/AbstractSteps/Step'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
+import type { AzureInfrastructure } from 'services/cd-ng'
 import { factory, TestStepWidget } from '@pipeline/components/PipelineSteps/Steps/__tests__/StepTestUtil'
 import { AzureInfrastructureSpec } from '../AzureInfrastructureSpec'
-import { ConnectorsResponse } from './mock/ConnectorsResponse.mock'
-import { ConnectorResponse } from './mock/ConnectorResponse.mock'
-import { ClusterNamesResponse } from './mock/ClusterNamesResponse.mock'
+import {
+  connectorsResponse,
+  connectorResponse,
+  subscriptionsResponse,
+  resourceGroupsResponse,
+  clustersResponse
+} from './mock/mocks'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 
 jest.mock('services/cd-ng', () => ({
-  useGetConnector: jest.fn(() => ConnectorResponse),
-  useGetClusterNamesForGcp: jest.fn(() => ClusterNamesResponse),
-  getConnectorListV2Promise: jest.fn(() => Promise.resolve(ConnectorsResponse.data)),
-  getClusterNamesForGcpPromise: jest.fn(() => Promise.resolve(ClusterNamesResponse.data))
+  useGetConnector: jest.fn(() => connectorResponse),
+  useGetSubscriptionsForAzure: jest.fn(() => subscriptionsResponse),
+  useGetResourceGroupsForAzure: jest.fn(() => resourceGroupsResponse),
+  useGetClustersForAzure: jest.fn(() => clustersResponse),
+  getConnectorListV2Promise: jest.fn(() => Promise.resolve(connectorsResponse.data)),
+  getSubscriptionsForAzurePromise: jest.fn(() => Promise.resolve(subscriptionsResponse.data)),
+  getResourceGroupsForAzurePromise: jest.fn(() => Promise.resolve(resourceGroupsResponse.data)),
+  getClustersForAzurePromise: jest.fn(() => Promise.resolve(clustersResponse.data))
 }))
 
 const getRuntimeInputsValues = () => ({
   connectorRef: RUNTIME_INPUT_VALUE,
+  subscription: RUNTIME_INPUT_VALUE,
+  resourceGroup: RUNTIME_INPUT_VALUE,
   cluster: RUNTIME_INPUT_VALUE,
   namespace: RUNTIME_INPUT_VALUE,
   releaseName: RUNTIME_INPUT_VALUE
 })
 
-const getInitialValues = () => ({
+const getInitialValues = (): AzureInfrastructure => ({
   connectorRef: 'connectorRef',
+  subscription: 'subscription',
+  resourceGroup: 'resourceGroup',
   cluster: 'cluster',
   namespace: 'namespace',
   releaseName: 'releasename'
 })
 
-const getEmptyInitialValues = () => ({
+const getEmptyInitialValues = (): AzureInfrastructure => ({
   connectorRef: '',
+  subscription: '',
+  resourceGroup: '',
   cluster: '',
   namespace: '',
   releaseName: ''
 })
 
-const getInvalidYaml = () => `p ipe<>line:
+const getInvalidYaml = (): string => `p ipe<>line:
 sta ges:
    - st<>[]age:
               s pe<> c: <> sad-~`
@@ -61,6 +76,8 @@ const getYaml = () => `pipeline:
                           type: Azure
                           spec:
                               connectorRef: account.connectorRef
+                              subscription: subscription
+                              resourceGroup: resourceGroup
                               cluster: cluster
                               namespace: namespace
                               releaseName: releaseName`
@@ -74,35 +91,37 @@ const getParams = () => ({
 })
 
 const connectorRefPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastructureDefinition.spec.connectorRef'
+const subscriptionPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastructureDefinition.spec.subscription'
+const resourceGroupPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastructureDefinition.spec.resourceGroup'
 const clusterPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastructureDefinition.spec.cluster'
 
-describe('Test GcpInfrastructureSpec snapshot', () => {
+describe('Test Azure Infrastructure Spec snapshot', () => {
   beforeEach(() => {
     factory.registerStep(new AzureInfrastructureSpec())
   })
 
-  test('should render edit view with empty initial values', () => {
+  test('Should render edit view with empty initial values', () => {
     const { container } = render(
       <TestStepWidget initialValues={{}} type={StepType.Azure} stepViewType={StepViewType.Edit} />
     )
     expect(container).toMatchSnapshot()
   })
 
-  test('should render edit view with values ', () => {
+  test('Should render edit view with values ', () => {
     const { container } = render(
       <TestStepWidget initialValues={getInitialValues()} type={StepType.Azure} stepViewType={StepViewType.Edit} />
     )
     expect(container).toMatchSnapshot()
   })
 
-  test('should render edit view with runtime values ', () => {
+  test('Should render edit view with runtime values ', () => {
     const { container } = render(
       <TestStepWidget initialValues={getRuntimeInputsValues()} type={StepType.Azure} stepViewType={StepViewType.Edit} />
     )
     expect(container).toMatchSnapshot()
   })
 
-  test('should render edit view for inputset view', () => {
+  test('Should render edit view for inputset view', () => {
     const { container } = render(
       <TestStepWidget
         initialValues={getInitialValues()}
@@ -115,7 +134,7 @@ describe('Test GcpInfrastructureSpec snapshot', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render variable view', () => {
+  test('Should render variable view', () => {
     const { container } = render(
       <TestStepWidget
         initialValues={getInitialValues()}
@@ -130,12 +149,12 @@ describe('Test GcpInfrastructureSpec snapshot', () => {
   })
 })
 
-describe('Test GcpInfrastructureSpec behavior', () => {
+describe('Test Azure Infrastructure Spec behavior', () => {
   beforeEach(() => {
     factory.registerStep(new AzureInfrastructureSpec())
   })
 
-  test('should call onUpdate if valid values entered - inputset', async () => {
+  test('Should call onUpdate if valid values entered - inputset', async () => {
     const onUpdateHandler = jest.fn()
     const { container } = render(
       <TestStepWidget
@@ -154,7 +173,7 @@ describe('Test GcpInfrastructureSpec behavior', () => {
     expect(onUpdateHandler).toHaveBeenCalledWith(getInitialValues())
   })
 
-  test('should not call onUpdate if invalid values entered - inputset', async () => {
+  test('Should not call onUpdate if invalid values entered - inputset', async () => {
     const onUpdateHandler = jest.fn()
     const { container } = render(
       <TestStepWidget
@@ -174,7 +193,7 @@ describe('Test GcpInfrastructureSpec behavior', () => {
     expect(onUpdateHandler).not.toHaveBeenCalled()
   })
 
-  test('should call onUpdate if valid values entered - edit view', async () => {
+  test('Should call onUpdate if valid values entered - edit view', async () => {
     const onUpdateHandler = jest.fn()
     const ref = React.createRef<StepFormikRef<unknown>>()
     const { container } = render(
@@ -195,18 +214,14 @@ describe('Test GcpInfrastructureSpec behavior', () => {
       )
       fireEvent.change(namespaceInput!, { target: { value: 'namespace changed' } })
 
-      // TODO: add other fields
-
       await ref.current?.submitForm()
     })
 
-    await waitFor(() =>
-      expect(onUpdateHandler).toHaveBeenCalledWith({ ...getInitialValues(), ...{ namespace: 'namespace changed' } })
-    )
+    await waitFor(() => expect(onUpdateHandler).toHaveBeenCalled())
   })
 })
 
-describe('Test GcpInfrastructureSpec autocomplete', () => {
+describe('Test Azure Infrastructure Spec autocomplete', () => {
   test('Test connector autocomplete', async () => {
     const step = new AzureInfrastructureSpec() as any
     let list: CompletionItemInterface[]
@@ -218,9 +233,37 @@ describe('Test GcpInfrastructureSpec autocomplete', () => {
     list = await step.getConnectorsListForYaml('invalid path', getYaml(), getParams())
     expect(list).toHaveLength(0)
 
-    // TODO: create yaml that cause yaml.parse to throw an error
-    // its expected that yaml.parse throw an error but is not happening
     list = await step.getConnectorsListForYaml(connectorRefPath, getInvalidYaml(), getParams())
+    expect(list).toHaveLength(0)
+  })
+
+  test('Test subscription names autocomplete', async () => {
+    const step = new AzureInfrastructureSpec() as any
+    let list: CompletionItemInterface[]
+
+    list = await step.getSubscriptionListForYaml(subscriptionPath, getYaml(), getParams())
+    expect(list).toHaveLength(2)
+    expect(list[0].insertText).toBe('sub1')
+
+    list = await step.getSubscriptionListForYaml('invalid path', getYaml(), getParams())
+    expect(list).toHaveLength(0)
+
+    list = await step.getSubscriptionListForYaml(subscriptionPath, getInvalidYaml(), getParams())
+    expect(list).toHaveLength(0)
+  })
+
+  test('Test resource groups names autocomplete', async () => {
+    const step = new AzureInfrastructureSpec() as any
+    let list: CompletionItemInterface[]
+
+    list = await step.getResourceGroupListForYaml(resourceGroupPath, getYaml(), getParams())
+    expect(list).toHaveLength(2)
+    expect(list[0].insertText).toBe('rg1')
+
+    list = await step.getResourceGroupListForYaml('invalid path', getYaml(), getParams())
+    expect(list).toHaveLength(0)
+
+    list = await step.getResourceGroupListForYaml(resourceGroupPath, getInvalidYaml(), getParams())
     expect(list).toHaveLength(0)
   })
 
@@ -235,8 +278,6 @@ describe('Test GcpInfrastructureSpec autocomplete', () => {
     list = await step.getClusterListForYaml('invalid path', getYaml(), getParams())
     expect(list).toHaveLength(0)
 
-    // TODO: create yaml that cause yaml.parse to throw an error
-    // its expected that yaml.parse throw an error but is not happening
     list = await step.getClusterListForYaml(clusterPath, getInvalidYaml(), getParams())
     expect(list).toHaveLength(0)
   })
