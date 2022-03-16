@@ -815,7 +815,7 @@ exports[`render modal  NewEditEnvironmentModal 1`] = `
                   <p
                     class="StyledProps--font StyledProps--main"
                   >
-                    ID
+                    Id
                   </p>
                 </div>
                 <p
@@ -1225,7 +1225,7 @@ exports[`render modal  should validate edit mode snapshot 1`] = `
                   <p
                     class="StyledProps--font StyledProps--main"
                   >
-                    ID
+                    Id
                   </p>
                 </div>
                 <p
