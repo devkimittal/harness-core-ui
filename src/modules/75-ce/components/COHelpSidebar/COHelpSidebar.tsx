@@ -22,6 +22,7 @@ interface COHelpSidebarProps {
   activeSectionNames: string[]
   customDomain?: string
   hostName?: string
+  showSshOption?: boolean
 }
 
 const ConfigStepOneContent = () => {
@@ -105,35 +106,14 @@ const COHelpSidebar: React.FC<COHelpSidebarProps> = props => {
                 {getString('ce.co.autoStoppingRule.setupAccess.helpText.dns.info')}
               </Text>
             </Layout.Horizontal>
-            <Layout.Horizontal spacing="large" padding="medium">
-              <img src={ssh} alt="" aria-hidden />
-              <Text style={{ lineHeight: '20px', fontSize: 'var(--font-size-normal)' }}>
-                {getString('ce.co.autoStoppingRule.setupAccess.helpText.ssh.info')}
-              </Text>
-            </Layout.Horizontal>
-            {/* <Layout.Horizontal spacing="large" padding="medium">
-              <img src={rdp} alt="" aria-hidden />
-              <Text style={{ lineHeight: '20px', fontSize: 'var(--font-size-normal)' }}>
-                {getString('ce.co.autoStoppingRule.setupAccess.helpText.rdp.info')}
-              </Text>
-            </Layout.Horizontal>
-            <Layout.Horizontal spacing="large" padding="medium">
-              <img src={bgTasks} alt="" aria-hidden />
-              <Text style={{ lineHeight: '20px', fontSize: 'var(--font-size-normal)' }}>
-                {getString('ce.co.autoStoppingRule.setupAccess.helpText.bgTasks.info')}
-              </Text>
-            </Layout.Horizontal>
-            <Layout.Horizontal spacing="large" padding="medium">
-              <img src={ip} alt="" aria-hidden />
-              <Text style={{ lineHeight: '20px', fontSize: 'var(--font-size-normal)' }}>
-                {getString('ce.co.autoStoppingRule.setupAccess.helpText.ip.info')}
-              </Text>
-            </Layout.Horizontal> */}
-            {/* <Text
-              style={{ color: '#0278d5', fontSize: 'var(--font-size-normal)', fontWeight: 500, lineHeight: '24px' }}
-            >
-              {getString('ce.co.autoStoppingRule.helpText.readMore')}
-            </Text> */}
+            {props.showSshOption === true && (
+              <Layout.Horizontal spacing="large" padding="medium">
+                <img src={ssh} alt="" aria-hidden />
+                <Text style={{ lineHeight: '20px', fontSize: 'var(--font-size-normal)' }}>
+                  {getString('ce.co.autoStoppingRule.setupAccess.helpText.ssh.info')}
+                </Text>
+              </Layout.Horizontal>
+            )}
           </Layout.Vertical>
         </Container>
       ) : null}

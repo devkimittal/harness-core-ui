@@ -223,6 +223,7 @@ const COGatewayAccess: React.FC<COGatewayAccessProps> = props => {
           activeSectionNames={selectedHelpTextSections}
           customDomain={props.gatewayDetails.customDomains?.join(',')}
           hostName={props.gatewayDetails.hostName}
+          showSshOption={shouldShowSshOption}
         />
       </Drawer>
       <Layout.Vertical spacing="large" padding="medium" style={{ marginLeft: '10px' }}>

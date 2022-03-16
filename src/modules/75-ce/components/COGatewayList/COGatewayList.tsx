@@ -293,6 +293,20 @@ function ResourcesCell(tableProps: CellProps<Service>): JSX.Element {
               )}
             </>
           )}
+          {isEcsRule && (
+            <>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  color: tableProps.row.original.disabled ? textColor.disable : 'inherit',
+                  marginRight: 5
+                }}
+              >
+                {`No. of Tasks: ${_defaultTo(tableProps.row.original.routing?.container_svc?.task_count, 0)}`}
+              </Text>
+              {getStateTag(tableProps.row.original.routing?.container_svc?.task_count ? 'active' : 'down')}
+            </>
+          )}
         </Layout.Horizontal>
         {!isK8sRule ? (
           renderLink(
