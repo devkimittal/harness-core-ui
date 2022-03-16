@@ -215,7 +215,7 @@ export const getConnectorIconByType = (type: string): IconName => {
     case Connectors.ERROR_TRACKING:
       return 'error-tracking'
     case Connectors.AZURE:
-      return 'service-azure'
+      return 'microsoft-azure'
     default:
       return 'placeholder'
   }

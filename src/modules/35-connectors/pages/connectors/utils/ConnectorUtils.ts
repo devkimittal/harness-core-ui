@@ -1700,7 +1700,6 @@ export const getIconByType = (type: ConnectorInfoDTO['type'] | undefined): IconN
     case Connectors.AWS_SECRET_MANAGER:
       return 'aws-secret-manager'
     case Connectors.CE_AZURE:
-    case Connectors.AZURE:
       return 'service-azure'
     case Connectors.DATADOG:
       return 'service-datadog'
@@ -1724,6 +1723,8 @@ export const getIconByType = (type: ConnectorInfoDTO['type'] | undefined): IconN
       return 'service-custom-connector'
     case Connectors.ERROR_TRACKING:
       return 'error-tracking'
+    case Connectors.AZURE:
+      return 'microsoft-azure'
     default:
       return 'cog'
   }
