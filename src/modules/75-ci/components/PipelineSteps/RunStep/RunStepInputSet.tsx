@@ -160,7 +160,9 @@ export const RunStepInputSetBasic: React.FC<RunStepProps> = ({
             expressions,
             getString,
             readonly,
-            formik
+            formik,
+            withObjectStructure: true,
+            keyName: 'name'
           })}
         </Container>
       )}

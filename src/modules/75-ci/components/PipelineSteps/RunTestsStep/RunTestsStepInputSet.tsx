@@ -254,7 +254,9 @@ export const RunTestsStepInputSetBasic: React.FC<RunTestsStepProps> = ({
             expressions,
             getString,
             readonly,
-            formik
+            formik,
+            withObjectStructure: true,
+            keyName: 'name'
           })}
         </Container>
       )}

@@ -40,6 +40,8 @@ interface MultiTypeListConfigureOptionsProps
 export interface MultiTypeListProps {
   name: string
   placeholder?: string
+  withObjectStructure?: boolean
+  keyName?: string
   multiTypeFieldSelectorProps: Omit<MultiTypeFieldSelectorProps, 'name' | 'defaultValueToReset' | 'children'>
   multiTextInputProps?: Omit<MultiTextInputProps, 'name'>
   enableConfigureOptions?: boolean
@@ -58,6 +60,8 @@ export const MultiTypeListInputSet = (props: MultiTypeListProps): React.ReactEle
   const {
     name,
     placeholder,
+    withObjectStructure,
+    keyName,
     multiTypeFieldSelectorProps,
     multiTextInputProps = {},
     enableConfigureOptions = true,
