@@ -150,8 +150,10 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const [buffer, setBuffer] = useState(0)
   const [tuneRecomVisible, setTuneRecomVisible] = useState(true)
 
-  const { includeTypes, includeSeries, excludeTypes, excludeSeries } = (recommendationDetails.resourceRequirement ||
-    {}) as RecommendClusterRequest
+  const { includeTypes, includeSeries, excludeTypes, excludeSeries } = defaultTo(
+    recommendationDetails.resourceRequirement,
+    {}
+  ) as RecommendClusterRequest
 
   const {
     sumCpu = 0,
@@ -175,11 +177,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
   const initialState = useMemo(
     () => ({
-      maxCpu: +maxcpu.toFixed(2),
-      maxMemory: +maxmemory.toFixed(2),
-      sumCpu: +sumCpu.toFixed(2),
-      sumMem: +sumMem.toFixed(2),
-      minNodes: +minNodes.toFixed(2),
+      maxCpu: +maxcpu.toFixed(3),
+      maxMemory: +maxmemory.toFixed(3),
+      sumCpu: +sumCpu.toFixed(3),
+      sumMem: +sumMem.toFixed(3),
+      minNodes: +minNodes.toFixed(3),
       includeTypes: includeTypes || [],
       includeSeries: includeSeries || [],
       excludeTypes: excludeTypes || [],
@@ -196,17 +198,14 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
   const [updatedState, setUpdatedState] = useState(initialState)
 
-  const { mutate: fetchNewRecommendation, loading } = useRecommendCluster({
+  const pathParams = {
     provider: defaultTo(provider, ''),
     region: defaultTo(region, ''),
     service: defaultTo(service, '')
-  })
+  }
+  const { mutate: fetchNewRecommendation, loading } = useRecommendCluster(pathParams)
 
-  const { data: seriesData, loading: seriesDataLoading } = useGetSeries({
-    provider: defaultTo(provider, ''),
-    service: defaultTo(service, ''),
-    region: defaultTo(region, '')
-  })
+  const { data: seriesData, loading: seriesDataLoading } = useGetSeries(pathParams)
 
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
@@ -215,16 +214,14 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     const sumMemWithBuffer = addBufferToValue(state.sumMem, buffer)
 
     if (isResourceConsistent(sumCpuWithBuffer, sumMemWithBuffer, state.maxCpu, state.maxMemory)) {
-      setUpdatedState(addBufferToState(state, buffer))
-
       const payload = convertStateToRecommendClusterPayload(
         state,
-        (recommendationDetails.resourceRequirement || {}) as RecommendClusterRequest,
+        defaultTo(recommendationDetails.resourceRequirement, {}) as RecommendClusterRequest,
         buffer
       )
 
       try {
-        const response = await debouncedFetchNewRecomm(payload as RecommendClusterRequest)
+        const response = await debouncedFetchNewRecomm(payload)
         const newState = {
           ...recomDetails,
           recommended: { ...recomDetails.recommended, ...response }
@@ -233,6 +230,8 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         if (!isEqual(recomDetails, newState)) {
           setRecomDetails(newState)
         }
+
+        setUpdatedState(addBufferToState(state, buffer))
 
         UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
       } catch (e) {
@@ -247,20 +246,16 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     dispatch({
       type: ACTIONS.UPDATE_TIME_RANGE,
       data: {
-        maxCpu: +maxcpu.toFixed(2),
-        maxMemory: +maxmemory.toFixed(2),
-        sumCpu: +sumCpu.toFixed(2),
-        sumMem: +sumMem.toFixed(2),
-        minNodes: +minNodes.toFixed(2)
+        maxCpu: +maxcpu.toFixed(3),
+        maxMemory: +maxmemory.toFixed(3),
+        sumCpu: +sumCpu.toFixed(3),
+        sumMem: +sumMem.toFixed(3),
+        minNodes: +minNodes.toFixed(3)
       }
     })
 
     updateRecommendationDetails()
   }, [timeRange])
-
-  // useDidMountEffect(() => {
-  //   updateRecommendationDetails()
-  // }, [])
 
   const [showModal, hideModal] = useModalHook(() => {
     return (
@@ -273,7 +268,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           <Container height="100%">
             <Tabs
               id={'horizontalTabs'}
-              tabList={Object.keys(seriesData?.categoryDetails || {}).map(key => ({
+              tabList={Object.keys(defaultTo(seriesData?.categoryDetails, {})).map(key => ({
                 id: key,
                 title: key,
                 panel: (
@@ -348,17 +343,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         </Card>
       </Layout.Vertical>
       <Layout.Vertical spacing="large" padding="xlarge">
-        <Layout.Horizontal flex={{ justifyContent: 'space-between' }}>
-          <Container>
-            <Text font={{ variation: FontVariation.H6 }} tooltipProps={{ dataTooltipId: 'resourceUtilisation' }}>
-              {getString('ce.nodeRecommendation.resourceUtilInLast', { timeRange: timeRange.label.toLowerCase() })}
-            </Text>
-          </Container>
-        </Layout.Horizontal>
         <ResourceUtilizationCharts
-          sumCpu={+defaultTo(sumCpu, 0).toFixed(2)}
-          sumMem={+defaultTo(sumMem, 0).toFixed(2)}
-          minNodes={+defaultTo(minNodes, 0).toFixed(2)}
+          sumCpu={+defaultTo(sumCpu, 0).toFixed(3)}
+          sumMem={+defaultTo(sumMem, 0).toFixed(3)}
+          minNodes={+defaultTo(minNodes, 0).toFixed(3)}
+          timeRange={timeRange}
         />
         <Text font={{ variation: FontVariation.H5 }} padding={{ top: 'xsmall' }}>
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
@@ -388,7 +377,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
 export default NodeRecommendationDetails
 
-const TuneRecommendationHelpText = ({ toggleCardVisible }: { toggleCardVisible: () => void }) => {
+const TuneRecommendationHelpText: React.FC<{ toggleCardVisible: () => void }> = ({ toggleCardVisible }) => {
   const { getString } = useStrings()
 
   return (

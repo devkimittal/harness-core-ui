@@ -171,7 +171,7 @@ exports[`test cases for Node Recommendation page should be able to render the pa
               class="StyledProps--font StyledProps--main actionText StyledProps--color StyledProps--color-primary5"
               style="display: flex; align-items: center;"
             >
-              LAST 7 DAYS
+              LAST DAY
               <span
                 class="bp3-icon bp3-icon-caret-down StyledProps--main Text--icon StyledProps--padding-left-xsmall StyledProps--color StyledProps--color-primary5"
                 icon="caret-down"

@@ -137,7 +137,7 @@ const Resources: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> =
             value={`${state.sumCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.SUM_CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_CPUS, data: e.target.value })
             }
           />
         </Container>
@@ -154,7 +154,7 @@ const Resources: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> =
             value={`${state.sumMem}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.SUM_MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.SUM_MEM, data: e.target.value })
             }
           />
         </Container>
@@ -223,7 +223,7 @@ const LargestResources: React.FC<{ dispatch: React.Dispatch<Action>; state: ISta
             value={`${state.maxCpu}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MAX_CPUS, data: +e.target.value })
+              dispatch({ type: ACTIONS.MAX_CPUS, data: e.target.value })
             }
           />
         </Container>
@@ -235,7 +235,7 @@ const LargestResources: React.FC<{ dispatch: React.Dispatch<Action>; state: ISta
             value={`${state.maxMemory}`}
             wrapperClassName={css.input}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch({ type: ACTIONS.MAX_MEM, data: +e.target.value })
+              dispatch({ type: ACTIONS.MAX_MEM, data: e.target.value })
             }
           />
         </Container>
@@ -294,7 +294,7 @@ const InstanceFamilies: React.FC<{
         <Text
           inline
           font={{ variation: FontVariation.SMALL_SEMI }}
-          tooltipProps={{ dataTooltipId: 'preferredInstanceFamilies' }}
+          // tooltipProps={{ dataTooltipId: 'preferredInstanceFamilies' }}
         >
           {getString('ce.nodeRecommendation.preferredInstanceFamilies')}
         </Text>

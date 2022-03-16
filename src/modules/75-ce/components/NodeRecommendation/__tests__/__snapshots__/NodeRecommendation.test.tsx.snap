@@ -47,11 +47,16 @@ exports[`test cases for node recommendations details should be able to render no
             <div
               class="StyledProps--font StyledProps--main recommendationCategory"
             >
-              <p
-                class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-grey700 StyledProps--font-variation-h5"
+              <div
+                class="Text--withDocsTooltip"
+                data-tooltip-id="recommendedDetails"
               >
-                ce.nodeRecommendation.recommended
-              </p>
+                <p
+                  class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-grey700 StyledProps--font-variation-h5"
+                >
+                  ce.nodeRecommendation.recommended
+                </p>
+              </div>
             </div>
           </div>
           <div
@@ -527,11 +532,16 @@ exports[`test cases for node recommendations details should be able to render no
       <div
         class="StyledProps--font StyledProps--main"
       >
-        <p
-          class="StyledProps--font StyledProps--main StyledProps--font-variation-h6"
+        <div
+          class="Text--withDocsTooltip"
+          data-tooltip-id="resourceUtilisation"
         >
-          ce.nodeRecommendation.resourceUtilInLast
-        </p>
+          <p
+            class="StyledProps--font StyledProps--main StyledProps--font-variation-h6"
+          >
+            ce.nodeRecommendation.resourceUtilInLast
+          </p>
+        </div>
       </div>
     </div>
     <div
@@ -552,7 +562,7 @@ exports[`test cases for node recommendations details should be able to render no
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey400"
           >
-             19.94vCPU
+             1vCPU
           </span>
         </div>
         <img
@@ -574,7 +584,7 @@ exports[`test cases for node recommendations details should be able to render no
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey400"
           >
-             65.92GiB
+             1GiB
           </span>
         </div>
         <img
@@ -649,11 +659,16 @@ exports[`test cases for node recommendations details should be able to render no
           <div
             class="StyledProps--font StyledProps--main"
           >
-            <p
-              class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+            <div
+              class="Text--withDocsTooltip"
+              data-tooltip-id="prefResourceNeeds"
             >
-              ce.nodeRecommendation.prefResourceNeeds
-            </p>
+              <p
+                class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+              >
+                ce.nodeRecommendation.prefResourceNeeds
+              </p>
+            </div>
             <div
               class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main spaceBetween StyledProps--flex StyledProps--margin-top-small"
             >
@@ -683,7 +698,7 @@ exports[`test cases for node recommendations details should be able to render no
                           <input
                             class="bp3-input"
                             type="text"
-                            value="19.94"
+                            value="1"
                           />
                         </div>
                       </div>
@@ -705,7 +720,7 @@ exports[`test cases for node recommendations details should be able to render no
                           <input
                             class="bp3-input"
                             type="text"
-                            value="65.92"
+                            value="1"
                           />
                         </div>
                       </div>
@@ -755,29 +770,34 @@ exports[`test cases for node recommendations details should be able to render no
                     class="Layout--horizontal StyledProps--main"
                     style="justify-content: space-between;"
                   >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
-                      style="display: flex; align-items: center;"
+                    <div
+                      class="Text--withDocsTooltip"
+                      data-tooltip-id="buffer"
                     >
-                      ce.nodeRecommendation.buffer
-                      <span
-                        class="bp3-icon StyledProps--main Text--icon StyledProps--padding-left-xsmall StyledProps--color StyledProps--color-grey800"
-                        data-icon="info"
+                      <p
+                        class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                        style="display: flex; align-items: center;"
                       >
-                        <svg
-                          height="12"
-                          viewBox="0 0 12 12"
-                          width="12"
-                          xmlns="http://www.w3.org/2000/svg"
+                        ce.nodeRecommendation.buffer
+                        <span
+                          class="bp3-icon StyledProps--main Text--icon StyledProps--padding-left-xsmall StyledProps--color StyledProps--color-grey800"
+                          data-icon="info"
                         >
-                          <path
-                            clip-rule="evenodd"
-                            d="M0 6a6 6 0 1012 0A6 6 0 000 6zm.75 0a5.25 5.25 0 1010.5 0A5.25 5.25 0 00.75 6zm4.206 3.104v.646h2.682v-.646l-.836-.144V4.203H4.956v.65l.836.144V8.96l-.836.144zm1.846-7.352v1.03h-1.01v-1.03h1.01z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </p>
+                          <svg
+                            height="12"
+                            viewBox="0 0 12 12"
+                            width="12"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M0 6a6 6 0 1012 0A6 6 0 000 6zm.75 0a5.25 5.25 0 1010.5 0A5.25 5.25 0 00.75 6zm4.206 3.104v.646h2.682v-.646l-.836-.144V4.203H4.956v.65l.836.144V8.96l-.836.144zm1.846-7.352v1.03h-1.01v-1.03h1.01z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </p>
+                    </div>
                     <p
                       class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi StyledProps--color StyledProps--color-grey400"
                     >
@@ -818,12 +838,12 @@ exports[`test cases for node recommendations details should be able to render no
                     <span
                       class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
                     >
-                      delegate.delegateCPU: 19.94 vCPU 
+                      delegate.delegateCPU: 1 vCPU 
                     </span>
                     <span
                       class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
                     >
-                      ce.nodeRecommendation.ram: 65.92 GiB
+                      ce.nodeRecommendation.ram: 1 GiB
                     </span>
                   </div>
                 </div>
@@ -838,11 +858,16 @@ exports[`test cases for node recommendations details should be able to render no
                 <div
                   class="Layout--vertical Layout--layout-spacing-small StyledProps--main"
                 >
-                  <p
-                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                  <div
+                    class="Text--withDocsTooltip"
+                    data-tooltip-id="largestWorkloadReq"
                   >
-                    ce.nodeRecommendation.largestWorkloadReq
-                  </p>
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                    >
+                      ce.nodeRecommendation.largestWorkloadReq
+                    </p>
+                  </div>
                   <div
                     class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                     style="width: 75%;"
@@ -861,7 +886,7 @@ exports[`test cases for node recommendations details should be able to render no
                         <input
                           class="bp3-input"
                           type="text"
-                          value="0"
+                          value="4"
                         />
                       </div>
                     </div>
@@ -884,7 +909,7 @@ exports[`test cases for node recommendations details should be able to render no
                         <input
                           class="bp3-input"
                           type="text"
-                          value="0"
+                          value="10"
                         />
                       </div>
                     </div>
@@ -897,11 +922,16 @@ exports[`test cases for node recommendations details should be able to render no
                 <div
                   class="Layout--vertical Layout--layout-spacing-small StyledProps--main"
                 >
-                  <p
-                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                  <div
+                    class="Text--withDocsTooltip"
+                    data-tooltip-id="prefMinNodeCount"
                   >
-                    ce.nodeRecommendation.prefMinNodeCount
-                  </p>
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                    >
+                      ce.nodeRecommendation.prefMinNodeCount
+                    </p>
+                  </div>
                   <div
                     class="Layout--horizontal Layout--layout-spacing-small StyledProps--main minNodeContainer"
                   >

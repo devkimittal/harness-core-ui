@@ -11,11 +11,16 @@ exports[`test cases for tune recommendation card should be able to render tune r
       <div
         class="StyledProps--font StyledProps--main"
       >
-        <p
-          class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+        <div
+          class="Text--withDocsTooltip"
+          data-tooltip-id="prefResourceNeeds"
         >
-          ce.nodeRecommendation.prefResourceNeeds
-        </p>
+          <p
+            class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+          >
+            ce.nodeRecommendation.prefResourceNeeds
+          </p>
+        </div>
         <div
           class="Layout--horizontal Layout--layout-spacing-medium StyledProps--main spaceBetween StyledProps--flex StyledProps--margin-top-small"
         >
@@ -117,29 +122,34 @@ exports[`test cases for tune recommendation card should be able to render tune r
                 class="Layout--horizontal StyledProps--main"
                 style="justify-content: space-between;"
               >
-                <p
-                  class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
-                  style="display: flex; align-items: center;"
+                <div
+                  class="Text--withDocsTooltip"
+                  data-tooltip-id="buffer"
                 >
-                  ce.nodeRecommendation.buffer
-                  <span
-                    class="bp3-icon StyledProps--main Text--icon StyledProps--padding-left-xsmall StyledProps--color StyledProps--color-grey800"
-                    data-icon="info"
+                  <p
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                    style="display: flex; align-items: center;"
                   >
-                    <svg
-                      height="12"
-                      viewBox="0 0 12 12"
-                      width="12"
-                      xmlns="http://www.w3.org/2000/svg"
+                    ce.nodeRecommendation.buffer
+                    <span
+                      class="bp3-icon StyledProps--main Text--icon StyledProps--padding-left-xsmall StyledProps--color StyledProps--color-grey800"
+                      data-icon="info"
                     >
-                      <path
-                        clip-rule="evenodd"
-                        d="M0 6a6 6 0 1012 0A6 6 0 000 6zm.75 0a5.25 5.25 0 1010.5 0A5.25 5.25 0 00.75 6zm4.206 3.104v.646h2.682v-.646l-.836-.144V4.203H4.956v.65l.836.144V8.96l-.836.144zm1.846-7.352v1.03h-1.01v-1.03h1.01z"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                </p>
+                      <svg
+                        height="12"
+                        viewBox="0 0 12 12"
+                        width="12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M0 6a6 6 0 1012 0A6 6 0 000 6zm.75 0a5.25 5.25 0 1010.5 0A5.25 5.25 0 00.75 6zm4.206 3.104v.646h2.682v-.646l-.836-.144V4.203H4.956v.65l.836.144V8.96l-.836.144zm1.846-7.352v1.03h-1.01v-1.03h1.01z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </p>
+                </div>
                 <p
                   class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi StyledProps--color StyledProps--color-grey400"
                 >
@@ -200,11 +210,16 @@ exports[`test cases for tune recommendation card should be able to render tune r
             <div
               class="Layout--vertical Layout--layout-spacing-small StyledProps--main"
             >
-              <p
-                class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+              <div
+                class="Text--withDocsTooltip"
+                data-tooltip-id="largestWorkloadReq"
               >
-                ce.nodeRecommendation.largestWorkloadReq
-              </p>
+                <p
+                  class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                >
+                  ce.nodeRecommendation.largestWorkloadReq
+                </p>
+              </div>
               <div
                 class="StyledProps--font StyledProps--main spaceBetween StyledProps--flex"
                 style="width: 75%;"
@@ -259,11 +274,16 @@ exports[`test cases for tune recommendation card should be able to render tune r
             <div
               class="Layout--vertical Layout--layout-spacing-small StyledProps--main"
             >
-              <p
-                class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+              <div
+                class="Text--withDocsTooltip"
+                data-tooltip-id="prefMinNodeCount"
               >
-                ce.nodeRecommendation.prefMinNodeCount
-              </p>
+                <p
+                  class="StyledProps--font StyledProps--main StyledProps--font-variation-small-semi"
+                >
+                  ce.nodeRecommendation.prefMinNodeCount
+                </p>
+              </div>
               <div
                 class="Layout--horizontal Layout--layout-spacing-small StyledProps--main minNodeContainer"
               >

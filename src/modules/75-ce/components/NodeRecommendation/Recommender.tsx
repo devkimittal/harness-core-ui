@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import cx from 'classnames'
 import { defaultTo, get } from 'lodash-es'
 
@@ -37,6 +37,7 @@ interface CardRow {
 
 const instaceFamLabelStringKey = 'ce.nodeRecommendation.instanceFam'
 const nodeCountLabelStringKey = 'ce.nodeRecommendation.nodeCount'
+const estimatedSavingsStringKey = 'ce.nodeRecommendation.estimatedSavings'
 
 const Recommender = (props: RecommenderProps) => {
   const { getString } = useStrings()
@@ -48,6 +49,8 @@ const Recommender = (props: RecommenderProps) => {
       SPOT: getString('ce.nodeRecommendation.spot')
     }
   }, [])
+
+  const getCardTextStyle = useCallback((isLabel, cardStyle) => (isLabel ? FontVariation.SMALL_SEMI : cardStyle), [])
 
   const data: CardRow[] = useMemo(() => {
     const curInstanceType = defaultTo(details.current?.instanceCategory, '')
@@ -73,10 +76,11 @@ const Recommender = (props: RecommenderProps) => {
       return stats.totalMonthlyCost - recommendedMonthlyCost
     }
 
-    const getCpusAndMemoryPerVm = (vmDetails: Maybe<RecommendationResponse>) =>
-      vmDetails && vmDetails.nodePools?.length
-        ? `(CPU: ${vmDetails.nodePools[0]?.vm?.cpusPerVm} Mem: ${vmDetails.nodePools[0]?.vm?.cpusPerVm})`
-        : null
+    const getCpusAndMemoryPerVm = (vmDetails: Maybe<RecommendationResponse>) => {
+      if (vmDetails && vmDetails.nodePools?.length) {
+        return `(CPU: ${vmDetails.nodePools[0]?.vm?.cpusPerVm} Mem: ${vmDetails.nodePools[0]?.vm?.cpusPerVm})`
+      }
+    }
 
     const vmTypePropertyPath = 'nodePools[0].vm.type'
     const sumNodesPropertyPath = 'nodePools[0].sumNodes'
@@ -90,17 +94,17 @@ const Recommender = (props: RecommenderProps) => {
         spot: 'SPOT',
         demand: 'ON_DEMAND',
         renderer: (value, type) => {
-          const v = value[type!]
+          const v = value[type]
           return v && <div className={css.cardLabelPill}>{instanceTypeToLabel[v]}</div>
         }
       },
       {
-        label: getString('ce.nodeRecommendation.estimatedSavings'),
+        label: getString(estimatedSavingsStringKey),
         current: 0,
         spot: getEstimatedSavingsFor(CardType.RECOMMENDED_SPOT),
         demand: getEstimatedSavingsFor(CardType.RECOMMENDED_ON_DEMAND),
         renderer: (value, type) => {
-          const v = value[type!]
+          const v = value[type]
           const isLabel = type === CardType.LABEL
 
           const color = isLabel ? Color.GREY_700 : v < 0 ? Color.RED_500 : Color.GREEN_700
@@ -109,7 +113,7 @@ const Recommender = (props: RecommenderProps) => {
             <Text
               color={color}
               font={{
-                variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H5
+                variation: getCardTextStyle(isLabel, FontVariation.H5)
               }}
             >
               {isLabel ? v : formatCost(+v)}
@@ -123,7 +127,7 @@ const Recommender = (props: RecommenderProps) => {
         spot: get(details.recommended, vmTypePropertyPath, ''),
         demand: get(details.recommended, vmTypePropertyPath, ''),
         renderer: (value, type) => {
-          const v = value[type!]
+          const v = value[type]
           const isLabel = type === CardType.LABEL
 
           const vmDetails = type === CardType.CURRENT ? details?.current : details?.recommended
@@ -133,7 +137,7 @@ const Recommender = (props: RecommenderProps) => {
               <Text
                 color={Color.GREY_700}
                 font={{
-                  variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H6
+                  variation: getCardTextStyle(isLabel, FontVariation.H6)
                 }}
               >
                 {v}
@@ -153,14 +157,14 @@ const Recommender = (props: RecommenderProps) => {
         spot: get(details.recommended, sumNodesPropertyPath, 0),
         demand: get(details.recommended, sumNodesPropertyPath, 0),
         renderer: (value, type) => {
-          const v = value[type!]
+          const v = value[type]
           const isLabel = type === CardType.LABEL
 
           return (
             <Text
               color={Color.GREY_700}
               font={{
-                variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.H6
+                variation: getCardTextStyle(isLabel, FontVariation.H6)
               }}
             >
               {v}
@@ -199,7 +203,7 @@ const Recommender = (props: RecommenderProps) => {
         spot: formatCost(getMonthlyCostFor(CardType.RECOMMENDED_SPOT)),
         demand: formatCost(getMonthlyCostFor(CardType.RECOMMENDED_ON_DEMAND)),
         renderer: (value, type) => {
-          const v = value[type!]
+          const v = value[type]
           const isLabel = type === CardType.LABEL
 
           return (
@@ -223,7 +227,7 @@ const Recommender = (props: RecommenderProps) => {
           <Text
             color={Color.GREY_700}
             font={{ variation: FontVariation.H5, align: 'center' }}
-            tooltipProps={{ dataTooltipId: 'currentDetails' }}
+            // tooltipProps={{ dataTooltipId: 'currentDetails' }}
           >
             {getString('common.current')}
           </Text>
@@ -304,9 +308,9 @@ const Card = (props: CardProps) => {
           type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString(nodeCountLabelStringKey)
         const isNodeCountCardSpot = type === CardType.RECOMMENDED_SPOT && d.label === getString(nodeCountLabelStringKey)
         const isEstimatedSavingsCardOnDemand =
-          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString('ce.nodeRecommendation.estimatedSavings')
+          type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString(estimatedSavingsStringKey)
         const isEstimatedSavingsCardSpot =
-          type === CardType.RECOMMENDED_SPOT && d.label === getString('ce.nodeRecommendation.estimatedSavings')
+          type === CardType.RECOMMENDED_SPOT && d.label === getString(estimatedSavingsStringKey)
 
         const cardStyles = cx(
           css.cardItem,
