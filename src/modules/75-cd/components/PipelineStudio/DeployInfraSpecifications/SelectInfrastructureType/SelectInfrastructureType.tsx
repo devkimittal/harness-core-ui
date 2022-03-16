@@ -69,7 +69,7 @@ export default function SelectDeploymentType(props: SelectDeploymentTypeProps): 
             },
             {
               label: getString('pipelineSteps.deploymentTypes.azure'),
-              icon: 'service-azure',
+              icon: 'microsoft-azure',
               value: InfraDeploymentType.Azure
             }
           ]

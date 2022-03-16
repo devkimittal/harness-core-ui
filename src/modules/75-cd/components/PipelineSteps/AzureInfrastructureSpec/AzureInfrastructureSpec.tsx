@@ -1023,7 +1023,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
   }
 
   // todo: change azure icon to microsoft azure
-  protected stepIcon: IconName = 'service-azure'
+  protected stepIcon: IconName = 'microsoft-azure'
   protected stepName = 'Specify your Azure Connector'
   protected stepPaletteVisible = false
   protected invocationMap: Map<
