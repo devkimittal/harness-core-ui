@@ -34,9 +34,9 @@ createModal:
   descriptionPlaceholder: 'Provide dashboard purpose'
   # submit: 'Submit'
   submitFail: 'Dashboard creation failed, Please try again.'
-moveModal:
-  moveToFolder: 'Move to folder'
-  submitFail: 'Move dashboard failed, Please try again.'
+editModal:
+  editDashboard: 'Edit Dashboard'
+  submitFail: 'Edit dashboard failed, Please try again.'
 createFolder:
   stepOne: 'About the Folder'
   folderPlaceholder: 'Name your folder'

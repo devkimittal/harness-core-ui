@@ -2116,6 +2116,8 @@ export interface StringsMap {
   'dashboards.deleteFolder.confirmDeleteText': string
   'dashboards.deleteFolder.confirmDeleteTitle': string
   'dashboards.deleteFolder.success': string
+  'dashboards.editModal.editDashboard': string
+  'dashboards.editModal.submitFail': string
   'dashboards.getStarted.subTextVideo1': string
   'dashboards.getStarted.subTextVideo2': string
   'dashboards.getStarted.subTextVideo3': string
@@ -2133,8 +2135,6 @@ export interface StringsMap {
   'dashboards.homePage.removeTagFromFilter': string
   'dashboards.homePage.searchPlaceholder': string
   'dashboards.modules.harness': string
-  'dashboards.moveModal.moveToFolder': string
-  'dashboards.moveModal.submitFail': string
   'dashboards.resourceModal.folderDetail': string
   'dashboards.resourceModal.folders': string
   'dashboards.sideNav.byHarness': string

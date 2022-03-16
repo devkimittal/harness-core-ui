@@ -155,3 +155,30 @@ export const useMoveDashboard = (accountId: string): MoveDashboardResponse => {
   })
   return { mutate, loading }
 }
+
+export interface UpdateDashboardResponseData {
+  resource: string
+}
+
+export interface UpdateDashboardResponse {
+  mutate: (props: UpdateDashboard) => Promise<UpdateDashboardResponseData>
+  loading: boolean
+}
+
+export interface UpdateDashboard {
+  dashboardId: string
+  title: string
+  description: string
+  folderId: string
+}
+
+export const useUpdateDashboard = (accountId: string): UpdateDashboardResponse => {
+  const { mutate, loading } = useMutate({
+    verb: 'PATCH',
+    path: 'gateway/dashboard',
+    queryParams: {
+      accountId: accountId
+    }
+  })
+  return { mutate, loading }
+}
