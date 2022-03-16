@@ -21,10 +21,11 @@ import { yamlStringify } from '@common/utils/YamlHelperMethods'
 import { useMutateAsGet } from '@common/hooks'
 import { SidecarArtifact, useGetBuildDetailsForAcrWithYaml } from 'services/cd-ng'
 import { useListAzureRegistries, useListAzureRepositories, useListAzureSubscriptions } from 'services/portal'
-import { ENABLED_ARTIFACT_TYPES } from '@pipeline/components/ArtifactsSelection/ArtifactHelper'
+import { ArtifactToConnectorMap, ENABLED_ARTIFACT_TYPES } from '@pipeline/components/ArtifactsSelection/ArtifactHelper'
 import { TriggerDefaultFieldList } from '@triggers/pages/triggers/utils/TriggersWizardPageUtils'
 import { useStrings } from 'framework/strings'
 import { useVariablesExpression } from '@pipeline/components/PipelineStudio/PiplineHooks/useVariablesExpression'
+import { FormMultiTypeConnectorField } from '@connectors/components/ConnectorReferenceField/FormMultiTypeConnectorField'
 import ExperimentalInput from '../../K8sServiceSpecForms/ExperimentalInput'
 import { isFieldRuntime } from '../../K8sServiceSpecHelper'
 import { getYamlData, isArtifactSourceRuntime, isFieldfromTriggerTabDisabled, resetTags } from '../artifactSourceUtils'
@@ -205,6 +206,32 @@ const Content = (props: ACRRenderContent): JSX.Element => {
     <>
       {isRuntime && (
         <Layout.Vertical key={artifactPath} className={css.inputWidth}>
+          {isFieldRuntime(`artifacts.${artifactPath}.spec.connectorRef`, template) && (
+            <FormMultiTypeConnectorField
+              name={`${path}.artifacts.${artifactPath}.spec.connectorRef`}
+              label={getString('pipelineSteps.deploy.inputSet.artifactServer')}
+              selected={get(initialValues, `artifacts.${artifactPath}.spec.connectorRef`, '')}
+              placeholder={''}
+              accountIdentifier={accountId}
+              projectIdentifier={projectIdentifier}
+              orgIdentifier={orgIdentifier}
+              width={391}
+              setRefValue
+              disabled={isFieldDisabled(`artifacts.${artifactPath}.spec.connectorRef`)}
+              multiTypeProps={{
+                allowableTypes,
+                expressions
+              }}
+              onChange={() => resetTags(formik, `${path}.artifacts.${artifactPath}.spec.tag`)}
+              className={css.connectorMargin}
+              type={ArtifactToConnectorMap[defaultTo(artifact?.type, '')]}
+              gitScope={{
+                repo: defaultTo(repoIdentifier, ''),
+                branch: defaultTo(branch, ''),
+                getDefaultFromOtherRepo: true
+              }}
+            />
+          )}
           {isFieldRuntime(`artifacts.${artifactPath}.spec.subscription`, template) && (
             <ExperimentalInput
               formik={formik}

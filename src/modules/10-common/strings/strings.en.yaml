@@ -803,6 +803,5 @@ request: Request
 whose: whose
 and: and
 payload: Payload
-resourceGroupPlaceholder: 'Select Resource Group'
-subscriptionPlaceholder: 'Select Subscription'
+subscriptionPlaceholder: 'Select or add Subscription'
 

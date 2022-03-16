@@ -535,7 +535,6 @@ export interface StringsMap {
   'common.resourceCenter.ticketmenu.ticketsDesc': string
   'common.resourceCenter.title': string
   'common.resourceGroupLabel': string
-  'common.resourceGroupPlaceholder': string
   'common.resourceLabel': string
   'common.resourceTypeLabel': string
   'common.role': string
