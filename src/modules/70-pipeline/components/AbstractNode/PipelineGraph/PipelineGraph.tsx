@@ -117,7 +117,7 @@ function PipelineGraph({
   }
 
   return (
-    <div id="draggable-parent" ref={draggableRef}>
+    <div id="draggable-parent" className={css.draggableParent} ref={draggableRef}>
       <Draggable scale={graphScale} defaultPosition={DEFAULT_POSITION} offsetParent={document.body}>
         <div
           id="overlay"
