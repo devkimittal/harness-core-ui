@@ -100,6 +100,7 @@ export const InstanceFamiliesModalTab: React.FC<TabProps> = ({ data, state, disp
               checked={status === CheckboxStatus.CHECKED}
               indeterminate={status === CheckboxStatus.INDETERMINATE}
               onClick={() => handleInstanceSeriesCheckbox(status, val)}
+              data-testid={`series-checkbox-${val}`}
             />
           </Container>
         </Container>
@@ -132,6 +133,7 @@ export const InstanceFamiliesModalTab: React.FC<TabProps> = ({ data, state, disp
                 checked={status === CheckboxStatus.CHECKED}
                 indeterminate={status === CheckboxStatus.INDETERMINATE}
                 onClick={() => handleInstanceTypeCheckbox(status, type)}
+                data-testid={`type-checkbox-${type}`}
               />
             </Container>
           )
@@ -194,6 +196,7 @@ const Grid: React.FC<GridProps> = ({ columns, data, getTypeCheckboxStatus, handl
                           checked={status === CheckboxStatus.CHECKED}
                           indeterminate={status === CheckboxStatus.INDETERMINATE}
                           onClick={() => handleInstanceTypeCheckbox(status, column.render('Header')?.toString() || '')}
+                          data-testid={`type-header-checkbox-${column.render('Header')}`}
                         />
                       </Container>
                     ) : null}

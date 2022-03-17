@@ -54,8 +54,8 @@ export const convertStateToRecommendClusterPayload = (
     sumCpuWithBuffer,
     sumMemWithBuffer,
     state.maxCpu,
-    state.maxMemory,
-    state.minNodes
+    +state.maxMemory,
+    +state.minNodes
   )
 
   return {

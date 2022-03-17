@@ -15,6 +15,10 @@
       ]
     },
     "recommendationDetails": {
+      "totalResourceUsage": {
+        "maxcpu": 20,
+        "maxmemory": 40
+      },
       "current": {
         "instanceCategory": "SPOT",
         "nodePools": [

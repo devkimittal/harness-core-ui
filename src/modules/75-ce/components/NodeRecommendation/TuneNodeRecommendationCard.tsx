@@ -139,6 +139,7 @@ const Resources: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> =
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.SUM_CPUS, data: e.target.value })
             }
+            data-testid="sumCpu-input"
           />
         </Container>
         <Container flex className={css.spaceBetween}>
@@ -156,6 +157,7 @@ const Resources: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> =
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.SUM_MEM, data: e.target.value })
             }
+            data-testid="sumMem-input"
           />
         </Container>
       </Layout.Vertical>
@@ -225,6 +227,7 @@ const LargestResources: React.FC<{ dispatch: React.Dispatch<Action>; state: ISta
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.MAX_CPUS, data: e.target.value })
             }
+            data-testid="maxCpu-input"
           />
         </Container>
         <Container flex className={css.spaceBetween} width="75%">
@@ -237,6 +240,7 @@ const LargestResources: React.FC<{ dispatch: React.Dispatch<Action>; state: ISta
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.MAX_MEM, data: e.target.value })
             }
+            data-testid="maxMemory-input"
           />
         </Container>
       </Layout.Vertical>
@@ -261,6 +265,7 @@ const Nodes: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> = ({ 
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes - 1 })
             }}
             disabled={state.minNodes <= 0}
+            data-testid="increment-minnode-btn"
           />
           <TextInput
             value={`${state.minNodes}`}
@@ -268,6 +273,7 @@ const Nodes: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> = ({ 
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               dispatch({ type: ACTIONS.MIN_NODES, data: +e.target.value })
             }
+            data-testid="minnodes-input"
           />
           <Button
             icon="plus"
@@ -275,6 +281,7 @@ const Nodes: React.FC<{ dispatch: React.Dispatch<Action>; state: IState }> = ({ 
             onClick={() => {
               dispatch({ type: ACTIONS.MIN_NODES, data: state.minNodes + 1 })
             }}
+            data-testid="decrement-minnode-btn"
           />
         </Layout.Horizontal>
       </Layout.Vertical>

@@ -59,10 +59,10 @@ import ResourceUtilizationCharts from './ResourceUtilizationCharts'
 import { ACTIONS, Action, IState } from './constants'
 import css from './NodeRecommendation.module.scss'
 
-const insertOrRemoveIntoArray = (array: string[], val: string): string[] =>
+export const insertOrRemoveIntoArray = (array: string[], val: string): string[] =>
   array.indexOf(val) > -1 ? array.filter(ele => ele !== val) : [...array, val]
 
-const reducer = (state: IState, action: Action) => {
+export const reducer = (state: IState, action: Action) => {
   const { type, data } = action
 
   switch (type) {
@@ -175,25 +175,21 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
-  const initialState = useMemo(
-    () => ({
-      maxCpu: +maxcpu.toFixed(3),
-      maxMemory: +maxmemory.toFixed(3),
-      sumCpu: +sumCpu.toFixed(3),
-      sumMem: +sumMem.toFixed(3),
-      minNodes: +minNodes.toFixed(3),
-      includeTypes: includeTypes || [],
-      includeSeries: includeSeries || [],
-      excludeTypes: excludeTypes || [],
-      excludeSeries: excludeSeries || []
-    }),
-    [timeRange]
-  )
-
+  const initialState = {
+    maxCpu: +maxcpu.toFixed(3),
+    maxMemory: +maxmemory.toFixed(3),
+    sumCpu: +sumCpu.toFixed(3),
+    sumMem: +sumMem.toFixed(3),
+    minNodes: +minNodes.toFixed(3),
+    includeTypes: includeTypes || [],
+    includeSeries: includeSeries || [],
+    excludeTypes: excludeTypes || [],
+    excludeSeries: excludeSeries || []
+  }
   const [recomDetails, setRecomDetails] = useState(recommendationDetails)
   const [state, dispatch] = useReducer(
     reducer,
-    useMemo(() => initialState as IState, [])
+    useMemo(() => initialState as IState, [timeRange])
   )
 
   const [updatedState, setUpdatedState] = useState(initialState)
@@ -377,7 +373,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 
 export default NodeRecommendationDetails
 
-const TuneRecommendationHelpText: React.FC<{ toggleCardVisible: () => void }> = ({ toggleCardVisible }) => {
+export const TuneRecommendationHelpText: React.FC<{ toggleCardVisible: () => void }> = ({ toggleCardVisible }) => {
   const { getString } = useStrings()
 
   return (

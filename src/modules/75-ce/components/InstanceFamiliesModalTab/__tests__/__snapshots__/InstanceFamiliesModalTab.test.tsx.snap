@@ -46,6 +46,8 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    checked=""
+                    data-testid="type-header-checkbox-c2d-highcpu-4"
                     type="checkbox"
                   />
                   <span
@@ -76,6 +78,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-c2d-highcpu-32"
                     type="checkbox"
                   />
                   <span
@@ -106,6 +109,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-c2d-highcpu-8"
                     type="checkbox"
                   />
                   <span
@@ -136,6 +140,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-c2d-highcpu-112"
                     type="checkbox"
                   />
                   <span
@@ -166,6 +171,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-c2d-highcpu-2"
                     type="checkbox"
                   />
                   <span
@@ -196,6 +202,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-c2d-highcpu-16"
                     type="checkbox"
                   />
                   <span
@@ -226,6 +233,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-c2d-highcpu-56"
                     type="checkbox"
                   />
                   <span
@@ -256,6 +264,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-e2-highcpu-4"
                     type="checkbox"
                   />
                   <span
@@ -286,6 +295,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-e2-highcpu-2"
                     type="checkbox"
                   />
                   <span
@@ -316,6 +326,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-e2-highcpu-8"
                     type="checkbox"
                   />
                   <span
@@ -346,6 +357,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-e2-highcpu-32"
                     type="checkbox"
                   />
                   <span
@@ -376,6 +388,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-e2-highcpu-16"
                     type="checkbox"
                   />
                   <span
@@ -406,6 +419,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-8"
                     type="checkbox"
                   />
                   <span
@@ -436,6 +450,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-2"
                     type="checkbox"
                   />
                   <span
@@ -466,6 +481,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-96"
                     type="checkbox"
                   />
                   <span
@@ -496,6 +512,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-4"
                     type="checkbox"
                   />
                   <span
@@ -526,6 +543,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-32"
                     type="checkbox"
                   />
                   <span
@@ -556,6 +574,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-16"
                     type="checkbox"
                   />
                   <span
@@ -586,6 +605,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                 >
                   <input
+                    data-testid="type-header-checkbox-n1-highcpu-64"
                     type="checkbox"
                   />
                   <span
@@ -626,6 +646,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                     class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                   >
                     <input
+                      data-testid="series-checkbox-c2d"
                       type="checkbox"
                     />
                     <span
@@ -652,6 +673,8 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  checked=""
+                  data-testid="type-checkbox-c2d-highcpu-4"
                   type="checkbox"
                 />
                 <span
@@ -671,6 +694,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-c2d-highcpu-32"
                   type="checkbox"
                 />
                 <span
@@ -690,6 +714,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-c2d-highcpu-8"
                   type="checkbox"
                 />
                 <span
@@ -709,6 +734,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-c2d-highcpu-112"
                   type="checkbox"
                 />
                 <span
@@ -728,6 +754,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-c2d-highcpu-2"
                   type="checkbox"
                 />
                 <span
@@ -747,6 +774,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-c2d-highcpu-16"
                   type="checkbox"
                 />
                 <span
@@ -766,6 +794,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-c2d-highcpu-56"
                   type="checkbox"
                 />
                 <span
@@ -844,6 +873,8 @@ exports[`test cases for instance family modal tab should be able to render insta
                     class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                   >
                     <input
+                      checked=""
+                      data-testid="series-checkbox-e2"
                       type="checkbox"
                     />
                     <span
@@ -898,6 +929,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-e2-highcpu-4"
                   type="checkbox"
                 />
                 <span
@@ -917,6 +949,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-e2-highcpu-2"
                   type="checkbox"
                 />
                 <span
@@ -936,6 +969,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-e2-highcpu-8"
                   type="checkbox"
                 />
                 <span
@@ -955,6 +989,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-e2-highcpu-32"
                   type="checkbox"
                 />
                 <span
@@ -974,6 +1009,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-e2-highcpu-16"
                   type="checkbox"
                 />
                 <span
@@ -1032,6 +1068,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                     class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
                   >
                     <input
+                      data-testid="series-checkbox-n1"
                       type="checkbox"
                     />
                     <span
@@ -1106,6 +1143,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-8"
                   type="checkbox"
                 />
                 <span
@@ -1125,6 +1163,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-2"
                   type="checkbox"
                 />
                 <span
@@ -1144,6 +1183,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-96"
                   type="checkbox"
                 />
                 <span
@@ -1163,6 +1203,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-4"
                   type="checkbox"
                 />
                 <span
@@ -1182,6 +1223,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-32"
                   type="checkbox"
                 />
                 <span
@@ -1201,6 +1243,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-16"
                   type="checkbox"
                 />
                 <span
@@ -1220,6 +1263,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                 class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
               >
                 <input
+                  data-testid="type-checkbox-n1-highcpu-64"
                   type="checkbox"
                 />
                 <span
@@ -1230,6 +1274,46 @@ exports[`test cases for instance family modal tab should be able to render insta
           </td>
         </tr>
       </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`test cases for instance family modal tab should be able to render instance family modal tab when instance families are not present 1`] = `
+<div>
+  <div
+    class="StyledProps--font StyledProps--main StyledProps--flex"
+    style="overflow: scroll; border: 1px solid #d9dae6;"
+  >
+    <table
+      role="table"
+    >
+      <thead>
+        <tr
+          class="headerGroup"
+          role="row"
+        >
+          <th
+            class=""
+            colspan="1"
+            role="columnheader"
+          >
+            <div
+              class="Layout--horizontal StyledProps--main"
+              style="align-items: center;"
+            >
+              <p
+                class="StyledProps--font StyledProps--main tableHeader StyledProps--font-variation-small-bold"
+              >
+                
+              </p>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        role="rowgroup"
+      />
     </table>
   </div>
 </div>

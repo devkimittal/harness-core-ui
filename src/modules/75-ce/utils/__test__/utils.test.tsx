@@ -19,6 +19,7 @@ import { convertNumberToFixedDecimalPlaces } from '../convertNumberToFixedDecima
 import formatCost from '../formatCost'
 import { clusterInfoUtil, DEFAULT_GROUP_BY } from '../perspectiveUtils'
 import { generateGroupBy, getCloudProviderFromFields, getFiltersFromEnityMap } from '../anomaliesUtils'
+import { addBufferToValue, calculateNodes, isResourceConsistent } from '../recommendationUtils'
 
 describe('test cases for recommendation utils', () => {
   test('test cases for CPU value formatter', () => {
@@ -51,6 +52,21 @@ describe('test cases for recommendation utils', () => {
   test('get mem in readable format for chart', () => {
     expect(getMemValueInReadableFormForChart(100000000)).toBe('100.00Mi')
     expect(getMemValueInReadableFormForChart(1000000)).toBe('1.00Mi')
+  })
+
+  test('add buffer to resource values', () => {
+    expect(addBufferToValue(100, 100)).toBe(200)
+    expect(addBufferToValue(0.1, 50)).toBe(0.15)
+  })
+
+  test('check if resource values are consistent', () => {
+    expect(isResourceConsistent(1, 1, 2, 2)).toBe(true)
+    expect(isResourceConsistent(0, 0, 1, 2)).toBe(false)
+  })
+
+  test('test cases to calculate nodes', () => {
+    expect(calculateNodes(10, 10, 20, 20, 6)).toMatchObject({ minimumNodes: 1, maximumNodes: 1 })
+    expect(calculateNodes(32, 16, 4, 2, 7)).toMatchObject({ minimumNodes: 7, maximumNodes: 8 })
   })
 })
 

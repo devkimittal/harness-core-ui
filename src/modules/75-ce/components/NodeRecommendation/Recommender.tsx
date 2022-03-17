@@ -299,7 +299,7 @@ const Card = (props: CardProps) => {
   return (
     <div className={cx(css.card, classNames)}>
       {isRecommendationCard && <div className={css.cardOverlay} />}
-      {data.map(d => {
+      {data.map((d, index) => {
         const isInstaceFamilyCardOnDemand =
           type === CardType.RECOMMENDED_ON_DEMAND && d.label === getString(instaceFamLabelStringKey)
         const isInstaceFamilyCardSpot =
@@ -323,9 +323,12 @@ const Card = (props: CardProps) => {
         )
 
         return typeof d.renderer === 'function' ? (
-          <div className={cardStyles}>{d.renderer(d, type!)}</div>
+          <div key={index} className={cardStyles}>
+            {d.renderer(d, type!)}
+          </div>
         ) : (
           <Text
+            key={index}
             className={cardStyles}
             color={Color.GREY_700}
             font={{ variation: isLabel ? FontVariation.SMALL_SEMI : FontVariation.SMALL }}

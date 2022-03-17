@@ -23,6 +23,18 @@ const mockState = {
   excludeSeries: []
 }
 
+const mockState2 = {
+  maxCpu: 44,
+  maxMemory: 100,
+  sumCpu: 30,
+  sumMem: 120,
+  minNodes: 10,
+  includeTypes: ['type1'],
+  includeSeries: [],
+  excludeTypes: ['type2'],
+  excludeSeries: []
+}
+
 jest.mock('framework/strings', () => ({
   ...(jest.requireActual('framework/strings') as any),
   useStrings: jest.fn().mockReturnValue({
@@ -40,7 +52,7 @@ describe('test cases for tune recommendation card', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('tune recommendation card  hidden', async () => {
+  test('tune recommendation card hidden', async () => {
     const { container } = render(
       <TestWrapper>
         <TuneRecommendationCardHeader cardVisible={false} toggleCardVisible={jest.fn()} />
@@ -61,6 +73,25 @@ describe('test cases for tune recommendation card', () => {
           showInstanceFamiliesModal={jest.fn()}
           updateRecommendationDetails={jest.fn()}
           updatedState={mockState as IState}
+        />
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should be able to render tune recommendation card when there are instance families', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <TuneRecommendationCardBody
+          buffer={0}
+          dispatch={jest.fn()}
+          setBuffer={jest.fn()}
+          state={mockState2}
+          initialState={mockState as IState}
+          showInstanceFamiliesModal={jest.fn()}
+          updateRecommendationDetails={jest.fn()}
+          updatedState={mockState2 as IState}
         />
       </TestWrapper>
     )
