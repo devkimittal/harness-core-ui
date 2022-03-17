@@ -101,7 +101,6 @@ const PerspectiveFiltersNew: React.FC<PerspectiveFiltersProps> = ({ formikProps 
                   <div className={css.filterContainer} key={`multiline-filters-${index}`}>
                     <PerspectiveBuilderFilters
                       fieldValuesList={data?.perspectiveFields?.fieldIdentifierData as QlceViewFieldIdentifierData[]}
-                      showAndOperator={true}
                       timeRange={{
                         to: dateRange[1].format(CE_DATE_FORMAT_INTERNAL),
                         from: dateRange[0].format(CE_DATE_FORMAT_INTERNAL)

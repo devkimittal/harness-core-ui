@@ -11,5 +11,7 @@ declare const styles: {
   readonly addMoreFilter: string
   readonly andOperator: string
   readonly filterContainer: string
+  readonly filters: string
+  readonly withAndOperation: string
 }
 export default styles

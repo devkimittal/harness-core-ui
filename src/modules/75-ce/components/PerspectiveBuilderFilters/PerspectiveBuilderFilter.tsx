@@ -211,8 +211,8 @@ const PerspectiveBuilderFilter: React.FC<FilterPillProps> = ({
         searchText={pageInfo.searchValue}
       />
 
-      <Icon key="delete" name="delete" size={18} color={Color.ORANGE_500} onClick={removePill} />
-      {showAddButton ? <Icon key="add" name="add" size={18} color={Color.BLUE_500} onClick={onButtonClick} /> : null}
+      <Icon key="delete" name="delete" size={18} color={Color.ORANGE_700} onClick={removePill} />
+      {showAddButton ? <Icon key="add" name="add" size={18} color={Color.PRIMARY_7} onClick={onButtonClick} /> : null}
     </Container>
   )
 }

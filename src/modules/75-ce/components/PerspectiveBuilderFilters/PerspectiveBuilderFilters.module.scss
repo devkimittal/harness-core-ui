@@ -18,6 +18,16 @@
   margin-left: 0px;
   background-color: var(--white);
   z-index: 2;
+
+  .filters {
+    display: grid;
+    width: 100%;
+    align-items: center;
+
+    &.withAndOperation {
+      grid-template-columns: 1fr 43px;
+    }
+  }
 }
 
 .addMoreFilter {

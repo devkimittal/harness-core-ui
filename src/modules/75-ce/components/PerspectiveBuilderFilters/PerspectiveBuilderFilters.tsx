@@ -8,6 +8,7 @@
 import React from 'react'
 import { FieldArray } from 'formik'
 import cx from 'classnames'
+import { Color, FontVariation, Container, Text } from '@harness/uicore'
 import type { ViewCondition } from 'services/ce/'
 import type { QlceViewFieldIdentifierData } from 'services/ce/services'
 import type { TimeRangeFilterType } from '@ce/types'
@@ -34,7 +35,8 @@ const Filters: React.FC<FiltersProps> = ({
   filterValue,
   setFieldValue,
   timeRange,
-  fieldName
+  fieldName,
+  showAndOperator
 }) => {
   const onPillDataChange: (id: number, data: Omit<PillData, 'type'>) => void = (id, data) => {
     if (data.viewField.identifier === 'CUSTOM') {
@@ -52,7 +54,10 @@ const Filters: React.FC<FiltersProps> = ({
           <section className={cx(css.filterContainer)}>
             {filters.map((data, innerIndex) => {
               return (
-                <React.Fragment key={`filter-pill-${innerIndex}`}>
+                <Container
+                  className={cx(css.filters, { [css.withAndOperation]: showAndOperator })}
+                  key={`filter-pill-${innerIndex}`}
+                >
                   <PerspectiveBuilderFilter
                     timeRange={timeRange}
                     showAddButton={innerIndex === filters.length - 1}
@@ -83,8 +88,24 @@ const Filters: React.FC<FiltersProps> = ({
                     onChange={onPillDataChange}
                     pillData={data}
                   />
-                  {/* {showAndOperator ? <Text className={css.andOperator}>AND</Text> : ''} */}
-                </React.Fragment>
+                  {showAndOperator && innerIndex === filters.length - 1 ? (
+                    <Text
+                      padding={{
+                        bottom: 'small'
+                      }}
+                      font={{
+                        variation: FontVariation.BODY2
+                      }}
+                      color={Color.PRIMARY_7}
+                      inline
+                      className={css.andOperator}
+                    >
+                      AND
+                    </Text>
+                  ) : (
+                    ''
+                  )}
+                </Container>
               )
             })}
           </section>

@@ -16,7 +16,7 @@ interface RuleViewProps {
   showAndOperatior: boolean
 }
 
-const RuleView: (props: RuleViewProps) => React.ReactElement = ({ condition, showAndOperatior }) => {
+const RuleView: (props: RuleViewProps) => React.ReactElement | null = ({ condition, showAndOperatior }) => {
   const pillProps = {
     border: { radius: 10 },
     background: Color.GREY_200,
@@ -31,7 +31,11 @@ const RuleView: (props: RuleViewProps) => React.ReactElement = ({ condition, sho
   }
   const values = condition.values || []
   const valuesToDisplay = values.slice(0, 2)
-  return (
+
+  const identifierName = condition.viewField?.identifierName
+  const fieldName = condition.viewField?.fieldName
+
+  return fieldName && identifierName ? (
     <Layout.Horizontal
       spacing="small"
       className={css.ruleViewContainer}
@@ -40,9 +44,7 @@ const RuleView: (props: RuleViewProps) => React.ReactElement = ({ condition, sho
         bottom: 'small'
       }}
     >
-      <Text
-        font={{ variation: FontVariation.SMALL_SEMI }}
-      >{`${condition?.viewField?.identifierName} > ${condition?.viewField?.fieldName}`}</Text>
+      <Text font={{ variation: FontVariation.SMALL_SEMI }}>{`${identifierName} > ${fieldName}`}</Text>
       <Text font={{ variation: FontVariation.SMALL_SEMI }}>{`${condition.viewOperator}`}</Text>
       {valuesToDisplay.map(val => (
         <Text {...pillProps} key={val}>
@@ -52,7 +54,7 @@ const RuleView: (props: RuleViewProps) => React.ReactElement = ({ condition, sho
       {values.length > 2 ? <Text {...pillProps}>{`+${values.length - 2}`}</Text> : null}
       {showAndOperatior ? <Text font={{ variation: FontVariation.SMALL_SEMI }}>AND</Text> : null}
     </Layout.Horizontal>
-  )
+  ) : null
 }
 
 interface RuleViewerProps {

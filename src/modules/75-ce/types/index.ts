@@ -116,11 +116,11 @@ export enum CostBucketWidgetType {
 }
 
 export type CostTargetType = CostTarget & {
-  isOpen: boolean
-  isViewerOpen: boolean
+  isOpen?: boolean
+  isViewerOpen?: boolean
 }
 
 export type SharedCostType = SharedCost & {
-  isOpen: boolean
-  isViewerOpen: boolean
+  isOpen?: boolean
+  isViewerOpen?: boolean
 }

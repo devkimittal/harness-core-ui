@@ -113,6 +113,7 @@ const CostBucketStep: (props: CostBucketStepProps) => React.ReactElement = ({
                             index={index}
                             fieldValuesList={fieldValuesList}
                             setFieldValue={formikProps.setFieldValue}
+                            validateField={formikProps.validateField}
                             isSharedCost={isSharedCost}
                             widgetType={widgetType}
                           />

@@ -22,9 +22,9 @@ import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { DEFAULT_TIME_RANGE } from '@ce/utils/momentUtils'
 import { EMPTY_PERSPECTIVE_RULE } from '@ce/utils/perspectiveUtils'
-import type { CostBucketWidgetType } from '@ce/types'
+import type { CostBucketWidgetType, CostTargetType, SharedCostType } from '@ce/types'
 import { useStrings } from 'framework/strings'
-import type { CostTarget, SharedCost } from 'services/ce'
+import type { SharedCost } from 'services/ce'
 import type { QlceViewFieldIdentifierData } from 'services/ce/services'
 import PerspectiveBuilderFilters from '../PerspectiveBuilderFilters/PerspectiveBuilderFilters'
 import { getBucketNameText } from './constants'
@@ -34,15 +34,14 @@ import css from './CostBucketBuilder.module.scss'
 
 interface CostBucketBuilderProps {
   fieldValuesList: QlceViewFieldIdentifierData[]
-  value:
-    | (CostTarget & { isOpen: boolean; isViewerOpen: boolean })
-    | (SharedCost & { isOpen: boolean; isViewerOpen: boolean })
+  value: CostTargetType | SharedCostType
   index: number
   setFieldValue: any
   removeCostBucket: () => void
   namespace: string
   isSharedCost?: boolean
   widgetType: CostBucketWidgetType
+  validateField: (field: string) => void
 }
 
 const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement = ({
@@ -98,14 +97,16 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                       iconProps={{
                         size: 20
                       }}
+                      className={css.buttonNoPadding}
                       minimal
                       intent="primary"
-                      onClick={() => {
+                      onClick={async () => {
                         setFieldValue(`${namespace}[${index}].isOpen`, false)
                       }}
                     />
                     <Button
                       icon="cross"
+                      className={css.buttonNoPadding}
                       iconProps={{
                         size: 20
                       }}
@@ -120,6 +121,7 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                   <>
                     <Button
                       icon="Edit"
+                      className={css.buttonNoPadding}
                       iconProps={{
                         size: 16
                       }}
@@ -131,6 +133,7 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                     />
                     <Button
                       icon={isViewerOpen ? 'chevron-up' : 'chevron-down'}
+                      className={css.buttonNoPadding}
                       iconProps={{
                         size: 20
                       }}
@@ -242,7 +245,7 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                 </Container>
               ) : null}
 
-              <RuleViewer isOpen={isViewerOpen && !isEditOpen} value={value} />
+              <RuleViewer isOpen={isViewerOpen && !isEditOpen ? true : false} value={value} />
             </Card>
           </Container>
         )

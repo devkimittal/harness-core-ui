@@ -7,13 +7,15 @@
 
 import React from 'react'
 import { Button, Container, FlexExpander, Formik, FormikForm, Layout, FormInput, Color } from '@harness/uicore'
-import { noop } from 'lodash-es'
+import * as Yup from 'yup'
 import { useFetchViewFieldsQuery, QlceViewFilterWrapperInput, QlceViewFieldIdentifierData } from 'services/ce/services'
 import { CostBucketWidgetType, CostTargetType, SharedCostType } from '@ce/types'
 import CostBucketStep from './CostBucketStep/CostBucketStep'
 import Step from './Step/Step'
 import ManageUnallocatedCost from './ManageUnallocatedCost/ManageUnallocatedCost'
 import css from './BusinessMappingBuilder.module.scss'
+// import { useCreateBusinessMapping } from 'services/ce'
+// import { useParams } from 'react-router'
 
 interface BusinessMappingForm {
   costTargets: Array<CostTargetType>
@@ -23,6 +25,7 @@ interface BusinessMappingForm {
 }
 
 const BusinessMappingBuilder: () => React.ReactElement = () => {
+  // const { accountId } = useParams()
   const [{ data }] = useFetchViewFieldsQuery({
     variables: {
       filters: [
@@ -31,19 +34,72 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
     }
   })
 
+  // const { mutate, loading } = useCreateBusinessMapping({
+  //   queryParams: {
+  //     accountIdentifier: accountId
+  //   }
+  // })
+
   const fieldValuesList = data?.perspectiveFields?.fieldIdentifierData as QlceViewFieldIdentifierData[]
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().trim().required(),
+    costTargets: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().trim().required(),
+        rules: Yup.array()
+          .of(
+            Yup.object().shape({
+              viewConditions: Yup.array().of(
+                Yup.object().shape({
+                  viewOperator: Yup.string(),
+                  viewField: Yup.object().shape({
+                    fieldId: Yup.string().required(),
+                    fieldName: Yup.string(),
+                    identifier: Yup.string().required(),
+                    identifierName: Yup.string().nullable()
+                  }),
+                  values: Yup.array().of(Yup.string()).min(1, 'Need at least one element')
+                })
+              )
+            })
+          )
+          .required()
+      })
+    )
+  })
+
+  const handleSubmit: (values: BusinessMappingForm) => void = async values => {
+    values.costTargets.forEach(costTarget => {
+      delete costTarget?.isOpen
+      delete costTarget?.isViewerOpen
+      delete (costTarget as SharedCostType).strategy
+    })
+
+    values.sharedCosts.forEach(costTarget => {
+      delete costTarget.isOpen
+      delete costTarget.isViewerOpen
+    })
+
+    // const result = await mutate(values, {
+    //   queryParams: {
+    //     accountIdentifier: accountId
+    //   }
+    // })
+  }
 
   return (
     <Formik<BusinessMappingForm>
       formName="createBusinessMapping"
+      validationSchema={validationSchema}
       initialValues={{
         costTargets: [],
         sharedCosts: [],
         costTargetsKey: 0,
         sharedCostsKey: 0
       }}
-      onSubmit={() => {
-        noop
+      onSubmit={values => {
+        handleSubmit(values)
       }}
       render={formikProps => {
         return (
@@ -56,7 +112,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
             >
               <FormInput.Text name="name" placeholder="Enter Business Mapping Name" />
               <FlexExpander />
-              <Button icon="upload-box" intent="primary" text={'Save Business Mapping'} />
+              <Button icon="upload-box" intent="primary" text={'Save Business Mapping'} type="submit" />
             </Layout.Horizontal>
             <Container
               className={css.container}
