@@ -1638,11 +1638,16 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
               <div
                 class="StyledProps--font StyledProps--main authHeaderRow"
               >
-                <span
-                  class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
+                <div
+                  class="Text--withDocsTooltip"
+                  data-tooltip-id="acrAuthTooltip"
                 >
-                  authentication
-                </span>
+                  <span
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
+                  >
+                    authentication
+                  </span>
+                </div>
                 <div
                   class="bp3-form-group authTypeSelect"
                 >
@@ -2590,11 +2595,16 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
               <div
                 class="StyledProps--font StyledProps--main authHeaderRow"
               >
-                <span
-                  class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
+                <div
+                  class="Text--withDocsTooltip"
+                  data-tooltip-id="acrAuthTooltip"
                 >
-                  authentication
-                </span>
+                  <span
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
+                  >
+                    authentication
+                  </span>
+                </div>
                 <div
                   class="bp3-form-group authTypeSelect"
                 >

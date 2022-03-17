@@ -189,7 +189,11 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                     label={getString('connectors.azure.tenantIdPlaceholder')}
                   />
                   <Container className={css.authHeaderRow}>
-                    <Text font={{ variation: FontVariation.H6 }} inline>
+                    <Text
+                      font={{ variation: FontVariation.H6 }}
+                      tooltipProps={{ dataTooltipId: 'acrAuthTooltip' }}
+                      inline
+                    >
                       {getString('authentication')}
                     </Text>
                     <FormInput.Select
