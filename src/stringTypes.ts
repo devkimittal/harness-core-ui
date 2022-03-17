@@ -3342,6 +3342,7 @@ export interface StringsMap {
   'cd.pipelineSteps.environmentTab.specifyYourEnvironment': string
   'cd.pipelineSteps.executionTab.stepsCount': string
   'cd.pipelineSteps.infraTab.clusterError': string
+  'cd.pipelineSteps.infraTab.clusterErrorAzure': string
   'cd.pipelineSteps.infraTab.deploymentType': string
   'cd.pipelineSteps.infraTab.resourceGroupError': string
   'cd.pipelineSteps.infraTab.subscriptionError': string

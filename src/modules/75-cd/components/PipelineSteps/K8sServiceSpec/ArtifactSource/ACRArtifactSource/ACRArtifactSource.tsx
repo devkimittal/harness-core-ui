@@ -85,6 +85,10 @@ const Content = (props: ACRRenderContent): JSX.Element => {
       orgIdentifier,
       repoIdentifier,
       branch,
+      connectorRef:
+        getMultiTypeFromValue(artifact?.spec?.connectorRef) !== MultiTypeInputType.RUNTIME
+          ? artifact?.spec?.connectorRef
+          : get(initialValues?.artifacts, `${artifactPath}.spec.connectorRef`, ''),
       subscription:
         getMultiTypeFromValue(artifact?.spec?.subscription) !== MultiTypeInputType.RUNTIME
           ? artifact?.spec?.subscription
@@ -130,7 +134,7 @@ const Content = (props: ACRRenderContent): JSX.Element => {
 
   useEffect(() => {
     if (
-      getMultiTypeFromValue(artifact?.spec?.repository) === MultiTypeInputType.FIXED &&
+      getMultiTypeFromValue(artifact?.spec?.subscription) === MultiTypeInputType.FIXED &&
       getMultiTypeFromValue(artifact?.spec?.registry) === MultiTypeInputType.FIXED
     ) {
       refetchRegistries({
@@ -353,6 +357,10 @@ export class ACRArtifactSource extends ArtifactSourceBase<ArtifactSourceRenderPr
   isTagsSelectionDisabled(props: ArtifactSourceRenderProps): boolean {
     const { initialValues, artifactPath, artifact } = props
 
+    const isConnectorPresent =
+      getMultiTypeFromValue(artifact?.spec?.connectorRef) !== MultiTypeInputType.RUNTIME
+        ? artifact?.spec?.connectorRef
+        : get(initialValues?.artifacts, `${artifactPath}.spec.connectorRef`, '')
     const isSubscriptionPresent =
       getMultiTypeFromValue(artifact?.spec?.subscription) !== MultiTypeInputType.RUNTIME
         ? artifact?.spec?.subscription
@@ -366,7 +374,7 @@ export class ACRArtifactSource extends ArtifactSourceBase<ArtifactSourceRenderPr
         ? artifact?.spec?.repository
         : get(initialValues, `artifacts.${artifactPath}.spec.repository`, '')
 
-    return !(isSubscriptionPresent && isRegistryPresent && isRepositoryPresent)
+    return !(isConnectorPresent && isSubscriptionPresent && isRegistryPresent && isRepositoryPresent)
   }
 
   renderContent(props: ArtifactSourceRenderProps): JSX.Element | null {
