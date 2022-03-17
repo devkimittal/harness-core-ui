@@ -90,6 +90,11 @@ describe('Create Azure connector Wizard', () => {
     await act(async () => {
       fireEvent.click(container.querySelector('button[type="submit"]')!)
     })
+    expect(container).toMatchSnapshot()
+
+    await act(async () => {
+      fireEvent.click(container.querySelector('button[type="submit"]')!)
+    })
 
     expect(container).toMatchSnapshot()
   })
