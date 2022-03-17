@@ -264,49 +264,29 @@ function generateSchemaForMap(
   }
 }
 
-function generateSchemaForOutputVariables(
-  { isInputSet }: Field,
-  { getString }: GenerateSchemaDependencies
-): ArraySchema<any> | Lazy {
-  if (isInputSet) {
-    return yup
-      .array()
-      .of(
-        yup.lazy(val =>
-          getMultiTypeFromValue(val as string) === MultiTypeInputType.FIXED
-            ? yup.object().shape({
-                name: yup.string().matches(regexIdentifier, getString('validation.validOutputVariableRegex'))
-              })
-            : yup.string()
-        )
-      )
-      .test('valuesShouldBeUnique', getString('validation.uniqueValues'), outputVariables => {
-        if (!outputVariables) return true
-
-        return uniqBy(outputVariables, 'name').length === outputVariables.length
-      })
-  } else {
-    return yup.lazy(value =>
-      Array.isArray(value)
-        ? yup
-            .array()
-            .of(
-              yup.object().shape({
-                value: yup.lazy(val =>
-                  getMultiTypeFromValue(val as string) === MultiTypeInputType.FIXED
-                    ? yup.string().matches(regexIdentifier, getString('validation.validOutputVariableRegex'))
-                    : yup.string()
-                )
-              })
+function generateSchemaForOutputVariables({ getString }: GenerateSchemaDependencies): ArraySchema<any> | Lazy {
+  return yup.lazy(value => {
+    if (Array.isArray(value)) {
+      return yup
+        .array()
+        .of(
+          yup.object().shape({
+            value: yup.lazy(val =>
+              getMultiTypeFromValue(val as string) === MultiTypeInputType.FIXED
+                ? yup.string().matches(regexIdentifier, getString('validation.validOutputVariableRegex'))
+                : yup.string()
             )
-            .test('valuesShouldBeUnique', getString('validation.uniqueValues'), outputVariables => {
-              if (!outputVariables) return true
+          })
+        )
+        .test('valuesShouldBeUnique', getString('validation.uniqueValues'), outputVariables => {
+          if (!outputVariables) return true
 
-              return uniqBy(outputVariables, 'value').length === outputVariables.length
-            })
-        : yup.string()
-    )
-  }
+          return uniqBy(outputVariables, 'value').length === outputVariables.length
+        })
+    } else {
+      return yup.string()
+    }
+  })
 }
 
 export function generateSchemaForLimitMemory({ getString, isRequired = false }: GenerateSchemaDependencies): Lazy {
@@ -415,7 +395,7 @@ export function generateSchemaFields(
     }
 
     if (type === Types.OutputVariables) {
-      validationRule = generateSchemaForOutputVariables(field, { getString })
+      validationRule = generateSchemaForOutputVariables({ getString })
     }
 
     if (type === Types.LimitMemory) {

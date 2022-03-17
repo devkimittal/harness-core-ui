@@ -102,6 +102,8 @@ export const renderMultiTypeListInputSet = ({
     placeholder={placeholderKey ? getString(placeholderKey) : ''}
     disabled={readonly}
     formik={formik}
+    withObjectStructure={withObjectStructure}
+    keyName={keyName}
   />
 )
 

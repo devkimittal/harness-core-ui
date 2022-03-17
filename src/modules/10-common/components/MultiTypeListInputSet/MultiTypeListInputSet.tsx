@@ -80,7 +80,7 @@ export const MultiTypeListInputSet = (props: MultiTypeListProps): React.ReactEle
     }
     const initialValueInCorrectFormat = (initialValue || []).map((item: string | { [key: string]: string }) => ({
       id: uuid('', nameSpace()),
-      value: item
+      value: withObjectStructure && keyName ? ((item as { [key: string]: string })[keyName] as string) : item
     })) as ListUIType
 
     // Adding a default value
@@ -128,7 +128,7 @@ export const MultiTypeListInputSet = (props: MultiTypeListProps): React.ReactEle
     if (isEmpty(valueWithoutEmptyItems) && initialValue) {
       const initialValueInCorrectFormat = initialValue.map((item: string | { [key: string]: string }) => ({
         id: uuid('', nameSpace()),
-        value: typeof item === 'string' ? item : ''
+        value: withObjectStructure && keyName ? (item as { [key: string]: string })[keyName] : item
       })) as ListUIType
 
       // Adding a default value
@@ -143,7 +143,11 @@ export const MultiTypeListInputSet = (props: MultiTypeListProps): React.ReactEle
   React.useEffect(() => {
     let valueInCorrectFormat: ListType = []
     if (Array.isArray(value)) {
-      valueInCorrectFormat = value.filter(item => !!item.value).map(item => item?.value) as ListType
+      valueInCorrectFormat = value
+        .filter(item => !!item.value && typeof item.value === 'string')
+        .map(item => {
+          return withObjectStructure && keyName ? { [keyName]: item.value } : item.value
+        }) as ListType
     }
 
     if (get(formik?.values, name, '') !== RUNTIME_INPUT_VALUE) {
