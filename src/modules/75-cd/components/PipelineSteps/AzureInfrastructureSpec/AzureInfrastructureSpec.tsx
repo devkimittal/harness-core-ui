@@ -50,8 +50,7 @@ import { Scope } from '@common/interfaces/SecretsInterface'
 import type { VariableMergeServiceResponse } from 'services/pipeline-ng'
 
 import type { CompletionItemInterface } from '@common/interfaces/YAMLBuilderProps'
-import { useStrings } from 'framework/strings'
-import type { UseStringsReturn } from 'framework/strings'
+import { useStrings, UseStringsReturn } from 'framework/strings'
 import { loggerFor } from 'framework/logging/logging'
 import { ModuleName } from 'framework/types/ModuleName'
 import { VariablesListTable } from '@pipeline/components/VariablesListTable/VariablesListTable'
@@ -71,18 +70,23 @@ import stepCss from '@pipeline/components/PipelineSteps/Steps/Steps.module.scss'
 const logger = loggerFor(ModuleName.CD)
 type AzureInfrastructureTemplate = { [key in keyof AzureInfrastructure]: string }
 
+const subscriptionLabel = 'connectors.ACR.subscription'
+const resourceGroupLabel = 'common.resourceGroupLabel'
+const clusterLabel = 'common.cluster'
+const errorMessage = 'data.message'
+
 function getValidationSchema(getString: UseStringsReturn['getString']): Yup.ObjectSchema {
   return Yup.object().shape({
     connectorRef: getConnectorSchema(getString),
     subscription: Yup.lazy((value): Yup.Schema<unknown> => {
       /* istanbul ignore else */ if (typeof value === 'string') {
-        return Yup.string().required(getString('connectors.ACR.subscription'))
+        return Yup.string().required(getString(subscriptionLabel))
       }
       return Yup.object().test({
         test(valueObj: SelectOption): boolean | Yup.ValidationError {
           if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
             return this.createError({
-              message: getString('fieldRequired', { field: getString('connectors.ACR.subscription') })
+              message: getString('fieldRequired', { field: getString(subscriptionLabel) })
             })
           }
           return true
@@ -91,13 +95,13 @@ function getValidationSchema(getString: UseStringsReturn['getString']): Yup.Obje
     }),
     resourceGroup: Yup.lazy((value): Yup.Schema<unknown> => {
       /* istanbul ignore else */ if (typeof value === 'string') {
-        return Yup.string().required(getString('common.resourceGroupLabel'))
+        return Yup.string().required(getString(resourceGroupLabel))
       }
       return Yup.object().test({
         test(valueObj: SelectOption): boolean | Yup.ValidationError {
           if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
             return this.createError({
-              message: getString('fieldRequired', { field: getString('common.resourceGroupLabel') })
+              message: getString('fieldRequired', { field: getString(resourceGroupLabel) })
             })
           }
           return true
@@ -106,12 +110,12 @@ function getValidationSchema(getString: UseStringsReturn['getString']): Yup.Obje
     }),
     cluster: Yup.lazy((value): Yup.Schema<unknown> => {
       /* istanbul ignore else */ if (typeof value === 'string') {
-        return Yup.string().required(getString('common.cluster'))
+        return Yup.string().required(getString(clusterLabel))
       }
       return Yup.object().test({
         test(valueObj: SelectOption): boolean | Yup.ValidationError {
           if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
-            return this.createError({ message: getString('fieldRequired', { field: getString('common.cluster') }) })
+            return this.createError({ message: getString('fieldRequired', { field: getString(clusterLabel) }) })
           }
           return true
         }
@@ -135,9 +139,9 @@ interface AzureInfrastructureSpecEditableProps {
 }
 
 interface AzureInfrastructureUI extends Omit<AzureInfrastructure, 'subscription' | 'cluster' | 'resourceGroup'> {
-  subscription?: { label?: string; value?: string } | string | any
-  cluster?: { label?: string; value?: string } | string | any
-  resourceGroup?: { label?: string; value?: string } | string | any
+  subscription?: any
+  cluster?: any
+  resourceGroup?: any
 }
 
 const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableProps> = ({
@@ -164,7 +168,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
     refetch: refetchSubscriptionsData,
     loading: loadingSubscriptionsData,
     error: subscriptionsError
-    // todo: add subcription API call
   } = useGetSubscriptionsForAzure({
     lazy: true,
     debounce: 300
@@ -195,7 +198,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
     refetch: refetchResourceGroups,
     loading: loadingResourceGroupsData,
     error: resourceGroupsError
-    // todo: add clusters API call
   } = useGetResourceGroupsForAzure({
     lazy: true,
     debounce: 300
@@ -232,7 +234,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
     refetch: refetchClustersData,
     loading: loadingClustersData,
     error: clustersError
-    // todo: add clusters API call for azure
   } = useGetClustersForAzure({
     lazy: true,
     debounce: 300
@@ -267,7 +268,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
   }, [initialValues.connectorRef, initialValues.subscription, initialValues.resourceGroup])
 
   const getValue = (value: { label?: string; value?: string } | string | any): string => {
-    return typeof value === 'string' ? (value as string) : value?.value
+    return typeof value === 'string' ? value : value?.value
   }
 
   const getInitialValues = (): AzureInfrastructureUI => {
@@ -315,7 +316,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
             allowSimultaneousDeployments: value.allowSimultaneousDeployments
           }
           /* istanbul ignore else */ if (value.connectorRef) {
-            data.connectorRef = (value.connectorRef as any)?.value || /* istanbul ignore next */ value.connectorRef
+            data.connectorRef = value.connectorRef?.value || /* istanbul ignore next */ value.connectorRef
           }
 
           delayedOnUpdate(data)
@@ -376,7 +377,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                     type={
                       <Layout.Horizontal spacing="medium" style={{ alignItems: 'center' }}>
                         <Icon name={getIconByType(Connectors.AZURE)}></Icon>
-                        {/* todo: change label */}
                         <Text>{getString('pipelineSteps.gcpConnectorLabel')}</Text>
                       </Layout.Horizontal>
                     }
@@ -411,14 +411,14 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       addClearBtn: !(loadingSubscriptionsData || readonly),
                       noResults: (
                         <Text padding={'small'}>
-                          {get(subscriptionsError, 'data.message', null) ||
+                          {get(subscriptionsError, errorMessage, null) ||
                             getString('cd.pipelineSteps.infraTab.subscriptionError')}
                         </Text>
                       )
                     },
                     allowableTypes
                   }}
-                  label={getString('connectors.ACR.subscription')}
+                  label={getString(subscriptionLabel)}
                 />
                 {getMultiTypeFromValue(getValue(formik.values.subscription)) === MultiTypeInputType.RUNTIME &&
                   !readonly && (
@@ -456,15 +456,14 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       addClearBtn: !(loadingResourceGroupsData || readonly),
                       noResults: (
                         <Text padding={'small'}>
-                          {get(resourceGroupsError, 'data.message', null) ||
-                            // todo: add error
+                          {get(resourceGroupsError, errorMessage, null) ||
                             getString('cd.pipelineSteps.infraTab.resourceGroupError')}
                         </Text>
                       )
                     },
                     allowableTypes
                   }}
-                  label={getString('common.resourceGroupLabel')}
+                  label={getString(resourceGroupLabel)}
                 />
                 {getMultiTypeFromValue(getValue(formik.values.resourceGroup)) === MultiTypeInputType.RUNTIME &&
                   !readonly && (
@@ -502,14 +501,14 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       addClearBtn: !(loadingClustersData || readonly),
                       noResults: (
                         <Text padding={'small'}>
-                          {get(clustersError, 'data.message', null) ||
+                          {get(clustersError, errorMessage, null) ||
                             getString('cd.pipelineSteps.infraTab.clusterErrorAzure')}
                         </Text>
                       )
                     },
                     allowableTypes
                   }}
-                  label={getString('common.cluster')}
+                  label={getString(clusterLabel)}
                 />
                 {getMultiTypeFromValue(getValue(formik.values.cluster)) === MultiTypeInputType.RUNTIME && !readonly && (
                   <ConfigureOptions
@@ -640,7 +639,6 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
 
   useEffect(() => {
     const options =
-      // todo: replace clusterNames
       subscriptionsData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setSubscriptions(options)
   }, [subscriptionsData])
@@ -672,7 +670,6 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
 
   useEffect(() => {
     const options =
-      // todo: replace clusterNames
       resourceGroupData?.data?.map(name => ({ label: name, value: name })) || /* istanbul ignore next */ []
     setResourceGroups(options)
   }, [resourceGroupData])
@@ -695,7 +692,6 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
           subscription
         }
       })
-      // reset resource groups on connectorRef or subscription change
       if (
         getMultiTypeFromValue(template?.resourceGroup) === MultiTypeInputType.RUNTIME &&
         getMultiTypeFromValue(initialValues?.resourceGroup) !== MultiTypeInputType.RUNTIME
@@ -748,7 +744,6 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
         }
       })
 
-      // reset cluster on connectorRef change
       if (
         getMultiTypeFromValue(template?.cluster) === MultiTypeInputType.RUNTIME &&
         getMultiTypeFromValue(initialValues?.cluster) !== MultiTypeInputType.RUNTIME
@@ -818,12 +813,11 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
             placeholder={
               loadingSubscriptionsData
                 ? /* istanbul ignore next */ getString('loading')
-                : // todo: change label
-                  getString('cd.steps.azureInfraStep.subscriptionPlaceholder')
+                : getString('cd.steps.azureInfraStep.subscriptionPlaceholder')
             }
             useValue
             selectItems={subscriptions}
-            label={getString('connectors.ACR.subscription')}
+            label={getString(subscriptionLabel)}
             multiTypeInputProps={{
               selectProps: {
                 items: subscriptions,
@@ -832,7 +826,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
                 noResults: (
                   <Text padding={'small'}>
                     {defaultTo(
-                      get(subscriptionsError, 'data.message', subscriptionsError?.message),
+                      get(subscriptionsError, errorMessage, subscriptionsError?.message),
                       getString('cd.pipelineSteps.infraTab.subscriptionError')
                     )}
                   </Text>
@@ -856,7 +850,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
             }
             useValue
             selectItems={resourceGroups}
-            label={getString('common.resourceGroupLabel')}
+            label={getString(resourceGroupLabel)}
             multiTypeInputProps={{
               selectProps: {
                 items: resourceGroups,
@@ -865,7 +859,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
                 noResults: (
                   <Text padding={'small'}>
                     {defaultTo(
-                      get(resourceGroupsError, 'data.message', resourceGroupsError?.message),
+                      get(resourceGroupsError, errorMessage, resourceGroupsError?.message),
                       getString('cd.pipelineSteps.infraTab.resourceGroupError')
                     )}
                   </Text>
@@ -889,7 +883,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
             }
             useValue
             selectItems={clusters}
-            label={getString('common.cluster')}
+            label={getString(clusterLabel)}
             multiTypeInputProps={{
               selectProps: {
                 items: clusters,
@@ -898,7 +892,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
                 noResults: (
                   <Text padding={'small'}>
                     {defaultTo(
-                      get(clustersError, 'data.message', clustersError?.message),
+                      get(clustersError, errorMessage, clustersError?.message),
                       getString('cd.pipelineSteps.infraTab.clusterErrorAzure')
                     )}
                   </Text>
@@ -979,7 +973,6 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     releaseName: ''
   }
 
-  // todo: change azure icon to microsoft azure
   protected stepIcon: IconName = 'microsoft-azure'
   protected stepName = 'Specify your Azure Connector'
   protected stepPaletteVisible = false
@@ -1008,7 +1001,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('Error while parsing the yaml', err)
+      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
@@ -1026,21 +1019,18 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
             includeAllConnectorsAvailableAtScope: true
           },
           body: { types: [AzureType], filterType: 'Connector' }
-        }).then(response => {
-          const data =
+        }).then(
+          response =>
             response?.data?.content?.map(connector => ({
               label: getConnectorName(connector),
               insertText: getConnectorValue(connector),
               kind: CompletionItemKind.Field
             })) || /* istanbul ignore next */ []
-          return data
-        })
+        )
       }
     }
 
-    return new Promise(resolve => {
-      resolve([])
-    })
+    return Promise.resolve([])
   }
 
   protected getSubscriptionListForYaml(
@@ -1052,7 +1042,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('Error while parsing the yaml', err)
+      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
@@ -1073,22 +1063,18 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
             projectIdentifier,
             connectorRef: obj.spec?.connectorRef
           }
-        }).then(response => {
-          const data =
-            // change clusterNames
+        }).then(
+          response =>
             response?.data?.map(subscription => ({
               label: subscription,
               insertText: subscription,
               kind: CompletionItemKind.Field
             })) || /* istanbul ignore next */ []
-          return data
-        })
+        )
       }
     }
 
-    return new Promise(resolve => {
-      resolve([])
-    })
+    return Promise.resolve([])
   }
 
   protected getResourceGroupListForYaml(
@@ -1100,7 +1086,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('Error while parsing the yaml', err)
+      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
@@ -1116,7 +1102,6 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
         obj?.spec?.subscription &&
         getMultiTypeFromValue(obj.spec?.subscription) === MultiTypeInputType.FIXED
       ) {
-        // todo: add API call for resource group
         return getResourceGroupsForAzurePromise({
           queryParams: {
             accountIdentifier: accountId,
@@ -1125,22 +1110,18 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
             connectorRef: obj.spec?.connectorRef,
             subscription: obj.spec?.subscription
           }
-        }).then(response => {
-          const data =
-            // change clusterNames
+        }).then(
+          response =>
             response?.data?.map(resourceGroup => ({
               label: resourceGroup,
               insertText: resourceGroup,
               kind: CompletionItemKind.Field
             })) || /* istanbul ignore next */ []
-          return data
-        })
+        )
       }
     }
 
-    return new Promise(resolve => {
-      resolve([])
-    })
+    return Promise.resolve([])
   }
 
   protected getClusterListForYaml(
@@ -1152,7 +1133,7 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('Error while parsing the yaml', err)
+      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
@@ -1179,21 +1160,18 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
             subscription: obj.spec?.subscription,
             resourceGroup: obj.spec?.resourceGroup
           }
-        }).then(response => {
-          const data =
+        }).then(
+          response =>
             response?.data?.map(cluster => ({
               label: cluster,
               insertText: cluster,
               kind: CompletionItemKind.Field
             })) || /* istanbul ignore next */ []
-          return data
-        })
+        )
       }
     }
 
-    return new Promise(resolve => {
-      resolve([])
-    })
+    return Promise.resolve([])
   }
 
   validateInputSet({
@@ -1216,21 +1194,21 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
       isRequired &&
       getMultiTypeFromValue(template?.subscription) === MultiTypeInputType.RUNTIME
     ) {
-      errors.subscription = getString?.('fieldRequired', { field: getString('connectors.ACR.subscription') })
+      errors.subscription = getString?.('fieldRequired', { field: getString(subscriptionLabel) })
     }
     if (
       isEmpty(data.resourceGroup) &&
       isRequired &&
       getMultiTypeFromValue(template?.resourceGroup) === MultiTypeInputType.RUNTIME
     ) {
-      errors.resourceGroup = getString?.('fieldRequired', { field: getString('common.resourceGroupLabel') })
+      errors.resourceGroup = getString?.('fieldRequired', { field: getString(resourceGroupLabel) })
     }
     if (
       isEmpty(data.cluster) &&
       isRequired &&
       getMultiTypeFromValue(template?.cluster) === MultiTypeInputType.RUNTIME
     ) {
-      errors.cluster = getString?.('fieldRequired', { field: getString('common.cluster') })
+      errors.cluster = getString?.('fieldRequired', { field: getString(clusterLabel) })
     }
     /* istanbul ignore else */ if (
       getString &&

@@ -204,3 +204,4 @@ artifactPaths: Artifact Paths
 serviceList:
   noIdentifier: Selected service does not have any identifier associated with it.
 artifactRepoTooltip: Enter the name of the repository where the artifact source is located.
+parsingYamlError: 'Error while parsing the yaml'
