@@ -68,7 +68,7 @@ export default function SelectDeploymentType(props: SelectDeploymentTypeProps): 
               value: InfraDeploymentType.KubernetesGcp
             },
             {
-              label: getString('pipelineSteps.deploymentTypes.azure'),
+              label: getString('cd.steps.azureInfraStep.azure'),
               icon: 'microsoft-azure',
               value: InfraDeploymentType.Azure
             }
