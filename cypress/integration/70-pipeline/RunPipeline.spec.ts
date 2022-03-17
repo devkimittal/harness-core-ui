@@ -77,7 +77,7 @@ describe('RUN PIPELINE MODAL', () => {
       cy.contains('span', 'Pipeline Stage Successfully removed.').should('be.visible')
     })
 
-    it.skip('should display the field errors if form is invalid', () => {
+    it('should display the field errors if form is invalid', () => {
       cy.intercept('POST', pipelineSave, { fixture: 'pipeline/api/pipelines.postsuccess' })
       cy.intercept('POST', inputSetsTemplateCall, { fixture: 'pipeline/api/runpipeline/inputsettemplate' })
       cy.intercept('GET', pipelineDetailsCall, { fixture: 'pipeline/api/runpipeline/getpipeline' })
@@ -89,7 +89,7 @@ describe('RUN PIPELINE MODAL', () => {
       cy.contains('span', 'Pipeline published successfully').should('be.visible')
 
       cy.findByTestId('card-run-pipeline').click()
-      cy.contains('span', 'Run Pipeline').click()
+      cy.contains('span', 'Run').click({ force: true })
 
       cy.contains('span', 'Service is required').should('be.visible').should('have.class', 'FormError--error')
       cy.contains('span', 'ConnectorRef is a required field')
@@ -188,112 +188,111 @@ describe('RUN PIPELINE MODAL', () => {
         cy.get('#pipeline-panel').contains('span', 'cypress').should('be.visible')
       })
     })
+  })
+  describe('For approval stage', () => {
+    beforeEach(() => {
+      cy.get('[icon="plus"]').click()
+      cy.findByTestId('stage-Approval').click()
+      cy.fillName('testStage')
+      cy.contains('p', 'Harness Approval').click({ multiple: true })
+      cy.clickSubmit()
+    })
 
-    describe('For approval stage', () => {
+    it('should display the delete pipeline stage modal', () => {
+      cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
+      cy.wait(2000)
+      cy.get('[icon="play"]').click({ force: true, multiple: true })
+      cy.wait(2000)
+      cy.contains('p', 'testStage').trigger('mouseover')
+      cy.get('[icon="cross"]').click({ force: true })
+      cy.contains('p', 'Delete Pipeline Stage').should('be.visible')
+      cy.contains('span', 'Delete').click({ force: true })
+      cy.contains('span', 'Pipeline Stage Successfully removed.').should('be.visible')
+    })
+
+    it('adding step information ,apply changes without adding user groups', () => {
+      // Toggle to variable view
+      cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
+      cy.wait(2000)
+      cy.contains('span', 'Advanced').click({ force: true })
+      cy.wait(1000)
+      cy.contains('span', 'Execution').click({ force: true })
+      cy.wait(4000)
+      cy.contains('p', 'Approval').click()
+      cy.wait(4000)
+      cy.contains('p', 'Select User Group(s)').should('be.visible')
+      cy.contains('span', 'Apply Changes').click({ force: true })
+      cy.contains('span', 'Please provide user groups.').should('be.visible')
+    })
+    it('adding step information ,apply changes after adding groups', () => {
+      // Toggle to variable view
+      cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
+      cy.intercept('GET', userGroupCall, { fixture: 'pipeline/api/approvals/userGroup' })
+      cy.wait(2000)
+      cy.contains('span', 'Advanced').click({ force: true })
+      cy.wait(1000)
+      cy.contains('span', 'Execution').click({ force: true })
+      cy.wait(4000)
+      cy.contains('p', 'Approval').click()
+      cy.wait(4000)
+      cy.contains('p', 'Select User Group(s)').should('be.visible')
+      cy.contains('p', 'Select User Group(s)').click()
+      cy.wait(2000)
+      cy.contains('div', 'Organization').click()
+      cy.findByTestId('Checkbox-test').click({ force: true })
+      cy.contains('span', 'Apply Selected').click()
+      cy.contains('span', 'Apply Changes').click({ force: true })
+    })
+
+    describe('Checks visual to YAML and visual to variable view parity', () => {
       beforeEach(() => {
-        cy.get('[icon="plus"]').click()
-        cy.findByTestId('stage-Approval').click()
-        cy.fillName('testStage')
-        cy.contains('p', 'Harness Approval').click()
-        cy.clickSubmit()
+        cy.intercept('GET', servicesCall, { fixture: 'ng/api/servicesV2' })
+        cy.intercept('GET', environmentsCall, { fixture: 'ng/api/environmentsV2' })
+        cy.intercept('GET', connectorsCall, { fixture: 'ng/api/connectors' })
+        cy.intercept('POST', pipelineVariablesCall, { fixture: 'pipeline/api/approvals/pipeline.variables' })
+        cy.intercept('POST', resolvedPipelineDetailsCall, req => {
+          req.continue(res => {
+            res.send({
+              status: 'SUCCESS',
+              data: {
+                mergedPipelineYaml: req.body.originalEntityYaml,
+                templateReferenceSummaries: []
+              },
+              metaData: null,
+              correlationId: 'fa9edc77-c155-42f5-b0af-93c1f0546911'
+            })
+          })
+        })
       })
 
-      it('should display the delete pipeline stage modal', () => {
-        cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
-        cy.wait(2000)
-        cy.get('[icon="play"]').click({ force: true, multiple: true })
-        cy.wait(2000)
-        cy.contains('p', 'testStage').trigger('mouseover')
-        cy.get('[icon="cross"]').click({ force: true })
-        cy.contains('p', 'Delete Pipeline Stage').should('be.visible')
-        cy.contains('span', 'Delete').click({ force: true })
-        cy.contains('span', 'Pipeline Stage Successfully removed.').should('be.visible')
-      })
+      it('visual to variable view for stage configuration', () => {
+        // Toggle to variable view
 
-      it('adding step information ,apply changes without adding user groups', () => {
-        // Toggle to variable view
-        cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
-        cy.wait(2000)
-        cy.contains('span', 'Advanced').click({ force: true })
-        cy.wait(1000)
-        cy.contains('span', 'Execution').click({ force: true })
-        cy.wait(4000)
-        cy.contains('p', 'Approval').click()
-        cy.wait(4000)
-        cy.contains('p', 'Select User Group(s)').should('be.visible')
-        cy.contains('span', 'Apply Changes').click({ force: true })
-        cy.contains('span', 'Please provide user groups.').should('be.visible')
-      })
-      it('adding step information ,apply changes after adding groups', () => {
-        // Toggle to variable view
         cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
         cy.intercept('GET', userGroupCall, { fixture: 'pipeline/api/approvals/userGroup' })
+        cy.intercept('POST', stepsCall, { fixture: 'pipeline/api/approvals/steps' })
         cy.wait(2000)
         cy.contains('span', 'Advanced').click({ force: true })
         cy.wait(1000)
         cy.contains('span', 'Execution').click({ force: true })
-        cy.wait(4000)
+        cy.wait(2000)
         cy.contains('p', 'Approval').click()
-        cy.wait(4000)
-        cy.contains('p', 'Select User Group(s)').should('be.visible')
+        cy.wait(2000)
         cy.contains('p', 'Select User Group(s)').click()
         cy.wait(2000)
         cy.contains('div', 'Organization').click()
         cy.findByTestId('Checkbox-test').click({ force: true })
         cy.contains('span', 'Apply Selected').click()
         cy.contains('span', 'Apply Changes').click({ force: true })
-      })
+        cy.contains('span', 'Variables').click()
+        cy.wait(4000)
 
-      describe('Checks visual to YAML and visual to variable view parity', () => {
-        beforeEach(() => {
-          cy.intercept('GET', servicesCall, { fixture: 'ng/api/servicesV2' })
-          cy.intercept('GET', environmentsCall, { fixture: 'ng/api/environmentsV2' })
-          cy.intercept('GET', connectorsCall, { fixture: 'ng/api/connectors' })
-          cy.intercept('POST', pipelineVariablesCall, { fixture: 'pipeline/api/approvals/pipeline.variables' })
-          cy.intercept('POST', resolvedPipelineDetailsCall, req => {
-            req.continue(res => {
-              res.send({
-                status: 'SUCCESS',
-                data: {
-                  mergedPipelineYaml: req.body.originalEntityYaml,
-                  templateReferenceSummaries: []
-                },
-                metaData: null,
-                correlationId: 'fa9edc77-c155-42f5-b0af-93c1f0546911'
-              })
-            })
-          })
-        })
-
-        it('visual to variable view for stage configuration', () => {
-          // Toggle to variable view
-
-          cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
-          cy.intercept('GET', userGroupCall, { fixture: 'pipeline/api/approvals/userGroup' })
-          cy.intercept('POST', stepsCall, { fixture: 'pipeline/api/approvals/steps' })
-          cy.wait(2000)
-          cy.contains('span', 'Advanced').click({ force: true })
-          cy.wait(1000)
-          cy.contains('span', 'Execution').click({ force: true })
-          cy.wait(2000)
-          cy.contains('p', 'Approval').click()
-          cy.wait(2000)
-          cy.contains('p', 'Select User Group(s)').click()
-          cy.wait(2000)
-          cy.contains('div', 'Organization').click()
-          cy.findByTestId('Checkbox-test').click({ force: true })
-          cy.contains('span', 'Apply Selected').click()
-          cy.contains('span', 'Apply Changes').click({ force: true })
-          cy.contains('span', 'Variables').click()
-          cy.wait(4000)
-
-          cy.get('#pipeline-panel').contains('span', 'testPipeline_Cypress').should('be.visible')
-          cy.get('#pipeline-panel').contains('span', 'testStage').should('be.visible')
-          cy.contains('span', 'Please review the following information and approve the pipeline progression').should(
-            'be.visible'
-          )
-          cy.contains('span', 'timeout').should('be.visible')
-        })
+        cy.get('#pipeline-panel').contains('span', 'testPipeline_Cypress').should('be.visible')
+        cy.get('#pipeline-panel').contains('span', 'testStage').should('be.visible')
+        cy.contains('span', 'Please review the following information and approve the pipeline progression').should(
+          'be.visible'
+        )
+        cy.contains('span', 'timeout').should('be.visible')
       })
     })
   })
