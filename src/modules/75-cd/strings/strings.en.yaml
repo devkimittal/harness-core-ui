@@ -84,10 +84,11 @@ pipelineSteps:
     serviceIsRequired: Service is required
     aboutYourService: About the Service
   infraTab:
+    clusterError: No cluster found with given Connector
     deploymentType: Infrastructure type selection is required
     subscriptionError: No subscription found with given Connector
     resourceGroupError: No resource group found with given Subscription
-    clusterError: No cluster found with given Resource Group
+    clusterErrorAzure: No cluster found with given Resource Group
   executionTab:
     stepsCount: At least one step is required
 cdLaunchText: Launch CD First Generation

@@ -134,9 +134,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
     <PageSpinner />
   ) : (
     <Layout.Vertical spacing="medium" className={css.secondStep}>
-      <Text font={{ variation: FontVariation.H3 }} tooltipProps={{ dataTooltipId: 'azureAuthenticationDetails' }}>
-        {getString('details')}
-      </Text>
+      <Text font={{ variation: FontVariation.H3 }}>{getString('details')}</Text>
       <Formik
         initialValues={{
           ...initialValues,
@@ -191,11 +189,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                     label={getString('connectors.azure.tenantIdPlaceholder')}
                   />
                   <Container className={css.authHeaderRow}>
-                    <Text
-                      font={{ variation: FontVariation.H6 }}
-                      inline
-                      tooltipProps={{ dataTooltipId: 'acrAuthTooltip' }}
-                    >
+                    <Text font={{ variation: FontVariation.H6 }} inline>
                       {getString('authentication')}
                     </Text>
                     <FormInput.Select
@@ -224,7 +218,6 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                 icon="chevron-left"
                 variation={ButtonVariation.SECONDARY}
                 onClick={() => props?.previousStep?.(props?.prevStepData)}
-                data-name="artifactoryBackButton"
               />
               <Button
                 type="submit"

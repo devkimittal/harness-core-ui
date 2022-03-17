@@ -386,12 +386,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                     showAdvanced={true}
                     onChange={value => {
                       formik.setFieldValue('connectorRef', value)
-                      formik.setFieldValue('subscription', '')
-                      setSubscriptions([])
-                      formik.setFieldValue('cluster', '')
-                      setClusters([])
-                      formik.setFieldValue('resourceGroup', '')
-                      setResourceGroups([])
                     }}
                     isReadonly={readonly}
                   />
@@ -437,10 +431,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       showAdvanced={true}
                       onChange={value => {
                         formik.setFieldValue('subscription', value)
-                        formik.setFieldValue('cluster', '')
-                        setClusters([])
-                        formik.setFieldValue('resourceGroup', '')
-                        setResourceGroups([])
                       }}
                       isReadonly={readonly}
                     />
@@ -487,8 +477,6 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       showAdvanced={true}
                       onChange={value => {
                         formik.setFieldValue('resourceGroup', value)
-                        formik.setFieldValue('cluster', '')
-                        setClusters([])
                       }}
                       isReadonly={readonly}
                     />
@@ -515,7 +503,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       noResults: (
                         <Text padding={'small'}>
                           {get(clustersError, 'data.message', null) ||
-                            getString('cd.pipelineSteps.infraTab.clusterError')}
+                            getString('cd.pipelineSteps.infraTab.clusterErrorAzure')}
                         </Text>
                       )
                     },
@@ -911,7 +899,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
                   <Text padding={'small'}>
                     {defaultTo(
                       get(clustersError, 'data.message', clustersError?.message),
-                      getString('cd.pipelineSteps.infraTab.clusterError')
+                      getString('cd.pipelineSteps.infraTab.clusterErrorAzure')
                     )}
                   </Text>
                 )

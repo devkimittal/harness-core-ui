@@ -1983,7 +1983,6 @@ export interface EcrResponseDTO {
 }
 
 export type AcrArtifactConfig = ArtifactConfig & {
-  connectorRef: string
   subscription: string
   registry: string
   repository: string
@@ -13493,7 +13492,7 @@ export interface GetBuildDetailsForAcrWithYamlQueryParams {
 
 export type GetBuildDetailsForAcrWithYamlProps = Omit<
   MutateProps<
-    ResponseEcrResponseDTO,
+    ResponseAcrResponseDTO,
     Failure | Error,
     GetBuildDetailsForAcrWithYamlQueryParams,
     GetBuildDetailsForAcrWithYamlBodyRequestBody,
@@ -13507,7 +13506,7 @@ export type GetBuildDetailsForAcrWithYamlProps = Omit<
  */
 export const GetBuildDetailsForAcrWithYaml = (props: GetBuildDetailsForAcrWithYamlProps) => (
   <Mutate<
-    ResponseEcrResponseDTO,
+    ResponseAcrResponseDTO,
     Failure | Error,
     GetBuildDetailsForAcrWithYamlQueryParams,
     GetBuildDetailsForAcrWithYamlBodyRequestBody,

@@ -502,16 +502,11 @@ exports[`Create Azure connector Wizard Should match snapshot 2`] = `
       <div
         class="Layout--vertical Layout--layout-spacing-medium StyledProps--main secondStep"
       >
-        <div
-          class="Text--withDocsTooltip"
-          data-tooltip-id="azureAuthenticationDetails"
+        <p
+          class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
         >
-          <p
-            class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
-          >
-            details
-          </p>
-        </div>
+          details
+        </p>
         <div
           class="OverlaySpinner--overlaySpinner"
         >
@@ -574,7 +569,6 @@ exports[`Create Azure connector Wizard Should match snapshot 2`] = `
           >
             <button
               class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--withLeftIcon Button--variation Button--variation-secondary"
-              data-name="artifactoryBackButton"
               type="button"
             >
               <span
@@ -785,16 +779,11 @@ exports[`Create Azure connector Wizard Should match snapshot 3`] = `
       <div
         class="Layout--vertical Layout--layout-spacing-medium StyledProps--main secondStep"
       >
-        <div
-          class="Text--withDocsTooltip"
-          data-tooltip-id="azureAuthenticationDetails"
+        <p
+          class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
         >
-          <p
-            class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
-          >
-            details
-          </p>
-        </div>
+          details
+        </p>
         <div
           class="OverlaySpinner--overlaySpinner"
         >
@@ -857,7 +846,6 @@ exports[`Create Azure connector Wizard Should match snapshot 3`] = `
           >
             <button
               class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--withLeftIcon Button--variation Button--variation-secondary"
-              data-name="artifactoryBackButton"
               type="button"
             >
               <span
@@ -1406,16 +1394,11 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
       <div
         class="Layout--vertical Layout--layout-spacing-medium StyledProps--main secondStep"
       >
-        <div
-          class="Text--withDocsTooltip"
-          data-tooltip-id="azureAuthenticationDetails"
+        <p
+          class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
         >
-          <p
-            class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
-          >
-            details
-          </p>
-        </div>
+          details
+        </p>
         <div
           class="OverlaySpinner--overlaySpinner"
         >
@@ -1655,16 +1638,11 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
               <div
                 class="StyledProps--font StyledProps--main authHeaderRow"
               >
-                <div
-                  class="Text--withDocsTooltip"
-                  data-tooltip-id="acrAuthTooltip"
+                <span
+                  class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
                 >
-                  <span
-                    class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
-                  >
-                    authentication
-                  </span>
-                </div>
+                  authentication
+                </span>
                 <div
                   class="bp3-form-group authTypeSelect"
                 >
@@ -1820,7 +1798,6 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
           >
             <button
               class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--withLeftIcon Button--variation Button--variation-secondary"
-              data-name="artifactoryBackButton"
               type="button"
             >
               <span
@@ -2369,16 +2346,11 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
       <div
         class="Layout--vertical Layout--layout-spacing-medium StyledProps--main secondStep"
       >
-        <div
-          class="Text--withDocsTooltip"
-          data-tooltip-id="azureAuthenticationDetails"
+        <p
+          class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
         >
-          <p
-            class="StyledProps--font StyledProps--main StyledProps--font-variation-h3"
-          >
-            details
-          </p>
-        </div>
+          details
+        </p>
         <div
           class="OverlaySpinner--overlaySpinner"
         >
@@ -2618,16 +2590,11 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
               <div
                 class="StyledProps--font StyledProps--main authHeaderRow"
               >
-                <div
-                  class="Text--withDocsTooltip"
-                  data-tooltip-id="acrAuthTooltip"
+                <span
+                  class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
                 >
-                  <span
-                    class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--inline"
-                  >
-                    authentication
-                  </span>
-                </div>
+                  authentication
+                </span>
                 <div
                   class="bp3-form-group authTypeSelect"
                 >
@@ -2783,7 +2750,6 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
           >
             <button
               class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--withLeftIcon Button--variation Button--variation-secondary"
-              data-name="artifactoryBackButton"
               type="button"
             >
               <span
