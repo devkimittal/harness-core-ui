@@ -7,19 +7,24 @@
 
 import React, { useState } from 'react'
 import { Button, Layout, PageBody, PageHeader } from '@harness/uicore'
+import { useParams } from 'react-router-dom'
 import { Drawer, Position } from '@blueprintjs/core'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
 import { useStrings } from 'framework/strings'
+import { useGetBusinessMappingList } from 'services/ce'
+import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import BusinessMappingBuilder from '@ce/components/BusinessMappingBuilder/BusinessMappingBuilder'
 
 const BusinessMapping: () => React.ReactElement = () => {
+  const { accountId } = useParams<AccountPathProps>()
   const { getString } = useStrings()
+  const { loading } = useGetBusinessMappingList({ queryParams: { accountIdentifier: accountId } })
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
 
   return (
     <>
       <PageHeader breadcrumbs={<NGBreadcrumbs />} title={getString('ce.businessMapping.sideNavText')} />
-      <PageBody>
+      <PageBody loading={loading}>
         <Layout.Horizontal
           padding={{
             left: 'large',

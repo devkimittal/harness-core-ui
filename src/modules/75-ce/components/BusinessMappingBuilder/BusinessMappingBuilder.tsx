@@ -8,24 +8,26 @@
 import React from 'react'
 import { Button, Container, FlexExpander, Formik, FormikForm, Layout, FormInput, Color } from '@harness/uicore'
 import * as Yup from 'yup'
+import { useParams } from 'react-router-dom'
 import { useFetchViewFieldsQuery, QlceViewFilterWrapperInput, QlceViewFieldIdentifierData } from 'services/ce/services'
 import { CostBucketWidgetType, CostTargetType, SharedCostType } from '@ce/types'
+import { useCreateBusinessMapping } from 'services/ce'
+import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import CostBucketStep from './CostBucketStep/CostBucketStep'
 import Step from './Step/Step'
 import ManageUnallocatedCost from './ManageUnallocatedCost/ManageUnallocatedCost'
 import css from './BusinessMappingBuilder.module.scss'
-// import { useCreateBusinessMapping } from 'services/ce'
-// import { useParams } from 'react-router'
 
 interface BusinessMappingForm {
   costTargets: Array<CostTargetType>
   sharedCosts: Array<SharedCostType>
-  costTargetsKey: number
-  sharedCostsKey: number
+  costTargetsKey?: number
+  sharedCostsKey?: number
+  accountId?: string
 }
 
 const BusinessMappingBuilder: () => React.ReactElement = () => {
-  // const { accountId } = useParams()
+  const { accountId } = useParams<AccountPathProps>()
   const [{ data }] = useFetchViewFieldsQuery({
     variables: {
       filters: [
@@ -34,11 +36,11 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
     }
   })
 
-  // const { mutate, loading } = useCreateBusinessMapping({
-  //   queryParams: {
-  //     accountIdentifier: accountId
-  //   }
-  // })
+  const { mutate } = useCreateBusinessMapping({
+    queryParams: {
+      accountIdentifier: accountId
+    }
+  })
 
   const fieldValuesList = data?.perspectiveFields?.fieldIdentifierData as QlceViewFieldIdentifierData[]
 
@@ -70,6 +72,11 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
   })
 
   const handleSubmit: (values: BusinessMappingForm) => void = async values => {
+    delete values.costTargetsKey
+    delete values.sharedCostsKey
+
+    values.accountId = accountId
+
     values.costTargets.forEach(costTarget => {
       delete costTarget?.isOpen
       delete costTarget?.isViewerOpen
@@ -81,11 +88,11 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
       delete costTarget.isViewerOpen
     })
 
-    // const result = await mutate(values, {
-    //   queryParams: {
-    //     accountIdentifier: accountId
-    //   }
-    // })
+    await mutate(values, {
+      queryParams: {
+        accountIdentifier: accountId
+      }
+    })
   }
 
   return (
