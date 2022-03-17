@@ -273,7 +273,7 @@ function generateSchemaForOutputVariables(
       .array()
       .of(
         yup.lazy(val =>
-          getMultiTypeFromValue(val as string) === MultiTypeInputType.FIXED
+          getMultiTypeFromValue((val as { name: string })?.['name'] as string) === MultiTypeInputType.FIXED
             ? yup.object().shape({
                 name: yup.string().matches(regexIdentifier, getString('validation.validOutputVariableRegex'))
               })
