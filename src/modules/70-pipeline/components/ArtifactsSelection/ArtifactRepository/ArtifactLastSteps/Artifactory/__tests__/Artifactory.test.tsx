@@ -10,7 +10,6 @@ import { act, findByText, fireEvent, queryByAttribute, render, waitFor } from '@
 import { MultiTypeInputType } from '@wings-software/uicore'
 import { TestWrapper } from '@common/utils/testUtils'
 import { ArtifactType, TagTypes } from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
-import { ServiceDeploymentType } from '@pipeline/utils/stageHelpers'
 import Artifactory from '../Artifactory'
 
 const props = {
@@ -20,27 +19,12 @@ const props = {
   context: 2,
   handleSubmit: jest.fn(),
   artifactIdentifiers: [],
-  selectedArtifact: 'Nexus3Registry' as ArtifactType,
-  selectedDeploymentType: ServiceDeploymentType.Kubernetes
-}
-
-const repoMock = {
-  data: {
-    repositories: {
-      testRepo: 'generic-local',
-      anotherRepo: 'generic repo'
-    }
-  }
+  selectedArtifact: 'Nexus3Registry' as ArtifactType
 }
 
 jest.mock('services/cd-ng', () => ({
   useGetBuildDetailsForArtifactoryArtifact: jest.fn().mockImplementation(() => {
     return { data: {}, refetch: jest.fn(), error: null, loading: false }
-  }),
-  useGetRepositoriesDetailsForArtifactory: () => ({
-    loading: false,
-    data: repoMock,
-    refetch: jest.fn()
   })
 }))
 const initialValues = {

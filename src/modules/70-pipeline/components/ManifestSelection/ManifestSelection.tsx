@@ -15,7 +15,6 @@ import { usePipelineContext } from '@pipeline/components/PipelineStudio/Pipeline
 
 import type { PipelineType } from '@common/interfaces/RouteInterfaces'
 import { getIdentifierFromValue, getScopeFromValue } from '@common/components/EntityReference/EntityReference'
-import { getDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
 
 import { useStrings } from 'framework/strings'
 import type { Scope } from '@common/interfaces/SecretsInterface'
@@ -128,7 +127,14 @@ export default function ManifestSelection({
     }
   }
 
-  const deploymentType = getDeploymentType(stage, getStageFromPipeline, isPropagating)
+  const getDeploymentType = (): string => {
+    if (isPropagating) {
+      const parentStageId = get(stage, 'stage.spec.serviceConfig.useFromStage.stage', null)
+      const parentStage = getStageFromPipeline<DeploymentStageElementConfig>(parentStageId || '')
+      return get(parentStage, 'stage.stage.spec.serviceConfig.serviceDefinition.type', null)
+    }
+    return get(stage, 'stage.spec.serviceConfig.serviceDefinition.type', null)
+  }
 
   return (
     <Layout.Vertical>
@@ -150,9 +156,8 @@ export default function ManifestSelection({
         refetchConnectors={refetchConnectorList}
         listOfManifests={listOfManifests}
         isReadonly={isReadonly}
-        deploymentType={deploymentType}
+        deploymentType={getDeploymentType()}
         allowableTypes={allowableTypes}
-        allowOnlyOne={isServerlessDeploymentType(deploymentType)}
       />
     </Layout.Vertical>
   )

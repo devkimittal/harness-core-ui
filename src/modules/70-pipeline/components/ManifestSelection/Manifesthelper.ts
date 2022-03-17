@@ -20,8 +20,7 @@ export const ManifestDataType: Record<ManifestTypes, ManifestTypes> = {
   Kustomize: 'Kustomize',
   OpenshiftTemplate: 'OpenshiftTemplate',
   OpenshiftParam: 'OpenshiftParam',
-  KustomizePatches: 'KustomizePatches',
-  ServerlessAwsLambda: 'ServerlessAwsLambda'
+  KustomizePatches: 'KustomizePatches'
 }
 
 export const ManifestStoreMap: { [key: string]: ManifestStores } = {
@@ -44,8 +43,7 @@ export const allowedManifestTypes: Record<string, Array<ManifestTypes>> = {
     ManifestDataType.Kustomize,
     ManifestDataType.KustomizePatches
   ],
-  NativeHelm: [ManifestDataType.Values, ManifestDataType.HelmChart],
-  ServerlessAwsLambda: [ManifestDataType.ServerlessAwsLambda]
+  NativeHelm: [ManifestDataType.Values, ManifestDataType.HelmChart]
 }
 
 export const manifestStoreTypes: Array<ManifestStores> = [
@@ -62,8 +60,7 @@ export const manifestTypeIcons: Record<ManifestTypes, IconName> = {
   Kustomize: 'kustamize',
   OpenshiftTemplate: 'openshift',
   OpenshiftParam: 'openshift-params',
-  KustomizePatches: 'kustomizeparam',
-  ServerlessAwsLambda: 'service-serverless-aws'
+  KustomizePatches: 'kustomizeparam'
 }
 
 export const manifestTypeLabels: Record<ManifestTypes, StringKeys> = {
@@ -73,8 +70,7 @@ export const manifestTypeLabels: Record<ManifestTypes, StringKeys> = {
   Kustomize: 'pipeline.manifestTypeLabels.KustomizeLabel',
   OpenshiftTemplate: 'pipeline.manifestTypeLabels.OpenshiftTemplate',
   OpenshiftParam: 'pipeline.manifestTypeLabels.OpenshiftParam',
-  KustomizePatches: 'pipeline.manifestTypeLabels.KustomizePatches',
-  ServerlessAwsLambda: 'pipeline.manifestTypeLabels.ServerlessAwsLambda'
+  KustomizePatches: 'pipeline.manifestTypeLabels.KustomizePatches'
 }
 
 export const helmVersions: Array<{ label: string; value: HelmVersionOptions }> = [

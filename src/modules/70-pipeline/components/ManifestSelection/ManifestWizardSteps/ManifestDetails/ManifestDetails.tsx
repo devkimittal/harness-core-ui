@@ -31,7 +31,6 @@ import { FormMultiTypeCheckboxField } from '@common/components'
 
 import { useStrings } from 'framework/strings'
 import type { ConnectorConfigDTO, ManifestConfig, ManifestConfigWrapper } from 'services/cd-ng'
-import { isServerlessManifestType } from '@pipeline/utils/stageHelpers'
 import type { ManifestDetailDataType, ManifestTypes } from '../../ManifestInterface'
 import {
   gitFetchTypeList,
@@ -307,7 +306,6 @@ function ManifestDetails({
                     selectedManifest={selectedManifest}
                     expressions={expressions}
                     allowableTypes={allowableTypes}
-                    allowOnlyOneFilePath={isServerlessManifestType(selectedManifest)}
                   />
 
                   {!!(selectedManifest === ManifestDataType.K8sManifest) && (

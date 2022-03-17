@@ -514,7 +514,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                           <p
                             class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey600 StyledProps--margin-top-small"
                           >
-                            pipeline.serviceDeploymentTypes.kubernetes
+                            serviceDeploymentTypes.kubernetes
                           </p>
                           <input
                             checked=""
@@ -721,7 +721,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.amazonEcs
+                                  serviceDeploymentTypes.amazonEcs
                                 </p>
                                 <input
                                   disabled=""
@@ -912,7 +912,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.amazonAmi
+                                  serviceDeploymentTypes.amazonAmi
                                 </p>
                                 <input
                                   disabled=""
@@ -995,7 +995,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.awsCodeDeploy
+                                  serviceDeploymentTypes.awsCodeDeploy
                                 </p>
                                 <input
                                   disabled=""
@@ -1042,7 +1042,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.winrm
+                                  serviceDeploymentTypes.winrm
                                 </p>
                                 <input
                                   disabled=""
@@ -1089,7 +1089,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.awsLambda
+                                  serviceDeploymentTypes.awsLambda
                                 </p>
                                 <input
                                   disabled=""
@@ -1144,7 +1144,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.pcf
+                                  serviceDeploymentTypes.pcf
                                 </p>
                                 <input
                                   disabled=""
@@ -1221,7 +1221,7 @@ exports[`DeployStageSetupShell tests opens services tab by default 1`] = `
                                 <p
                                   class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey500 StyledProps--margin-top-small"
                                 >
-                                  pipeline.serviceDeploymentTypes.ssh
+                                  serviceDeploymentTypes.ssh
                                 </p>
                                 <input
                                   disabled=""

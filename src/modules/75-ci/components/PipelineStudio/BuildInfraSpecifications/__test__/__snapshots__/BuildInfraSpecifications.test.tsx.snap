@@ -381,7 +381,7 @@ exports[`BuildInfraSpecifications snapshot tests for AWS Build Infra initializes
                               <p
                                 class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--font-weight-semi-bold StyledProps--color StyledProps--color-grey600 StyledProps--margin-top-small"
                               >
-                                pipeline.serviceDeploymentTypes.kubernetes
+                                serviceDeploymentTypes.kubernetes
                               </p>
                               <input
                                 name="buildInfraType"

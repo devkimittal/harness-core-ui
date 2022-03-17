@@ -32,7 +32,6 @@ export interface DragnDropPathsProps {
   allowableTypes: MultiTypeInputType[]
   selectedManifest?: string | null
   pathLabel?: string | null
-  allowOnlyOneFilePath?: boolean
 }
 
 const defaultValueToReset = [{ path: '', uuid: uuid('', nameSpace()) }]
@@ -42,8 +41,7 @@ function DragnDropPaths({
   selectedManifest,
   expressions,
   allowableTypes,
-  pathLabel,
-  allowOnlyOneFilePath = false
+  pathLabel
 }: DragnDropPathsProps): React.ReactElement {
   const { getString } = useStrings()
   const onDragStart = useCallback((event: React.DragEvent<HTMLDivElement>, index: number) => {
@@ -167,18 +165,16 @@ function DragnDropPaths({
                       </Draggable>
                     ))}
                     {provided.placeholder}
-                    {allowOnlyOneFilePath && formik.values?.paths.length === 1 ? null : (
-                      <span>
-                        <Button
-                          text={getString('addFileText')}
-                          icon="plus"
-                          size={ButtonSize.SMALL}
-                          variation={ButtonVariation.LINK}
-                          className={css.addFileButton}
-                          onClick={() => arrayHelpers.push({ path: '', uuid: uuid('', nameSpace()) })}
-                        />
-                      </span>
-                    )}
+                    <span>
+                      <Button
+                        text={getString('addFileText')}
+                        icon="plus"
+                        size={ButtonSize.SMALL}
+                        variation={ButtonVariation.LINK}
+                        className={css.addFileButton}
+                        onClick={() => arrayHelpers.push({ path: '', uuid: uuid('', nameSpace()) })}
+                      />
+                    </span>
                   </Layout.Vertical>
                 )}
               />

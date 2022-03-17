@@ -15,10 +15,21 @@ import {
   getFailureStrategiesValidationSchema,
   getVariablesValidationField
 } from '@pipeline/components/PipelineSteps/AdvancedSteps/FailureStrategyPanel/validation'
-import { ServiceDeploymentType } from '@pipeline/utils/stageHelpers'
 
 const namespaceRegex = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?$/
 const releaseNameRegex = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/
+
+export enum ServiceDeploymentType {
+  Kubernetes = 'Kubernetes',
+  NativeHelm = 'NativeHelm',
+  amazonEcs = 'amazonEcs',
+  amazonAmi = 'amazonAmi',
+  awsCodeDeploy = 'awsCodeDeploy',
+  winrm = 'winrm',
+  awsLambda = 'awsLambda',
+  pcf = 'pcf',
+  ssh = 'ssh'
+}
 
 export enum InfraDeploymentType {
   KubernetesDirect = 'KubernetesDirect',

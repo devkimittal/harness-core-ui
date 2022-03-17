@@ -6,7 +6,6 @@
  */
 
 import React, { useCallback, useEffect } from 'react'
-import type { FormikValues } from 'formik'
 import { Menu } from '@blueprintjs/core'
 import {
   FormInput,
@@ -23,58 +22,25 @@ import { useStrings } from 'framework/strings'
 import { EXPRESSION_STRING } from '@pipeline/utils/constants'
 import { getHelpeTextForTags } from '@pipeline/utils/stageHelpers'
 
-import type { Failure, Error, ArtifactoryBuildDetailsDTO, DockerBuildDetailsDTO } from 'services/cd-ng'
+import type { Failure, Error, DockerBuildDetailsDTO } from 'services/cd-ng'
 import { tagOptions } from '../../../ArtifactHelper'
-import { getArtifactPathToFetchTags, helperTextData, resetTag } from '../../../ArtifactUtils'
+import { helperTextData, resetTag } from '../../../ArtifactUtils'
 import type { ArtifactImagePathTagViewProps } from '../../../ArtifactInterface'
 import css from '../../ArtifactConnector.module.scss'
 
-export function NoTagResults({
-  tagError,
-  isServerlessDeploymentTypeSelected
-}: {
-  tagError: GetDataError<Failure | Error> | null
-  isServerlessDeploymentTypeSelected?: boolean
-}): JSX.Element {
+export function NoTagResults({ tagError }: { tagError: GetDataError<Failure | Error> | null }): JSX.Element {
   const { getString } = useStrings()
-
-  const getErrorText = useCallback(() => {
-    if (isServerlessDeploymentTypeSelected) {
-      getString('pipelineSteps.deploy.errors.noArtifactPaths')
-    }
-    return getString('pipelineSteps.deploy.errors.notags')
-  }, [isServerlessDeploymentTypeSelected, getString])
 
   return (
     <span className={css.padSmall}>
-      <Text lineClamp={1}>{get(tagError, 'data.message', null) || getErrorText()}</Text>
+      <Text lineClamp={1}>
+        {get(tagError, 'data.message', null) || getString('pipelineSteps.deploy.errors.notags')}
+      </Text>
     </span>
   )
 }
 
-const onTagInputFocus = (
-  e: React.FocusEvent<HTMLInputElement>,
-  formik: FormikValues,
-  fetchTags: (val: string) => void,
-  isArtifactPath = false,
-  isServerlessDeploymentTypeSelected = false
-): void => {
-  if (e?.target?.type !== 'text' || (e?.target?.type === 'text' && e?.target?.placeholder === EXPRESSION_STRING)) {
-    return
-  }
-  fetchTags(getArtifactPathToFetchTags(formik, isArtifactPath, isServerlessDeploymentTypeSelected))
-}
-
-export const selectItemsMapper = (
-  tagList: DockerBuildDetailsDTO[] | undefined,
-  isServerlessDeploymentTypeSelected = false
-): SelectOption[] => {
-  if (isServerlessDeploymentTypeSelected) {
-    return tagList?.map((tag: ArtifactoryBuildDetailsDTO) => ({
-      label: tag.artifactPath,
-      value: tag.artifactPath
-    })) as SelectOption[]
-  }
+export const selectItemsMapper = (tagList: DockerBuildDetailsDTO[] | undefined): SelectOption[] => {
   return tagList?.map(tag => ({ label: tag.tag, value: tag.tag })) as SelectOption[]
 }
 
@@ -91,15 +57,11 @@ function ArtifactImagePathTagView({
   fetchTags,
   tagError,
   tagDisabled,
-  isArtifactPath,
-  isServerlessDeploymentTypeSelected
+  isArtifactPath
 }: ArtifactImagePathTagViewProps): React.ReactElement {
   const { getString } = useStrings()
 
-  const getSelectItems = useCallback(selectItemsMapper.bind(null, tagList, isServerlessDeploymentTypeSelected), [
-    tagList,
-    isServerlessDeploymentTypeSelected
-  ])
+  const getSelectItems = useCallback(selectItemsMapper.bind(null, tagList), [tagList])
 
   const tags = buildDetailsLoading ? [{ label: 'Loading Tags...', value: 'Loading Tags...' }] : getSelectItems()
 
@@ -127,21 +89,19 @@ function ArtifactImagePathTagView({
     </div>
   ))
 
-  const onChangeImageArtifactPath = (): void => {
-    tagList?.length && setTagList([])
-    resetTag(formik)
-  }
-
   return (
     <>
-      {isServerlessDeploymentTypeSelected ? null : isArtifactPath ? (
+      {isArtifactPath ? (
         <div className={css.imagePathContainer}>
           <FormInput.MultiTextInput
             label={getString('pipeline.artifactPathLabel')}
             name="artifactPath"
             placeholder={getString('pipeline.artifactsSelection.artifactNamePlaceholder')}
             multiTextInputProps={{ expressions, allowableTypes }}
-            onChange={onChangeImageArtifactPath}
+            onChange={() => {
+              tagList?.length && setTagList([])
+              resetTag(formik)
+            }}
           />
           {getMultiTypeFromValue(formik.values?.artifactPath) === MultiTypeInputType.RUNTIME && (
             <div className={css.configureOptions}>
@@ -167,7 +127,10 @@ function ArtifactImagePathTagView({
             name="imagePath"
             placeholder={getString('pipeline.artifactsSelection.existingDocker.imageNamePlaceholder')}
             multiTextInputProps={{ expressions, allowableTypes }}
-            onChange={onChangeImageArtifactPath}
+            onChange={() => {
+              tagList?.length && setTagList([])
+              resetTag(formik)
+            }}
           />
           {getMultiTypeFromValue(formik.values?.imagePath) === MultiTypeInputType.RUNTIME && (
             <div className={css.configureOptions}>
@@ -190,9 +153,6 @@ function ArtifactImagePathTagView({
 
       <div className={css.tagGroup}>
         <FormInput.RadioGroup
-          label={
-            isServerlessDeploymentTypeSelected ? getString('pipeline.artifactsSelection.artifactDetails') : undefined
-          }
           name="tagType"
           radioGroup={{ inline: true }}
           items={tagOptions}
@@ -206,28 +166,31 @@ function ArtifactImagePathTagView({
             disabled={tagDisabled}
             helperText={
               getMultiTypeFromValue(formik.values?.tag) === MultiTypeInputType.FIXED &&
-              getHelpeTextForTags(
-                helperTextData(selectedArtifact, formik, connectorIdValue),
-                getString,
-                isServerlessDeploymentTypeSelected
-              )
+              getHelpeTextForTags(helperTextData(selectedArtifact, formik, connectorIdValue), getString)
             }
             multiTypeInputProps={{
               expressions,
               allowableTypes,
               selectProps: {
                 defaultSelectedItem: formik.values?.tag,
-                noResults: <NoTagResults tagError={tagError} isServerlessDeploymentTypeSelected />,
+                noResults: <NoTagResults tagError={tagError} />,
                 items: tags,
                 addClearBtn: true,
                 itemRenderer: itemRenderer,
                 allowCreatingNewItems: true,
                 addTooltip: true
               },
-              onFocus: (e: React.FocusEvent<HTMLInputElement>) =>
-                onTagInputFocus(e, formik, fetchTags, isArtifactPath, isServerlessDeploymentTypeSelected)
+              onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+                if (
+                  e?.target?.type !== 'text' ||
+                  (e?.target?.type === 'text' && e?.target?.placeholder === EXPRESSION_STRING)
+                ) {
+                  return
+                }
+                fetchTags(isArtifactPath ? formik.values.artifactPath : formik.values.imagePath)
+              }
             }}
-            label={isServerlessDeploymentTypeSelected ? getString('pipeline.artifactPathLabel') : getString('tagLabel')}
+            label={getString('tagLabel')}
             name="tag"
             className={css.tagInputButton}
           />
@@ -254,9 +217,7 @@ function ArtifactImagePathTagView({
       {formik.values?.tagType === 'regex' ? (
         <div className={css.imagePathContainer}>
           <FormInput.MultiTextInput
-            label={
-              isServerlessDeploymentTypeSelected ? getString('pipeline.artifactPathFilterLabel') : getString('tagRegex')
-            }
+            label={getString('tagRegex')}
             name="tagRegex"
             placeholder={getString('pipeline.artifactsSelection.existingDocker.enterTagRegex')}
             multiTextInputProps={{ expressions, allowableTypes }}

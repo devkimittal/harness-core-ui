@@ -268,11 +268,6 @@ manifestTypeLabels:
   OpenshiftTemplate: Openshift Template
   OpenshiftParam: Openshift Param
   KustomizePatches: Kustomize Patches
-  ServerlessAwsLambda: Serverless Lambda Manifest
-  ServerlessAzure: Serverless Azure Manifest
-  ServerlessGCP: Serverless GCP Manifest
-  AwsSAM: AWS SAM Manifest
-  AzureFunctions: Azure Functions Manifest
 manifestToConnectorLabelMap:
   AWSLabel: '{{ $.common.aws }}'
   GCPLabel: GCP
@@ -609,7 +604,6 @@ infraSpecifications:
     requiredExistingStage: Existing stage is a required field
 imagePathLabel: Image Path
 artifactPathLabel: Artifact Path
-artifactPathFilterLabel: Artifact Path Filter
 artifactsSelection:
   repositoryPort: Repository Port
   repositoryPortPlaceholder: Enter Repository Port
@@ -618,8 +612,6 @@ artifactsSelection:
   artifactTyperequired: Artifact Type is required
   loadingTags: Loading Tags...
   artifactNamePlaceholder: Enter Artifact Path
-  artifactDirectory: Artifact Directory
-  artifactDirectoryPlaceholder: Enter Artifact Directory
   existingDocker:
     sidecarId: Sidecar Identifier
     sidecarIdPlaceholder: Enter Artifact Identifier
@@ -634,10 +626,6 @@ artifactsSelection:
     sidecarId: Sidecar Identifier is required
     repositoryPort: Repository Port is required
     repositoryUrl: Repository URL is required
-    artifactDirectory: Artifact Directory is required
-    artifactPathFilter: Artifact Path Filter is required
-  errors:
-    noRepositories: No repositories found with given connector
 overrideSets:
   createOverrideSet: Create Override Set
   overrideSetPlaceholder: Enter Override Set Name
@@ -717,7 +705,6 @@ ciCodebase:
   buildType: CI Codebase Build Type
   pullRequestNumber: Pull Request Number
 tagDependencyRequired: required to fetch the tags
-artifactPathDependencyRequired: required to fetch the artifact paths
 myDeploymentsText: My Deployments
 myBuildsText: My Builds
 noBuckets: No buckets found with given region
@@ -899,18 +886,3 @@ ci:
 imageVersionDeprecated: Image version outdated
 unsupportedImagesWarning: 'You are using unsupported Harness CI images. Harness allows builds to use these images, but we cannot ensure that builds will not fail. Please update the versions of the following image(s) {{summary}}'
 invalidRequest: Invalid Request
-serviceDeploymentTypes:
-  kubernetes: '{{$.kubernetesText}}'
-  amazonEcs: '{{$.delegate.cardData.amazonECS.name}}'
-  amazonAmi: AWS AMI
-  awsCodeDeploy: CodeDeploy
-  winrm: WinRM
-  awsLambda: AWS Lambda
-  pcf: TAS
-  ssh: Secure Shell
-  deployDifferentLabel: Deploy different service
-  serverlessAwsLambda: Serverless AWS Lambda
-  serverlessAzureFunctions: Serverless Azure Functions
-  serverlessGoogleFunctions: Serverless Google Functions
-  awsSAM: AWS SAM
-  azureFunctions: Azure Functions

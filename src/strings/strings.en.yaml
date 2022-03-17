@@ -130,6 +130,16 @@ refrencedBy: Referenced by
 activityHistoryLabel: Activity History
 connectionMode: Connection Mode
 credType: Credential Type
+serviceDeploymentTypes:
+  kubernetes: '{{$.kubernetesText}}'
+  amazonEcs: '{{$.delegate.cardData.amazonECS.name}}'
+  amazonAmi: AWS AMI
+  awsCodeDeploy: CodeDeploy
+  winrm: WinRM
+  awsLambda: AWS Lambda
+  pcf: TAS
+  ssh: Secure Shell
+  deployDifferentLabel: Deploy different service
 noDeploymentText: Your Pipeline does not have any executions yet. Click the button below to run a pipeline.
 noBuildsText: Your account does not have any builds yet. Click the button below to run a pipeline.
 newConnector: 'New Connector'
@@ -915,7 +925,6 @@ pipelineSteps:
   deploy:
     errors:
       notags: No tags found with given Image Path
-      noArtifactPaths: No artifact paths found with given Artifact Directory
     create:
       multipleServices: '{{$.multipleService}}'
       deployStageName: Deploy

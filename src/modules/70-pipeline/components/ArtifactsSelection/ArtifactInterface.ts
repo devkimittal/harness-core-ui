@@ -17,8 +17,7 @@ import type {
   SidecarArtifactWrapper,
   DockerBuildDetailsDTO,
   Failure,
-  Error,
-  ArtifactoryBuildDetailsDTO
+  Error
 } from 'services/cd-ng'
 
 export interface ArtifactListViewProps {
@@ -35,7 +34,6 @@ export interface ArtifactListViewProps {
   accountId: string
   refetchConnectors: () => void
   isReadonly: boolean
-  allowSidecar?: boolean
 }
 export interface ArtifactsSelectionProps {
   isForOverrideSets?: boolean
@@ -71,10 +69,9 @@ export interface ImagePathTypes {
   registryHostname?: string
   region?: any
   repositoryPort?: number | string
-  repository?: any
+  repository?: string
   repositoryUrl?: string
   repositoryPortorRepositoryURL?: string
-  artifactDirectory?: string
 }
 
 export interface ImagePathProps {
@@ -88,7 +85,6 @@ export interface ImagePathProps {
   isReadonly?: boolean
   selectedArtifact: ArtifactType | null
   allowableTypes: MultiTypeInputType[]
-  selectedDeploymentType: string
 }
 
 export interface ConnectorRefLabelType {
@@ -104,7 +100,6 @@ export interface ArtifactTagHelperText {
   registryHostname?: string
   repository?: string
   repositoryPort?: number
-  artifactDirectory?: string
 }
 export interface ArtifactImagePathTagViewProps {
   selectedArtifact: ArtifactType
@@ -115,10 +110,9 @@ export interface ArtifactImagePathTagViewProps {
   connectorIdValue: string
   fetchTags: (val: string) => void
   buildDetailsLoading: boolean
-  tagList: DockerBuildDetailsDTO[] | ArtifactoryBuildDetailsDTO[] | undefined
+  tagList: DockerBuildDetailsDTO[] | undefined
   setTagList: any
   tagError: GetDataError<Failure | Error> | null
   tagDisabled: boolean
   isArtifactPath?: boolean
-  isServerlessDeploymentTypeSelected?: boolean
 }

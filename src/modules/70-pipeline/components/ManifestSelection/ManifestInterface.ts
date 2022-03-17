@@ -24,7 +24,6 @@ export type ManifestTypes =
   | 'OpenshiftTemplate'
   | 'OpenshiftParam'
   | 'KustomizePatches'
-  | 'ServerlessAwsLambda'
 
 export type ManifestStores = 'Git' | 'Github' | 'GitLab' | 'Bitbucket' | 'Http' | 'S3' | 'Gcs'
 export type HelmVersionOptions = 'V2' | 'V3'
@@ -51,7 +50,6 @@ export interface ManifestListViewProps {
   isReadonly: boolean
   deploymentType: string
   allowableTypes: MultiTypeInputType[]
-  allowOnlyOne?: boolean
 }
 
 export interface ManifestStepInitData {

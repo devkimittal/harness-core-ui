@@ -10,7 +10,6 @@ import { act, fireEvent, queryByAttribute, render, waitFor } from '@testing-libr
 import { MultiTypeInputType } from '@wings-software/uicore'
 import { TestWrapper } from '@common/utils/testUtils'
 import { ArtifactType, TagTypes } from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
-import { ServiceDeploymentType } from '@pipeline/utils/stageHelpers'
 import { DockerRegistryArtifact } from '../DockerRegistryArtifact'
 
 const props = {
@@ -20,8 +19,7 @@ const props = {
   context: 2,
   handleSubmit: jest.fn(),
   artifactIdentifiers: [],
-  selectedArtifact: 'DockerRegistry' as ArtifactType,
-  selectedDeploymentType: ServiceDeploymentType.Kubernetes
+  selectedArtifact: 'DockerRegistry' as ArtifactType
 }
 
 jest.mock('services/cd-ng', () => ({
