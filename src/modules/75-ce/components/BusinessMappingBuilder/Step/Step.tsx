@@ -8,6 +8,7 @@
 import React, { useState } from 'react'
 import { Container, Layout, Color, ButtonSize, Text, Card, FontVariation, FlexExpander, Button } from '@harness/uicore'
 import { Collapse } from '@blueprintjs/core'
+import { useStrings } from 'framework/strings'
 import css from './Step.module.scss'
 
 interface StepProps {
@@ -29,6 +30,7 @@ interface StepProps {
 
 const Step: (props: StepProps) => React.ReactElement = ({ stepProps, title, children, actionButtonProps }) => {
   const [isOpen, setIsOpen] = useState<boolean>(stepProps.defaultOpen)
+  const { getString } = useStrings()
 
   return (
     <Card className={css.container}>
@@ -45,7 +47,12 @@ const Step: (props: StepProps) => React.ReactElement = ({ stepProps, title, chil
               right: 'small'
             }}
             font={{ variation: FontVariation.TINY }}
-          >{`Step ${stepProps.current} of ${stepProps.total}`}</Text>
+          >
+            {getString('ce.businessMapping.stepText', {
+              current: stepProps.current,
+              total: stepProps.total
+            })}
+          </Text>
           <FlexExpander />
           <Button
             icon={isOpen ? 'chevron-up' : 'chevron-down'}

@@ -5,19 +5,29 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Container, FormInput, Layout, RadioButton } from '@harness/uicore'
 import React from 'react'
+import { Container, FormInput, Layout, RadioButton } from '@harness/uicore'
+import { useStrings } from 'framework/strings'
 import css from './ManageUnallocatedCost.module.scss'
 
 const ManageUnallocatedCost: () => React.ReactElement = () => {
+  const { getString } = useStrings()
   return (
     <Container>
       <Layout.Horizontal spacing="small" className={css.hContainer}>
-        <RadioButton label={'Show Unallocated Values as'} value="default" />
-        <FormInput.Text name="defaultVal" placeholder={'Others'} className={css.defaultValInputBox} disabled />
+        <RadioButton
+          label={getString('ce.businessMapping.manageUnallocatedCost.defaultUnallocatedCostLabel')}
+          value="default"
+        />
+        <FormInput.Text
+          name="defaultVal"
+          placeholder={getString('ce.businessMapping.manageUnallocatedCost.otherPlaceholder')}
+          className={css.defaultValInputBox}
+          disabled
+        />
       </Layout.Horizontal>
-      <RadioButton label={'Ignore Unallocated Values (Coming Soon)'} value={'-'} disabled />
-      <RadioButton label={'Share Default Costs among Cost Buckets (Coming Soon)'} value={'-'} disabled />
+      <RadioButton label={getString('ce.businessMapping.manageUnallocatedCost.ignoreCostLabel')} value={'-'} disabled />
+      <RadioButton label={getString('ce.businessMapping.manageUnallocatedCost.shareCosts')} value={'-'} disabled />
     </Container>
   )
 }

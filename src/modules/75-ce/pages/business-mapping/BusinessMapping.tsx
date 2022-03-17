@@ -39,7 +39,7 @@ const BusinessMapping: () => React.ReactElement = () => {
         >
           <Button
             icon="plus"
-            text={'New Business Mapping'}
+            text={getString('ce.businessMapping.newButton')}
             intent="primary"
             onClick={() => {
               setDrawerOpen(true)

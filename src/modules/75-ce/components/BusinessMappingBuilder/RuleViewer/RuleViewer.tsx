@@ -9,6 +9,7 @@ import React from 'react'
 import { Collapse } from '@blueprintjs/core'
 import { Color, Container, FontVariation, Layout, Text } from '@harness/uicore'
 import type { SharedCost, CostTarget, ViewIdCondition } from 'services/ce'
+import { useStrings } from 'framework/strings'
 import css from './RuleViewer.module.scss'
 
 interface RuleViewProps {
@@ -17,6 +18,7 @@ interface RuleViewProps {
 }
 
 const RuleView: (props: RuleViewProps) => React.ReactElement | null = ({ condition, showAndOperatior }) => {
+  const { getString } = useStrings()
   const pillProps = {
     border: { radius: 10 },
     background: Color.GREY_200,
@@ -52,7 +54,9 @@ const RuleView: (props: RuleViewProps) => React.ReactElement | null = ({ conditi
         </Text>
       ))}
       {values.length > 2 ? <Text {...pillProps}>{`+${values.length - 2}`}</Text> : null}
-      {showAndOperatior ? <Text font={{ variation: FontVariation.SMALL_SEMI }}>AND</Text> : null}
+      {showAndOperatior ? (
+        <Text font={{ variation: FontVariation.SMALL_SEMI }}>{getString('ce.common.and')}</Text>
+      ) : null}
     </Layout.Horizontal>
   ) : null
 }
@@ -62,9 +66,12 @@ interface RuleViewerProps {
   value: SharedCost | CostTarget
 }
 const RuleViewer: (props: RuleViewerProps) => React.ReactElement | null = ({ isOpen, value }) => {
+  const { getString } = useStrings()
+
   if (!value.rules?.length) {
     return null
   }
+
   const rulesLength = value.rules.length
   return (
     <Collapse keepChildrenMounted isOpen={isOpen}>
@@ -101,7 +108,7 @@ const RuleViewer: (props: RuleViewerProps) => React.ReactElement | null = ({ isO
                   padding="small"
                   className={css.orOperator}
                 >
-                  OR
+                  {getString('ce.common.or')}
                 </Text>
               ) : null}
             </Container>

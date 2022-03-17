@@ -13,6 +13,7 @@ import { useFetchViewFieldsQuery, QlceViewFilterWrapperInput, QlceViewFieldIdent
 import { CostBucketWidgetType, CostTargetType, SharedCostType } from '@ce/types'
 import { useCreateBusinessMapping } from 'services/ce'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
+import { useStrings } from 'framework/strings'
 import CostBucketStep from './CostBucketStep/CostBucketStep'
 import Step from './Step/Step'
 import ManageUnallocatedCost from './ManageUnallocatedCost/ManageUnallocatedCost'
@@ -35,6 +36,8 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
       ]
     }
   })
+
+  const { getString } = useStrings()
 
   const { mutate } = useCreateBusinessMapping({
     queryParams: {
@@ -61,7 +64,9 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
                     identifier: Yup.string().required(),
                     identifierName: Yup.string().nullable()
                   }),
-                  values: Yup.array().of(Yup.string()).min(1, 'Need at least one element')
+                  values: Yup.array()
+                    .of(Yup.string())
+                    .min(1, getString('ce.businessMapping.errorMessages.viewConditions'))
                 })
               )
             })
@@ -117,9 +122,17 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
                 bottom: true
               }}
             >
-              <FormInput.Text name="name" placeholder="Enter Business Mapping Name" />
+              <FormInput.Text
+                name="name"
+                placeholder={getString('ce.businessMapping.form.businessMappingPlaceholder')}
+              />
               <FlexExpander />
-              <Button icon="upload-box" intent="primary" text={'Save Business Mapping'} type="submit" />
+              <Button
+                icon="upload-box"
+                intent="primary"
+                text={getString('ce.businessMapping.form.saveText')}
+                type="submit"
+              />
             </Layout.Horizontal>
             <Container
               className={css.container}
@@ -166,7 +179,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
                   current: 3,
                   defaultOpen: false
                 }}
-                title={'Manage Unallocated Costs'}
+                title={getString('ce.businessMapping.manageUnallocatedCost.title')}
               >
                 <ManageUnallocatedCost />
               </Step>

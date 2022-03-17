@@ -12,8 +12,8 @@ import { Color, FontVariation, Container, Text } from '@harness/uicore'
 import type { ViewCondition } from 'services/ce/'
 import type { QlceViewFieldIdentifierData } from 'services/ce/services'
 import type { TimeRangeFilterType } from '@ce/types'
+import { useStrings } from 'framework/strings'
 import PerspectiveBuilderFilter, { PillData } from './PerspectiveBuilderFilter'
-
 import css from './PerspectiveBuilderFilters.module.scss'
 
 interface FiltersProps {
@@ -38,6 +38,7 @@ const Filters: React.FC<FiltersProps> = ({
   fieldName,
   showAndOperator
 }) => {
+  const { getString } = useStrings()
   const onPillDataChange: (id: number, data: Omit<PillData, 'type'>) => void = (id, data) => {
     if (data.viewField.identifier === 'CUSTOM') {
       data.values = []
@@ -100,11 +101,9 @@ const Filters: React.FC<FiltersProps> = ({
                       inline
                       className={css.andOperator}
                     >
-                      AND
+                      {getString('ce.common.and')}
                     </Text>
-                  ) : (
-                    ''
-                  )}
+                  ) : null}
                 </Container>
               )
             })}

@@ -442,7 +442,7 @@ conditionalExecution:
   belowExpression: below expression is true
 startTime: Start time
 duration: Duration
-and: AND
+and: '{{ $.common.andCaps }}'
 gitDetails: git details
 pipelineInputPanel:
   noRuntimeInputs: 'No Runtime Inputs'

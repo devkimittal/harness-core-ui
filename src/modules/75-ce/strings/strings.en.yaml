@@ -5,6 +5,8 @@ common:
   newBudget: 'New Budget'
   budget: 'Budget'
   spendTillDate: 'Spend Till Date'
+  and: '{{ $.common.andCaps }}'
+  or: '{{ $.common.orCaps }}'
 allRegions: 'All Regions'
 allClusters: 'All Clusters'
 enforcementMessage:
@@ -837,7 +839,20 @@ anomalyDetection:
     anomaliesRedirectionText: View anomalies
     filterText: Apply anomaly filters
 businessMapping:
+  newButton: New Business Mapping
   sideNavText: 'Business Mapping'
+  stepText: 'Step {{ current }} of {{ total }}'
+  form:
+    businessMappingPlaceholder: Enter Business Mapping Name
+    saveText: Save Business Mapping
+  errorMessages:
+    viewConditions: Need at least one element
+  manageUnallocatedCost:
+    title: Manage Unallocated Costs
+    defaultUnallocatedCostLabel: Show Unallocated Values as
+    ignoreCostLabel: Ignore Unallocated Values (Coming Soon)
+    shareCosts: Share Default Costs among Cost Buckets (Coming Soon)
+    otherPlaceholder: '{{ $.stepPalette.others }}'
   costBucket:
     title: 'Define Cost Buckets'
     newButtonText: 'New Cost Bucket'

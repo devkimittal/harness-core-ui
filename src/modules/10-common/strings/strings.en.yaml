@@ -799,3 +799,5 @@ request: Request
 whose: whose
 and: and
 payload: Payload
+andCaps: AND
+orCaps: OR
