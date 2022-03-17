@@ -56,6 +56,8 @@ export const TuneRecommendationCardHeader: React.FC<TuneRecommendationCardHeader
 }
 
 interface TuneRecommendationCardBodyProps {
+  cardVisible: boolean
+  toggleCardVisible: () => void
   state: IState
   dispatch: React.Dispatch<Action>
   buffer: number
@@ -66,8 +68,10 @@ interface TuneRecommendationCardBodyProps {
   updateRecommendationDetails: () => void
 }
 
-export const TuneRecommendationCardBody: React.FC<TuneRecommendationCardBodyProps> = props => {
+export const TuneRecommendationCard: React.FC<TuneRecommendationCardBodyProps> = props => {
   const {
+    cardVisible,
+    toggleCardVisible,
     state,
     dispatch,
     buffer,
@@ -80,41 +84,49 @@ export const TuneRecommendationCardBody: React.FC<TuneRecommendationCardBodyProp
   const { getString } = useStrings()
 
   return (
-    <Container className={css.preferences} padding="medium" background={Color.PRIMARY_1}>
-      <Layout.Vertical spacing="medium">
-        <Container>
-          <Text font={{ variation: FontVariation.SMALL_SEMI }} tooltipProps={{ dataTooltipId: 'prefResourceNeeds' }}>
-            {getString('ce.nodeRecommendation.prefResourceNeeds')}
-          </Text>
-          <Layout.Horizontal flex className={css.spaceBetween} spacing="medium" margin={{ top: 'small' }}>
-            <Layout.Horizontal spacing="medium">
-              <Resources state={state} dispatch={dispatch} />
-              <Container flex={{ justifyContent: 'center' }}>
-                <Container style={{ borderWidth: 1, borderStyle: 'solid', borderLeft: 0, width: 14, height: 60 }} />
-              </Container>
-              <Container flex={{ justifyContent: 'center' }} margin={{ right: 'small' }}>
-                <Icon name="plus" size={12} color={Color.GREY_700} />
-              </Container>
-            </Layout.Horizontal>
-            <Buffer state={state} buffer={buffer} setBuffer={setBuffer} />
-          </Layout.Horizontal>
-          <Layout.Horizontal padding={{ top: 'medium' }} spacing="medium">
-            <LargestResources state={state} dispatch={dispatch} />
-            <Nodes state={state} dispatch={dispatch} />
-          </Layout.Horizontal>
+    <>
+      <TuneRecommendationCardHeader cardVisible={cardVisible} toggleCardVisible={toggleCardVisible} />
+      {cardVisible ? (
+        <Container className={css.preferences} padding="medium" background={Color.PRIMARY_1}>
+          <Layout.Vertical spacing="medium">
+            <Container>
+              <Text
+                font={{ variation: FontVariation.SMALL_SEMI }}
+                tooltipProps={{ dataTooltipId: 'prefResourceNeeds' }}
+              >
+                {getString('ce.nodeRecommendation.prefResourceNeeds')}
+              </Text>
+              <Layout.Horizontal flex className={css.spaceBetween} spacing="medium" margin={{ top: 'small' }}>
+                <Layout.Horizontal spacing="medium">
+                  <Resources state={state} dispatch={dispatch} />
+                  <Container flex={{ justifyContent: 'center' }}>
+                    <Container style={{ borderWidth: 1, borderStyle: 'solid', borderLeft: 0, width: 14, height: 60 }} />
+                  </Container>
+                  <Container flex={{ justifyContent: 'center' }} margin={{ right: 'small' }}>
+                    <Icon name="plus" size={12} color={Color.GREY_700} />
+                  </Container>
+                </Layout.Horizontal>
+                <Buffer state={state} buffer={buffer} setBuffer={setBuffer} />
+              </Layout.Horizontal>
+              <Layout.Horizontal padding={{ top: 'medium' }} spacing="medium">
+                <LargestResources state={state} dispatch={dispatch} />
+                <Nodes state={state} dispatch={dispatch} />
+              </Layout.Horizontal>
+            </Container>
+            <InstanceFamilies showInstanceFamiliesModal={showInstanceFamiliesModal} state={state} />
+            <ApplyPreferencesButtonGroup
+              dispatch={dispatch}
+              setBuffer={setBuffer}
+              state={state}
+              initialState={initialState}
+              updatedState={updatedState}
+              updateRecommendationDetails={updateRecommendationDetails}
+              buffer={buffer}
+            />
+          </Layout.Vertical>
         </Container>
-        <InstanceFamilies showInstanceFamiliesModal={showInstanceFamiliesModal} state={state} />
-        <ApplyPreferencesButtonGroup
-          dispatch={dispatch}
-          setBuffer={setBuffer}
-          state={state}
-          initialState={initialState}
-          updatedState={updatedState}
-          updateRecommendationDetails={updateRecommendationDetails}
-          buffer={buffer}
-        />
-      </Layout.Vertical>
-    </Container>
+      ) : null}
+    </>
   )
 }
 

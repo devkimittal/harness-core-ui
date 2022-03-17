@@ -8,7 +8,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
-import { TuneRecommendationCardBody, TuneRecommendationCardHeader } from '../TuneNodeRecommendationCard'
+import { TuneRecommendationCard } from '../TuneNodeRecommendationCard'
 import type { IState } from '../constants'
 
 const mockState = {
@@ -43,28 +43,33 @@ jest.mock('framework/strings', () => ({
 }))
 
 describe('test cases for tune recommendation card', () => {
-  test('should be able to render tune recommendation card header', async () => {
+  test('should be able to render tune recommendation card hidden', async () => {
     const { container } = render(
       <TestWrapper>
-        <TuneRecommendationCardHeader cardVisible={true} toggleCardVisible={jest.fn()} />
+        <TuneRecommendationCard
+          cardVisible={false}
+          toggleCardVisible={jest.fn()}
+          buffer={0}
+          dispatch={jest.fn()}
+          setBuffer={jest.fn()}
+          state={mockState}
+          initialState={mockState as IState}
+          showInstanceFamiliesModal={jest.fn()}
+          updateRecommendationDetails={jest.fn()}
+          updatedState={mockState as IState}
+        />
       </TestWrapper>
     )
-    expect(container).toMatchSnapshot()
-  })
 
-  test('tune recommendation card hidden', async () => {
-    const { container } = render(
-      <TestWrapper>
-        <TuneRecommendationCardHeader cardVisible={false} toggleCardVisible={jest.fn()} />
-      </TestWrapper>
-    )
     expect(container).toMatchSnapshot()
   })
 
   test('should be able to render tune recommendation card', async () => {
     const { container } = render(
       <TestWrapper>
-        <TuneRecommendationCardBody
+        <TuneRecommendationCard
+          cardVisible={true}
+          toggleCardVisible={jest.fn()}
           buffer={0}
           dispatch={jest.fn()}
           setBuffer={jest.fn()}
@@ -83,7 +88,9 @@ describe('test cases for tune recommendation card', () => {
   test('should be able to render tune recommendation card when there are instance families', async () => {
     const { container } = render(
       <TestWrapper>
-        <TuneRecommendationCardBody
+        <TuneRecommendationCard
+          cardVisible={true}
+          toggleCardVisible={jest.fn()}
           buffer={0}
           dispatch={jest.fn()}
           setBuffer={jest.fn()}

@@ -3,6 +3,34 @@
 exports[`test cases for tune recommendation card should be able to render tune recommendation card 1`] = `
 <div>
   <div
+    class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
+  >
+    <p
+      class="StyledProps--font StyledProps--main pointer StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey800"
+    >
+      ce.nodeRecommendation.setInstancePreferences
+    </p>
+    <span
+      class="bp3-icon bp3-icon-caret-up StyledProps--main pointer StyledProps--color StyledProps--color-primary7"
+      icon="caret-up"
+    >
+      <svg
+        data-icon="caret-up"
+        height="16"
+        viewBox="0 0 16 16"
+        width="16"
+      >
+        <desc>
+          caret-up
+        </desc>
+        <path
+          d="M11.87 9.17s.01 0 0 0l-3.5-4C8.28 5.07 8.15 5 8 5s-.28.07-.37.17l-3.5 4a.495.495 0 00.37.83h7a.495.495 0 00.37-.83z"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </span>
+  </div>
+  <div
     class="StyledProps--font StyledProps--main preferences StyledProps--padding-medium StyledProps--background-primary1"
   >
     <div
@@ -423,7 +451,40 @@ exports[`test cases for tune recommendation card should be able to render tune r
 </div>
 `;
 
-exports[`test cases for tune recommendation card should be able to render tune recommendation card header 1`] = `
+exports[`test cases for tune recommendation card should be able to render tune recommendation card hidden 1`] = `
+<div>
+  <div
+    class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
+  >
+    <p
+      class="StyledProps--font StyledProps--main pointer StyledProps--font-variation-h6 StyledProps--color StyledProps--color-primary7"
+    >
+      ce.nodeRecommendation.setInstancePreferences
+    </p>
+    <span
+      class="bp3-icon bp3-icon-caret-down StyledProps--main pointer StyledProps--color StyledProps--color-primary7"
+      icon="caret-down"
+    >
+      <svg
+        data-icon="caret-down"
+        height="16"
+        viewBox="0 0 16 16"
+        width="16"
+      >
+        <desc>
+          caret-down
+        </desc>
+        <path
+          d="M12 6.5c0-.28-.22-.5-.5-.5h-7a.495.495 0 00-.37.83l3.5 4c.09.1.22.17.37.17s.28-.07.37-.17l3.5-4c.08-.09.13-.2.13-.33z"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`test cases for tune recommendation card should be able to render tune recommendation card when there are instance families 1`] = `
 <div>
   <div
     class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
@@ -453,11 +514,6 @@ exports[`test cases for tune recommendation card should be able to render tune r
       </svg>
     </span>
   </div>
-</div>
-`;
-
-exports[`test cases for tune recommendation card should be able to render tune recommendation card when there are instance families 1`] = `
-<div>
   <div
     class="StyledProps--font StyledProps--main preferences StyledProps--padding-medium StyledProps--background-primary1"
   >
@@ -929,39 +985,6 @@ exports[`test cases for tune recommendation card should be able to render tune r
         </button>
       </div>
     </div>
-  </div>
-</div>
-`;
-
-exports[`test cases for tune recommendation card tune recommendation card hidden 1`] = `
-<div>
-  <div
-    class="StyledProps--font StyledProps--main spaceBetween StyledProps--padding-medium StyledProps--flex"
-  >
-    <p
-      class="StyledProps--font StyledProps--main pointer StyledProps--font-variation-h6 StyledProps--color StyledProps--color-primary7"
-    >
-      ce.nodeRecommendation.setInstancePreferences
-    </p>
-    <span
-      class="bp3-icon bp3-icon-caret-down StyledProps--main pointer StyledProps--color StyledProps--color-primary7"
-      icon="caret-down"
-    >
-      <svg
-        data-icon="caret-down"
-        height="16"
-        viewBox="0 0 16 16"
-        width="16"
-      >
-        <desc>
-          caret-down
-        </desc>
-        <path
-          d="M12 6.5c0-.28-.22-.5-.5-.5h-7a.495.495 0 00-.37.83l3.5 4c.09.1.22.17.37.17s.28-.07.37-.17l3.5-4c.08-.09.13-.2.13-.33z"
-          fill-rule="evenodd"
-        />
-      </svg>
-    </span>
   </div>
 </div>
 `;

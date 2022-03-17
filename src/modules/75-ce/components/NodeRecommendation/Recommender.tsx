@@ -80,6 +80,8 @@ const Recommender = (props: RecommenderProps) => {
       if (vmDetails && vmDetails.nodePools?.length) {
         return `(CPU: ${vmDetails.nodePools[0]?.vm?.cpusPerVm} Mem: ${vmDetails.nodePools[0]?.vm?.cpusPerVm})`
       }
+
+      return null
     }
 
     const vmTypePropertyPath = 'nodePools[0].vm.type'

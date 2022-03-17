@@ -41,10 +41,7 @@ import {
   RecommendationDetailsSavingsCard,
   RecommendationDetailsSpendCard
 } from '@ce/components/RecommendationDetailsSummaryCards/RecommendationDetailsSummaryCards'
-import {
-  TuneRecommendationCardHeader,
-  TuneRecommendationCardBody
-} from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
+import { TuneRecommendationCard } from '@ce/components/NodeRecommendation/TuneNodeRecommendationCard'
 import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } from 'services/ce/recommenderService'
 import { useGetSeries } from 'services/ce/publicPricingService'
 import {
@@ -210,13 +207,13 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     const sumMemWithBuffer = addBufferToValue(state.sumMem, buffer)
 
     if (isResourceConsistent(sumCpuWithBuffer, sumMemWithBuffer, state.maxCpu, state.maxMemory)) {
-      const payload = convertStateToRecommendClusterPayload(
-        state,
-        defaultTo(recommendationDetails.resourceRequirement, {}) as RecommendClusterRequest,
-        buffer
-      )
-
       try {
+        const payload = convertStateToRecommendClusterPayload(
+          state,
+          defaultTo(recommendationDetails.resourceRequirement, {}) as RecommendClusterRequest,
+          buffer
+        )
+
         const response = await debouncedFetchNewRecomm(payload)
         const newState = {
           ...recomDetails,
@@ -226,9 +223,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         if (!isEqual(recomDetails, newState)) {
           setRecomDetails(newState)
         }
-
         setUpdatedState(addBufferToState(state, buffer))
-
         UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
       } catch (e) {
         showError(getString('ce.nodeRecommendation.fetchRecommendationError'))
@@ -249,7 +244,6 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         minNodes: +minNodes.toFixed(3)
       }
     })
-
     updateRecommendationDetails()
   }, [timeRange])
 
@@ -277,28 +271,22 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
               }))}
             />
           </Container>
-          <Layout.Horizontal spacing="medium">
-            <Button variation={ButtonVariation.PRIMARY} onClick={hideModal} disabled={isEqual(state, updatedState)}>
-              {getString('ce.nodeRecommendation.savePreferences')}
-            </Button>
-            <Button
-              variation={ButtonVariation.TERTIARY}
-              onClick={() => {
-                hideModal()
-                dispatch({
-                  type: ACTIONS.CLEAR_INSTACE_FAMILY,
-                  data: {
-                    includeTypes: updatedState.includeTypes,
-                    includeSeries: updatedState.includeSeries,
-                    excludeTypes: updatedState.excludeTypes,
-                    excludeSeries: updatedState.excludeSeries
-                  }
-                })
-              }}
-            >
-              {getString('cancel')}
-            </Button>
-          </Layout.Horizontal>
+          <InstaceFamiliesModalButtonGroup
+            onSave={hideModal}
+            onCancel={() => {
+              hideModal()
+              dispatch({
+                type: ACTIONS.CLEAR_INSTACE_FAMILY,
+                data: {
+                  includeTypes: updatedState.includeTypes,
+                  includeSeries: updatedState.includeSeries,
+                  excludeTypes: updatedState.excludeTypes,
+                  excludeSeries: updatedState.excludeSeries
+                }
+              })
+            }}
+            saveButtonDisabled={isEqual(state, updatedState)}
+          />
         </Layout.Vertical>
       </Dialog>
     )
@@ -349,22 +337,18 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           {getString('ce.recommendation.detailsPage.tuneRecommendations')}
         </Text>
         <Card className={css.tuneRecommendationCard}>
-          <TuneRecommendationCardHeader
+          <TuneRecommendationCard
             cardVisible={tuneRecomVisible}
             toggleCardVisible={() => setTuneRecomVisible(prevState => !prevState)}
+            state={state}
+            dispatch={dispatch}
+            buffer={buffer}
+            setBuffer={setBuffer}
+            showInstanceFamiliesModal={showModal}
+            initialState={initialState}
+            updatedState={updatedState}
+            updateRecommendationDetails={updateRecommendationDetails}
           />
-          {tuneRecomVisible ? (
-            <TuneRecommendationCardBody
-              state={state}
-              dispatch={dispatch}
-              buffer={buffer}
-              setBuffer={setBuffer}
-              showInstanceFamiliesModal={showModal}
-              initialState={initialState}
-              updatedState={updatedState}
-              updateRecommendationDetails={updateRecommendationDetails}
-            />
-          ) : null}
         </Card>
       </Layout.Vertical>
     </>
@@ -399,5 +383,24 @@ export const TuneRecommendationHelpText: React.FC<{ toggleCardVisible: () => voi
         </Container>
       </Layout.Horizontal>
     </Container>
+  )
+}
+
+const InstaceFamiliesModalButtonGroup: React.FC<{
+  onSave: () => void
+  onCancel: () => void
+  saveButtonDisabled: boolean
+}> = ({ onCancel, onSave, saveButtonDisabled }) => {
+  const { getString } = useStrings()
+
+  return (
+    <Layout.Horizontal spacing="medium">
+      <Button variation={ButtonVariation.PRIMARY} onClick={onSave} disabled={saveButtonDisabled}>
+        {getString('ce.nodeRecommendation.savePreferences')}
+      </Button>
+      <Button variation={ButtonVariation.TERTIARY} onClick={onCancel}>
+        {getString('cancel')}
+      </Button>
+    </Layout.Horizontal>
   )
 }
