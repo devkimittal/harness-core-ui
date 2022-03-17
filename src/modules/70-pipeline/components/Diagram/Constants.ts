@@ -10,6 +10,7 @@ export const Event: { [key: string]: string } = {
   SelectionChanged: 'selectionChanged',
   ClickNode: 'clickNode',
   ColorChanged: 'colorChanged',
+  CanvasClick: 'CanvasClick',
   WidthChanged: 'widthChanged',
   RemoveNode: 'removeNode',
   NodesUpdated: 'nodesUpdated',
@@ -40,7 +41,9 @@ export const DiagramType: { [key: string]: string } = {
   DiamondNode: 'default-diamond',
   StartNode: 'node-start',
   GroupNode: 'group-node',
-  IconNode: 'icon-node'
+  StepGroupNode: 'step-group-node',
+  IconNode: 'icon-node',
+  Link: 'link'
 }
 
 export enum StepsType {

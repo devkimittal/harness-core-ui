@@ -5,6 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
+import type { IconName } from '@harness/uicore'
+
 export const EXPRESSION_STRING = '<+expression>' // TODO: this needs to be exported from uicore for best use.
 
 export enum CardVariant {
@@ -17,4 +19,12 @@ export const ConnectorRefWidth = {
   DeploymentFormView: 320,
   InputSetView: 310,
   DefaultView: 385
+}
+
+export const stageTypeToIconMap: Record<string, IconName> = {
+  Deployment: 'cd-main',
+  CI: 'ci-main',
+  Pipeline: 'pipeline',
+  Custom: 'pipeline-custom',
+  Approval: 'approval-stage-icon'
 }

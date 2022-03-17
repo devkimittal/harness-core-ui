@@ -1,0 +1,94 @@
+.stepGroupNode {
+  height: 80px !important;
+  width: 80px !important;
+}
+.stepGroup {
+  width: fit-content;
+  height: fit-content;
+  padding-bottom: var(--spacing-xlarge);
+  margin-right: var(--spacing-xxxlarge);
+  padding-left: var(--spacing-small);
+  &.marginBottom {
+    margin-bottom: 30px;
+  }
+  position: relative;
+
+  &:hover .closeNode {
+    opacity: 1;
+    &.readonly {
+      opacity: 0 !important;
+    }
+    pointer-events: initial;
+  }
+
+  .closeNode {
+    --icon-padding: 0 !important;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    left: -15px;
+    background-color: var(--primary-7) !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    height: 14px !important;
+    padding: 0 !important;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+
+    :global {
+      span.bp3-icon {
+        color: var(--white) !important;
+      }
+    }
+  }
+  // width: fit-content;
+  // margin: 0 auto;
+  .horizontalBar {
+    position: absolute;
+    top: 46px;
+    height: 64px;
+    opacity: 0;
+    // width: 100%;
+    left: 0;
+    right: 0;
+  }
+  .svgLeftJointPoint {
+    position: absolute;
+    top: 46px;
+    height: 40px;
+    opacity: 0;
+    // width: 100%;
+    left: 0;
+  }
+  .svgRightJointPoint {
+    position: absolute;
+    top: 46px;
+    height: 40px;
+    opacity: 0;
+    // width: 100%;
+    right: 0;
+  }
+  background: rgba(244, 251, 255, 0.25);
+  // margin-bottom: 20px;
+  border-radius: 8px;
+  border: dashed 1px var(--primary-4);
+  &.firstnode {
+    top: -47px;
+  }
+  .stepGroupHeader {
+    padding: var(--spacing-small) var(--spacing-small) 0 var(--spacing-small);
+
+    .collapseIcon {
+      color: var(--primary-7) !important;
+      cursor: pointer;
+    }
+  }
+  .stepGroupBody {
+    padding: var(--spacing-large) var(--spacing-xxxlarge);
+  }
+}

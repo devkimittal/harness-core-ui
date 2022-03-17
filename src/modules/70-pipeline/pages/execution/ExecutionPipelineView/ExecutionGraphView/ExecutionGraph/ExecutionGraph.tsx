@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { isEmpty, get } from 'lodash-es'
 import { Icon, Layout, Text } from '@wings-software/uicore'
@@ -13,8 +13,10 @@ import { Intent, Color } from '@harness/design-system'
 import { GraphLayoutNode, NodeRunInfo, useGetBarriersExecutionInfo } from 'services/pipeline-ng'
 import {
   getIconFromStageModule,
+  processExecutionDataForGraph,
   processLayoutNodeMap,
-  ProcessLayoutNodeMapResponse
+  ProcessLayoutNodeMapResponse,
+  processLayoutNodeMapV1
 } from '@pipeline/utils/executionUtils'
 import {
   ExecutionStatus,
@@ -38,9 +40,34 @@ import type { ExecutionPathProps } from '@common/interfaces/RouteInterfaces'
 import ConditionalExecutionTooltipWrapper from '@pipeline/components/ConditionalExecutionToolTip/ConditionalExecutionTooltipWrapper'
 import { StepMode as Modes } from '@pipeline/utils/stepUtils'
 import { useExecutionContext } from '@pipeline/context/ExecutionContext'
+import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
+import {
+  DiagramFactory,
+  DiagramNodes,
+  NodeType as DiagramNodeType
+} from '@pipeline/components/AbstractNode/DiagramFactory'
+import { DiamondNodeWidget } from '@pipeline/components/AbstractNode/Nodes/DiamondNode/DiamondNode'
+import PipelineStageNode from '@pipeline/components/AbstractNode/Nodes/DefaultNode/PipelineStageNode'
+import { IconNode } from '@pipeline/components/AbstractNode/Nodes/IconNode/IconNode'
+import CreateNodeStage from '@pipeline/components/AbstractNode/Nodes/CreateNode/CreateNodeStage'
+import EndNodeStage from '@pipeline/components/AbstractNode/Nodes/EndNode/EndNodeStage'
+import StartNodeStage from '@pipeline/components/AbstractNode/Nodes/StartNode/StartNodeStage'
 import CDInfo from './components/CD/CDInfo/CDInfo'
 import css from './ExecutionGraph.module.scss'
 
+const diagram = new DiagramFactory('graph')
+diagram.registerNode('Deployment', PipelineStageNode, true)
+diagram.registerNode(DiagramNodeType.CreateNode, CreateNodeStage)
+diagram.registerNode(DiagramNodeType.EndNode, EndNodeStage)
+diagram.registerNode(DiagramNodeType.StartNode, StartNodeStage)
+diagram.registerNode('StepGroup', DiagramNodes[DiagramNodeType.StepGroupNode])
+diagram.registerNode('Approval', DiamondNodeWidget)
+diagram.registerNode('JiraApproval', DiamondNodeWidget)
+diagram.registerNode('HarnessApproval', DiamondNodeWidget)
+diagram.registerNode('default-diamond', DiamondNodeWidget)
+diagram.registerNode('Barrier', IconNode)
+
+export const CDPipelineStudioNew = diagram.render()
 const barrierSupportedStageTypes = [StageType.DEPLOY, StageType.APPROVAL]
 
 const processExecutionData = (
@@ -97,6 +124,7 @@ const processExecutionData = (
 export interface ExecutionGraphProps {
   onSelectedStage(stage: string): void
 }
+const NEW_PIP_STUDIO = localStorage.getItem('IS_NEW_PIP_STUDIO_ACTIVE') === 'true'
 
 export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactElement {
   const { executionIdentifier } = useParams<ExecutionPathProps>()
@@ -107,13 +135,24 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
   const [stageSetupId, setStageSetupIdId] = React.useState('')
   const { pipelineExecutionDetail, selectedStageId } = useExecutionContext()
   const { primaryPaneSize } = useExecutionLayoutContext()
-  const nodeData = processLayoutNodeMap(pipelineExecutionDetail?.pipelineExecutionSummary)
-  const data: ExecutionPipeline<GraphLayoutNode> = {
-    items: processExecutionData(nodeData),
-    identifier: pipelineExecutionDetail?.pipelineExecutionSummary?.pipelineIdentifier || /* istanbul ignore next */ '',
-    status: pipelineExecutionDetail?.pipelineExecutionSummary?.status as any,
-    allNodes: Object.keys(pipelineExecutionDetail?.pipelineExecutionSummary?.layoutNodeMap || {})
-  }
+  const nodeData = useMemo(
+    () =>
+      NEW_PIP_STUDIO
+        ? processLayoutNodeMapV1(pipelineExecutionDetail?.pipelineExecutionSummary)
+        : processLayoutNodeMap(pipelineExecutionDetail?.pipelineExecutionSummary),
+    [pipelineExecutionDetail?.pipelineExecutionSummary]
+  )
+  const data: ExecutionPipeline<GraphLayoutNode> | ExecutionPipeline<PipelineGraphState> = useMemo(() => {
+    return {
+      items: NEW_PIP_STUDIO
+        ? processExecutionDataForGraph(nodeData as PipelineGraphState[])
+        : processExecutionData(nodeData as ProcessLayoutNodeMapResponse[]),
+      identifier:
+        pipelineExecutionDetail?.pipelineExecutionSummary?.pipelineIdentifier || /* istanbul ignore next */ '',
+      status: pipelineExecutionDetail?.pipelineExecutionSummary?.status as any,
+      allNodes: Object.keys(pipelineExecutionDetail?.pipelineExecutionSummary?.layoutNodeMap || {})
+    }
+  }, [nodeData])
 
   const {
     data: barrierInfoData,
@@ -191,29 +230,33 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
       ) : null}
       {!isEmpty(pipelineExecutionDetail?.pipelineExecutionSummary?.pipelineIdentifier) && data.items?.length > 0 && (
         <>
-          <ExecutionStageDiagram
-            itemMouseEnter={onMouseEnter}
-            itemMouseLeave={() => {
-              dynamicPopoverHandler?.hide()
-              setStageSetupIdId('')
-            }}
-            selectedIdentifier={selectedStageId}
-            itemClickHandler={e => props.onSelectedStage(e.stage.identifier)}
-            diagramContainerHeight={primaryPaneSize}
-            data={data}
-            nodeStyle={{
-              width: 90,
-              height: 40
-            }}
-            graphConfiguration={{
-              NODE_WIDTH: 90,
-              ALLOW_PORT_HIDE: false
-            }}
-            gridStyle={{
-              startX: 50,
-              startY: 50
-            }}
-          />
+          {NEW_PIP_STUDIO ? (
+            <CDPipelineStudioNew readonly data={data.items as PipelineGraphState[]} />
+          ) : (
+            <ExecutionStageDiagram
+              itemMouseEnter={onMouseEnter}
+              itemMouseLeave={() => {
+                dynamicPopoverHandler?.hide()
+                setStageSetupIdId('')
+              }}
+              selectedIdentifier={selectedStageId}
+              itemClickHandler={e => props.onSelectedStage(e.stage.identifier)}
+              diagramContainerHeight={primaryPaneSize}
+              data={data}
+              nodeStyle={{
+                width: 90,
+                height: 40
+              }}
+              graphConfiguration={{
+                NODE_WIDTH: 90,
+                ALLOW_PORT_HIDE: false
+              }}
+              gridStyle={{
+                startX: 50,
+                startY: 50
+              }}
+            />
+          )}
           <DynamicPopover
             darkMode={true}
             render={renderPopover}

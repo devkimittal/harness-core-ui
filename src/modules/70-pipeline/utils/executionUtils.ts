@@ -16,7 +16,8 @@ import {
   isExecutionCompletedWithBadState,
   isExecutionRunning,
   isExecutionWaiting,
-  isExecutionSkipped
+  isExecutionSkipped,
+  isExecutionNotStarted
 } from '@pipeline/utils/statusHelpers'
 import type {
   GraphLayoutNode,
@@ -34,7 +35,11 @@ import {
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { stagesCollection } from '@pipeline/components/PipelineStudio/Stages/StagesCollection'
+import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
+import jsonMock from './execMock.json'
 import { isApprovalStep } from './stepUtils'
+import { StageType } from './stageHelpers'
+import { processNodeDataV1 } from './execUtils'
 
 export const LITE_ENGINE_TASK = 'liteEngineTask'
 export const STATIC_SERVICE_GROUP_NAME = 'static_service_group'
@@ -70,7 +75,8 @@ export enum NodeType {
   DEPLOYMENT_STAGE_STEP = 'DEPLOYMENT_STAGE_STEP',
   APPROVAL_STAGE = 'APPROVAL_STAGE',
   NG_SECTION_WITH_ROLLBACK_INFO = 'NG_SECTION_WITH_ROLLBACK_INFO',
-  NG_EXECUTION = 'NG_EXECUTION'
+  NG_EXECUTION = 'NG_EXECUTION',
+  StepGroupNode = 'StepGroupNode'
 }
 
 export const NonSelectableNodes: NodeType[] = [
@@ -419,7 +425,7 @@ const addDependencies = (
   }
 }
 
-const processLiteEngineTask = (
+export const processLiteEngineTask = (
   nodeData: ExecutionNode | undefined,
   rootNodes: ExecutionPipelineNode<ExecutionNode>[],
   parentNode?: ExecutionNode
@@ -767,4 +773,273 @@ export const addServiceDependenciesFromLiteTaskEngine = (
       nodeMap[liteEngineTask.uuid] = liteEngineTask
     }
   }
+}
+
+export const processLayoutNodeMapV1 = (executionSummary?: PipelineExecutionSummary): PipelineGraphState[] => {
+  const response: PipelineGraphState[] = []
+  if (!executionSummary) {
+    return response
+  }
+  const startingNodeId = executionSummary.startingNodeId
+  const layoutNodeMap = executionSummary.layoutNodeMap
+  if (startingNodeId && layoutNodeMap?.[startingNodeId]) {
+    let nodeDetails: GraphLayoutNode | undefined = layoutNodeMap[startingNodeId]
+
+    while (nodeDetails) {
+      const currentNodeChildren: string[] | undefined = nodeDetails?.edgeLayoutList?.currentNodeChildren
+      const nextIds: string[] | undefined = nodeDetails?.edgeLayoutList?.nextIds
+      if (nodeDetails?.nodeType === NodeTypes.Parallel && currentNodeChildren && currentNodeChildren.length > 1) {
+        const firstParallelNode = layoutNodeMap[currentNodeChildren[0]]
+        const restChildNodes = currentNodeChildren.slice(1) // response?.children?.push({ parallel: currentNodeChildren.map(item => layoutNodeMap[item]) })
+        const parentNode = {
+          id: firstParallelNode?.nodeUuid as string, //string
+          identifier: firstParallelNode?.nodeIdentifier as string, //string
+          type: firstParallelNode?.nodeType as string, //string
+          name: firstParallelNode?.name as string, //string
+          icon: 'cross', //IconName
+          data: firstParallelNode as any, //StageElementWrapperConfig | ExecutionWrapperConfig
+          children: restChildNodes.map(item => {
+            const nodeDataItem = layoutNodeMap[item]
+            return {
+              id: nodeDataItem.nodeUuid as string, //string
+              identifier: nodeDataItem.nodeIdentifier as string, //string
+              type: nodeDataItem.nodeType as string, //string
+              name: nodeDataItem.name as string, //string
+              icon: 'cross', //IconName
+              data: nodeDataItem as any,
+              children: []
+            }
+          })
+        } as PipelineGraphState
+
+        response.push(parentNode)
+        nodeDetails = layoutNodeMap[nodeDetails.edgeLayoutList?.nextIds?.[0] || '']
+      } else if (
+        nodeDetails?.nodeType === NodeTypes.Parallel &&
+        currentNodeChildren &&
+        layoutNodeMap[currentNodeChildren[0]]
+      ) {
+        ;(nodeDetails as any)?.children?.push({ stage: layoutNodeMap[currentNodeChildren[0]] })
+        nodeDetails = layoutNodeMap[nodeDetails.edgeLayoutList?.nextIds?.[0] || '']
+      } else {
+        response.push({
+          id: nodeDetails?.nodeUuid as string, //string
+          identifier: nodeDetails?.nodeIdentifier as string, //string
+          type: nodeDetails?.nodeType as string, //string
+          name: nodeDetails?.name as string, //string
+          icon: 'cross', //IconName
+          data: nodeDetails as any, //StageElementWrapperConfig | ExecutionWrapperConfig
+          children: [] //PipelineGraphState[]
+        })
+        if (nextIds && nextIds.length === 1) {
+          nodeDetails = layoutNodeMap[nextIds[0]]
+        } else {
+          nodeDetails = undefined
+        }
+      }
+    }
+  }
+  return response
+}
+
+export const processExecutionDataForGraph = (stages?: PipelineGraphState[]): PipelineGraphState[] => {
+  const items: PipelineGraphState[] = []
+  stages?.forEach(currentStage => {
+    if (currentStage?.children?.length) {
+      const childNodes: PipelineGraphState[] = []
+      const currentStageData = currentStage.data
+      currentStage = {
+        ...currentStage,
+        icon: getIconFromStageModule(currentStageData?.module, currentStageData?.nodeType),
+        data: {
+          ...currentStage.data,
+          identifier: currentStageData?.nodeUuid || /* istanbul ignore next */ '',
+          name: currentStageData?.name || currentStageData?.nodeIdentifier || /* istanbul ignore next */ '',
+          status: currentStageData?.status as any,
+          barrierFound: currentStageData?.barrierFound,
+          type:
+            currentStageData?.nodeType === StageType.APPROVAL
+              ? ExecutionPipelineNodeType.DIAMOND
+              : ExecutionPipelineNodeType.NORMAL,
+          skipCondition: currentStageData?.skipInfo?.evaluatedCondition
+            ? currentStageData.skipInfo.skipCondition
+            : undefined,
+          disableClick: isExecutionNotStarted(currentStageData?.status) || isExecutionSkipped(currentStageData?.status),
+          when: currentStageData?.nodeRunInfo
+        }
+      }
+      currentStage?.children?.forEach?.(currentNode => {
+        const node = currentNode.data
+        node &&
+          childNodes.push({
+            ...currentNode,
+            icon: getIconFromStageModule(node?.module, node.nodeType),
+            data: {
+              ...node,
+              identifier: node?.nodeUuid || /* istanbul ignore next */ '',
+              name: node?.name || node?.nodeIdentifier || /* istanbul ignore next */ '',
+              status: node?.status as never,
+              barrierFound: node?.barrierFound,
+              type:
+                node?.nodeType === StageType.APPROVAL
+                  ? ExecutionPipelineNodeType.DIAMOND
+                  : ExecutionPipelineNodeType.NORMAL,
+              skipCondition: node?.skipInfo?.evaluatedCondition ? node.skipInfo.skipCondition : undefined,
+              disableClick: isExecutionNotStarted(node?.status) || isExecutionSkipped(node?.status),
+              when: node?.nodeRunInfo
+            }
+          })
+      })
+      currentStage.children = childNodes as PipelineGraphState[]
+      items.push(currentStage)
+    } else {
+      const stage = currentStage.data
+      items.push({
+        ...currentStage,
+        icon: getIconFromStageModule(stage?.module, stage?.nodeType),
+        data: {
+          ...stage,
+          identifier: stage?.nodeUuid || /* istanbul ignore next */ '',
+          name: stage?.name || stage?.nodeIdentifier || /* istanbul ignore next */ '',
+          status: stage?.status as any,
+          barrierFound: stage?.barrierFound,
+          type:
+            stage?.nodeType === StageType.APPROVAL
+              ? ExecutionPipelineNodeType.DIAMOND
+              : ExecutionPipelineNodeType.NORMAL,
+          skipCondition: stage?.skipInfo?.evaluatedCondition ? stage.skipInfo.skipCondition : undefined,
+          disableClick: isExecutionNotStarted(stage?.status) || isExecutionSkipped(stage?.status),
+          when: stage?.nodeRunInfo,
+          data: stage
+        }
+      })
+    }
+  })
+  return items
+}
+
+export const processExecutionDataV1 = (graph?: ExecutionGraph): PipelineGraphState[] => {
+  const items: PipelineGraphState[] = []
+
+  /* istanbul ignore else */
+  if (graph?.nodeAdjacencyListMap && graph?.rootNodeId) {
+    const nodeAdjacencyListMap = graph.nodeAdjacencyListMap
+    const rootNode = graph.rootNodeId
+    // Ignore the graph when its fqn is pipeline, as this doesn't render pipeline graph
+    if (graph?.nodeMap?.[rootNode].baseFqn === 'pipeline') {
+      return items
+    }
+    let nodeId = nodeAdjacencyListMap[rootNode].children?.[0]
+    while (nodeId && nodeAdjacencyListMap[nodeId]) {
+      const nodeData = graph?.nodeMap?.[nodeId]
+      /* istanbul ignore else */
+      if (nodeData) {
+        const isRollback = nodeData.name?.endsWith(StepGroupRollbackIdentifier) ?? false
+        if (nodeData.stepType && (TopLevelNodes.indexOf(nodeData.stepType as NodeType) > -1 || isRollback)) {
+          // NOTE: exception if we have only lite task engine in Execution group
+          if (hasOnlyLiteEngineTask(nodeAdjacencyListMap[nodeId].children, graph)) {
+            const liteTaskEngineId = nodeAdjacencyListMap?.[nodeId]?.children?.[0] || ''
+            processLiteEngineTask(graph?.nodeMap?.[liteTaskEngineId], items, nodeData)
+          } else if (!isEmpty(nodeAdjacencyListMap[nodeId].children)) {
+            if (nodeData.identifier === 'execution') {
+              items.push(
+                ...processNodeDataV1(
+                  nodeAdjacencyListMap[nodeId].children || /* istanbul ignore next */ [],
+                  graph?.nodeMap,
+                  graph?.nodeAdjacencyListMap,
+                  items
+                )
+              )
+            } else {
+              const [parentNode, ...childNodes] = nodeAdjacencyListMap?.[nodeId].children as any[]
+
+              const iconData = getIconDataBasedOnType(parentNode)
+              items.push({
+                id: nodeId as string,
+                identifier: nodeId as string,
+                name: parentNode?.name as string,
+                icon: iconData.icon,
+                type: parentNode?.stepType,
+                nodeType: getExecutionPipelineNodeType(parentNode?.stepType),
+                data: {
+                  name: parentNode.name || /* istanbul ignore next */ '',
+                  identifier: nodeId,
+                  data: parentNode,
+                  skipCondition: parentNode.skipInfo?.evaluatedCondition
+                    ? parentNode.skipInfo.skipCondition
+                    : undefined,
+                  when: parentNode.nodeRunInfo,
+                  containerCss: {
+                    ...(RollbackIdentifier === parentNode.identifier || isRollback ? RollbackContainerCss : {})
+                  },
+                  status: parentNode.status as ExecutionStatus,
+                  isOpen: true,
+                  ...iconData
+                },
+                children: processNodeDataV1(
+                  childNodes || /* istanbul ignore next */ [],
+                  graph?.nodeMap,
+                  graph?.nodeAdjacencyListMap,
+                  items
+                )
+              })
+            }
+          }
+        } else if (nodeData.stepType === NodeType.FORK) {
+          const [parentNode, ...childNodes] = nodeAdjacencyListMap?.[nodeId].children as any[]
+
+          const iconData = getIconDataBasedOnType(parentNode)
+          items.push({
+            id: nodeId as string,
+            identifier: nodeId as string,
+            name: parentNode?.name as string,
+            icon: iconData.icon,
+            type: parentNode?.stepType,
+            nodeType: getExecutionPipelineNodeType(parentNode?.stepType),
+            data: {
+              name: parentNode.name || /* istanbul ignore next */ '',
+              skipCondition: parentNode.skipInfo?.evaluatedCondition ? parentNode.skipInfo.skipCondition : undefined,
+              when: parentNode.nodeRunInfo,
+              ...iconData,
+              showInLabel: parentNode.stepType === NodeType.SERVICE || parentNode.stepType === NodeType.INFRASTRUCTURE,
+              identifier: nodeId,
+              status: parentNode.status as ExecutionStatus,
+              type: getExecutionPipelineNodeType(parentNode?.stepType),
+              data: parentNode
+            },
+            children: processNodeDataV1(
+              childNodes || /* istanbul ignore next */ [],
+              graph?.nodeMap,
+              graph?.nodeAdjacencyListMap,
+              items
+            )
+          })
+        } else {
+          const iconData = getIconDataBasedOnType(nodeData)
+          items.push({
+            id: nodeId as string,
+            identifier: nodeId as string,
+            name: nodeData?.name as string,
+            icon: iconData.icon,
+            type: nodeData?.stepType,
+            nodeType: getExecutionPipelineNodeType(nodeData?.stepType),
+            data: {
+              name: nodeData.name || /* istanbul ignore next */ '',
+              skipCondition: nodeData.skipInfo?.evaluatedCondition ? nodeData.skipInfo.skipCondition : undefined,
+              when: nodeData.nodeRunInfo,
+              ...iconData,
+              showInLabel: nodeData.stepType === NodeType.SERVICE || nodeData.stepType === NodeType.INFRASTRUCTURE,
+              identifier: nodeId,
+              status: nodeData.status as ExecutionStatus,
+              type: getExecutionPipelineNodeType(nodeData?.stepType),
+              data: nodeData
+            }
+          } as PipelineGraphState)
+        }
+      }
+      nodeId = nodeAdjacencyListMap[nodeId].nextIds?.[0]
+    }
+  }
+
+  return items
 }
