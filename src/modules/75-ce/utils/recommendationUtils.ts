@@ -14,11 +14,24 @@ export const addBufferToValue = (value: number, bufferPercentage: number): numbe
 export const calculateSavingsPercentage = (savings: number, totalCost: number): string =>
   `(${Math.floor((savings / totalCost) * 100)}%)`
 
-export const isResourceConsistent = (sumCpu: number, sumMemory: number, maxCpu: number, maxMemory: number): boolean => {
-  const isInconsistent = Math.round(sumCpu) < Math.round(maxCpu) || Math.round(sumMemory) < Math.round(maxMemory)
+export const isResourceConsistent = (
+  sumCpu: number,
+  sumMemory: number,
+  maxCpu: number,
+  maxMemory: number,
+  buffer: number
+): boolean => {
+  const sumCpuWithBuffer = addBufferToValue(sumCpu, buffer)
+  const sumMemWithBuffer = addBufferToValue(sumMemory, buffer)
+
+  const isInconsistent =
+    Math.round(sumCpuWithBuffer) < Math.round(maxCpu) || Math.round(sumMemWithBuffer) < Math.round(maxMemory)
 
   const anyZero =
-    Math.round(sumCpu) === 0 || Math.round(sumMemory) === 0 || Math.round(maxCpu) === 0 || Math.round(maxMemory) === 0
+    Math.round(sumCpuWithBuffer) === 0 ||
+    Math.round(sumMemWithBuffer) === 0 ||
+    Math.round(maxCpu) === 0 ||
+    Math.round(maxMemory) === 0
 
   return !isInconsistent || !anyZero
 }

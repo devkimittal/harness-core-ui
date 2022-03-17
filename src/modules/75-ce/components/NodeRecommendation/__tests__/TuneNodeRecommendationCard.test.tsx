@@ -47,6 +47,7 @@ describe('test cases for tune recommendation card', () => {
     const { container } = render(
       <TestWrapper>
         <TuneRecommendationCard
+          loading={false}
           cardVisible={false}
           toggleCardVisible={jest.fn()}
           buffer={0}
@@ -68,6 +69,7 @@ describe('test cases for tune recommendation card', () => {
     const { container } = render(
       <TestWrapper>
         <TuneRecommendationCard
+          loading={true}
           cardVisible={true}
           toggleCardVisible={jest.fn()}
           buffer={0}
@@ -89,6 +91,7 @@ describe('test cases for tune recommendation card', () => {
     const { container } = render(
       <TestWrapper>
         <TuneRecommendationCard
+          loading={true}
           cardVisible={true}
           toggleCardVisible={jest.fn()}
           buffer={0}

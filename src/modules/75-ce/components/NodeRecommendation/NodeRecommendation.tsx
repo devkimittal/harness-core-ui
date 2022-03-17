@@ -46,7 +46,6 @@ import { RecommendationResponse, RecommendClusterRequest, useRecommendCluster } 
 import { useGetSeries } from 'services/ce/publicPricingService'
 import {
   addBufferToState,
-  addBufferToValue,
   calculateSavingsPercentage,
   convertStateToRecommendClusterPayload,
   isResourceConsistent
@@ -151,13 +150,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     {}
   ) as RecommendClusterRequest
 
-  const {
-    sumCpu = 0,
-    sumMem = 0,
-    minNodes = 0,
-    maxcpu = 0,
-    maxmemory = 0
-  } = useMemo(() => {
+  const { sumCpu, sumMem, minNodes, maxcpu, maxmemory } = useMemo(() => {
     const recommendClusterRequest = ((timeRange.value === NodepoolTimeRangeType.LAST_DAY
       ? recommendationDetails.resourceRequirement
       : nodeRecommendationRequestData.recommendClusterRequest) || {}) as RecommendClusterRequest
@@ -172,11 +165,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
   const initialState = {
-    maxCpu: +maxcpu.toFixed(3),
-    maxMemory: +maxmemory.toFixed(3),
-    sumCpu: +sumCpu.toFixed(3),
-    sumMem: +sumMem.toFixed(3),
-    minNodes: +minNodes.toFixed(3),
+    maxCpu: +defaultTo(maxcpu, 0).toFixed(3),
+    maxMemory: +defaultTo(maxmemory, 0).toFixed(3),
+    sumCpu: +defaultTo(sumCpu, 0).toFixed(3),
+    sumMem: +defaultTo(sumMem, 0).toFixed(3),
+    minNodes: +defaultTo(minNodes, 0).toFixed(3),
     includeTypes: includeTypes || [],
     includeSeries: includeSeries || [],
     excludeTypes: excludeTypes || [],
@@ -201,10 +194,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
 
   const updateRecommendationDetails = async () => {
-    const sumCpuWithBuffer = addBufferToValue(state.sumCpu, buffer)
-    const sumMemWithBuffer = addBufferToValue(state.sumMem, buffer)
-
-    if (isResourceConsistent(sumCpuWithBuffer, sumMemWithBuffer, state.maxCpu, state.maxMemory)) {
+    if (isResourceConsistent(state.sumCpu, state.sumMem, state.maxCpu, state.maxMemory, buffer)) {
       try {
         const payload = convertStateToRecommendClusterPayload(
           state,
@@ -234,11 +224,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     dispatch({
       type: ACTIONS.UPDATE_TIME_RANGE,
       data: {
-        maxCpu: +maxcpu.toFixed(3),
-        maxMemory: +maxmemory.toFixed(3),
-        sumCpu: +sumCpu.toFixed(3),
-        sumMem: +sumMem.toFixed(3),
-        minNodes: +minNodes.toFixed(3)
+        maxCpu: +defaultTo(maxcpu, 0).toFixed(3),
+        maxMemory: +defaultTo(maxmemory, 0).toFixed(3),
+        sumCpu: +defaultTo(sumCpu, 0).toFixed(3),
+        sumMem: +defaultTo(sumMem, 0).toFixed(3),
+        minNodes: +defaultTo(minNodes, 0).toFixed(3)
       }
     })
     updateRecommendationDetails()
@@ -251,7 +241,9 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           <Text font={{ variation: FontVariation.H4 }} icon="gcp">
             {`${recommendationName}: Preferred Instance Families`}
           </Text>
-          <Text>{getString('ce.nodeRecommendation.instaceFamiliesModalDesc')}</Text>
+          <Text font={{ variation: FontVariation.SMALL }}>
+            {getString('ce.nodeRecommendation.instaceFamiliesModalDesc')}
+          </Text>
           <Container height="100%">
             <Tabs
               id={'horizontalTabs'}
@@ -336,6 +328,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         <Card className={css.tuneRecommendationCard}>
           <TuneRecommendationCard
             cardVisible={tuneRecomVisible}
+            loading={loading}
             toggleCardVisible={() => setTuneRecomVisible(prevState => !prevState)}
             state={state}
             dispatch={dispatch}

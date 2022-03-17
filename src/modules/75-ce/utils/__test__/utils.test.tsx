@@ -60,8 +60,8 @@ describe('test cases for recommendation utils', () => {
   })
 
   test('check if resource values are consistent', () => {
-    expect(isResourceConsistent(1, 1, 2, 2)).toBe(true)
-    expect(isResourceConsistent(0, 0, 1, 2)).toBe(false)
+    expect(isResourceConsistent(1, 1, 2, 2, 0)).toBe(true)
+    expect(isResourceConsistent(0, 0, 1, 2, 0)).toBe(false)
   })
 
   test('test cases to calculate nodes', () => {

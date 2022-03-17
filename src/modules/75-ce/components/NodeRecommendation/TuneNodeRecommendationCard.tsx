@@ -55,7 +55,8 @@ export const TuneRecommendationCardHeader: React.FC<TuneRecommendationCardHeader
   )
 }
 
-interface TuneRecommendationCardBodyProps {
+interface TuneRecommendationCardProps {
+  loading: boolean
   cardVisible: boolean
   toggleCardVisible: () => void
   state: IState
@@ -68,8 +69,9 @@ interface TuneRecommendationCardBodyProps {
   updateRecommendationDetails: () => void
 }
 
-export const TuneRecommendationCard: React.FC<TuneRecommendationCardBodyProps> = props => {
+export const TuneRecommendationCard: React.FC<TuneRecommendationCardProps> = props => {
   const {
+    loading,
     cardVisible,
     toggleCardVisible,
     state,
@@ -122,6 +124,7 @@ export const TuneRecommendationCard: React.FC<TuneRecommendationCardBodyProps> =
               updatedState={updatedState}
               updateRecommendationDetails={updateRecommendationDetails}
               buffer={buffer}
+              loading={loading}
             />
           </Layout.Vertical>
         </Container>
@@ -357,7 +360,8 @@ const ApplyPreferencesButtonGroup: React.FC<{
   dispatch: React.Dispatch<Action>
   setBuffer: React.Dispatch<React.SetStateAction<number>>
   buffer: number
-}> = ({ updateRecommendationDetails, state, initialState, updatedState, dispatch, setBuffer, buffer }) => {
+  loading: boolean
+}> = ({ updateRecommendationDetails, state, initialState, updatedState, dispatch, setBuffer, buffer, loading }) => {
   const { getString } = useStrings()
 
   const stateWithBuffer = {
@@ -372,6 +376,7 @@ const ApplyPreferencesButtonGroup: React.FC<{
         variation={ButtonVariation.PRIMARY}
         onClick={updateRecommendationDetails}
         disabled={isEqual(stateWithBuffer, updatedState)}
+        loading={loading}
       >
         {getString('ce.nodeRecommendation.applyPreferences')}
       </Button>
