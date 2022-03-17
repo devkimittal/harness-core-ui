@@ -42,8 +42,12 @@ const getGcpInstanceDetailsLink = (zone: string, name: string) => {
   return `https://console.cloud.google.com/compute/instancesDetail/zones/${zone}/instances/${name}`
 }
 
-export function getInstancesLink(service: Service, resources: AllResourcesOfAccountResponse): string {
-  const resource = resources.response?.[0]
+const getEcsServicesLink = (region: string, cluster: string, serviceName: string) => {
+  return `https://console.aws.amazon.com/ecs/home?region=${region}#/clusters/${cluster}/services/${serviceName}/details`
+}
+
+export function getInstancesLink(service: Service, resources?: AllResourcesOfAccountResponse): string {
+  const resource = resources?.response?.[0]
   if (resource?.provider_type === PROVIDER_TYPES.AZURE) {
     return getAzureInstancesLink()
   } else if (resource?.provider_type === PROVIDER_TYPES.GCP) {
@@ -56,9 +60,15 @@ export function getInstancesLink(service: Service, resources: AllResourcesOfAcco
     const region = resource?.region || ''
     if (service.kind === GatewayKindType.DATABASE) {
       return getAwsConsoleDatabaseLink(_defaultTo(region, ''), _defaultTo(resource?.id, ''))
+    } else if (service.kind === GatewayKindType.CONTAINERS) {
+      return getEcsServicesLink(
+        _defaultTo(service.routing?.container_svc?.region, ''),
+        _defaultTo(service.routing?.container_svc?.cluster, ''),
+        _defaultTo(service.routing?.container_svc?.service, '')
+      )
     } else {
       const instanceIDs = _defaultTo(
-        resources.response?.map(x => x.id),
+        resources?.response?.map(x => x.id),
         []
       )
       return getAwsConsoleInstancesLink(_defaultTo(region, ''), instanceIDs?.join(','))

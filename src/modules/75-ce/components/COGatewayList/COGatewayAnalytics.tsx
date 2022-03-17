@@ -155,6 +155,7 @@ const COGatewayAnalytics: React.FC<COGatewayAnalyticsProps> = props => {
   const [idleHourSeries, setIdleHourSeries] = useState<number[]>([])
   const [actualHoursSeries, setActualHoursSeries] = useState<number[]>([])
   const isK8sRule = Utils.isK8sRule(props.service?.data as Service)
+  const isEcsRule = !_isEmpty(props.service?.data.routing?.container_svc)
 
   const { data, loading } = useSavingsOfService({
     account_id: accountId,
@@ -189,7 +190,7 @@ const COGatewayAnalytics: React.FC<COGatewayAnalyticsProps> = props => {
     account_id: accountId,
     rule_id: props.service?.data.id as number, // eslint-disable-line
     debounce: 300,
-    lazy: isK8sRule
+    lazy: isK8sRule || isEcsRule
   })
 
   const { triggerToggle } = useToggleRuleState({
@@ -298,27 +299,42 @@ const COGatewayAnalytics: React.FC<COGatewayAnalyticsProps> = props => {
             </Container>
             {!isK8sRule && (
               <Container className={css.serviceDetailsItemContainer}>
-                <Text className={css.detailItemHeader}>Resources managed</Text>
+                <Text className={css.detailItemHeader}>{isEcsRule ? 'Tasks running' : 'Resources managed'}</Text>
                 <Layout.Horizontal spacing="medium" className={css.detailItemValue}>
-                  {!resourcesLoading && resources && props.service?.data ? (
-                    <Link
-                      href={getInstancesLink(
-                        props.service?.data as Service,
-                        resources as AllResourcesOfAccountResponse
-                      )}
-                      target="_blank"
-                      style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                    >
-                      {resources?.response?.length} Instances
-                    </Link>
+                  {isEcsRule ? (
+                    <>
+                      <Link
+                        href={getInstancesLink(props.service?.data as Service)}
+                        target="_blank"
+                        style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                      >
+                        {`${_defaultTo(props.service?.data?.routing?.container_svc?.task_count, 0)} tasks`}
+                      </Link>
+                      {getStateTag(props.service?.data?.routing?.container_svc?.task_count ? 'active' : 'down')}
+                    </>
                   ) : (
-                    <Icon name="spinner" size={12} color="blue500" />
+                    <>
+                      {!resourcesLoading && resources && props.service?.data ? (
+                        <Link
+                          href={getInstancesLink(
+                            props.service?.data as Service,
+                            resources as AllResourcesOfAccountResponse
+                          )}
+                          target="_blank"
+                          style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                        >
+                          {resources?.response?.length} Instances
+                        </Link>
+                      ) : (
+                        <Icon name="spinner" size={12} color="blue500" />
+                      )}
+                      {healthDataLoading ? (
+                        <Icon name="spinner" size={12} color="blue500" />
+                      ) : healthData?.response?.['state'] != null ? (
+                        getStateTag(healthData?.response?.['state'])
+                      ) : null}
+                    </>
                   )}
-                  {healthDataLoading ? (
-                    <Icon name="spinner" size={12} color="blue500" />
-                  ) : healthData?.response?.['state'] != null ? (
-                    getStateTag(healthData?.response?.['state'])
-                  ) : null}
                 </Layout.Horizontal>
               </Container>
             )}
@@ -354,10 +370,18 @@ const COGatewayAnalytics: React.FC<COGatewayAnalyticsProps> = props => {
               <Layout.Horizontal spacing="xsmall" className={css.detailItemValue}>
                 {isK8sRule ? (
                   <Icon name="app-kubernetes" size={18} />
+                ) : isEcsRule ? (
+                  <Icon name="service-ecs" size={18} />
                 ) : (
                   <img src={props.service?.data.fulfilment === 'spot' ? spotIcon : odIcon} alt="" aria-hidden />
                 )}
-                <Text>{props.service?.data.fulfilment}</Text>
+                <Text>
+                  {Utils.getConditionalResult(
+                    isEcsRule,
+                    getString('ce.common.containerService'),
+                    props.service?.data.fulfilment
+                  )}
+                </Text>
               </Layout.Horizontal>
             </Container>
             {/* <Layout.Vertical spacing="large" padding="medium">

@@ -56,6 +56,7 @@ import RbacButton from '@rbac/components/Button/Button'
 import { FeatureIdentifier } from 'framework/featureStore/FeatureIdentifier'
 import type { FeatureDetail } from 'framework/featureStore/featureStoreUtil'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
+import { Utils } from '@ce/common/Utils'
 import COGatewayAnalytics from './COGatewayAnalytics'
 import COGatewayCumulativeAnalytics from './COGatewayCumulativeAnalytics'
 import odIcon from './images/ondemandIcon.svg'
@@ -90,7 +91,9 @@ interface EmptyListPageProps {
 }
 
 function IconCell(tableProps: CellProps<Service>): JSX.Element {
+  const { getString } = useStrings()
   const isK8sRule = tableProps.row.original.kind === 'k8s'
+  const isEcsRule = !_isEmpty(tableProps.row.original.routing?.container_svc)
   const getIcon = () => {
     return tableProps.value === 'spot'
       ? tableProps.row.original.disabled
@@ -104,11 +107,13 @@ function IconCell(tableProps: CellProps<Service>): JSX.Element {
     <Layout.Horizontal spacing="medium">
       {isK8sRule ? (
         <Icon name="app-kubernetes" size={21} />
+      ) : isEcsRule ? (
+        <Icon name="service-ecs" size={21} />
       ) : (
         <img className={css.fulFilmentIcon} src={getIcon()} alt="" width={'20px'} height={'19px'} aria-hidden />
       )}
       <Text lineClamp={3} color={tableProps.row.original.disabled ? textColor.disable : Color.GREY_500}>
-        {tableProps.value}
+        {Utils.getConditionalResult(isEcsRule, getString('ce.common.containerService'), tableProps.value)}
       </Text>
     </Layout.Horizontal>
   )

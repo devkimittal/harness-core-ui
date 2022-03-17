@@ -3728,6 +3728,7 @@ export interface StringsMap {
   'ce.co.setupCloudProvider': string
   'ce.co.sshSetup': string
   'ce.common.budget': string
+  'ce.common.containerService': string
   'ce.common.newBudget': string
   'ce.common.spendTillDate': string
   'ce.connector.AWS.crossAccountRole.arn': string
