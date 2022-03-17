@@ -3406,6 +3406,7 @@ export interface StringsMap {
   'cd.setupGitOpsServerStep': string
   'cd.specifyTfVarStore': string
   'cd.stepName': string
+  'cd.steps.azureInfraStep.azure': string
   'cd.steps.azureInfraStep.resourceGroupPlaceholder': string
   'cd.steps.azureInfraStep.subscriptionPlaceholder': string
   'cd.steps.common.clusterDetails': string
@@ -7713,10 +7714,6 @@ export interface StringsMap {
    * @deprecated migrate this string to module level file
    */
   'pipelineSteps.deploy.serviceSpecifications.useFromStageLabel': string
-  /**
-   * @deprecated migrate this string to module level file
-   */
-  'pipelineSteps.deploymentTypes.azure': string
   /**
    * @deprecated migrate this string to module level file
    */

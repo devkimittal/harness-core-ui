@@ -15,6 +15,7 @@ steps:
   kubernetesGcpStep:
     stepName: Specify your GCP Connector
   azureInfraStep:
+    azure: 'Microsoft Azure'
     subscriptionPlaceholder: '{{ $.common.subscriptionPlaceholder }}'
     resourceGroupPlaceholder: 'Select or add Resource Group'
 folderPath: Folder Path
