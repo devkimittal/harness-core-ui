@@ -141,7 +141,6 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
 }) => {
   const { getString } = useStrings()
   const { showError } = useToaster()
-
   const timeRangeFilter = GET_NODEPOOL_DATE_RANGE[timeRange.value]
 
   const [buffer, setBuffer] = useState(0)
@@ -197,7 +196,6 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     service: defaultTo(service, '')
   }
   const { mutate: fetchNewRecommendation, loading } = useRecommendCluster(pathParams)
-
   const { data: seriesData, loading: seriesDataLoading } = useGetSeries(pathParams)
 
   const debouncedFetchNewRecomm = useCallback(pDebounce(fetchNewRecommendation, 500), [])
@@ -213,7 +211,6 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
           defaultTo(recommendationDetails.resourceRequirement, {}) as RecommendClusterRequest,
           buffer
         )
-
         const response = await debouncedFetchNewRecomm(payload)
         const newState = {
           ...recomDetails,
