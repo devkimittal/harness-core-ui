@@ -3334,6 +3334,7 @@ export interface StringsMap {
   'cd.noEnvironment.title': string
   'cd.noGitOpsServerText': string
   'cd.notReachable': string
+  'cd.parsingYamlError': string
   'cd.pathCannotBeEmpty': string
   'cd.pipelineSteps.environmentTab.environmentIsRequired': string
   'cd.pipelineSteps.environmentTab.newEnvironment': string

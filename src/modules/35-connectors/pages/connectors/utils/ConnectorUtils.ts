@@ -645,7 +645,7 @@ export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accoun
     scopeQueryParams
   )
 
-  const formData = {
+  return {
     azureEnvironmentType: connectorInfoSpec.azureEnvironmentType,
     authType: connectorInfoSpec.credential.type,
     clientId: connectorInfoSpec.credential.spec.clientId || undefined,
@@ -654,8 +654,6 @@ export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accoun
     secretText: secretType === AzureSecretKeyType.SECRET ? secretKey : undefined,
     secretFile: secretType === AzureSecretKeyType.CERT ? secretKey : undefined
   }
-
-  return formData
 }
 
 export const setupAwsKmsFormData = async (connectorInfo: ConnectorInfoDTO, accountId: string): Promise<FormData> => {

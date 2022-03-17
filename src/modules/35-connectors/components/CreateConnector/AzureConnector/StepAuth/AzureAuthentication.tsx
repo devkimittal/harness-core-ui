@@ -108,7 +108,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
   }
 
   const [initialValues, setInitialValues] = useState(defaultInitialFormData)
-  const [loadingConnectorSecrets, setLoadingConnectorSecrets] = useState(true && props.isEditMode)
+  const [loadingConnectorSecrets, setLoadingConnectorSecrets] = useState(props.isEditMode)
 
   useEffect(() => {
     if (loadingConnectorSecrets && props.isEditMode) {
