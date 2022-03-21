@@ -34,7 +34,7 @@ export default function HealthScoreChart(props: HealthScoreChartProps): JSX.Elem
       duration: duration?.value as TimePeriodEnum,
       endTime: endTime || Date.now()
     }
-  }, [accountId, projectIdentifier, orgIdentifier, duration?.value, endTime])
+  }, [duration?.value, endTime])
 
   const {
     data: healthScoreDataWithMSIdentifier,
