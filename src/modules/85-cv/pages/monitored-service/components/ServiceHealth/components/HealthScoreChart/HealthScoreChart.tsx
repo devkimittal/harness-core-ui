@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'
 import { Container, Text } from '@wings-software/uicore'
@@ -26,6 +26,16 @@ export default function HealthScoreChart(props: HealthScoreChartProps): JSX.Elem
   const { orgIdentifier, projectIdentifier, accountId } = useParams<ProjectPathProps>()
   const [seriesData, setSeriesData] = useState<ColumnData[]>([])
 
+  const queryParams = useMemo(() => {
+    return {
+      accountId,
+      projectIdentifier,
+      orgIdentifier,
+      duration: duration?.value as TimePeriodEnum,
+      endTime: endTime || Date.now()
+    }
+  }, [accountId, projectIdentifier, orgIdentifier, duration?.value, endTime])
+
   const {
     data: healthScoreDataWithMSIdentifier,
     refetch: fetchHealthScoreWithMSIdentifier,
@@ -33,14 +43,18 @@ export default function HealthScoreChart(props: HealthScoreChartProps): JSX.Elem
     error: healthScoreDataWithMSIdentifierError
   } = useGetMonitoredServiceOverAllHealthScore({
     identifier: monitoredServiceIdentifier,
-    queryParams: {
-      accountId,
-      orgIdentifier,
-      projectIdentifier,
-      duration: duration?.value as TimePeriodEnum,
-      endTime: endTime || Date.now()
-    }
+    queryParams,
+    lazy: true
   })
+
+  useEffect(() => {
+    fetchHealthScoreWithMSIdentifier({ queryParams })
+  }, [queryParams])
+
+  useEffect(() => {
+    handleHealthScoreData(healthScoreDataWithMSIdentifier)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [healthScoreDataWithMSIdentifier])
 
   const handleHealthScoreData = (healthScoreData: ResponseHistoricalTrend | null): void => {
     if (healthScoreData?.data?.healthScores && !isEmpty(healthScoreData?.data?.healthScores)) {
@@ -49,11 +63,6 @@ export default function HealthScoreChart(props: HealthScoreChartProps): JSX.Elem
       setHealthScoreData?.(healthScoreData.data.healthScores)
     }
   }
-
-  useEffect(() => {
-    handleHealthScoreData(healthScoreDataWithMSIdentifier)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [healthScoreDataWithMSIdentifier])
 
   return (
     <Container className={css.main}>
