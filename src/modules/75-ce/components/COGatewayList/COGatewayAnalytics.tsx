@@ -327,7 +327,11 @@ const COGatewayAnalytics: React.FC<COGatewayAnalyticsProps> = props => {
                 ) : isEcsRule ? (
                   <Icon name="service-ecs" size={18} />
                 ) : (
-                  <img src={props.service?.data.fulfilment === 'spot' ? spotIcon : odIcon} alt="" aria-hidden />
+                  <img
+                    src={Utils.getConditionalResult(props.service?.data.fulfilment === 'spot', spotIcon, odIcon)}
+                    alt=""
+                    aria-hidden
+                  />
                 )}
                 <Text>
                   {Utils.getConditionalResult(
