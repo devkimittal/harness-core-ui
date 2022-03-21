@@ -6,11 +6,35 @@
  */
 
 import React, { FC } from 'react'
+import type { SidebarContext } from '@common/navigation/SidebarProvider'
+import routes from '@common/RouteDefinitions'
+import { RouteWithLayout } from '@common/router'
+import { accountPathProps } from '@common/utils/routeUtils'
+import STOHomePage from '@sto-steps/pages/STOHomePage'
 import '@pipeline/components/CommonPipelineStages/PipelineStage'
 import '@sto-steps/components/PipelineStages/SecurityStage'
 
+const STOSideNavProps: SidebarContext = {
+  navComponent: function DefaultNav() {
+    return null
+  },
+  title: 'Security Tests',
+  icon: 'sto-color-filled'
+}
+
 const STORoutes: FC = () => {
-  return <></>
+  return (
+    <>
+      <RouteWithLayout
+        // licenseRedirectData={licenseRedirectData}
+        sidebarProps={STOSideNavProps}
+        path={[routes.toSTOHome({ ...accountPathProps })]}
+        exact
+      >
+        <STOHomePage />
+      </RouteWithLayout>
+    </>
+  )
 }
 
 export default STORoutes
