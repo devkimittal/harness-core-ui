@@ -34,6 +34,7 @@ export default function L1Nav(): React.ReactElement {
     CING_ENABLED,
     CENG_ENABLED,
     CFNG_ENABLED,
+    SECURITY,
     RESOURCE_CENTER_ENABLED,
     NG_DASHBOARDS
   } = useFeatureFlags()
@@ -138,6 +139,23 @@ export default function L1Nav(): React.ReactElement {
                   className={css.text}
                 >
                   <String stringID="common.purpose.cv.serviceReliability" />
+                </Text>
+              </Layout.Vertical>
+            </Link>
+          </li>
+        )}
+        {SECURITY && (
+          <li className={css.navItem}>
+            <Link {...commonLinkProps} to={paths.toSTO(params)}>
+              <Layout.Vertical flex={{ align: 'center-center' }} spacing="small">
+                <Icon name="sto-color-filled" size={30} />
+                <Text
+                  font={{ weight: 'semi-bold', align: 'center' }}
+                  padding={{ bottom: 'xsmall' }}
+                  color={Color.WHITE}
+                  className={css.text}
+                >
+                  <String stringID="common.purpose.sto.continuous" />
                 </Text>
               </Layout.Vertical>
             </Link>

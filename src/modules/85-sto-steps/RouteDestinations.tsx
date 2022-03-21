@@ -13,11 +13,10 @@ import { accountPathProps } from '@common/utils/routeUtils'
 import STOHomePage from '@sto-steps/pages/STOHomePage'
 import '@pipeline/components/CommonPipelineStages/PipelineStage'
 import '@sto-steps/components/PipelineStages/SecurityStage'
+import STOSideNav from '@sto-steps/components/STOSideNav/STOSideNav'
 
 const STOSideNavProps: SidebarContext = {
-  navComponent: function DefaultNav() {
-    return null
-  },
+  navComponent: STOSideNav,
   title: 'Security Tests',
   icon: 'sto-color-filled'
 }
