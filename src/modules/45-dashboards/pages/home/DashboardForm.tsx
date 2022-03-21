@@ -9,7 +9,6 @@ import React from 'react'
 import {
   Button,
   Container,
-  FontVariation,
   Formik,
   FormikForm as Form,
   FormInput,
@@ -19,6 +18,7 @@ import {
   SelectOption,
   Text
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { useGet } from 'restful-react'
