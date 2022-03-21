@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test cases for ManageUnallocatedCost should be able to render component 1`] = `
+<div>
+  <div
+    class="StyledProps--font StyledProps--main"
+  >
+    <div
+      class="Layout--horizontal Layout--layout-spacing-small StyledProps--main hContainer"
+    >
+      <label
+        class="RadioButton--radio StyledProps--main"
+      >
+        <input
+          class="RadioButton--input"
+          name=""
+          type="radio"
+          value="default"
+        />
+        <span
+          class="RadioButton--radioIcon"
+        />
+        ce.businessMapping.manageUnallocatedCost.defaultUnallocatedCostLabel
+      </label>
+      <div
+        class="bp3-form-group bp3-disabled defaultValInputBox"
+      >
+        <div
+          class="bp3-form-content"
+        >
+          <div
+            class="bp3-input-group bp3-disabled"
+          >
+            <input
+              autocomplete="off"
+              class="bp3-input"
+              disabled=""
+              name="defaultVal"
+              placeholder="ce.businessMapping.manageUnallocatedCost.otherPlaceholder"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <label
+      class="RadioButton--radio StyledProps--main"
+    >
+      <input
+        class="RadioButton--input"
+        disabled=""
+        name=""
+        type="radio"
+        value="-"
+      />
+      <span
+        class="RadioButton--radioIcon"
+      />
+      ce.businessMapping.manageUnallocatedCost.ignoreCostLabel
+    </label>
+    <label
+      class="RadioButton--radio StyledProps--main"
+    >
+      <input
+        class="RadioButton--input"
+        disabled=""
+        name=""
+        type="radio"
+        value="-"
+      />
+      <span
+        class="RadioButton--radioIcon"
+      />
+      ce.businessMapping.manageUnallocatedCost.shareCosts
+    </label>
+  </div>
+</div>
+`;
