@@ -395,7 +395,7 @@ exports[`Test COGatewayList clicking on a row should open info drawer 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main StyledProps--font-variation-table-headers"
                 >
-                  ce.co.rulesTableHeaders.savings
+                  CE.CO.RULESTABLEHEADERS.SAVINGS
                 </p>
               </div>
               <div
@@ -1595,7 +1595,7 @@ exports[`Test COGatewayList clicking on refresh button refetch all rules 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main StyledProps--font-variation-table-headers"
                 >
-                  ce.co.rulesTableHeaders.savings
+                  CE.CO.RULESTABLEHEADERS.SAVINGS
                 </p>
               </div>
               <div
@@ -3338,7 +3338,7 @@ exports[`Test COGatewayList renders without crashing 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main StyledProps--font-variation-table-headers"
                 >
-                  ce.co.rulesTableHeaders.savings
+                  CE.CO.RULESTABLEHEADERS.SAVINGS
                 </p>
               </div>
               <div
