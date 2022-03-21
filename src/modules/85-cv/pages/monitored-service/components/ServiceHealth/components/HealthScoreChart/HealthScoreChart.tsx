@@ -43,13 +43,8 @@ export default function HealthScoreChart(props: HealthScoreChartProps): JSX.Elem
     error: healthScoreDataWithMSIdentifierError
   } = useGetMonitoredServiceOverAllHealthScore({
     identifier: monitoredServiceIdentifier,
-    queryParams,
-    lazy: true
+    queryParams
   })
-
-  useEffect(() => {
-    fetchHealthScoreWithMSIdentifier({ queryParams })
-  }, [queryParams])
 
   useEffect(() => {
     handleHealthScoreData(healthScoreDataWithMSIdentifier)

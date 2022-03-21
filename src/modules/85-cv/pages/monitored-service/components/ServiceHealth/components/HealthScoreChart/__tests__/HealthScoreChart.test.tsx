@@ -56,7 +56,6 @@ describe('Unit tests for HealthScoreChart', () => {
     await waitFor(() =>
       expect(cvService.useGetMonitoredServiceOverAllHealthScore).toHaveBeenLastCalledWith({
         identifier: 'monitored_service_identifier',
-        lazy: true,
         queryParams: {
           accountId: undefined,
           duration: 'TWENTY_FOUR_HOURS',
@@ -129,7 +128,6 @@ describe('Unit tests for HealthScoreChart', () => {
     await waitFor(() =>
       expect(cvService.useGetMonitoredServiceOverAllHealthScore).toHaveBeenLastCalledWith({
         identifier: 'monitored_service_identifier',
-        lazy: true,
         queryParams: {
           accountId: undefined,
           orgIdentifier: undefined,
