@@ -14,6 +14,7 @@ import cx from 'classnames'
 import { useFeatureFlags } from '@common/hooks/useFeatureFlag'
 import { useCommunity } from 'framework/LicenseStore/useCommunity'
 import { useStrings } from 'framework/strings'
+import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import Feedback from './Feedback'
 import css from './ResourceCenter.module.scss'
 
@@ -138,11 +139,12 @@ export const CommunitySubmitTicket = (): React.ReactElement => {
     </Layout.Horizontal>
   )
 }
-export const MenuItems: React.FC = (): React.ReactElement => {
+export const MenuItems = ({ closeResourceCenter }: { closeResourceCenter: () => void }): React.ReactElement => {
   const { getString } = useStrings()
   const isCommunity = useCommunity()
   const { SHOW_NG_REFINER_FEEDBACK } = useFeatureFlags()
   const timestamp = moment.now()
+  const { currentUserInfo } = useAppStore()
   const openZendeskSupport = (e: React.MouseEvent<Element, MouseEvent>): void => {
     const url =
       '/sso.html?action=login&brand_id=114095000394&locale_id=1&return_to=https%3A%2F%2Fsupport.harness.io%2Fhc%2Fen-us%2Frequests&src=zendesk&timestamp=' +
@@ -150,6 +152,17 @@ export const MenuItems: React.FC = (): React.ReactElement => {
     e.stopPropagation()
     e.preventDefault()
     window.open(url)
+  }
+  const openSaber = (e: React.MouseEvent<Element, MouseEvent>): void => {
+    e.stopPropagation()
+    e.preventDefault()
+    window.Saber?.do('set_options', {
+      feedback_values: { _email: currentUserInfo.email }
+    })
+    closeResourceCenter()
+    setTimeout(function () {
+      window.Saber?.do('open')
+    }, 500)
   }
 
   return isCommunity ? (
@@ -164,7 +177,10 @@ export const MenuItems: React.FC = (): React.ReactElement => {
       >
         {menuItems({
           title: getString('common.resourceCenter.ticketmenu.submit'),
-          description: getString('common.resourceCenter.ticketmenu.submitDesc')
+          description: getString('common.resourceCenter.ticketmenu.submitDesc'),
+          onClick: e => {
+            openSaber(e)
+          }
         })}
       </Layout.Horizontal>
       <Layout.Horizontal padding={{ top: 'medium' }} flex={{ justifyContent: 'space-between' }}>

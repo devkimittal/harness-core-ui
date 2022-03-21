@@ -72,7 +72,11 @@ export const ResourceCenter = (): React.ReactElement => {
           </Layout.Horizontal>
           <img src={resourceImage} height={106} alt={'Resource center image'} />
         </Layout.Vertical>
-        <MenuItems />
+        <MenuItems
+          closeResourceCenter={() => {
+            setShow(false)
+          }}
+        />
         <Layout.Vertical padding={'xlarge'}>
           <Text font={{ variation: FontVariation.BODY2 }} padding={{ bottom: 'medium' }} color={Color.WHITE}>
             {getString('common.resourceCenter.bottomlayout.desc')}
