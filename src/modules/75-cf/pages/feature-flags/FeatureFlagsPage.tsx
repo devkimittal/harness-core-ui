@@ -65,6 +65,7 @@ import SaveFlagToGitModal from '@cf/components/SaveFlagToGitModal/SaveFlagToGitM
 import { AUTO_COMMIT_MESSAGES } from '@cf/constants/GitSyncConstants'
 import GitSyncActions from '@cf/components/GitSyncActions/GitSyncActions'
 import { GitDetails, GitSyncFormValues, GIT_SYNC_ERROR_CODE, useGitSync, UseGitSync } from '@cf/hooks/useGitSync'
+import { useGovernance, UseGovernance } from '@cf/hooks/useGovernance'
 import usePlanEnforcement from '@cf/hooks/usePlanEnforcement'
 import FlagOptionsMenuButton from '@cf/components/FlagOptionsMenuButton/FlagOptionsMenuButton'
 import { FeatureIdentifier } from 'framework/featureStore/FeatureIdentifier'
@@ -80,6 +81,7 @@ export interface RenderColumnFlagProps {
   gitSync: UseGitSync
   cell: Cell<Feature>
   toggleFeatureFlag: UseToggleFeatureFlag
+  governance: UseGovernance
   update: (status: boolean) => void
 }
 
@@ -87,6 +89,7 @@ export const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
   numberOfEnvs,
   gitSync,
   toggleFeatureFlag,
+  governance,
   cell: { row },
   update
 }) => {
@@ -139,7 +142,11 @@ export const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
       if (error.status === GIT_SYNC_ERROR_CODE) {
         gitSync.handleError(error.data as GitSyncErrorResponse)
       } else {
-        showError(getErrorMessage(error), 0, 'cf.toggle.ff.status.error')
+        if (error?.data?.details?.governanceMetadata) {
+          governance.handleError(error.data)
+        } else {
+          showError(getErrorMessage(error), 0, 'cf.toggle.ff.status.error')
+        }
       }
     }
   }
@@ -465,7 +472,9 @@ const FeatureFlagsPage: React.FC = () => {
 
   const gitSync = useGitSync()
 
-  const error = flagsError || envsError || deleteFlag.error || toggleFeatureFlag.error
+  const governance = useGovernance()
+
+  const error = flagsError || envsError || deleteFlag.error || (toggleFeatureFlag.error && !governance.governanceError)
 
   const columns: Column<Feature>[] = useMemo(
     () => [
@@ -479,6 +488,7 @@ const FeatureFlagsPage: React.FC = () => {
               numberOfEnvs={environments?.length}
               gitSync={gitSync}
               toggleFeatureFlag={toggleFeatureFlag}
+              governance={governance}
               cell={cell}
               update={status => {
                 const feature = features?.features?.find(f => f.identifier === cell.row.original.identifier)

@@ -45,6 +45,7 @@ import {
 import { AUTO_COMMIT_MESSAGES } from '@cf/constants/GitSyncConstants'
 
 import { GIT_SYNC_ERROR_CODE, UseGitSync } from '@cf/hooks/useGitSync'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import usePlanEnforcement from '@cf/hooks/usePlanEnforcement'
 import { FeatureIdentifier } from 'framework/featureStore/FeatureIdentifier'
 import patch from '../../utils/instructions'
@@ -81,7 +82,7 @@ export const FlagPrerequisites: React.FC<FlagPrerequisitesProps> = props => {
     environmentIdentifier
   } = useParams<Record<string, string>>()
   const [searchTerm, setSearchTerm] = useState<string>()
-
+  const governance = useGovernance()
   const gitSyncFormMeta = gitSync?.getGitSyncFormMeta(AUTO_COMMIT_MESSAGES.UPDATES_FLAG_PREREQS)
   const PAGE_SIZE = 500
 
@@ -213,7 +214,11 @@ export const FlagPrerequisites: React.FC<FlagPrerequisitesProps> = props => {
               if (err.status === GIT_SYNC_ERROR_CODE) {
                 gitSync.handleError(err.data as GitSyncErrorResponse)
               } else {
-                showError(get(err, 'data.message', err?.message), undefined, 'cf.patch.req.error')
+                if (err?.data?.details?.governanceMetadata) {
+                  governance.handleError(err.data)
+                } else {
+                  showError(get(err, 'data.message', err?.message), undefined, 'cf.patch.req.error')
+                }
               }
             })
             .finally(() => {

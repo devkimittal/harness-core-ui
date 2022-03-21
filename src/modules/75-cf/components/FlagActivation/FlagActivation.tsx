@@ -41,6 +41,7 @@ import { extraOperatorReference } from '@cf/constants'
 import { useToaster } from '@common/exports'
 import { useQueryParams } from '@common/hooks'
 import { useEnvironmentSelectV2 } from '@cf/hooks/useEnvironmentSelectV2'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import { FFDetailPageTab, getErrorMessage, rewriteCurrentLocationWithActiveEnvironment } from '@cf/utils/CFUtils'
 import routes from '@common/RouteDefinitions'
 import useActiveEnvironment from '@cf/hooks/useActiveEnvironment'
@@ -126,6 +127,7 @@ const FlagActivation: React.FC<FlagActivationProps> = props => {
       }
     }
   })
+  const governance = useGovernance()
 
   const FFM_1513 = useFeatureFlag(FeatureFlag.FFM_1513)
 
@@ -334,7 +336,11 @@ const FlagActivation: React.FC<FlagActivationProps> = props => {
               if (err.status === GIT_SYNC_ERROR_CODE) {
                 gitSync.handleError(err.data as GitSyncErrorResponse)
               } else {
-                showError(get(err, 'data.message', err?.message), 0)
+                if (err?.data?.details?.governanceMetadata) {
+                  governance.handleError(err.data)
+                } else {
+                  showError(get(err, 'data.message', err?.message), 0)
+                }
               }
             })
             .finally(() => {

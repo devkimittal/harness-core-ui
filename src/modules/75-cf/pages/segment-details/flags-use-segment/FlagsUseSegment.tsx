@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { Container, FlexExpander, Heading, Layout, Text, PageError, useToaster } from '@wings-software/uicore'
 import type { HeadingProps } from '@wings-software/uicore/dist/components/Heading/Heading'
 import { useStrings } from 'framework/strings'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import {
   GitSyncErrorResponse,
   SegmentFlag,
@@ -48,6 +49,7 @@ export const FlagsUseSegment = ({ gitSync }: FlagsUseSegmentProps): ReactElement
     segmentIdentifier
   } = useParams<Record<string, string>>()
   const { activeEnvironment: environmentIdentifier } = useActiveEnvironment()
+  const governance = useGovernance()
 
   const queryParams = {
     accountIdentifier,
@@ -105,7 +107,11 @@ export const FlagsUseSegment = ({ gitSync }: FlagsUseSegmentProps): ReactElement
         if (e.status === GIT_SYNC_ERROR_CODE) {
           gitSync.handleError(e.data as GitSyncErrorResponse)
         } else {
-          showError(getErrorMessage(e), undefined, 'cf.path.feature.error')
+          if (e?.data?.details?.governanceMetadata) {
+            governance.handleError(e.data)
+          } else {
+            showError(getErrorMessage(e), undefined, 'cf.path.feature.error')
+          }
         }
       })
   }

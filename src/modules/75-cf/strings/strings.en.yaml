@@ -492,6 +492,8 @@ gitSync:
   tryAgain: Try Again
   goToGit: Go to Git to fix issue
   invalidYaml: 'We are unable to render your {{{ flagsYamlFilename }}} file because it is invalid. Fix the following issues on Git and try again.'
+policyEvaluations:
+  failedToSave: 'Flag cannot be saved due to the policy evaluation failures'
 planEnforcement:
   upgradeRequiredDev: Total Developers managing feature flags has exceeded the Subscribed developer count.
   upgradeRequiredMau: 'Total Monthly Active Users (MAU) has reached the free plan limit. Upgrade to manage unlimited MAUs.'

@@ -37,6 +37,7 @@ import RbacButton from '@rbac/components/Button/Button'
 import { AUTO_COMMIT_MESSAGES } from '@cf/constants/GitSyncConstants'
 
 import { GIT_SYNC_ERROR_CODE, UseGitSync } from '@cf/hooks/useGitSync'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import usePlanEnforcement from '@cf/hooks/usePlanEnforcement'
 import { FeatureIdentifier } from 'framework/featureStore/FeatureIdentifier'
 import patch from '../../utils/instructions'
@@ -76,6 +77,7 @@ export const EditVariationsModal: React.FC<EditVariationsModalProps> = ({
     const { getString } = useStrings()
     const validateVariationValues = useValidateVariationValues()
     const { showError, clear } = useToaster()
+    const governance = useGovernance()
 
     const { mutate: submitPatch, loading: patchLoading } = usePatchFeature({
       identifier: feature.identifier as string,
@@ -181,7 +183,11 @@ export const EditVariationsModal: React.FC<EditVariationsModalProps> = ({
           if (error.status === GIT_SYNC_ERROR_CODE) {
             gitSync.handleError(error.data as GitSyncErrorResponse)
           } else {
-            showError(getErrorMessage(error), 0, 'cf.submit.patch.error')
+            if (error?.data?.details?.governanceMetadata) {
+              governance.handleError(error.data)
+            } else {
+              showError(getErrorMessage(error), 0, 'cf.submit.patch.error')
+            }
             patch.feature.reset()
           }
         }
