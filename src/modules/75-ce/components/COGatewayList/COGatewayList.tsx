@@ -604,7 +604,7 @@ const RulesTableContainer: React.FC<RulesTableContainerProps> = ({
                   Cell: ResourcesCell
                 },
                 {
-                  Header: getString('ce.co.rulesTableHeaders.savings'),
+                  Header: getString('ce.co.rulesTableHeaders.savings').toUpperCase(),
                   width: '15%',
                   Cell: SavingsCell,
                   disableSortBy: true

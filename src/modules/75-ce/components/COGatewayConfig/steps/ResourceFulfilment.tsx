@@ -210,7 +210,7 @@ const ResourceFulfilment: React.FC<ResourceFulfilmentProps> = props => {
         <Layout.Horizontal className={css.asgInstanceSelectionContianer}>
           <div className={css.asgInstanceDetails}>
             <Text className={css.asgDetailRow}>
-              <span>Desired capacity: </span>
+              <span>{`${getString('ce.co.autoStoppingRule.configuration.step3.desiredCapacity')}: `}</span>
               <span>
                 {props.gatewayDetails.routing?.instance?.scale_group?.desired ||
                   _defaultTo(props.gatewayDetails.routing.instance.scale_group?.on_demand, 0) +
@@ -218,11 +218,11 @@ const ResourceFulfilment: React.FC<ResourceFulfilmentProps> = props => {
               </span>
             </Text>
             <Text className={css.asgDetailRow}>
-              <span>Min capacity: </span>
+              <span>{`${getString('ce.co.autoStoppingRule.configuration.step3.minCapacity')}: `}</span>
               <span>{props.gatewayDetails.routing?.instance?.scale_group?.min}</span>
             </Text>
             <Text className={css.asgDetailRow}>
-              <span>Max capacity: </span>
+              <span>{`${getString('ce.co.autoStoppingRule.configuration.step3.maxCapacity')}: `}</span>
               <span>{props.gatewayDetails.routing?.instance?.scale_group?.max}</span>
             </Text>
           </div>
@@ -308,10 +308,10 @@ const ResourceFulfilment: React.FC<ResourceFulfilmentProps> = props => {
             }}
             validationSchema={Yup.object().shape({
               taskCount: Yup.number()
-                .integer('Desired task count should be a number')
-                .required('Desired task count cannot be empty')
+                .integer(getString('ce.co.autoStoppingRule.configuration.step3.validation.taskCountInteger'))
+                .required(getString('ce.co.autoStoppingRule.configuration.step3.validation.taskCountRequired'))
                 .positive()
-                .min(1, 'Desired task count must be greater than or equal to 1')
+                .min(1, getString('ce.co.autoStoppingRule.configuration.step3.validation.minTaskCount'))
             })}
           >
             {_formikProps => (

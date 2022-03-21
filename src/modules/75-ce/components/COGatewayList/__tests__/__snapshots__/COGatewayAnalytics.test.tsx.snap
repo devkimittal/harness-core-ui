@@ -433,7 +433,7 @@ exports[`Autostopping rule analytics drawer render analytics drawer 1`] = `
               <p
                 class="StyledProps--font StyledProps--main"
               >
-                Cumulative Savings
+                ce.co.rulesTableHeaders.savings
               </p>
             </div>
           </div>
@@ -453,7 +453,7 @@ exports[`Autostopping rule analytics drawer render analytics drawer 1`] = `
         class="StyledProps--font StyledProps--font-h3 StyledProps--main"
         level="3"
       >
-        SPEND VS SAVINGS
+        CE.CO.RULEDRAWER.SPENDVSSAVINGS
       </h3>
       <p
         class="StyledProps--font StyledProps--main"
@@ -465,7 +465,7 @@ exports[`Autostopping rule analytics drawer render analytics drawer 1`] = `
         class="StyledProps--font StyledProps--font-h3 StyledProps--main"
         level="3"
       >
-        LOGS AND USAGE TIME
+        CE.CO.RULEDRAWER.LOGS AND CE.CO.RULEDRAWER.USAGETIME
       </h3>
       <div
         class="bp3-tabs Tabs--main Tabs--horizontal"
@@ -493,7 +493,7 @@ exports[`Autostopping rule analytics drawer render analytics drawer 1`] = `
             role="tab"
             tabindex="0"
           >
-            Usage Time
+            ce.co.ruleDrawer.usageTime
           </div>
           <div
             aria-controls="bp3-tab-panel_logsAndUsage_logs"
@@ -506,7 +506,7 @@ exports[`Autostopping rule analytics drawer render analytics drawer 1`] = `
             role="tab"
             tabindex="0"
           >
-            Logs
+            ce.co.ruleDrawer.logs
           </div>
         </div>
         <div
@@ -967,7 +967,7 @@ exports[`Autostopping rule analytics drawer render k8s rule analytics drawer 1`]
               <p
                 class="StyledProps--font StyledProps--main"
               >
-                Cumulative Savings
+                ce.co.rulesTableHeaders.savings
               </p>
             </div>
           </div>
@@ -987,7 +987,7 @@ exports[`Autostopping rule analytics drawer render k8s rule analytics drawer 1`]
         class="StyledProps--font StyledProps--font-h3 StyledProps--main"
         level="3"
       >
-        SPEND VS SAVINGS
+        CE.CO.RULEDRAWER.SPENDVSSAVINGS
       </h3>
       <p
         class="StyledProps--font StyledProps--main"
@@ -999,7 +999,7 @@ exports[`Autostopping rule analytics drawer render k8s rule analytics drawer 1`]
         class="StyledProps--font StyledProps--font-h3 StyledProps--main"
         level="3"
       >
-        LOGS AND USAGE TIME
+        CE.CO.RULEDRAWER.LOGS AND CE.CO.RULEDRAWER.USAGETIME
       </h3>
       <div
         class="bp3-tabs Tabs--main Tabs--horizontal"
@@ -1027,7 +1027,7 @@ exports[`Autostopping rule analytics drawer render k8s rule analytics drawer 1`]
             role="tab"
             tabindex="0"
           >
-            Usage Time
+            ce.co.ruleDrawer.usageTime
           </div>
           <div
             aria-controls="bp3-tab-panel_logsAndUsage_logs"
@@ -1040,7 +1040,7 @@ exports[`Autostopping rule analytics drawer render k8s rule analytics drawer 1`]
             role="tab"
             tabindex="0"
           >
-            Logs
+            ce.co.ruleDrawer.logs
           </div>
         </div>
         <div

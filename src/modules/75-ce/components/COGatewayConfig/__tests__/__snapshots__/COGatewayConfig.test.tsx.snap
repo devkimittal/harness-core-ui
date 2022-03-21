@@ -1781,7 +1781,7 @@ exports[`Auto stopping Rule creation Tests fill remaining form for ASGs 1`] = `
                   class="StyledProps--font StyledProps--main asgDetailRow"
                 >
                   <span>
-                    Desired capacity: 
+                    ce.co.autoStoppingRule.configuration.step3.desiredCapacity: 
                   </span>
                   <span>
                     1
@@ -1791,7 +1791,7 @@ exports[`Auto stopping Rule creation Tests fill remaining form for ASGs 1`] = `
                   class="StyledProps--font StyledProps--main asgDetailRow"
                 >
                   <span>
-                    Min capacity: 
+                    ce.co.autoStoppingRule.configuration.step3.minCapacity: 
                   </span>
                   <span>
                     0
@@ -1801,7 +1801,7 @@ exports[`Auto stopping Rule creation Tests fill remaining form for ASGs 1`] = `
                   class="StyledProps--font StyledProps--main asgDetailRow"
                 >
                   <span>
-                    Max capacity: 
+                    ce.co.autoStoppingRule.configuration.step3.maxCapacity: 
                   </span>
                   <span>
                     3
@@ -2526,7 +2526,7 @@ exports[`Auto stopping Rule creation Tests fill remaining form for ASGs 2`] = `
                   class="StyledProps--font StyledProps--main asgDetailRow"
                 >
                   <span>
-                    Desired capacity: 
+                    ce.co.autoStoppingRule.configuration.step3.desiredCapacity: 
                   </span>
                   <span>
                     1
@@ -2536,7 +2536,7 @@ exports[`Auto stopping Rule creation Tests fill remaining form for ASGs 2`] = `
                   class="StyledProps--font StyledProps--main asgDetailRow"
                 >
                   <span>
-                    Min capacity: 
+                    ce.co.autoStoppingRule.configuration.step3.minCapacity: 
                   </span>
                   <span>
                     0
@@ -2546,7 +2546,7 @@ exports[`Auto stopping Rule creation Tests fill remaining form for ASGs 2`] = `
                   class="StyledProps--font StyledProps--main asgDetailRow"
                 >
                   <span>
-                    Max capacity: 
+                    ce.co.autoStoppingRule.configuration.step3.maxCapacity: 
                   </span>
                   <span>
                     3

@@ -3543,12 +3543,18 @@ export interface StringsMap {
   'ce.co.autoStoppingRule.configuration.step2.title': string
   'ce.co.autoStoppingRule.configuration.step3.asgSubTitle': string
   'ce.co.autoStoppingRule.configuration.step3.asgTitle': string
+  'ce.co.autoStoppingRule.configuration.step3.desiredCapacity': string
   'ce.co.autoStoppingRule.configuration.step3.desiredTaskCount': string
   'ce.co.autoStoppingRule.configuration.step3.ecsSubTitle': string
   'ce.co.autoStoppingRule.configuration.step3.invalidValueErrorMsg': string
+  'ce.co.autoStoppingRule.configuration.step3.maxCapacity': string
+  'ce.co.autoStoppingRule.configuration.step3.minCapacity': string
   'ce.co.autoStoppingRule.configuration.step3.policyNotEnabled': string
   'ce.co.autoStoppingRule.configuration.step3.subTitle': string
   'ce.co.autoStoppingRule.configuration.step3.title': string
+  'ce.co.autoStoppingRule.configuration.step3.validation.minTaskCount': string
+  'ce.co.autoStoppingRule.configuration.step3.validation.taskCountInteger': string
+  'ce.co.autoStoppingRule.configuration.step3.validation.taskCountRequired': string
   'ce.co.autoStoppingRule.configuration.step4.advancedConfiguration': string
   'ce.co.autoStoppingRule.configuration.step4.setup': string
   'ce.co.autoStoppingRule.configuration.step4.tabs.deps.description': string
@@ -3716,6 +3722,9 @@ export interface StringsMap {
   'ce.co.landingPageText': string
   'ce.co.newAutoStoppingRule': string
   'ce.co.noData': string
+  'ce.co.ruleDrawer.logs': string
+  'ce.co.ruleDrawer.spendVsSavings': string
+  'ce.co.ruleDrawer.usageTime': string
   'ce.co.rulesTableHeaders.fulfilment': string
   'ce.co.rulesTableHeaders.idleTime': string
   'ce.co.rulesTableHeaders.lastActivity': string
