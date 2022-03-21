@@ -167,9 +167,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                 items={DelegateCards.map(card => ({ label: card.info, value: card.type }))}
                 name="authType"
                 size="large"
-                onChange={type => {
-                  formikProps?.setFieldValue('authType', type)
-                }}
+                onChange={type => formikProps?.setFieldValue('authType', type)}
               />
               {DelegateTypes.DELEGATE_OUT_CLUSTER === formikProps.values.authType ? (
                 <Layout.Vertical>

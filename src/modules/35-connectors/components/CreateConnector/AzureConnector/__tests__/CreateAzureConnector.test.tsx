@@ -61,8 +61,15 @@ describe('Create Azure connector Wizard', () => {
 
     expect(container).toMatchSnapshot()
 
-    await act(async () => {
-      fireEvent.click(await waitFor(() => findByText('connectors.GCP.delegateOutClusterInfo')!))
+    act(() => {
+      fireEvent.click(container.querySelector('[value="ManualConfig"]')!)
+    })
+
+    expect(container).toMatchSnapshot()
+
+    const backButton = await waitFor(() => findByText('back'))
+    act(() => {
+      fireEvent.click(backButton)
     })
 
     expect(container).toMatchSnapshot()
