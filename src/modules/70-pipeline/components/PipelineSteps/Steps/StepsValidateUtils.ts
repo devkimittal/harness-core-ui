@@ -269,22 +269,27 @@ function generateSchemaForOutputVariables(
   { getString }: GenerateSchemaDependencies
 ): ArraySchema<any> | Lazy {
   if (isInputSet) {
-    return yup
-      .array()
-      .of(
-        yup.lazy(val =>
-          getMultiTypeFromValue((val as { name: string })?.['name'] as string) === MultiTypeInputType.FIXED
-            ? yup.object().shape({
-                name: yup.string().matches(regexIdentifier, getString('validation.validOutputVariableRegex'))
-              })
-            : yup.string()
-        )
+    return yup.array().of(
+      yup.lazy(val =>
+        // This check only works for fixed values but not for expressions
+        val &&
+        Object.prototype.hasOwnProperty.call(val, 'name') &&
+        getMultiTypeFromValue((val as { name: string })?.['name'] as string) === MultiTypeInputType.FIXED
+          ? yup.object().shape({
+              name: yup.string().matches(regexIdentifier, getString('validation.validOutputVariableRegex'))
+            })
+          : yup.string()
       )
-      .test('valuesShouldBeUnique', getString('validation.uniqueValues'), outputVariables => {
-        if (!outputVariables) return true
-
-        return uniqBy(outputVariables, 'name').length === outputVariables.length
-      })
+    )
+    // .test('valuesShouldBeUnique', getString('validation.uniqueValues'), outputVariables => {
+    //   if (!outputVariables) return true
+    //   return (
+    //     uniqBy(
+    //       outputVariables.filter((item: any) => item?.hasOwnProperty('name')),
+    //       'name'
+    //     ).length === outputVariables.length
+    //   )
+    // })
   } else {
     return yup.lazy(value =>
       Array.isArray(value)
