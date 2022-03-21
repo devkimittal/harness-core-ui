@@ -44,7 +44,7 @@ exports[`Test Step 1 renders without crashing 1`] = `
                         <p
                           class="StyledProps--font StyledProps--main"
                         >
-                          Id
+                          ID
                         </p>
                       </div>
                       <p
