@@ -6,9 +6,9 @@
  */
 
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
 
-import { MultiTypeInputType } from '@harness/uicore'
+import { Formik, MultiTypeInputType } from '@harness/uicore'
 import { TestWrapper } from '@common/utils/testUtils'
 import { StepViewType } from '@pipeline/components/AbstractSteps/Step'
 
@@ -19,7 +19,15 @@ import * as artifactSourceUtils from '../../artifactSourceUtils'
 import { KubernetesPrimaryArtifacts } from '../../../KubernetesArtifacts/KubernetesPrimaryArtifacts/KubernetesPrimaryArtifacts'
 import { KubernetesSidecarArtifacts } from '../../../KubernetesArtifacts/KubernetesSidecarArtifacts/KubernetesSidecarArtifacts'
 
-import { template, artifacts, mockSubscriptions, mockRegistries, mockRepositories } from './mocks'
+import {
+  template,
+  artifacts,
+  artifactsWithValues,
+  templateWithValues,
+  mockSubscriptions,
+  mockRegistries,
+  mockRepositories
+} from './mocks'
 
 jest.mock('services/portal', () => ({
   useListAzureSubscriptions: jest.fn().mockImplementation(() => {
@@ -57,6 +65,25 @@ describe('Acr Artifact Source tests', () => {
     expect(container).toMatchSnapshot()
   })
 
+  test('snapshot test for Primary Acr artifact source from trigger', () => {
+    const { container } = render(
+      <TestWrapper>
+        <KubernetesPrimaryArtifacts
+          initialValues={{ artifacts: artifacts as ArtifactListConfig }}
+          template={template as ServiceSpec}
+          artifacts={artifacts as ArtifactListConfig}
+          readonly={false}
+          stageIdentifier="stage-0"
+          fromTrigger={true}
+          artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
+          allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+          stepViewType={StepViewType.DeploymentForm}
+        />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
   test('snapshot test for Sidecar Acr artifact source', async () => {
     const { container } = render(
       <TestWrapper>
@@ -77,5 +104,95 @@ describe('Acr Artifact Source tests', () => {
     expect(await waitFor(() => artifactSourceUtils.fromPipelineInputTriggerTab)).toBeCalled()
     expect(await waitFor(() => artifactSourceUtils.isFieldfromTriggerTabDisabled)).toBeCalled()
     expect(await waitFor(() => cdng.useGetBuildDetailsForAcrWithYaml)).toBeCalled()
+
+    act(() => {
+      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.subscription"]')!, {
+        target: { value: 'sub1' }
+      })
+    })
+
+    act(() => {
+      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.registry"]')!, {
+        target: { value: 'reg1' }
+      })
+    })
+
+    act(() => {
+      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.repository"]')!, {
+        target: { value: 'rep1' }
+      })
+    })
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('snapshot test for Sidecar Acr artifact source for readonly artifact', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <KubernetesSidecarArtifacts
+          initialValues={{ artifacts: artifacts as ArtifactListConfig }}
+          template={template as ServiceSpec}
+          artifacts={artifacts as ArtifactListConfig}
+          readonly={true}
+          stageIdentifier="stage-0"
+          artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
+          allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+          stepViewType={StepViewType.DeploymentForm}
+        />
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
+    expect(await waitFor(() => artifactSourceUtils.fromPipelineInputTriggerTab)).toBeCalled()
+    expect(await waitFor(() => artifactSourceUtils.isFieldfromTriggerTabDisabled)).toBeCalled()
+    expect(await waitFor(() => cdng.useGetBuildDetailsForAcrWithYaml)).toBeCalled()
+
+    act(() => {
+      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.subscription"]')!, {
+        target: { value: 'sub1' }
+      })
+    })
+
+    act(() => {
+      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.registry"]')!, {
+        target: { value: 'reg1' }
+      })
+    })
+
+    act(() => {
+      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.repository"]')!, {
+        target: { value: 'rep1' }
+      })
+    })
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('snapshot test for Sidecar Acr artifact source with only tag as runtime input', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <Formik
+          formName="test-form"
+          initialValues={{ artifacts: artifactsWithValues as ArtifactListConfig }}
+          onSubmit={jest.fn()}
+        >
+          {formik => (
+            <KubernetesSidecarArtifacts
+              initialValues={{ artifacts: artifactsWithValues as ArtifactListConfig }}
+              template={templateWithValues as ServiceSpec}
+              artifacts={artifactsWithValues as ArtifactListConfig}
+              readonly={false}
+              formik={formik}
+              stageIdentifier="stage-0"
+              artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
+              allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+              stepViewType={StepViewType.DeploymentForm}
+            />
+          )}
+        </Formik>
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
   })
 })

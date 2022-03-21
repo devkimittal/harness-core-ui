@@ -63,6 +63,64 @@ export const template = {
   }
 }
 
+export const artifactsWithValues = {
+  sidecars: [
+    {
+      sidecar: {
+        identifier: 'Sidecar',
+        type: 'Acr',
+        spec: {
+          connectorRef: 'connectorRef',
+          subscription: 'subscription',
+          registry: 'registry',
+          repository: 'repository',
+          tag: '<+input>'
+        }
+      }
+    }
+  ],
+  primary: {
+    spec: {
+      connectorRef: 'connectorRef',
+      subscription: 'subscription',
+      registry: 'registry',
+      repository: 'repository',
+      tag: '<+input>'
+    },
+    type: 'Acr'
+  }
+}
+
+export const templateWithValues = {
+  artifacts: {
+    sidecars: [
+      {
+        sidecar: {
+          identifier: 'Sidecar',
+          type: 'Acr',
+          spec: {
+            connectorRef: 'connectorRef',
+            subscription: 'subscription',
+            registry: 'registry',
+            repository: 'repository',
+            tag: '<+input>'
+          }
+        }
+      }
+    ],
+    primary: {
+      spec: {
+        connectorRef: 'connectorRef',
+        subscription: 'subscription',
+        registry: 'registry',
+        repository: 'repository',
+        tag: '<+input>'
+      },
+      type: 'Acr'
+    }
+  }
+}
+
 export const mockSubscriptions = [
   { name: 'sub1', label: 'Subscription 1' },
   { name: 'sub2', label: 'Subscription 2' },

@@ -260,12 +260,15 @@ export function AcrArtifact({
     ) as ACRArtifactType
     const specValues = get(initialValues, 'spec', null)
 
+    /* istanbul ignore else */
     if (getMultiTypeFromValue(specValues?.subscription) === MultiTypeInputType.FIXED) {
       values.subscription = subscriptions.find(subscription => subscription.value === specValues?.subscription)
     }
+    /* istanbul ignore else */
     if (getMultiTypeFromValue(specValues?.registry) === MultiTypeInputType.FIXED) {
       values.registry = registries.find(registry => registry.value === specValues?.registry)
     }
+    /* istanbul ignore else */
     if (getMultiTypeFromValue(specValues?.repository) === MultiTypeInputType.FIXED) {
       values.repository = repositories.find(repository => repository.value === specValues?.repository)
     }
@@ -289,7 +292,9 @@ export function AcrArtifact({
   const tags = acrBuildDetailsLoading ? [{ label: 'Loading Tags...', value: 'Loading Tags...' }] : getSelectItems()
 
   useEffect(() => {
+    /* istanbul ignore else */
     if (!isNil(formikRef?.current?.values?.tag)) {
+      /* istanbul ignore else */
       if (getMultiTypeFromValue(formikRef?.current?.values?.tag) !== MultiTypeInputType.FIXED) {
         formikRef?.current?.setFieldValue('tagRegex', formikRef?.current?.values?.tag)
       } else {

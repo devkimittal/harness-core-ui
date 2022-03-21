@@ -149,7 +149,8 @@ const Content = (props: ACRRenderContent): JSX.Element => {
 
   useEffect(() => {
     const options =
-      defaultTo(registiresData?.resource, []).map(name => ({ label: name.value, value: name.value })) || []
+      defaultTo(registiresData?.resource, []).map(name => ({ label: name.value, value: name.value })) ||
+      /* istanbul ignore next */ []
     setRegistries(options)
   }, [registiresData])
 
@@ -182,7 +183,8 @@ const Content = (props: ACRRenderContent): JSX.Element => {
 
   useEffect(() => {
     const options =
-      defaultTo(repositoriesData?.resource, []).map(name => ({ label: name.value, value: name.value })) || []
+      defaultTo(repositoriesData?.resource, []).map(name => ({ label: name.value, value: name.value })) ||
+      /* istanbul ignore next */ []
     setRepositories(options)
   }, [repositoriesData])
 
@@ -194,7 +196,7 @@ const Content = (props: ACRRenderContent): JSX.Element => {
         formik,
         stageIdentifier,
         fromTrigger,
-        isSidecar ? (artifact as SidecarArtifact)?.identifier : undefined
+        isSidecar ? (artifact as SidecarArtifact)?.identifier : /* istanbul ignore next */ undefined
       )
     ) {
       return true
