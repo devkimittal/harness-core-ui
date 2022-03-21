@@ -166,6 +166,7 @@ export function PipelineCanvas({
   } = useQueryParams<GitQueryParams & RunPipelineQueryParams>()
   const { updateQueryParams, replaceQueryParams } = useUpdateQueryParams<PipelineStudioQueryParams>()
   const { trackEvent } = useTelemetry()
+  const [updatePipelineAPIResponse, setUpdatePipelineAPIResponse] = React.useState<any>()
 
   const {
     pipeline,
@@ -208,6 +209,24 @@ export function PipelineCanvas({
   const { showSuccess, showError, clear } = useToaster()
 
   useDocumentTitle([parse(pipeline?.name || getString('pipelines'))])
+
+  const [showErrorModal] = useModalHook(
+    () => (
+      <Dialog
+        isOpen={true}
+        enforceFocus={false}
+        canEscapeKeyClose
+        canOutsideClickClose
+        onClose={hideModal}
+        title={getString('editService')}
+        isCloseButtonShown
+        className={cx('padded-dialog')}
+      >
+        <div>Error {updatePipelineAPIResponse ? updatePipelineAPIResponse.metadata.schemaErrors.length : null}</div>
+      </Dialog>
+    ),
+    [updatePipelineAPIResponse]
+  )
 
   const [discardBEUpdateDialog, setDiscardBEUpdate] = React.useState(false)
   const { openDialog: openConfirmBEUpdateError } = useConfirmationDialog({
@@ -421,9 +440,15 @@ export function PipelineCanvas({
       setSchemaErrorView(true)
       // This is done because when git sync is enabled, errors are displayed in a modal
       if (!isGitSyncEnabled) {
-        showError(response?.message || getString('errorWhileSaving'), undefined, 'pipeline.save.pipeline.error')
+        // @ts-ignore
+        if (response?.metadata?.schemaErrors) {
+          setUpdatePipelineAPIResponse(response)
+          showErrorModal()
+        } else {
+          showError(response?.message || getString('errorWhileSaving'), undefined, 'pipeline.save.pipeline.error')
+        }
       }
-      throw response
+      // throw response
     }
     return { status: response?.status }
   }
