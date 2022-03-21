@@ -6,6 +6,7 @@
  */
 
 import React from 'react'
+import moment from 'moment'
 import { Button, ButtonVariation, Icon, IconName, Layout, Text } from '@wings-software/uicore'
 import { Color, FontVariation } from '@harness/design-system'
 import { PopoverInteractionKind, Classes, Position } from '@blueprintjs/core'
@@ -44,37 +45,34 @@ export const getButton = (
   )
 }
 
-export const menuItems = (title: string, description: string): JSX.Element => {
+export const menuItems = ({
+  title,
+  description,
+  onClick
+}: {
+  title: string
+  description: string
+  onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void
+}): JSX.Element => {
   return (
     <>
       <Layout.Vertical>
-        <Text font={{ variation: FontVariation.H4 }} padding={{ bottom: 'xsmall' }} color={Color.GREY_300}>
+        <Text font={{ variation: FontVariation.H4 }} padding={{ bottom: 'xsmall' }} color={Color.PRIMARY_3}>
           {title}
         </Text>
-        <Text font={{ variation: FontVariation.BODY2 }} padding={{ bottom: 'xsmall' }} color={Color.GREY_300}>
+        <Text font={{ variation: FontVariation.BODY2 }} padding={{ bottom: 'xsmall' }} color={Color.WHITE}>
           {description}
         </Text>
       </Layout.Vertical>
       <Layout.Horizontal flex={{ alignItems: 'center' }} spacing={'medium'}>
-        <ComingSoon />
-        <Button icon="chevron-right" variation={ButtonVariation.ICON} disabled iconProps={{ color: Color.PRIMARY_4 }} />
+        <Button
+          icon="chevron-right"
+          variation={ButtonVariation.ICON}
+          iconProps={{ color: Color.PRIMARY_4 }}
+          onClick={onClick}
+        />
       </Layout.Horizontal>
     </>
-  )
-}
-
-export const ComingSoon = (): React.ReactElement => {
-  const { getString } = useStrings()
-  return (
-    <Text
-      color={Color.BLUE_500}
-      background={Color.BLUE_50}
-      font={{ weight: 'bold', size: 'xsmall' }}
-      border={{ radius: 4 }}
-      padding={'xsmall'}
-    >
-      {getString('common.comingSoon').toUpperCase()}
-    </Text>
   )
 }
 
@@ -144,6 +142,15 @@ export const MenuItems: React.FC = (): React.ReactElement => {
   const { getString } = useStrings()
   const isCommunity = useCommunity()
   const { SHOW_NG_REFINER_FEEDBACK } = useFeatureFlags()
+  const timestamp = moment.now()
+  const openZendeskSupport = (e: React.MouseEvent<Element, MouseEvent>): void => {
+    const url =
+      '/sso.html?action=login&brand_id=114095000394&locale_id=1&return_to=https%3A%2F%2Fsupport.harness.io%2Fhc%2Fen-us%2Frequests&src=zendesk&timestamp=' +
+      timestamp
+    e.stopPropagation()
+    e.preventDefault()
+    window.open(url)
+  }
 
   return isCommunity ? (
     <CommunitySubmitTicket />
@@ -155,16 +162,19 @@ export const MenuItems: React.FC = (): React.ReactElement => {
         flex={{ justifyContent: 'space-between' }}
         className={css.bottomBorder}
       >
-        {menuItems(
-          getString('common.resourceCenter.ticketmenu.submit'),
-          getString('common.resourceCenter.ticketmenu.submitDesc')
-        )}
+        {menuItems({
+          title: getString('common.resourceCenter.ticketmenu.submit'),
+          description: getString('common.resourceCenter.ticketmenu.submitDesc')
+        })}
       </Layout.Horizontal>
       <Layout.Horizontal padding={{ top: 'medium' }} flex={{ justifyContent: 'space-between' }}>
-        {menuItems(
-          getString('common.resourceCenter.ticketmenu.tickets'),
-          getString('common.resourceCenter.ticketmenu.ticketsDesc')
-        )}
+        {menuItems({
+          title: getString('common.resourceCenter.ticketmenu.tickets'),
+          description: getString('common.resourceCenter.ticketmenu.ticketsDesc'),
+          onClick: e => {
+            openZendeskSupport(e)
+          }
+        })}
       </Layout.Horizontal>
     </Layout.Vertical>
   )
