@@ -44,9 +44,7 @@ import { AppStoreContext } from 'framework/AppStore/AppStoreContext'
 import { GitSyncStoreProvider } from 'framework/GitRepoStore/GitSyncStoreContext'
 import { useMutateAsGet, useQueryParams } from '@common/hooks'
 import type { GitContextProps } from '@common/components/GitContextForm/GitContextForm'
-import { yamlStringify } from '@common/utils/YamlHelperMethods'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
-import { useGetYamlWithTemplateRefsResolved } from 'services/template-ng'
 import type { InputSetDTO, InputSetType } from '@pipeline/utils/types'
 import { clearRuntimeInput } from '../PipelineStudio/StepUtil'
 import GitPopover from '../GitPopover/GitPopover'
@@ -231,24 +229,6 @@ export function InputSetForm(props: InputSetFormProps): React.ReactElement {
     }
   })
 
-  const { data: templateRefsResolvedPipeline, loading: loadingResolvedPipeline } = useMutateAsGet(
-    useGetYamlWithTemplateRefsResolved,
-    {
-      queryParams: {
-        accountIdentifier: accountId,
-        orgIdentifier,
-        pipelineIdentifier,
-        projectIdentifier,
-        repoIdentifier,
-        branch,
-        getDefaultFromOtherRepo: true
-      },
-      body: {
-        originalEntityYaml: yamlStringify(parse(defaultTo(pipeline?.data?.yamlPipeline, ''))?.pipeline)
-      }
-    }
-  )
-
   const { handleSubmit } = useSaveInputSet({ createInputSet, updateInputSet, inputSetResponse, isEdit, setFormErrors })
 
   const inputSet: InputSetDTO | InputSetType = React.useMemo(() => {
@@ -331,7 +311,7 @@ export function InputSetForm(props: InputSetFormProps): React.ReactElement {
         inputSet={inputSet}
         template={template}
         pipeline={pipeline}
-        templateRefsResolvedPipeline={templateRefsResolvedPipeline}
+        resolvedTemplatesPipelineYaml={pipeline?.data?.resolvedTemplatesPipelineYaml}
         handleSubmit={handleSubmit}
         formErrors={formErrors}
         setFormErrors={setFormErrors}
@@ -348,7 +328,7 @@ export function InputSetForm(props: InputSetFormProps): React.ReactElement {
       inputSet,
       template,
       pipeline,
-      templateRefsResolvedPipeline,
+      pipeline?.data?.resolvedTemplatesPipelineYaml,
       handleSubmit,
       formErrors,
       setFormErrors,
@@ -369,7 +349,6 @@ export function InputSetForm(props: InputSetFormProps): React.ReactElement {
       loading={
         loadingInputSet ||
         loadingPipeline ||
-        loadingResolvedPipeline ||
         loadingTemplate ||
         (!isGitSyncEnabled && (createInputSetLoading || updateInputSetLoading)) ||
         loadingMerge

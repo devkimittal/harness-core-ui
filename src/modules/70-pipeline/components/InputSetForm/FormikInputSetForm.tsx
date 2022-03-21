@@ -37,7 +37,6 @@ import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
 import { useQueryParams } from '@common/hooks'
 import GitContextForm, { GitContextProps } from '@common/components/GitContextForm/GitContextForm'
 import { IdentifierSchema, NameSchema } from '@common/utils/Validation'
-import type { ResponseTemplateMergeResponse } from 'services/template-ng'
 import type { InputSetDTO, InputSetType } from '@pipeline/utils/types'
 import { PipelineInputSetForm } from '../PipelineInputSetForm/PipelineInputSetForm'
 import { validatePipeline } from '../PipelineStudio/StepUtil'
@@ -48,13 +47,11 @@ import { StepViewType } from '../AbstractSteps/Step'
 import css from './InputSetForm.module.scss'
 
 export const showPipelineInputSetForm = (
-  templateRefsResolvedPipeline: ResponseTemplateMergeResponse | null,
+  resolvedTemplatesPipelineYaml: string | undefined,
   template: ResponseInputSetTemplateWithReplacedExpressionsResponse | null
 ): boolean => {
   return (
-    templateRefsResolvedPipeline?.data?.mergedPipelineYaml &&
-    template?.data?.inputSetTemplateYaml &&
-    parse(template.data.inputSetTemplateYaml)
+    resolvedTemplatesPipelineYaml && template?.data?.inputSetTemplateYaml && parse(template.data.inputSetTemplateYaml)
   )
 }
 
@@ -68,7 +65,7 @@ interface FormikInputSetFormProps {
   inputSet: InputSetDTO | InputSetType
   template: ResponseInputSetTemplateWithReplacedExpressionsResponse | null
   pipeline: ResponsePMSPipelineResponseDTO | null
-  templateRefsResolvedPipeline: ResponseTemplateMergeResponse | null
+  resolvedTemplatesPipelineYaml?: string
   handleSubmit: (inputSetObjWithGitInfo: InputSetDTO, gitDetails?: EntityGitDetails | undefined) => Promise<void>
   formErrors: Record<string, unknown>
   setFormErrors: React.Dispatch<React.SetStateAction<Record<string, unknown>>>
@@ -159,7 +156,7 @@ export default function FormikInputSetForm(props: FormikInputSetFormProps): Reac
     inputSet,
     template,
     pipeline,
-    templateRefsResolvedPipeline,
+    resolvedTemplatesPipelineYaml,
     handleSubmit,
     formErrors,
     setFormErrors,
@@ -266,13 +263,11 @@ export default function FormikInputSetForm(props: FormikInputSetFormProps): Reac
                                 />
                               </GitSyncStoreProvider>
                             )}
-                            {showPipelineInputSetForm(templateRefsResolvedPipeline, template) && (
+                            {showPipelineInputSetForm(resolvedTemplatesPipelineYaml, template) && (
                               <PipelineInputSetForm
                                 path="pipeline"
                                 readonly={!isEditable}
-                                originalPipeline={parse(
-                                  defaultTo(templateRefsResolvedPipeline?.data?.mergedPipelineYaml, '')
-                                )}
+                                originalPipeline={parse(defaultTo(resolvedTemplatesPipelineYaml, ''))?.pipeline}
                                 template={parse(defaultTo(template?.data?.inputSetTemplateYaml, '')).pipeline}
                                 viewType={StepViewType.InputSet}
                               />
