@@ -33,13 +33,18 @@ import type { GitQueryParams, ProjectPathProps } from '@common/interfaces/RouteI
 import { useQueryParams } from '@common/hooks'
 import {
   checkIfQueryParamsisNotEmpty,
+  getArtifactFormData,
   getConnectorIdValue,
   getFinalArtifactObj,
   helperTextData,
   resetTag,
   shouldFetchTags
 } from '@pipeline/components/ArtifactsSelection/ArtifactUtils'
-import type { ImagePathProps, ACRArtifactType } from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
+import type {
+  ImagePathProps,
+  ACRArtifactType,
+  ArtifactType
+} from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
 import { ArtifactIdentifierValidation, ModalViewFor, tagOptions } from '../../../ArtifactHelper'
 import { NoTagResults } from '../ArtifactImagePathTagView/ArtifactImagePathTagView'
 import SideCarArtifactIdentifier from '../SideCarArtifactIdentifier'
@@ -237,6 +242,7 @@ export function AcrArtifact({
     }
   }
   const canFetchTags = useCallback(
+    /* istanbul ignore next */
     (subscription: string, registry: string, repository: string): boolean =>
       !!(
         (lastQueryData?.subscription !== subscription ||
@@ -252,7 +258,11 @@ export function AcrArtifact({
   }, [])
 
   const getInitialValues = useCallback((): ACRArtifactType => {
-    const values = { ...initialValues } as ACRArtifactType
+    const values = getArtifactFormData(
+      initialValues,
+      selectedArtifact as ArtifactType,
+      context === ModalViewFor.SIDECAR
+    ) as ACRArtifactType
 
     /* istanbul ignore else */
     if (getMultiTypeFromValue(initialValues?.subscription) === MultiTypeInputType.FIXED) {
@@ -269,7 +279,7 @@ export function AcrArtifact({
       values.repository = repositories.find(repository => repository.value === initialValues?.repository)?.value
     }
 
-    return values
+    return { ...values, ...initialValues }
   }, [context, initialValues, subscriptions, registries, repositories, selectedArtifact])
 
   const submitFormData = (formData: ACRArtifactType & { connectorId?: string }): void => {
@@ -404,10 +414,11 @@ export function AcrArtifact({
                       showRequiredField={false}
                       showDefaultField={false}
                       showAdvanced={true}
-                      onChange={value => {
-                        /* istanbul ignore next */
-                        formik.setFieldValue('registry', value)
-                      }}
+                      onChange={
+                        /* istanbul ignore next */ value => {
+                          formik.setFieldValue('registry', value)
+                        }
+                      }
                       isReadonly={isReadonly}
                     />
                   )}
@@ -493,8 +504,7 @@ export function AcrArtifact({
                           addClearBtn: true,
                           allowCreatingNewItems: true
                         },
-                        onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
-                          /* istanbul ignore next */
+                        onFocus: /* istanbul ignore next */ (e: React.FocusEvent<HTMLInputElement>) => {
                           if (
                             e?.target?.type !== 'text' ||
                             (e?.target?.type === 'text' && e?.target?.placeholder === EXPRESSION_STRING)
