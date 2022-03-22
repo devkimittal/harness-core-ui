@@ -5,7 +5,6 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 import React, { useCallback, useEffect } from 'react'
-import { Menu } from '@blueprintjs/core'
 import {
   Formik,
   FormInput,
@@ -22,7 +21,7 @@ import {
 import { Form, FormikContext } from 'formik'
 import { useParams } from 'react-router-dom'
 import * as Yup from 'yup'
-import { defaultTo, get, isNil, memoize, merge } from 'lodash-es'
+import { defaultTo, get, isNil, merge } from 'lodash-es'
 import { useListAzureSubscriptions, useListAzureRegistries, useListAzureRepositories } from 'services/portal'
 import { AcrBuildDetailsDTO, ConnectorConfigDTO, useGetBuildDetailsForAcr } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'
@@ -34,18 +33,13 @@ import type { GitQueryParams, ProjectPathProps } from '@common/interfaces/RouteI
 import { useQueryParams } from '@common/hooks'
 import {
   checkIfQueryParamsisNotEmpty,
-  getArtifactFormData,
   getConnectorIdValue,
   getFinalArtifactObj,
   helperTextData,
   resetTag,
   shouldFetchTags
 } from '@pipeline/components/ArtifactsSelection/ArtifactUtils'
-import type {
-  ArtifactType,
-  ImagePathProps,
-  ACRArtifactType
-} from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
+import type { ImagePathProps, ACRArtifactType } from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
 import { ArtifactIdentifierValidation, ModalViewFor, tagOptions } from '../../../ArtifactHelper'
 import { NoTagResults } from '../ArtifactImagePathTagView/ArtifactImagePathTagView'
 import SideCarArtifactIdentifier from '../SideCarArtifactIdentifier'
@@ -130,14 +124,16 @@ export function AcrArtifact({
     lazy: true
   })
   useEffect(() => {
+    /* istanbul ignore next */
     if (acrTagError) {
       setTagList([])
-    } else if (Array.isArray(acrBuildData?.data?.buildDetailsList)) {
+    } /* istanbul ignore next */ else if (Array.isArray(acrBuildData?.data?.buildDetailsList)) {
       setTagList(acrBuildData?.data?.buildDetailsList as [])
     }
   }, [acrBuildData, acrTagError])
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (checkIfQueryParamsisNotEmpty(Object.values(lastQueryData))) {
       refetchAcrBuildData()
     }
@@ -167,6 +163,7 @@ export function AcrArtifact({
   })
 
   useEffect(() => {
+    /* istanbul ignore else */
     if (
       initialValues?.subscription &&
       getMultiTypeFromValue(initialValues?.subscription) === MultiTypeInputType.FIXED &&
@@ -204,6 +201,7 @@ export function AcrArtifact({
   })
 
   useEffect(() => {
+    /* istanbul ignore else */
     if (
       initialValues?.subscription &&
       getMultiTypeFromValue(initialValues?.subscription) === MultiTypeInputType.FIXED &&
@@ -233,6 +231,7 @@ export function AcrArtifact({
   }, [repositoriesData])
 
   const fetchTags = (subscription = '', registry = '', repository = ''): void => {
+    /* istanbul ignore next */
     if (canFetchTags(subscription, registry, repository)) {
       setLastQueryData({ subscription, registry, repository })
     }
@@ -253,25 +252,23 @@ export function AcrArtifact({
   }, [])
 
   const getInitialValues = useCallback((): ACRArtifactType => {
-    const values = getArtifactFormData(
-      initialValues,
-      selectedArtifact as ArtifactType,
-      context === ModalViewFor.SIDECAR
-    ) as ACRArtifactType
-    const specValues = get(initialValues, 'spec', null)
+    const values = { ...initialValues } as ACRArtifactType
 
     /* istanbul ignore else */
-    if (getMultiTypeFromValue(specValues?.subscription) === MultiTypeInputType.FIXED) {
-      values.subscription = subscriptions.find(subscription => subscription.value === specValues?.subscription)
+    if (getMultiTypeFromValue(initialValues?.subscription) === MultiTypeInputType.FIXED) {
+      values.subscription = subscriptions.find(
+        subscription => subscription.value === initialValues?.subscription
+      )?.value
     }
     /* istanbul ignore else */
-    if (getMultiTypeFromValue(specValues?.registry) === MultiTypeInputType.FIXED) {
-      values.registry = registries.find(registry => registry.value === specValues?.registry)
+    if (getMultiTypeFromValue(initialValues?.registry) === MultiTypeInputType.FIXED) {
+      values.registry = registries.find(registry => registry.value === initialValues?.registry)?.value
     }
     /* istanbul ignore else */
-    if (getMultiTypeFromValue(specValues?.repository) === MultiTypeInputType.FIXED) {
-      values.repository = repositories.find(repository => repository.value === specValues?.repository)
+    if (getMultiTypeFromValue(initialValues?.repository) === MultiTypeInputType.FIXED) {
+      values.repository = repositories.find(repository => repository.value === initialValues?.repository)?.value
     }
+
     return values
   }, [context, initialValues, subscriptions, registries, repositories, selectedArtifact])
 
@@ -289,7 +286,9 @@ export function AcrArtifact({
     return (tagList as AcrBuildDetailsDTO[])?.map(tag => ({ label: tag.tag, value: tag.tag })) as SelectOption[]
   }, [tagList])
 
-  const tags = acrBuildDetailsLoading ? [{ label: 'Loading Tags...', value: 'Loading Tags...' }] : getSelectItems()
+  const tags = acrBuildDetailsLoading
+    ? /* istanbul ignore next */ [{ label: 'Loading Tags...', value: 'Loading Tags...' }]
+    : getSelectItems()
 
   useEffect(() => {
     /* istanbul ignore else */
@@ -302,20 +301,6 @@ export function AcrArtifact({
       }
     }
   }, [formikRef?.current?.values?.tag])
-
-  const tagItemRenderer = memoize((item: { label: string }, { handleClick }) => (
-    <div key={item.label.toString()}>
-      <Menu.Item
-        text={
-          <Layout.Horizontal spacing="small">
-            <Text>{item.label}</Text>
-          </Layout.Horizontal>
-        }
-        disabled={acrBuildDetailsLoading}
-        onClick={handleClick}
-      />
-    </div>
-  ))
 
   return (
     <Layout.Vertical spacing="medium" className={css.firstep}>
@@ -346,7 +331,7 @@ export function AcrArtifact({
                     name="subscription"
                     selectItems={subscriptions}
                     multiTypeInputProps={{
-                      onChange: () => {
+                      onChange: /* istanbul ignore next */ () => {
                         tagList.length && setTagList([])
                         resetTag(formik)
                       },
@@ -369,9 +354,11 @@ export function AcrArtifact({
                         showRequiredField={false}
                         showDefaultField={false}
                         showAdvanced={true}
-                        onChange={value => {
-                          formik.setFieldValue('subscription', value)
-                        }}
+                        onChange={
+                          /* istanbul ignore next */ value => {
+                            formik.setFieldValue('subscription', value)
+                          }
+                        }
                         isReadonly={isReadonly}
                       />
                     </div>
@@ -383,10 +370,12 @@ export function AcrArtifact({
                     selectItems={registries}
                     disabled={loadingRegistries || isReadonly}
                     placeholder={
-                      loadingRegistries ? getString('loading') : getString('connectors.ACR.registryPlaceholder')
+                      loadingRegistries
+                        ? /* istanbul ignore next */ getString('loading')
+                        : getString('connectors.ACR.registryPlaceholder')
                     }
                     multiTypeInputProps={{
-                      onChange: () => {
+                      onChange: /* istanbul ignore next */ () => {
                         tagList.length && setTagList([])
                         resetTag(formik)
                       },
@@ -409,13 +398,14 @@ export function AcrArtifact({
                   />
                   {getMultiTypeFromValue(formik.values.registry) === MultiTypeInputType.RUNTIME && (
                     <ConfigureOptions
-                      value={formik.values.registry || ''}
+                      value={formik.values.registry || /* istanbul ignore next */ ''}
                       type="String"
                       variableName="registry"
                       showRequiredField={false}
                       showDefaultField={false}
                       showAdvanced={true}
                       onChange={value => {
+                        /* istanbul ignore next */
                         formik.setFieldValue('registry', value)
                       }}
                       isReadonly={isReadonly}
@@ -428,10 +418,13 @@ export function AcrArtifact({
                     selectItems={repositories}
                     disabled={loadingRepositories || isReadonly}
                     placeholder={
-                      loadingRepositories ? getString('loading') : getString('connectors.ACR.repositoryPlaceholder')
+                      loadingRepositories
+                        ? /* istanbul ignore next */ getString('loading')
+                        : getString('connectors.ACR.repositoryPlaceholder')
                     }
                     multiTypeInputProps={{
                       onChange: () => {
+                        /* istanbul ignore next */
                         tagList.length && setTagList([])
                         resetTag(formik)
                       },
@@ -455,15 +448,17 @@ export function AcrArtifact({
                   />
                   {getMultiTypeFromValue(formik.values.repository) === MultiTypeInputType.RUNTIME && (
                     <ConfigureOptions
-                      value={formik.values.repository || ''}
+                      value={formik.values.repository || /* istanbul ignore next */ ''}
                       type="String"
                       variableName="repository"
                       showRequiredField={false}
                       showDefaultField={false}
                       showAdvanced={true}
-                      onChange={value => {
-                        formik.setFieldValue('repository', value)
-                      }}
+                      onChange={
+                        /* istanbul ignore next */ value => {
+                          formik.setFieldValue('repository', value)
+                        }
+                      }
                       isReadonly={isReadonly}
                     />
                   )}
@@ -497,10 +492,10 @@ export function AcrArtifact({
                           noResults: <NoTagResults tagError={acrTagError} />,
                           items: tags,
                           addClearBtn: true,
-                          itemRenderer: tagItemRenderer,
                           allowCreatingNewItems: true
                         },
                         onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+                          /* istanbul ignore next */
                           if (
                             e?.target?.type !== 'text' ||
                             (e?.target?.type === 'text' && e?.target?.placeholder === EXPRESSION_STRING)
@@ -524,9 +519,11 @@ export function AcrArtifact({
                           showRequiredField={false}
                           showDefaultField={false}
                           showAdvanced={true}
-                          onChange={value => {
-                            formik.setFieldValue('tag', value)
-                          }}
+                          onChange={
+                            /* istanbul ignore next */ value => {
+                              formik.setFieldValue('tag', value)
+                            }
+                          }
                           isReadonly={isReadonly}
                         />
                       </div>
@@ -551,9 +548,11 @@ export function AcrArtifact({
                           showRequiredField={false}
                           showDefaultField={false}
                           showAdvanced={true}
-                          onChange={value => {
-                            formik.setFieldValue('tagRegex', value)
-                          }}
+                          onChange={
+                            /* istanbul ignore next */ value => {
+                              formik.setFieldValue('tagRegex', value)
+                            }
+                          }
                           isReadonly={isReadonly}
                         />
                       </div>
@@ -567,7 +566,9 @@ export function AcrArtifact({
                   variation={ButtonVariation.SECONDARY}
                   text={getString('back')}
                   icon="chevron-left"
-                  onClick={() => previousStep?.(prevStepData)}
+                  onClick={() => {
+                    previousStep?.(prevStepData)
+                  }}
                 />
                 <Button
                   variation={ButtonVariation.PRIMARY}

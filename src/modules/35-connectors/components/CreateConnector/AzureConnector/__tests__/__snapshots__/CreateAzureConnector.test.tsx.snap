@@ -960,7 +960,7 @@ exports[`Create Azure connector Wizard Should match snapshot 3`] = `
                     class="Tooltip--acenter"
                     data-tooltip-id="azureAuthForm_clientId"
                   >
-                    connectors.azure.clientIdPlaceholder
+                    connectors.azure.clientId
                   </span>
                    
                   <span
@@ -995,7 +995,7 @@ exports[`Create Azure connector Wizard Should match snapshot 3`] = `
                     class="Tooltip--acenter"
                     data-tooltip-id="azureAuthForm_tenantId"
                   >
-                    connectors.azure.tenantIdPlaceholder
+                    connectors.tenantId
                   </span>
                    
                   <span
@@ -2256,7 +2256,7 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
                     class="Tooltip--acenter"
                     data-tooltip-id="azureAuthForm_clientId"
                   >
-                    connectors.azure.clientIdPlaceholder
+                    connectors.azure.clientId
                   </span>
                    
                   <span
@@ -2291,7 +2291,7 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
                     class="Tooltip--acenter"
                     data-tooltip-id="azureAuthForm_tenantId"
                   >
-                    connectors.azure.tenantIdPlaceholder
+                    connectors.tenantId
                   </span>
                    
                   <span
@@ -3213,7 +3213,7 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
                     class="Tooltip--acenter"
                     data-tooltip-id="azureAuthForm_clientId"
                   >
-                    connectors.azure.clientIdPlaceholder
+                    connectors.azure.clientId
                   </span>
                    
                   <span
@@ -3248,7 +3248,7 @@ exports[`Create Azure connector Wizard Should match snapshot when in edit mode w
                     class="Tooltip--acenter"
                     data-tooltip-id="azureAuthForm_tenantId"
                   >
-                    connectors.azure.tenantIdPlaceholder
+                    connectors.tenantId
                   </span>
                    
                   <span

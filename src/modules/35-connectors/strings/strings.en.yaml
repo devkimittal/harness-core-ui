@@ -267,8 +267,6 @@ ACR:
   repositoryError: 'No repository found with given Registry'
 azure:
   clientId: '{{ $.common.clientId }}'
-  clientIdPlaceholder: 'Client ID (Application ID)'
-  tenantIdPlaceholder: 'Tenant ID (Application ID)'
   validation:
     environment: '{{ $.common.validation.environmentIsRequired }}'
     clientId: '{{ $.common.validation.clientIdIsRequired }}'

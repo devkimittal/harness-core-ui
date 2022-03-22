@@ -179,12 +179,12 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                   <FormInput.Text
                     name={'clientId'}
                     placeholder={getString('connectors.azure.clientId')}
-                    label={getString('connectors.azure.clientIdPlaceholder')}
+                    label={getString('connectors.azure.clientId')}
                   />
                   <FormInput.Text
                     name={'tenantId'}
                     placeholder={getString('connectors.tenantId')}
-                    label={getString('connectors.azure.tenantIdPlaceholder')}
+                    label={getString('connectors.tenantId')}
                   />
                   <Container className={css.authHeaderRow}>
                     <Text

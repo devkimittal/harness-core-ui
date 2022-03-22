@@ -7,7 +7,7 @@
 
 import React from 'react'
 import { act, fireEvent, getByText, render, waitFor } from '@testing-library/react'
-import { RUNTIME_INPUT_VALUE } from '@wings-software/uicore'
+import { MultiTypeInputType, MultiTypeInputValue, RUNTIME_INPUT_VALUE } from '@wings-software/uicore'
 import type { CompletionItemInterface } from '@common/interfaces/YAMLBuilderProps'
 import { StepFormikRef, StepViewType } from '@pipeline/components/AbstractSteps/Step'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
@@ -35,7 +35,7 @@ jest.mock('services/cd-ng', () => ({
   getClustersForAzurePromise: jest.fn(() => Promise.resolve(clustersResponse.data))
 }))
 
-const getRuntimeInputsValues = () => ({
+const getRuntimeInputsValues = (): AzureInfrastructure => ({
   connectorRef: RUNTIME_INPUT_VALUE,
   subscription: RUNTIME_INPUT_VALUE,
   resourceGroup: RUNTIME_INPUT_VALUE,
@@ -53,21 +53,12 @@ const getInitialValues = (): AzureInfrastructure => ({
   releaseName: 'releasename'
 })
 
-const getEmptyInitialValues = (): AzureInfrastructure => ({
-  connectorRef: '',
-  subscription: '',
-  resourceGroup: '',
-  cluster: '',
-  namespace: '',
-  releaseName: ''
-})
-
 const getInvalidYaml = (): string => `p ipe<>line:
 sta ges:
    - st<>[]age:
               s pe<> c: <> sad-~`
 
-const getYaml = () => `pipeline:
+const getYaml = (): string => `pipeline:
     stages:
         - stage:
               spec:
@@ -82,6 +73,7 @@ const getYaml = () => `pipeline:
                               namespace: namespace
                               releaseName: releaseName`
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const getParams = () => ({
   accountId: 'accountId',
   module: 'cd',
@@ -95,6 +87,25 @@ const subscriptionPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastruc
 const resourceGroupPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastructureDefinition.spec.resourceGroup'
 const clusterPath = 'pipeline.stages.0.stage.spec.infrastructure.infrastructureDefinition.spec.cluster'
 
+jest.mock('@connectors/components/ConnectorReferenceField/FormMultiTypeConnectorField', () => ({
+  ...(jest.requireActual('@connectors/components/ConnectorReferenceField/FormMultiTypeConnectorField') as any),
+  // eslint-disable-next-line react/display-name
+  FormMultiTypeConnectorField: (props: any) => {
+    return (
+      <div>
+        <button
+          name={'changeFormMultiTypeConnectorField'}
+          onClick={() => {
+            props.onChange('value', MultiTypeInputValue.STRING, MultiTypeInputType.RUNTIME)
+          }}
+        >
+          Form Multi Type Connector Field button
+        </button>
+      </div>
+    )
+  }
+}))
+
 describe('Test Azure Infrastructure Spec snapshot', () => {
   beforeEach(() => {
     factory.registerStep(new AzureInfrastructureSpec())
@@ -107,14 +118,15 @@ describe('Test Azure Infrastructure Spec snapshot', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('Should render edit view with values ', () => {
+  test('Should render edit view with values', () => {
     const { container } = render(
       <TestStepWidget initialValues={getInitialValues()} type={StepType.Azure} stepViewType={StepViewType.Edit} />
     )
+
     expect(container).toMatchSnapshot()
   })
 
-  test('Should render edit view with runtime values ', () => {
+  test('Should render edit view with runtime values', () => {
     const { container } = render(
       <TestStepWidget initialValues={getRuntimeInputsValues()} type={StepType.Azure} stepViewType={StepViewType.Edit} />
     )
@@ -156,7 +168,7 @@ describe('Test Azure Infrastructure Spec behavior', () => {
 
   test('Should call onUpdate if valid values entered - inputset', async () => {
     const onUpdateHandler = jest.fn()
-    const { container } = render(
+    const { container, findByText } = render(
       <TestStepWidget
         initialValues={getInitialValues()}
         template={getRuntimeInputsValues()}
@@ -166,6 +178,11 @@ describe('Test Azure Infrastructure Spec behavior', () => {
         onUpdate={onUpdateHandler}
       />
     )
+
+    const button = await waitFor(() => findByText('Form Multi Type Connector Field button'))
+    act(() => {
+      fireEvent.click(button)
+    })
 
     await act(async () => {
       fireEvent.click(getByText(container, 'Submit'))
@@ -177,9 +194,9 @@ describe('Test Azure Infrastructure Spec behavior', () => {
     const onUpdateHandler = jest.fn()
     const { container } = render(
       <TestStepWidget
-        initialValues={getEmptyInitialValues()}
+        initialValues={{}}
         template={getRuntimeInputsValues()}
-        allValues={getEmptyInitialValues()}
+        allValues={{}}
         type={StepType.Azure}
         stepViewType={StepViewType.InputSet}
         onUpdate={onUpdateHandler}
@@ -199,7 +216,7 @@ describe('Test Azure Infrastructure Spec behavior', () => {
     const { container } = render(
       <TestStepWidget
         initialValues={getInitialValues()}
-        template={getRuntimeInputsValues()}
+        template={getInitialValues()}
         allValues={getInitialValues()}
         type={StepType.Azure}
         stepViewType={StepViewType.Edit}
@@ -213,6 +230,13 @@ describe('Test Azure Infrastructure Spec behavior', () => {
         '[placeholder="pipeline.infraSpecifications.namespacePlaceholder"]'
       )
       fireEvent.change(namespaceInput!, { target: { value: 'namespace changed' } })
+    })
+
+    await act(async () => {
+      const subscriptionInput = container.querySelector(
+        '[placeholder="cd.steps.azureInfraStep.subscriptionPlaceholder"]'
+      )
+      fireEvent.change(subscriptionInput!, { target: { value: 'subscription1' } })
 
       await ref.current?.submitForm()
     })

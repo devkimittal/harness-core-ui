@@ -253,6 +253,16 @@ export const defaultArtifactInitialValues = (selectedArtifact: ArtifactType): Im
         repositoryPortorRepositoryURL: RepositoryPortOrServer.RepositoryUrl
       }
     case ENABLED_ARTIFACT_TYPES.DockerRegistry:
+    case ENABLED_ARTIFACT_TYPES.Acr:
+      return {
+        identifier: '',
+        subscription: '',
+        registry: '',
+        repository: '',
+        tag: RUNTIME_INPUT_VALUE,
+        tagType: TagTypes.Value,
+        tagRegex: RUNTIME_INPUT_VALUE
+      }
     case ENABLED_ARTIFACT_TYPES.Ecr:
     default:
       return {

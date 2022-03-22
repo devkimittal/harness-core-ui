@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { render } from '@testing-library/react'
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import { MultiTypeInputType } from '@wings-software/uicore'
 import { TestWrapper } from '@common/utils/testUtils'
 import { ArtifactType, TagTypes } from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
@@ -42,6 +42,13 @@ jest.mock('services/portal', () => ({
   })
 }))
 
+jest.mock('services/cd-ng', () => ({
+  ...jest.requireActual('services/cd-ng'),
+  useGetBuildDetailsForAcr: jest.fn().mockImplementation(() => {
+    return { data: mockRepositories, refetch: jest.fn(), error: null, loading: false }
+  })
+}))
+
 describe('Acr Artifact tests', () => {
   test('Should match snapshot', () => {
     const initialValues = {
@@ -56,16 +63,21 @@ describe('Acr Artifact tests', () => {
 
     const { container } = render(
       <TestWrapper>
-        <AcrArtifact key={'key'} initialValues={initialValues} {...props} />
+        <AcrArtifact
+          key={'key'}
+          prevStepData={{ connectorId: { value: 'connectorRef' } }}
+          initialValues={initialValues}
+          {...props}
+        />
       </TestWrapper>
     )
     expect(container).toMatchSnapshot()
   })
 
-  test('Should render correctly in edit case', () => {
+  test('Should render correctly in edit case', async () => {
     const initialValues = {
       identifier: 'Identifier1',
-      tag: 'tag1',
+      tag: '<+input>',
       tagRegex: '',
       repository: 'rep1',
       subscription: 'sub2',
@@ -75,9 +87,78 @@ describe('Acr Artifact tests', () => {
 
     const { container } = render(
       <TestWrapper>
-        <AcrArtifact key={'key'} initialValues={initialValues} {...props} />
+        <AcrArtifact
+          key={'key'}
+          prevStepData={{ connectorId: { value: 'connectorRef' } }}
+          initialValues={initialValues}
+          {...props}
+        />
       </TestWrapper>
     )
+
+    fireEvent.click(container.querySelector('button[type="submit"]')!)
+
+    await waitFor(() => {
+      expect(props.handleSubmit).toHaveBeenCalled()
+    })
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('Should render correctly in edit case for runtime fields', async () => {
+    const initialValues = {
+      identifier: 'Identifier1',
+      tag: '<+input>',
+      tagRegex: '',
+      repository: '<+input>',
+      subscription: '<+input>',
+      registry: '<+input>',
+      tagType: TagTypes.Value
+    }
+
+    const { container, getByText } = render(
+      <TestWrapper>
+        <AcrArtifact
+          key={'key'}
+          previousStep={jest.fn()}
+          prevStepData={{ connectorId: { value: 'connectorRef' } }}
+          initialValues={initialValues}
+          {...props}
+        />
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
+
+    await act(() => {
+      fireEvent.click(getByText('back')!)
+    })
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('Should render correctly in edit case for runtime fields regex', async () => {
+    const initialValues = {
+      identifier: 'Identifier1',
+      tag: '',
+      tagRegex: '<+input>',
+      repository: '<+input>',
+      subscription: '<+input>',
+      registry: '<+input>',
+      tagType: TagTypes.Regex
+    }
+
+    const { container } = render(
+      <TestWrapper>
+        <AcrArtifact
+          key={'key'}
+          prevStepData={{ connectorId: { value: 'connectorRef' } }}
+          initialValues={initialValues}
+          {...props}
+        />
+      </TestWrapper>
+    )
+
     expect(container).toMatchSnapshot()
   })
 })

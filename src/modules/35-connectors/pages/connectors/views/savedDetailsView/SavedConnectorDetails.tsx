@@ -26,6 +26,7 @@ import { HashiCorpVaultAccessTypes } from '@connectors/interfaces/ConnectorInter
 import TagsRenderer from '@common/components/TagsRenderer/TagsRenderer'
 import { accessTypeOptionsMap } from '@connectors/components/CreateConnector/HashiCorpVault/views/VaultConnectorFormFields'
 import { getLabelForAuthType } from '../../utils/ConnectorHelper'
+import { AzureSecretKeyType } from '../../utils/ConnectorUtils'
 import css from './SavedConnectorDetails.module.scss'
 
 interface SavedConnectorDetailsProps {
@@ -566,6 +567,43 @@ const getAWSSchema = (connector: ConnectorInfoDTO): Array<ActivityDetailsRowInte
   ]
 }
 
+const getAzureSchema = (connector: ConnectorInfoDTO): Array<ActivityDetailsRowInterface> => {
+  const connectorInfoSpec = connector?.spec
+
+  const secretType = connectorInfoSpec?.credential?.spec?.auth?.type
+
+  return [
+    {
+      label: 'connectionMode',
+      value: connectorInfoSpec?.credential?.type
+    },
+    {
+      label: 'environment',
+      value: connectorInfoSpec?.azureEnvironmentType
+    },
+    {
+      label: 'connectors.azure.clientId',
+      value: connectorInfoSpec?.credential?.spec?.clientId
+    },
+    {
+      label: 'connectors.tenantId',
+      value: connectorInfoSpec?.credential?.spec?.tenantId
+    },
+    {
+      label: 'authentication',
+      value: secretType
+    },
+    {
+      label:
+        secretType === AzureSecretKeyType.SECRET ? 'connectors.azure.auth.secret' : 'connectors.azure.auth.certificate',
+      value:
+        secretType === AzureSecretKeyType.SECRET
+          ? connectorInfoSpec?.credential?.spec?.auth?.spec?.secretRef
+          : connectorInfoSpec?.credential?.spec?.auth?.spec?.certificateRef
+    }
+  ]
+}
+
 const getNexusSchema = (connector: ConnectorInfoDTO): Array<ActivityDetailsRowInterface> => {
   return [
     {
@@ -711,6 +749,8 @@ const getSchemaByType = (
       return getSumologicSchema(connector)
     case Connectors.SERVICE_NOW:
       return getServiceNowSchema(connector)
+    case Connectors.AZURE:
+      return getAzureSchema(connector)
     default:
       return []
   }
