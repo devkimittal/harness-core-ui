@@ -1,0 +1,9 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "mergedPipelineYaml": "name: \"aa\"\nidentifier: \"aa\"\nallowStageExecutions: false\nprojectIdentifier: \"Kapil\"\norgIdentifier: \"default\"\ntags: {}\nstages:\n- stage:\n    name: \"testStage\"\n    identifier: \"testStage\"\n    description: \"\"\n    type: \"Approval\"\n    spec:\n      execution:\n        steps:\n        - step:\n            name: \"Approval\"\n            identifier: \"approval\"\n            type: \"HarnessApproval\"\n            timeout: \"1d\"\n            spec:\n              approvalMessage: \"Please review the following information\\nand approve\\\n                \\ the pipeline progression\"\n              includePipelineExecutionHistory: true\n              approvers:\n                minimumCount: 1\n                disallowPipelineExecutor: false\n    tags: {}\n    failureStrategies: null\n",
+    "templateReferenceSummaries": []
+  },
+  "metaData": null,
+  "correlationId": "0f11c568-f4bf-4599-a518-e85885783bbc"
+}
