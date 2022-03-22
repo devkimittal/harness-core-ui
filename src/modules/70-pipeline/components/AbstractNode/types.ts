@@ -27,11 +27,13 @@ export interface PipelineGraphState {
   type: string
   name: string
   icon: IconName
+  status?: string
   data: any
   nodeType?: string
   graphType?: PipelineGraphType
   children?: PipelineGraphState[]
   parentStepGroupId?: string
+  readonly?: boolean
 }
 export interface NodeIds {
   startNode: string

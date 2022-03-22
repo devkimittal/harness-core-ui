@@ -21,11 +21,10 @@ export function StepGroupNode(props: any): JSX.Element {
   const [isNodeCollapsed, setNodeCollapsed] = React.useState(false)
   const CreateNode: React.FC<any> | undefined = props?.getNode(NodeType.CreateNode)?.component
   const DefaultNode: React.FC<any> | undefined = props?.getDefaultNode()?.component
-
+  const stepsData = props?.data?.stepGroup?.steps || props?.data?.step?.data?.stepGroup?.steps
   React.useEffect(() => {
-    props?.updateGraphLinks()
+    props?.updateGraphLinks?.()
   }, [isNodeCollapsed])
-
   return (
     <>
       {isNodeCollapsed && DefaultNode ? (
@@ -71,24 +70,26 @@ export function StepGroupNode(props: any): JSX.Element {
               </Layout.Horizontal>
             </div>
             <div className={css.stepGroupBody}>
-              <StepGroupGraph {...props} data={props?.data?.stepGroup?.steps} isNodeCollapsed={isNodeCollapsed} />
+              <StepGroupGraph {...props} data={stepsData} isNodeCollapsed={isNodeCollapsed} />
             </div>
-            <Button
-              className={classnames(css.closeNode, { [css.readonly]: props.readonly })}
-              minimal
-              icon="cross"
-              variation={ButtonVariation.PRIMARY}
-              iconProps={{ size: 10 }}
-              onMouseDown={e => {
-                e.stopPropagation()
-                props?.fireEvent({
-                  type: Event.RemoveNode,
-                  identifier: props?.identifier,
-                  node: props
-                })
-              }}
-              withoutCurrentColor={true}
-            />
+            {!props.readonly && (
+              <Button
+                className={classnames(css.closeNode, { [css.readonly]: props.readonly })}
+                minimal
+                icon="cross"
+                variation={ButtonVariation.PRIMARY}
+                iconProps={{ size: 10 }}
+                onMouseDown={e => {
+                  e.stopPropagation()
+                  props?.fireEvent({
+                    type: Event.RemoveNode,
+                    identifier: props?.identifier,
+                    node: props
+                  })
+                }}
+                withoutCurrentColor={true}
+              />
+            )}
           </div>
           {!props.isParallelNode && !props.readonly && (
             <div

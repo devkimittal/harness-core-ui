@@ -15,6 +15,7 @@ declare const styles: {
   readonly defaultCard: string
   readonly defaultNode: string
   readonly draggable: string
+  readonly failed: string
   readonly hoverName: string
   readonly icon: string
   readonly iconGroup: string
@@ -26,8 +27,10 @@ declare const styles: {
   readonly nameText: string
   readonly readonly: string
   readonly right: string
+  readonly runningNode: string
   readonly secondaryIcon: string
   readonly selected: string
+  readonly shine: string
   readonly show: string
   readonly showIcon: string
   readonly stageAddIcon: string

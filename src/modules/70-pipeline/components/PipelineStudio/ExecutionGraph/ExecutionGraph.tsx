@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect } from 'react'
-import { cloneDeep, set, isEmpty } from 'lodash-es'
+import { cloneDeep, set, isEmpty, get } from 'lodash-es'
 import type { NodeModelListener, LinkModelListener } from '@projectstorm/react-diagrams-core'
 import type { BaseModelListener } from '@projectstorm/react-canvas-core'
 import { Button, ButtonVariation, Layout, Text } from '@wings-software/uicore'
@@ -968,9 +968,10 @@ function ExecutionGraphRef<T extends StageElementConfig>(
   diagram.registerListeners(listerners)
 
   const stepsData = React.useMemo(() => {
+    const serviceDependencies: DependencyElement[] | undefined = get(stage, 'stage.spec.serviceDependencies', undefined)
     return state?.isRollback
       ? getPipelineGraphData(stage?.stage?.spec?.execution?.rollbackSteps)
-      : getPipelineGraphData(stage?.stage?.spec?.execution?.steps)
+      : getPipelineGraphData(stage?.stage?.spec?.execution?.steps, serviceDependencies)
   }, [stage, state?.isRollback])
 
   return (

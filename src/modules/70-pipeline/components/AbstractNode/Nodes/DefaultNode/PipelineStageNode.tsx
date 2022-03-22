@@ -10,21 +10,28 @@ import cx from 'classnames'
 import type { IconName } from '@wings-software/uicore'
 import { Icon, Text, Color, Button, ButtonVariation } from '@wings-software/uicore'
 import { DiagramDrag, DiagramType, Event } from '@pipeline/components/Diagram'
-import { ExecutionStatusIconMap as IconMap, getStageType } from '@pipeline/utils/executionUtils'
-import type { ExecutionStatus } from '@pipeline/utils/statusHelpers'
 import { RunningIcon } from '@pipeline/components/ExecutionCard/MiniExecutionGraph/StageNode'
+import { ExecutionPipelineNodeType } from '@pipeline/components/ExecutionStageDiagram/ExecutionPipelineModel'
+import { getStatusProps } from '@pipeline/components/ExecutionStageDiagram/ExecutionStageDiagramUtils'
+import { ExecutionStatus, ExecutionStatusEnum } from '@pipeline/utils/statusHelpers'
 import SVGMarker from '../SVGMarker'
 import { NodeType } from '../../Node'
 // import CreateNode from '../CreateNode/CreateNodeStage'
 import css from './DefaultNode.module.scss'
 
-const SECONDARY_ICON: IconName = 'command-echo'
+const CODE_ICON: IconName = 'command-echo'
 
 function PipelineStageNode(props: any): JSX.Element {
   const allowAdd = props.allowAdd ?? false
   const [showAddNode, setVisibilityOfAdd] = React.useState(false)
   const [showAddLink, setShowAddLink] = React.useState(false)
   const CreateNode: React.FC<any> | undefined = props?.getNode(NodeType.CreateNode)?.component
+
+  const stageStatus = props?.status || (props?.data?.step?.status as ExecutionStatus)
+  const { secondaryIconProps, secondaryIcon, secondaryIconStyle } = getStatusProps(
+    stageStatus,
+    ExecutionPipelineNodeType.NORMAL
+  )
 
   return (
     <div
@@ -81,7 +88,11 @@ function PipelineStageNode(props: any): JSX.Element {
         id={props.id}
         data-nodeid={props.id}
         draggable={!props.readonly}
-        className={cx(css.defaultCard, { [css.selected]: props?.isSelected })}
+        className={cx(
+          css.defaultCard,
+          { [css.selected]: props?.isSelected },
+          { [css.failed]: stageStatus === ExecutionStatusEnum.Failed }
+        )}
         style={{
           width: 90,
           height: 40
@@ -105,19 +116,24 @@ function PipelineStageNode(props: any): JSX.Element {
         }}
       >
         <div className="execution-running-animation" />
-        {props.icon && <Icon size={28} name={props.icon} inverse={props?.isSelected} />}
-        {props?.data?.status === 'Running' ? (
-          <RunningIcon />
-        ) : (
-          props?.data?.status && (
-            <Icon
-              name={IconMap[props?.data?.status as ExecutionStatus] || IconMap.NotStarted}
-              size={13}
-              className={css.secondaryIcon}
-            />
-          )
+        {props.icon && (
+          <Icon
+            size={28}
+            name={props.icon}
+            inverse={props?.isSelected || (stageStatus as string) === ExecutionStatusEnum.Failed}
+          />
         )}
-        {SECONDARY_ICON && <Icon className={css.codeIcon} size={8} name={SECONDARY_ICON} />}
+        {secondaryIcon && (
+          <Icon
+            name={secondaryIcon}
+            style={secondaryIconStyle}
+            size={13}
+            className={css.secondaryIcon}
+            {...secondaryIconProps}
+          />
+        )}
+        {props?.data?.tertiaryIcon && <Icon name={props?.data?.tertiaryIcon} size={13} className={css.tertiaryIcon} />}
+        {CODE_ICON && <Icon className={css.codeIcon} size={8} name={CODE_ICON} />}
         <Button
           className={cx(css.closeNode, { [css.readonly]: props.readonly })}
           minimal

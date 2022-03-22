@@ -9,26 +9,34 @@ import React from 'react'
 import cx from 'classnames'
 import { Icon, Text, Color, Button, ButtonVariation, IconName, Utils } from '@wings-software/uicore'
 import { DiagramDrag, DiagramType, Event } from '@pipeline/components/Diagram'
-import { ExecutionStatusIconMap as IconMap, getStageType } from '@pipeline/utils/executionUtils'
-import type { ExecutionStatus } from '@pipeline/utils/statusHelpers'
+import { ExecutionStatus, ExecutionStatusEnum } from '@pipeline/utils/statusHelpers'
 import stepsfactory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { RunningIcon } from '@pipeline/components/ExecutionCard/MiniExecutionGraph/StageNode'
+import { getStatusProps } from '@pipeline/components/ExecutionStageDiagram/ExecutionStageDiagramUtils'
+import { ExecutionPipelineNodeType } from '@pipeline/components/ExecutionStageDiagram/ExecutionPipelineModel'
 import SVGMarker from '../SVGMarker'
 import { NodeType } from '../../Node'
 import css from './DefaultNode.module.scss'
 
-const SECONDARY_ICON: IconName = 'command-echo'
+const CODE_ICON: IconName = 'command-echo'
 
 function PipelineStepNode(props: any): JSX.Element {
   const allowAdd = props.allowAdd ?? false
   const [showAddNode, setVisibilityOfAdd] = React.useState(false)
   const [showAddLink, setShowAddLink] = React.useState(false)
-  const stepData = stepsfactory.getStepData(props.type)
-  let stepIconColor = stepsfactory.getStepIconColor(props.type || '')
+  const stepType = props.type || props?.data?.step?.stepType || ''
+  const stepData = stepsfactory.getStepData(stepType)
+  let stepIconColor = stepsfactory.getStepIconColor(stepType)
   if (stepIconColor && Object.values(Color).includes(stepIconColor)) {
     stepIconColor = Utils.getRealCSSColor(stepIconColor)
   }
   const CreateNode: React.FC<any> | undefined = props?.getNode(NodeType.CreateNode)?.component
+
+  const stepStatus = props?.status || (props?.data?.step?.status as ExecutionStatus)
+  const { secondaryIconProps, secondaryIcon, secondaryIconStyle } = getStatusProps(
+    stepStatus,
+    ExecutionPipelineNodeType.NORMAL
+  )
   return (
     <div
       className={cx(css.defaultNode, 'default-node', { draggable: !props.readOnly })}
@@ -85,7 +93,10 @@ function PipelineStepNode(props: any): JSX.Element {
         id={props.id}
         data-nodeid={props.id}
         draggable={true}
-        className={cx(css.defaultCard, { [css.selected]: props?.isSelected })}
+        className={cx(css.defaultCard, {
+          [css.selected]: props?.isSelected,
+          [css.failed]: stepStatus === ExecutionStatusEnum.Failed
+        })}
         style={{
           width: 64,
           height: 64
@@ -107,26 +118,24 @@ function PipelineStepNode(props: any): JSX.Element {
         }}
       >
         <div className="execution-running-animation" />
-        {(stepData?.icon || props?.data?.icon) && (
+        {(stepData?.icon || props?.icon) && (
           <Icon
             size={28}
-            name={stepData?.icon || props?.data?.icon || 'cross'}
-            inverse={props?.isSelected}
             color={props.isSelected ? Utils.getRealCSSColor(Color.WHITE) : stepIconColor}
+            name={stepData?.icon || props?.icon || 'cross'}
+            inverse={props?.isSelected || (stepStatus as string) === ExecutionStatusEnum.Failed}
           />
         )}
-        {props?.data?.status === 'Running' ? (
-          <RunningIcon />
-        ) : (
-          props?.data?.status && (
-            <Icon
-              name={IconMap[props?.data?.status as ExecutionStatus] || IconMap.NotStarted}
-              size={13}
-              className={css.secondaryIcon}
-            />
-          )
+        {secondaryIcon && (
+          <Icon
+            name={secondaryIcon}
+            style={secondaryIconStyle}
+            size={13}
+            className={css.secondaryIcon}
+            {...secondaryIconProps}
+          />
         )}
-        {SECONDARY_ICON && <Icon className={css.codeIcon} size={8} name={SECONDARY_ICON} />}
+        {CODE_ICON && <Icon className={css.codeIcon} size={8} name={CODE_ICON} />}
 
         <Button
           className={cx(css.closeNode, { [css.readonly]: props.readonly })}

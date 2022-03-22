@@ -13,6 +13,7 @@ import { StepTypeToPipelineIconMap } from '@pipeline/components/PipelineStudio/E
 import { stageTypeToIconMap } from '@pipeline/utils/constants'
 import type { PipelineGraphState, SVGPathRecord } from '../types'
 import { PipelineGraphType } from '../types'
+import type { DependencyElement } from 'services/ci'
 
 const INITIAL_ZOOM_LEVEL = 1
 const ZOOM_INC_DEC_LEVEL = 0.1
@@ -33,6 +34,7 @@ interface DrawSVGPathOptions {
 const getFinalSVGArrowPath = (id1 = '', id2 = '', options?: DrawSVGPathOptions): { [key: string]: string } => {
   const node1 = getComputedPosition(id1, options?.parentElement)
   const node2 = getComputedPosition(id2, options?.parentElement)
+
   if (!node1 || !node2) {
     return { [id1]: '' }
   }
@@ -248,7 +250,8 @@ const NodeTypeToNodeMap: Record<string, string> = {
 }
 
 const getPipelineGraphData = (
-  data: StageElementWrapperConfig[] | ExecutionWrapperConfig[] = []
+  data: StageElementWrapperConfig[] | ExecutionWrapperConfig[] = [],
+  serviceDependencies?: DependencyElement[] | undefined
 ): PipelineGraphState[] => {
   let graphState: PipelineGraphState[] = []
   const pipGraphDataType = getPipelineGraphDataType(data)
@@ -256,6 +259,27 @@ const getPipelineGraphData = (
     graphState = trasformStageData(data, pipGraphDataType)
   } else {
     graphState = trasformStepsData(data, pipGraphDataType)
+
+    if (Array.isArray(serviceDependencies)) {
+      //CI module
+      graphState.unshift({
+        id: uuid() as string,
+        identifier: 'service-dependencies' as string,
+        name: 'Dependencies',
+        type: 'StepGroup',
+        nodeType: 'StepGroup',
+        icon: '' as IconName,
+        data: {
+          readonly: true,
+          name: 'Dependencies',
+          type: 'StepGroup',
+          nodeType: 'StepGroup',
+          steps: serviceDependencies.map(d => ({ step: d }))
+        },
+
+        graphType: pipGraphDataType
+      })
+    }
   }
 
   return graphState
@@ -263,6 +287,7 @@ const getPipelineGraphData = (
 
 const trasformStageData = (stages: StageElementWrapperConfig[], graphType: PipelineGraphType): PipelineGraphState[] => {
   const finalData: PipelineGraphState[] = []
+
   stages.forEach((stage: StageElementWrapperConfig) => {
     if (stage?.stage) {
       const { nodeType, iconName } = getNodeInfo(defaultTo(stage.stage.type, ''), graphType)

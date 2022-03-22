@@ -36,10 +36,8 @@ import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { stagesCollection } from '@pipeline/components/PipelineStudio/Stages/StagesCollection'
 import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
-import jsonMock from './execMock.json'
 import { isApprovalStep } from './stepUtils'
 import { StageType } from './stageHelpers'
-import { processNodeDataV1 } from './execUtils'
 
 export const LITE_ENGINE_TASK = 'liteEngineTask'
 export const STATIC_SERVICE_GROUP_NAME = 'static_service_group'
@@ -105,7 +103,8 @@ export const StepTypeIconsMap: { [key in NodeType]: IconName } = {
   INFRASTRUCTURE: 'infrastructure',
   NG_FORK: 'fork',
   DEPLOYMENT_STAGE_STEP: 'circle',
-  APPROVAL_STAGE: 'approval-stage-icon'
+  APPROVAL_STAGE: 'approval-stage-icon',
+  StepGroupNode: 'step-group'
 }
 
 export const ExecutionStatusIconMap: Record<ExecutionStatus, IconName> = {
@@ -585,7 +584,7 @@ const processNodeData = (
   return items
 }
 
-const hasOnlyLiteEngineTask = (children?: string[], graph?: ExecutionGraph): boolean => {
+export const hasOnlyLiteEngineTask = (children?: string[], graph?: ExecutionGraph): boolean => {
   return (
     !!children &&
     children.length === 1 &&
@@ -851,12 +850,14 @@ export const processExecutionDataForGraph = (stages?: PipelineGraphState[]): Pip
       currentStage = {
         ...currentStage,
         icon: getIconFromStageModule(currentStageData?.module, currentStageData?.nodeType),
+        status: currentStageData?.status as any,
         data: {
           ...currentStage.data,
           identifier: currentStageData?.nodeUuid || /* istanbul ignore next */ '',
           name: currentStageData?.name || currentStageData?.nodeIdentifier || /* istanbul ignore next */ '',
           status: currentStageData?.status as any,
           barrierFound: currentStageData?.barrierFound,
+          tertiaryIcon: currentStageData?.barrierFound ? 'barrier-open-with-links' : undefined,
           type:
             currentStageData?.nodeType === StageType.APPROVAL
               ? ExecutionPipelineNodeType.DIAMOND
@@ -874,12 +875,14 @@ export const processExecutionDataForGraph = (stages?: PipelineGraphState[]): Pip
           childNodes.push({
             ...currentNode,
             icon: getIconFromStageModule(node?.module, node.nodeType),
+            status: node?.status as never,
             data: {
               ...node,
               identifier: node?.nodeUuid || /* istanbul ignore next */ '',
               name: node?.name || node?.nodeIdentifier || /* istanbul ignore next */ '',
               status: node?.status as never,
               barrierFound: node?.barrierFound,
+              tertiaryIcon: currentStageData?.barrierFound ? 'barrier-open-with-links' : undefined,
               type:
                 node?.nodeType === StageType.APPROVAL
                   ? ExecutionPipelineNodeType.DIAMOND
@@ -897,12 +900,14 @@ export const processExecutionDataForGraph = (stages?: PipelineGraphState[]): Pip
       items.push({
         ...currentStage,
         icon: getIconFromStageModule(stage?.module, stage?.nodeType),
+        status: stage?.status as any,
         data: {
           ...stage,
           identifier: stage?.nodeUuid || /* istanbul ignore next */ '',
           name: stage?.name || stage?.nodeIdentifier || /* istanbul ignore next */ '',
           status: stage?.status as any,
           barrierFound: stage?.barrierFound,
+          tertiaryIcon: stage?.barrierFound ? 'barrier-open-with-links' : undefined,
           type:
             stage?.nodeType === StageType.APPROVAL
               ? ExecutionPipelineNodeType.DIAMOND
@@ -915,131 +920,5 @@ export const processExecutionDataForGraph = (stages?: PipelineGraphState[]): Pip
       })
     }
   })
-  return items
-}
-
-export const processExecutionDataV1 = (graph?: ExecutionGraph): PipelineGraphState[] => {
-  const items: PipelineGraphState[] = []
-
-  /* istanbul ignore else */
-  if (graph?.nodeAdjacencyListMap && graph?.rootNodeId) {
-    const nodeAdjacencyListMap = graph.nodeAdjacencyListMap
-    const rootNode = graph.rootNodeId
-    // Ignore the graph when its fqn is pipeline, as this doesn't render pipeline graph
-    if (graph?.nodeMap?.[rootNode].baseFqn === 'pipeline') {
-      return items
-    }
-    let nodeId = nodeAdjacencyListMap[rootNode].children?.[0]
-    while (nodeId && nodeAdjacencyListMap[nodeId]) {
-      const nodeData = graph?.nodeMap?.[nodeId]
-      /* istanbul ignore else */
-      if (nodeData) {
-        const isRollback = nodeData.name?.endsWith(StepGroupRollbackIdentifier) ?? false
-        if (nodeData.stepType && (TopLevelNodes.indexOf(nodeData.stepType as NodeType) > -1 || isRollback)) {
-          // NOTE: exception if we have only lite task engine in Execution group
-          if (hasOnlyLiteEngineTask(nodeAdjacencyListMap[nodeId].children, graph)) {
-            const liteTaskEngineId = nodeAdjacencyListMap?.[nodeId]?.children?.[0] || ''
-            processLiteEngineTask(graph?.nodeMap?.[liteTaskEngineId], items, nodeData)
-          } else if (!isEmpty(nodeAdjacencyListMap[nodeId].children)) {
-            if (nodeData.identifier === 'execution') {
-              items.push(
-                ...processNodeDataV1(
-                  nodeAdjacencyListMap[nodeId].children || /* istanbul ignore next */ [],
-                  graph?.nodeMap,
-                  graph?.nodeAdjacencyListMap,
-                  items
-                )
-              )
-            } else {
-              const [parentNode, ...childNodes] = nodeAdjacencyListMap?.[nodeId].children as any[]
-
-              const iconData = getIconDataBasedOnType(parentNode)
-              items.push({
-                id: nodeId as string,
-                identifier: nodeId as string,
-                name: parentNode?.name as string,
-                icon: iconData.icon,
-                type: parentNode?.stepType,
-                nodeType: getExecutionPipelineNodeType(parentNode?.stepType),
-                data: {
-                  name: parentNode.name || /* istanbul ignore next */ '',
-                  identifier: nodeId,
-                  data: parentNode,
-                  skipCondition: parentNode.skipInfo?.evaluatedCondition
-                    ? parentNode.skipInfo.skipCondition
-                    : undefined,
-                  when: parentNode.nodeRunInfo,
-                  containerCss: {
-                    ...(RollbackIdentifier === parentNode.identifier || isRollback ? RollbackContainerCss : {})
-                  },
-                  status: parentNode.status as ExecutionStatus,
-                  isOpen: true,
-                  ...iconData
-                },
-                children: processNodeDataV1(
-                  childNodes || /* istanbul ignore next */ [],
-                  graph?.nodeMap,
-                  graph?.nodeAdjacencyListMap,
-                  items
-                )
-              })
-            }
-          }
-        } else if (nodeData.stepType === NodeType.FORK) {
-          const [parentNode, ...childNodes] = nodeAdjacencyListMap?.[nodeId].children as any[]
-
-          const iconData = getIconDataBasedOnType(parentNode)
-          items.push({
-            id: nodeId as string,
-            identifier: nodeId as string,
-            name: parentNode?.name as string,
-            icon: iconData.icon,
-            type: parentNode?.stepType,
-            nodeType: getExecutionPipelineNodeType(parentNode?.stepType),
-            data: {
-              name: parentNode.name || /* istanbul ignore next */ '',
-              skipCondition: parentNode.skipInfo?.evaluatedCondition ? parentNode.skipInfo.skipCondition : undefined,
-              when: parentNode.nodeRunInfo,
-              ...iconData,
-              showInLabel: parentNode.stepType === NodeType.SERVICE || parentNode.stepType === NodeType.INFRASTRUCTURE,
-              identifier: nodeId,
-              status: parentNode.status as ExecutionStatus,
-              type: getExecutionPipelineNodeType(parentNode?.stepType),
-              data: parentNode
-            },
-            children: processNodeDataV1(
-              childNodes || /* istanbul ignore next */ [],
-              graph?.nodeMap,
-              graph?.nodeAdjacencyListMap,
-              items
-            )
-          })
-        } else {
-          const iconData = getIconDataBasedOnType(nodeData)
-          items.push({
-            id: nodeId as string,
-            identifier: nodeId as string,
-            name: nodeData?.name as string,
-            icon: iconData.icon,
-            type: nodeData?.stepType,
-            nodeType: getExecutionPipelineNodeType(nodeData?.stepType),
-            data: {
-              name: nodeData.name || /* istanbul ignore next */ '',
-              skipCondition: nodeData.skipInfo?.evaluatedCondition ? nodeData.skipInfo.skipCondition : undefined,
-              when: nodeData.nodeRunInfo,
-              ...iconData,
-              showInLabel: nodeData.stepType === NodeType.SERVICE || nodeData.stepType === NodeType.INFRASTRUCTURE,
-              identifier: nodeId,
-              status: nodeData.status as ExecutionStatus,
-              type: getExecutionPipelineNodeType(nodeData?.stepType),
-              data: nodeData
-            }
-          } as PipelineGraphState)
-        }
-      }
-      nodeId = nodeAdjacencyListMap[nodeId].nextIds?.[0]
-    }
-  }
-
   return items
 }

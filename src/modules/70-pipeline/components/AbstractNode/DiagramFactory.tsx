@@ -43,8 +43,12 @@ export class DiagramFactory {
     return this.type
   }
 
-  registerNode(type: string, Component: React.FC, isDefault = false): void {
-    this.nodeBank.set(type, { component: Component, isDefault })
+  registerNode(type: string | string[], Component: React.FC, isDefault = false): void {
+    if (Array.isArray(type)) {
+      type.forEach(nodeType => this.nodeBank.set(nodeType, { component: Component, isDefault }))
+    } else {
+      this.nodeBank.set(type, { component: Component, isDefault })
+    }
   }
 
   registerListeners(listeners: Record<string, BaseListener>): Record<string, ListenerHandle> {

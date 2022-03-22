@@ -124,7 +124,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
   ): React.ReactElement | null => {
     const defaultNode = getDefaultNode()?.component
     const NodeComponent: React.FC<any> | undefined = getNode?.(data?.type)?.component || defaultNode
-
+    const readOnlyValue = readonly || data.readonly
     return (
       <div
         className={classNames(
@@ -149,7 +149,8 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                 allowAdd={true}
                 prevNodeIdentifier={prevNodeIdentifier}
                 intersectingIndex={intersectingIndex}
-                readonly={readonly}
+                readonly={readOnlyValue}
+                updateGraphLinks={updateGraphLinks}
                 {...data}
               />
             ) : (
@@ -169,7 +170,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                   prevNode={prevNode}
                   nextNode={nextNode}
                   updateGraphLinks={updateGraphLinks}
-                  readonly={readonly}
+                  readonly={readOnlyValue}
                   {...data}
                 />
               )
@@ -200,7 +201,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                   prevNodeIdentifier={prevNodeIdentifier}
                   prevNode={prevNode}
                   nextNode={nextNode}
-                  readonly={readonly}
+                  readonly={readOnlyValue}
                   updateGraphLinks={updateGraphLinks}
                 />
               )
@@ -223,7 +224,8 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                     prevNodeIdentifier={prevNodeIdentifier}
                     identifier={currentNodeData.identifier}
                     intersectingIndex={intersectingIndex}
-                    readonly={readonly}
+                    readonly={readOnlyValue}
+                    updateGraphLinks={updateGraphLinks}
                   />
                 ) : indexRelativeToParent > intersectingIndex && intersectingIndex !== -1 ? null : (
                   ChildNodeComponent && (
@@ -241,7 +243,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                       prevNodeIdentifier={prevNodeIdentifier}
                       prevNode={prevNode}
                       nextNode={nextNode}
-                      readonly={readonly}
+                      readonly={readOnlyValue}
                       updateGraphLinks={updateGraphLinks}
                     />
                   )

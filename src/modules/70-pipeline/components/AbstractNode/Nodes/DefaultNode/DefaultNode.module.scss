@@ -249,3 +249,32 @@
   top: -5px;
   right: -5px;
 }
+.running-node {
+  position: relative;
+
+  :global(.execution-running-animation) {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    position: absolute;
+    &::before {
+      content: ' ';
+      display: block;
+      width: 200%;
+      height: 200%;
+      background-image: var(--execution-pipeline-selected-running-bg) !important;
+      animation: shine 2s infinite;
+      will-change: transform;
+    }
+  }
+  &.selected :global(.execution-running-animation) {
+    &::before {
+      background-image: var(--execution-pipeline-selected-running-bg-selected) !important;
+    }
+  }
+}
+.failed {
+  background-color: var(--execution-pipeline-color-red) !important;
+  border: solid 2px var(--execution-pipeline-color-dark-red) !important;
+}

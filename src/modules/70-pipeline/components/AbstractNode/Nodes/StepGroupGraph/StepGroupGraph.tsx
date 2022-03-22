@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { defaultTo } from 'lodash-es'
+import { defaultTo, get } from 'lodash-es'
 import { DiagramType, Event } from '@pipeline/components/Diagram'
 import { SVGComponent } from '../../PipelineGraph/PipelineGraph'
 import { PipelineGraphRecursive } from '../../PipelineGraph/PipelineGraphNode'
@@ -41,10 +41,25 @@ interface LayoutStyles {
   width: string
   marginLeft?: string
 }
+const getNestedStepGroupHeight = (steps?: any[]): number => {
+  let maxParalellNodesCount = 0
+  steps?.forEach(step => {
+    if (step?.parallel) {
+      maxParalellNodesCount = Math.max(maxParalellNodesCount, step.parallel.length)
+    }
+  })
+  return maxParalellNodesCount
+}
 const getCalculatedStyles = (data: PipelineGraphState[]): LayoutStyles => {
   let width = 0
   let maxChildLength = 0
   data.forEach(node => {
+    const childSteps = get(node, 'data.step.data.stepGroup.steps')
+    if (childSteps) {
+      const count = getNestedStepGroupHeight(childSteps)
+      maxChildLength = Math.max(maxChildLength, count)
+      width += childSteps.length * 170
+    }
     width += 170
     maxChildLength = Math.max(maxChildLength, node?.children?.length || 0)
   })
@@ -79,7 +94,7 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
   useLayoutEffect(() => {
     if (state?.length) {
       setSVGLinks()
-      props?.updateGraphLinks()
+      props?.updateGraphLinks?.()
     }
   }, [layoutStyles])
 
@@ -88,8 +103,7 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
     const firstNodeIdentifier = state?.[0]?.id
     const lastNodeIdentifier = state?.[state?.length - 1]?.id
     const parentElement = graphRef.current?.querySelector('#tree-container') as HTMLDivElement
-
-    return setSvgPath([
+    const finalPaths = [
       ...SVGLinks,
       getFinalSVGArrowPath(props?.id, firstNodeIdentifier as string, {
         direction: 'ltl',
@@ -99,7 +113,8 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
         direction: 'rtr',
         parentElement
       })
-    ])
+    ]
+    return setSvgPath(finalPaths)
   }
 
   useEffect(() => {
@@ -117,6 +132,7 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
           nodes={state}
           selectedNode={defaultTo(props?.selectedNodeId, '')}
           startEndNodeNeeded={false}
+          readonly={props.readonly}
         />
       ) : (
         CreateNode &&
