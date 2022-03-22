@@ -15,9 +15,9 @@ import {
   SelectOption,
   StepProps,
   Text,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { Form, FormikContext } from 'formik'
 import { useParams } from 'react-router-dom'
 import * as Yup from 'yup'
