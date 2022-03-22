@@ -6,10 +6,10 @@
  */
 
 import React from 'react'
-import { RemotePipelineSecurityView, STORemoteComponentMounter } from './STOApp'
+import { RemoteOverviewView, STORemoteComponentMounter } from './STOApp'
 
-export const PipelineSecurityView: React.FC<Record<string, unknown>> = props => (
-  <STORemoteComponentMounter component={<RemotePipelineSecurityView {...props} />} />
+const OverviewView: React.FC<Record<string, unknown>> = props => (
+  <STORemoteComponentMounter component={<RemoteOverviewView {...props} />} />
 )
 
-export default PipelineSecurityView
+export default OverviewView

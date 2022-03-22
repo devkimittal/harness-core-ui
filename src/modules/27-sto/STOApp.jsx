@@ -18,6 +18,7 @@ import { getLoginPageURL } from 'framework/utils/SessionUtils'
 const RemoteSTOApp = lazy(() => import('sto/App'))
 
 export const RemotePipelineSecurityView = lazy(() => import('sto/PipelineSecurityView'))
+export const RemoteOverviewView = lazy(() => import('sto/OverviewView'))
 
 export const STORemoteComponentMounter = props => {
   const { spinner, component } = props
