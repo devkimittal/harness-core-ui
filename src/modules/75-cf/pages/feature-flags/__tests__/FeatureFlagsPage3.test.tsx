@@ -6,12 +6,16 @@
  */
 
 import React from 'react'
-import { render, fireEvent, waitFor } from '@testing-library/react'
+import { render, fireEvent, waitFor, RenderResult, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { TestWrapper } from '@common/utils/testUtils'
 import mockImport from 'framework/utils/mockImport'
 import mockEnvironments from '@cf/pages/environments/__tests__/mockEnvironments'
-import FeatureFlagsPage from '../FeatureFlagsPage'
+import mockGitSync from '@cf/utils/testData/data/mockGitSync'
+import FeatureFlagsPage, { RenderColumnFlag } from '../FeatureFlagsPage'
+import type { RenderColumnFlagProps } from '../FeatureFlagsPage'
 import mockFeatureFlags from './mockFeatureFlags'
+import cellMock from './data/cellMock'
 
 jest.mock('@cf/hooks/useGitSync', () => ({
   useGitSync: jest.fn(() => ({
@@ -145,5 +149,56 @@ describe('FeatureFlagsPage', () => {
 
     fireEvent.click(document.querySelector('button[class*=intent-danger]') as HTMLButtonElement)
     await waitFor(() => expect(mutate).toBeCalledTimes(1))
+  })
+
+  describe('RenderColumnFlag', () => {
+    const toggleFeatureFlag = {
+      on: jest.fn(),
+      off: jest.fn(),
+      loading: false,
+      error: undefined
+    }
+
+    const renderComponent = (props: Partial<RenderColumnFlagProps> = {}): RenderResult =>
+      render(
+        <TestWrapper
+          path="/account/:accountId/cf/orgs/:orgIdentifier/projects/:projectIdentifier/feature-flags"
+          pathParams={{ accountId: 'dummy', orgIdentifier: 'dummy', projectIdentifier: 'dummy' }}
+        >
+          <RenderColumnFlag
+            gitSync={{ ...mockGitSync, isGitSyncEnabled: true }}
+            update={jest.fn()}
+            toggleFeatureFlag={toggleFeatureFlag}
+            cell={cellMock}
+            {...props}
+          />
+        </TestWrapper>
+      )
+
+    test('disables FF switch tooltip when there are no environments', async () => {
+      renderComponent({ numberOfEnvs: 0 })
+      const switchToggle = screen.getByRole('checkbox')
+
+      fireEvent.mouseOver(switchToggle)
+      await waitFor(() => {
+        const warningTooltip = screen.queryByText('cf.noEnvironment.title')
+        expect(warningTooltip).toBeInTheDocument()
+        expect(switchToggle).toBeDisabled()
+      })
+    })
+
+    test('switch tooltip appear when there are environments', async () => {
+      renderComponent({ numberOfEnvs: 2 })
+      const switchToggle = screen.getByRole('checkbox')
+      userEvent.click(switchToggle)
+
+      const toggleFlagPopover = screen.getByRole('heading', { name: 'cf.featureFlags.turnOnHeading' })
+
+      await waitFor(() => {
+        const warningToolTip = screen.queryByText('cf.noEnvironment.message')
+        expect(toggleFlagPopover).toBeInTheDocument()
+        expect(warningToolTip).not.toBeInTheDocument()
+      })
+    })
   })
 })

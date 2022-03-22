@@ -16,11 +16,12 @@ import {
   Pagination,
   Text,
   Utils,
-  TableV2
+  TableV2,
+  Popover
 } from '@wings-software/uicore'
 import { noop } from 'lodash-es'
+import { Classes, Position, Switch, PopoverInteractionKind } from '@blueprintjs/core'
 import { Color } from '@harness/design-system'
-import { Classes, Position, Switch } from '@blueprintjs/core'
 import type { Cell, CellProps, Column, Renderer } from 'react-table'
 import type { MutateMethod } from 'restful-react'
 import routes from '@common/RouteDefinitions'
@@ -34,7 +35,7 @@ import {
   useDeleteFeatureFlag,
   useGetAllFeatures
 } from 'services/cf'
-import { useStrings } from 'framework/strings'
+import { useStrings, String } from 'framework/strings'
 import { ResourceType } from '@rbac/interfaces/ResourceType'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
 import RBACTooltip from '@rbac/components/RBACTooltip/RBACTooltip'
@@ -45,7 +46,6 @@ import { VariationWithIcon } from '@cf/components/VariationWithIcon/VariationWit
 import ListingPageTemplate from '@cf/components/ListingPageTemplate/ListingPageTemplate'
 import { NoData } from '@cf/components/NoData/NoData'
 import { useEnvironmentSelectV2 } from '@cf/hooks/useEnvironmentSelectV2'
-import type { EnvironmentResponseDTO } from 'services/cd-ng'
 import { CFEnvironmentSelect } from '@cf/components/CFEnvironmentSelect/CFEnvironmentSelect'
 import useActiveEnvironment from '@cf/hooks/useActiveEnvironment'
 import {
@@ -75,17 +75,19 @@ import { FeatureFlagStatus, FlagStatus } from './FlagStatus'
 import { FlagResult } from './FlagResult'
 import css from './FeatureFlagsPage.module.scss'
 
-interface RenderColumnFlagProps {
+export interface RenderColumnFlagProps {
+  numberOfEnvs?: number
   gitSync: UseGitSync
   cell: Cell<Feature>
   toggleFeatureFlag: UseToggleFeatureFlag
   update: (status: boolean) => void
 }
 
-const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
+export const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
+  numberOfEnvs,
   gitSync,
   toggleFeatureFlag,
-  cell: { row, column },
+  cell: { row },
   update
 }) => {
   const data = row.original
@@ -142,33 +144,35 @@ const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
     }
   }
 
+  const NoEnvironmentWarningTooltip = (): ReactElement => (
+    <Popover interactionKind={PopoverInteractionKind.HOVER} popoverClassName={Classes.DARK}>
+      <Layout.Vertical padding="medium" className={css.tooltip}>
+        <Text font={{ weight: 'bold' }} color={Color.WHITE} padding={{ bottom: 'large' }}>
+          {getString('cf.noEnvironment.title')}
+        </Text>
+        <Text color={Color.GREY_200}>{getString('cf.noEnvironment.message')}</Text>
+      </Layout.Vertical>
+    </Popover>
+  )
+
   const switchTooltip = (
     <Container width={'350px'} padding="xxxlarge" className={css.switchTooltip}>
       <Heading level={2} style={{ fontWeight: 600, fontSize: '24px', lineHeight: '32px', color: '#22222A' }}>
         {getString(status ? 'cf.featureFlags.turnOffHeading' : 'cf.featureFlags.turnOnHeading')}
       </Heading>
       <Text margin={{ top: 'medium', bottom: 'small' }} style={{ lineHeight: '22px', color: '#383946' }}>
-        <span
-          // This is used to retain simple HTML markup in i18n string like <strong>
-          // to make sure formatting is aligned with translations
-          dangerouslySetInnerHTML={{
-            __html: getString(status ? 'cf.featureFlags.turnOffMessage' : 'cf.featureFlags.turnOnMessage', {
-              name: data.name,
-              env: (column as unknown as { activeEnvironment?: EnvironmentResponseDTO })?.activeEnvironment?.name || ''
-            })
-          }}
+        <String
+          stringID={status ? 'cf.featureFlags.turnOffMessage' : 'cf.featureFlags.turnOnMessage'}
+          vars={{ name: data.name, env: activeEnvironment || '' }}
+          useRichText
         />
       </Text>
       <Text margin={{ top: 'xsmall', bottom: 'xlarge' }} style={{ lineHeight: '22px', color: '#383946' }}>
         {(!featureFlagHasCustomRules(data) && (
-          <span
-            // This is used to retain simple HTML markup in i18n string like <strong>
-            // to make sure formatting is aligned with translations
-            dangerouslySetInnerHTML={{
-              __html: getString('cf.featureFlags.defaultWillBeServed', {
-                defaultVariation: status ? data.defaultOffVariation : data.defaultOnVariation
-              })
-            }}
+          <String
+            stringID={'cf.featureFlags.defaultWillBeServed'}
+            useRichText
+            vars={{ defaultVariation: status ? data.defaultOffVariation : data.defaultOnVariation }}
           />
         )) ||
           getString('cf.featureFlags.customRuleMessage')}
@@ -227,6 +231,8 @@ const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
       )
     } else if (switchDisabled) {
       return <FeatureWarningTooltip featureName={FeatureIdentifier.MAUS} />
+    } else if (!numberOfEnvs) {
+      return <NoEnvironmentWarningTooltip />
     } else {
       return switchTooltip
     }
@@ -239,12 +245,13 @@ const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
           noStyling
           tooltip={getTooltip()}
           tooltipProps={{
-            interactionKind: switchDisabled ? 'hover' : 'click',
-            hasBackdrop: switchDisabled ? false : true,
-            position: Position.TOP_LEFT
+            interactionKind:
+              switchDisabled || !numberOfEnvs ? PopoverInteractionKind.HOVER : PopoverInteractionKind.CLICK,
+            hasBackdrop: switchDisabled || !numberOfEnvs ? false : true,
+            position: switchDisabled || !numberOfEnvs ? Position.BOTTOM_LEFT : Position.TOP_LEFT
           }}
           className={css.toggleFlagButton}
-          disabled={data.archived || !canToggle || switchDisabled}
+          disabled={data.archived || !canToggle || switchDisabled || !numberOfEnvs}
         >
           <Switch
             style={{ alignSelf: 'baseline', marginLeft: '-10px' }}
@@ -252,7 +259,7 @@ const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
             className={Classes.LARGE}
             checked={status}
             onChange={noop}
-            disabled={data.archived || !canToggle}
+            disabled={data.archived || !canToggle || !numberOfEnvs}
           />
         </Button>
       </Container>
@@ -469,6 +476,7 @@ const FeatureFlagsPage: React.FC = () => {
         Cell: function WrapperRenderColumnFlag(cell: Cell<Feature>) {
           return (
             <RenderColumnFlag
+              numberOfEnvs={environments?.length}
               gitSync={gitSync}
               toggleFeatureFlag={toggleFeatureFlag}
               cell={cell}
