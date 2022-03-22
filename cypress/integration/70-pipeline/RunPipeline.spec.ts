@@ -77,7 +77,7 @@ describe('RUN PIPELINE MODAL', () => {
       cy.contains('span', 'Pipeline Stage Successfully removed.').should('be.visible')
     })
 
-    it('should display the field errors if form is invalid', () => {
+    it.skip('should display the field errors if form is invalid', () => {
       cy.intercept('POST', pipelineSave, { fixture: 'pipeline/api/pipelines.postsuccess' })
       cy.intercept('POST', inputSetsTemplateCall, { fixture: 'pipeline/api/runpipeline/inputsettemplate' })
       cy.intercept('GET', pipelineDetailsCall, { fixture: 'pipeline/api/runpipeline/getpipeline' })
@@ -196,6 +196,9 @@ describe('RUN PIPELINE MODAL', () => {
       cy.fillName('testStage')
       cy.contains('p', 'Harness Approval').click({ multiple: true })
       cy.clickSubmit()
+      cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
+      cy.intercept('GET', userGroupCall, { fixture: 'pipeline/api/approvals/userGroup' })
+      cy.intercept('POST', stepsCall, { fixture: 'pipeline/api/approvals/steps' })
     })
 
     it('should display the delete pipeline stage modal', () => {
@@ -245,45 +248,14 @@ describe('RUN PIPELINE MODAL', () => {
     })
 
     describe('Checks visual to YAML and visual to variable view parity', () => {
-      beforeEach(() => {
-        cy.intercept('GET', servicesCall, { fixture: 'ng/api/servicesV2' })
-        cy.intercept('GET', environmentsCall, { fixture: 'ng/api/environmentsV2' })
-        cy.intercept('GET', connectorsCall, { fixture: 'ng/api/connectors' })
-        cy.intercept('POST', pipelineVariablesCall, { fixture: 'pipeline/api/approvals/pipeline.variables' })
-        cy.intercept('POST', resolvedPipelineDetailsCall, req => {
-          req.continue(res => {
-            res.send({
-              status: 'SUCCESS',
-              data: {
-                mergedPipelineYaml: req.body.originalEntityYaml,
-                templateReferenceSummaries: []
-              },
-              metaData: null,
-              correlationId: 'fa9edc77-c155-42f5-b0af-93c1f0546911'
-            })
-          })
-        })
-      })
-
       it('visual to variable view for stage configuration', () => {
         // Toggle to variable view
-
-        cy.intercept('GET', yamlSnippetCall, { fixture: 'pipeline/api/approvals/stageYamlSnippet' })
-        cy.intercept('GET', userGroupCall, { fixture: 'pipeline/api/approvals/userGroup' })
-        cy.intercept('POST', stepsCall, { fixture: 'pipeline/api/approvals/steps' })
+        cy.intercept('POST', resolvedPipelineDetailsCall, { fixture: 'pipeline/api/approval/getresolvedpipeline' })
         cy.wait(2000)
         cy.contains('span', 'Advanced').click({ force: true })
         cy.wait(1000)
         cy.contains('span', 'Execution').click({ force: true })
         cy.wait(2000)
-        cy.contains('p', 'Approval').click()
-        cy.wait(2000)
-        cy.contains('p', 'Select User Group(s)').click()
-        cy.wait(2000)
-        cy.contains('div', 'Organization').click()
-        cy.findByTestId('Checkbox-test').click({ force: true })
-        cy.contains('span', 'Apply Selected').click()
-        cy.contains('span', 'Apply Changes').click({ force: true })
         cy.contains('span', 'Variables').click()
         cy.wait(4000)
 
