@@ -21,7 +21,6 @@ import type { YamlBuilderHandlerBinding, YamlBuilderProps } from '@common/interf
 import { branchStatusMock, gitConfigs, sourceCodeManagers } from '@connectors/mocks/mock'
 import { OverlayInputSetForm } from '@pipeline/components/OverlayInputSetForm/OverlayInputSetForm'
 import { PipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
-import type { ResponseTemplateMergeResponse } from 'services/template-ng'
 import type { ResponseInputSetTemplateWithReplacedExpressionsResponse } from 'services/pipeline-ng'
 import { EnhancedInputSetForm } from '../InputSetForm'
 import {
@@ -404,25 +403,25 @@ describe('Render Forms - Snapshot Testing', () => {
   test('showPipelineInputSetForm function', async () => {
     const templateData = cloneDeep(TemplateResponse.data)
     let returnVal = showPipelineInputSetForm(
-      MergedPipelineResponse.data as ResponseTemplateMergeResponse,
+      PipelineResponse?.data?.data?.resolvedTemplatesPipelineYaml,
       templateData as ResponseInputSetTemplateWithReplacedExpressionsResponse
     )
     expect(returnVal).toBeTruthy()
     delete templateData?.data
     returnVal = showPipelineInputSetForm(
-      MergedPipelineResponse.data as ResponseTemplateMergeResponse,
+      PipelineResponse?.data?.data?.resolvedTemplatesPipelineYaml,
       templateData as ResponseInputSetTemplateWithReplacedExpressionsResponse
     )
     expect(returnVal).toBeFalsy()
-    returnVal = showPipelineInputSetForm(MergedPipelineResponse.data as ResponseTemplateMergeResponse, null)
+    returnVal = showPipelineInputSetForm(PipelineResponse?.data?.data?.resolvedTemplatesPipelineYaml, null)
     expect(returnVal).toBeFalsy()
     delete MergedPipelineResponse.data?.data
     returnVal = showPipelineInputSetForm(
-      MergedPipelineResponse.data as ResponseTemplateMergeResponse,
+      PipelineResponse?.data?.data?.resolvedTemplatesPipelineYaml,
       templateData as ResponseInputSetTemplateWithReplacedExpressionsResponse
     )
     expect(returnVal).toBeFalsy()
-    returnVal = showPipelineInputSetForm(null, null)
+    returnVal = showPipelineInputSetForm(undefined, null)
     expect(returnVal).toBeFalsy()
   })
 
