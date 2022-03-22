@@ -117,7 +117,7 @@ const Content = (props: ACRRenderContent): JSX.Element => {
   useEffect(() => {
     const subscriptionValues = defaultTo(data?.resource, []).map(subsciption => ({
       value: subsciption.value,
-      label: subsciption.name
+      label: subsciption.value
     }))
     setSubscriptions(subscriptionValues as SelectOption[])
   }, [data?.resource])
@@ -149,7 +149,7 @@ const Content = (props: ACRRenderContent): JSX.Element => {
 
   useEffect(() => {
     const options =
-      defaultTo(registiresData?.resource, []).map(name => ({ label: name.value, value: name.value })) ||
+      defaultTo(registiresData?.resource, []).map(registry => ({ label: registry.value, value: registry.value })) ||
       /* istanbul ignore next */ []
     setRegistries(options)
   }, [registiresData])
@@ -183,7 +183,7 @@ const Content = (props: ACRRenderContent): JSX.Element => {
 
   useEffect(() => {
     const options =
-      defaultTo(repositoriesData?.resource, []).map(name => ({ label: name.value, value: name.value })) ||
+      defaultTo(repositoriesData?.resource, []).map(repo => ({ label: repo.value, value: repo.value })) ||
       /* istanbul ignore next */ []
     setRepositories(options)
   }, [repositoriesData])

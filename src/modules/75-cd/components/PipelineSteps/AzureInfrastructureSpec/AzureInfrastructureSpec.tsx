@@ -74,54 +74,14 @@ const subscriptionLabel = 'connectors.ACR.subscription'
 const resourceGroupLabel = 'common.resourceGroupLabel'
 const clusterLabel = 'common.cluster'
 const errorMessage = 'data.message'
+const yamlErrorMessage = 'cd.parsingYamlError'
 
 function getValidationSchema(getString: UseStringsReturn['getString']): Yup.ObjectSchema {
   return Yup.object().shape({
     connectorRef: getConnectorSchema(getString),
-    subscription: Yup.lazy((value): Yup.Schema<unknown> => {
-      /* istanbul ignore else */ if (typeof value === 'string') {
-        return Yup.string().required(getString(subscriptionLabel))
-      }
-      return Yup.object().test({
-        test(valueObj: SelectOption): boolean | Yup.ValidationError {
-          if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
-            return this.createError({
-              message: getString('fieldRequired', { field: getString(subscriptionLabel) })
-            })
-          }
-          return true
-        }
-      })
-    }),
-    resourceGroup: Yup.lazy((value): Yup.Schema<unknown> => {
-      /* istanbul ignore else */ if (typeof value === 'string') {
-        return Yup.string().required(getString(resourceGroupLabel))
-      }
-      return Yup.object().test({
-        test(valueObj: SelectOption): boolean | Yup.ValidationError {
-          if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
-            return this.createError({
-              message: getString('fieldRequired', { field: getString(resourceGroupLabel) })
-            })
-          }
-          return true
-        }
-      })
-    }),
-    cluster: Yup.lazy((value): Yup.Schema<unknown> => {
-      /* istanbul ignore else */ if (typeof value === 'string') {
-        return Yup.string().required(getString(clusterLabel))
-      }
-      return Yup.object().test({
-        test(valueObj: SelectOption): boolean | Yup.ValidationError {
-          if (isEmpty(valueObj) || isEmpty(valueObj.value)) {
-            return this.createError({ message: getString('fieldRequired', { field: getString(clusterLabel) }) })
-          }
-          return true
-        }
-      })
-    }),
-
+    subscription: Yup.string().required(getString(subscriptionLabel)),
+    resourceGroup: Yup.string().required(getString(resourceGroupLabel)),
+    cluster: Yup.string().required(getString(clusterLabel)),
     namespace: getNameSpaceSchema(getString),
     releaseName: getReleaseNameSchema(getString)
   })
@@ -298,6 +258,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
   React.useEffect(() => {
     subscribeForm({ tab: DeployTabs.INFRASTRUCTURE, form: formikRef })
     return () => unSubscribeForm({ tab: DeployTabs.INFRASTRUCTURE, form: formikRef })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -307,12 +268,16 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
         initialValues={getInitialValues()}
         validate={value => {
           const data: Partial<AzureInfrastructure> = {
-            namespace: value.namespace === '' ? undefined : value.namespace,
-            releaseName: value.releaseName === '' ? undefined : value.releaseName,
+            namespace: value.namespace === '' ? /* istanbul ignore next */ undefined : value.namespace,
+            releaseName: value.releaseName === '' ? /* istanbul ignore next */ undefined : value.releaseName,
             connectorRef: undefined,
-            subscription: getValue(value.subscription) === '' ? undefined : getValue(value.subscription),
-            resourceGroup: getValue(value.resourceGroup) === '' ? undefined : getValue(value.resourceGroup),
-            cluster: getValue(value.cluster) === '' ? undefined : getValue(value.cluser),
+            subscription:
+              getValue(value.subscription) === '' ? /* istanbul ignore next */ undefined : getValue(value.subscription),
+            resourceGroup:
+              getValue(value.resourceGroup) === ''
+                ? /* istanbul ignore next */ undefined
+                : getValue(value.resourceGroup),
+            cluster: getValue(value.cluster) === '' ? /* istanbul ignore next */ undefined : getValue(value.cluser),
             allowSimultaneousDeployments: value.allowSimultaneousDeployments
           }
           /* istanbul ignore else */ if (value.connectorRef) {
@@ -345,6 +310,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                   style={{ marginBottom: 'var(--spacing-large)' }}
                   type={Connectors.AZURE}
                   onChange={(value: any, _valueType, type) => {
+                    /* istanbul ignore next */
                     if (type === MultiTypeInputType.FIXED && value.record) {
                       const { record, scope } = value as unknown as { record: ConnectorReferenceDTO; scope: Scope }
                       const connectorRef =
@@ -359,15 +325,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                           connectorRef
                         }
                       })
-                    } else {
-                      setSubscriptions([])
-                      setClusters([])
-                      setResourceGroups([])
                     }
-
-                    formik.setFieldValue('subscription', '')
-                    formik.setFieldValue('cluster', '')
-                    formik.setFieldValue('resourceGroup', '')
                   }}
                   gitScope={{ repo: repoIdentifier || '', branch, getDefaultFromOtherRepo: true }}
                 />
@@ -385,6 +343,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                     showDefaultField={false}
                     showAdvanced={true}
                     onChange={value => {
+                      /* istanbul ignore next */
                       formik.setFieldValue('connectorRef', value)
                     }}
                     isReadonly={readonly}
@@ -430,6 +389,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       showDefaultField={false}
                       showAdvanced={true}
                       onChange={value => {
+                        /* istanbul ignore next */
                         formik.setFieldValue('subscription', value)
                       }}
                       isReadonly={readonly}
@@ -475,6 +435,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                       showDefaultField={false}
                       showAdvanced={true}
                       onChange={value => {
+                        /* istanbul ignore next */
                         formik.setFieldValue('resourceGroup', value)
                       }}
                       isReadonly={readonly}
@@ -519,6 +480,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                     showDefaultField={false}
                     showAdvanced={true}
                     onChange={value => {
+                      /* istanbul ignore next */
                       formik.setFieldValue('cluster', value)
                     }}
                     isReadonly={readonly}
@@ -543,6 +505,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                     showDefaultField={false}
                     showAdvanced={true}
                     onChange={value => {
+                      /* istanbul ignore next */
                       formik.setFieldValue('namespace', value)
                     }}
                     isReadonly={readonly}
@@ -552,7 +515,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
               <Accordion
                 panelClassName={css.accordionPanel}
                 detailsClassName={css.accordionDetails}
-                activeId={!isEmpty(formik.errors.releaseName) ? 'advanced' : ''}
+                activeId={!isEmpty(formik.errors.releaseName) ? /* istanbul ignore next */ 'advanced' : ''}
               >
                 <Accordion.Panel
                   id="advanced"
@@ -577,6 +540,7 @@ const AzureInfrastructureSpecEditable: React.FC<AzureInfrastructureSpecEditableP
                           showDefaultField={false}
                           showAdvanced={true}
                           onChange={value => {
+                            /* istanbul ignore next */
                             formik.setFieldValue('releaseName', value)
                           }}
                           isReadonly={readonly}
@@ -692,6 +656,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
           subscription
         }
       })
+      /* istanbul ignore else */
       if (
         getMultiTypeFromValue(template?.resourceGroup) === MultiTypeInputType.RUNTIME &&
         getMultiTypeFromValue(initialValues?.resourceGroup) !== MultiTypeInputType.RUNTIME
@@ -725,6 +690,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
     const subscription = defaultTo(initialValues.subscription, allValues?.subscription)
     const resourceGroup = defaultTo(initialValues.resourceGroup, allValues?.resourceGroup)
 
+    /* istanbul ignore else */
     if (
       connectorRef &&
       getMultiTypeFromValue(connectorRef) === MultiTypeInputType.FIXED &&
@@ -744,6 +710,7 @@ const AzureInfrastructureSpecInputForm: React.FC<AzureInfrastructureSpecEditable
         }
       })
 
+      /* istanbul ignore else */
       if (
         getMultiTypeFromValue(template?.cluster) === MultiTypeInputType.RUNTIME &&
         getMultiTypeFromValue(initialValues?.cluster) !== MultiTypeInputType.RUNTIME
@@ -1001,13 +968,14 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
+      /* istanbul ignore next */ logger.error(yamlErrorMessage, err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
       orgIdentifier: string
       projectIdentifier: string
     }
+    /* istanbul ignore else */
     if (pipelineObj) {
       const obj = get(pipelineObj, path.replace('.spec.connectorRef', ''))
       if (obj?.type === AzureType) {
@@ -1042,13 +1010,14 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
+      /* istanbul ignore next */ logger.error(yamlErrorMessage, err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
       orgIdentifier: string
       projectIdentifier: string
     }
+    /* istanbul ignore else */
     if (pipelineObj) {
       const obj = get(pipelineObj, path.replace('.spec.subscription', ''))
       if (
@@ -1086,13 +1055,14 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
+      /* istanbul ignore next */ logger.error(yamlErrorMessage, err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
       orgIdentifier: string
       projectIdentifier: string
     }
+    /* istanbul ignore else */
     if (pipelineObj) {
       const obj = get(pipelineObj, path.replace('.spec.resourceGroup', ''))
       if (
@@ -1133,13 +1103,14 @@ export class AzureInfrastructureSpec extends PipelineStep<AzureInfrastructureSpe
     try {
       pipelineObj = parse(yaml)
     } catch (err: any) {
-      /* istanbul ignore next */ logger.error('cd.parsingYamlError', err)
+      /* istanbul ignore next */ logger.error(yamlErrorMessage, err)
     }
     const { accountId, projectIdentifier, orgIdentifier } = params as {
       accountId: string
       orgIdentifier: string
       projectIdentifier: string
     }
+    /* istanbul ignore else */
     if (pipelineObj) {
       const obj = get(pipelineObj, path.replace('.spec.cluster', ''))
       if (

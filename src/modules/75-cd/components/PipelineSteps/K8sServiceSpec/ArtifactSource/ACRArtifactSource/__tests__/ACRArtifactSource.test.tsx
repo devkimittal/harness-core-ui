@@ -8,7 +8,7 @@
 import React from 'react'
 import { act, fireEvent, render, waitFor } from '@testing-library/react'
 
-import { Formik, MultiTypeInputType } from '@harness/uicore'
+import { Formik, MultiTypeInputType, MultiTypeInputValue } from '@harness/uicore'
 import { TestWrapper } from '@common/utils/testUtils'
 import { StepViewType } from '@pipeline/components/AbstractSteps/Step'
 
@@ -22,11 +22,14 @@ import { KubernetesSidecarArtifacts } from '../../../KubernetesArtifacts/Kuberne
 import {
   template,
   artifacts,
+  templateTagRegex,
+  artifactsTagRegex,
   artifactsWithValues,
   templateWithValues,
   mockSubscriptions,
   mockRegistries,
-  mockRepositories
+  mockRepositories,
+  path
 } from './mocks'
 
 jest.mock('services/portal', () => ({
@@ -46,6 +49,25 @@ jest.spyOn(artifactSourceUtils, 'isFieldfromTriggerTabDisabled')
 jest.spyOn(artifactSourceUtils, 'resetTags').mockImplementation(() => jest.fn())
 jest.spyOn(cdng, 'useGetBuildDetailsForAcrWithYaml')
 
+jest.mock('@connectors/components/ConnectorReferenceField/FormMultiTypeConnectorField', () => ({
+  ...(jest.requireActual('@connectors/components/ConnectorReferenceField/FormMultiTypeConnectorField') as any),
+  // eslint-disable-next-line react/display-name
+  FormMultiTypeConnectorField: (props: any) => {
+    return (
+      <div>
+        <button
+          name={'changeFormMultiTypeConnectorField'}
+          onClick={() => {
+            props.onChange('value', MultiTypeInputValue.STRING, MultiTypeInputType.RUNTIME)
+          }}
+        >
+          Form Multi Type Connector Field button
+        </button>
+      </div>
+    )
+  }
+}))
+
 describe('Acr Artifact Source tests', () => {
   test('snapshot test for Primary Acr artifact source', () => {
     const { container } = render(
@@ -62,13 +84,14 @@ describe('Acr Artifact Source tests', () => {
         />
       </TestWrapper>
     )
+
     expect(container).toMatchSnapshot()
   })
 
-  test('snapshot test for Primary Acr artifact source from trigger', () => {
+  test('snapshot test for Sidecar Acr artifact source from trigger', () => {
     const { container } = render(
       <TestWrapper>
-        <KubernetesPrimaryArtifacts
+        <KubernetesSidecarArtifacts
           initialValues={{ artifacts: artifacts as ArtifactListConfig }}
           template={template as ServiceSpec}
           artifacts={artifacts as ArtifactListConfig}
@@ -78,50 +101,73 @@ describe('Acr Artifact Source tests', () => {
           artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
           allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
           stepViewType={StepViewType.DeploymentForm}
+          path={path}
         />
       </TestWrapper>
     )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('snapshot test for Sidecar Acr artifact source with runtime tag regex', () => {
+    const { container } = render(
+      <TestWrapper>
+        <KubernetesSidecarArtifacts
+          initialValues={{ artifacts: artifactsTagRegex as ArtifactListConfig }}
+          template={templateTagRegex as ServiceSpec}
+          artifacts={artifactsTagRegex as ArtifactListConfig}
+          readonly={false}
+          stageIdentifier="stage-0"
+          fromTrigger={true}
+          artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
+          allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+          stepViewType={StepViewType.DeploymentForm}
+          path={path}
+        />
+      </TestWrapper>
+    )
+
     expect(container).toMatchSnapshot()
   })
 
   test('snapshot test for Sidecar Acr artifact source', async () => {
-    const { container } = render(
+    const { container, findByText } = render(
       <TestWrapper>
-        <KubernetesSidecarArtifacts
+        <Formik
+          formName="test-form"
           initialValues={{ artifacts: artifacts as ArtifactListConfig }}
-          template={template as ServiceSpec}
-          artifacts={artifacts as ArtifactListConfig}
-          readonly={false}
-          stageIdentifier="stage-0"
-          artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
-          allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
-          stepViewType={StepViewType.DeploymentForm}
-        />
+          onSubmit={jest.fn()}
+        >
+          {formik => (
+            <KubernetesSidecarArtifacts
+              initialValues={{ artifacts: artifacts as ArtifactListConfig }}
+              template={template as ServiceSpec}
+              artifacts={artifacts as ArtifactListConfig}
+              readonly={false}
+              formik={formik}
+              stageIdentifier="stage-0"
+              artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
+              allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+              stepViewType={StepViewType.DeploymentForm}
+              path={path}
+            />
+          )}
+        </Formik>
       </TestWrapper>
     )
 
     expect(container).toMatchSnapshot()
+    expect(await waitFor(() => findByText('tagLabel'))).toBeInTheDocument()
     expect(await waitFor(() => artifactSourceUtils.fromPipelineInputTriggerTab)).toBeCalled()
     expect(await waitFor(() => artifactSourceUtils.isFieldfromTriggerTabDisabled)).toBeCalled()
     expect(await waitFor(() => cdng.useGetBuildDetailsForAcrWithYaml)).toBeCalled()
 
+    const connector = await waitFor(() => findByText('Form Multi Type Connector Field button'))
     act(() => {
-      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.subscription"]')!, {
-        target: { value: 'sub1' }
-      })
+      fireEvent.click(connector)
     })
 
-    act(() => {
-      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.registry"]')!, {
-        target: { value: 'reg1' }
-      })
-    })
-
-    act(() => {
-      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.repository"]')!, {
-        target: { value: 'rep1' }
-      })
-    })
+    expect(await waitFor(() => artifactSourceUtils.resetTags)).toBeCalled()
 
     expect(container).toMatchSnapshot()
   })
@@ -138,6 +184,7 @@ describe('Acr Artifact Source tests', () => {
           artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
           allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
           stepViewType={StepViewType.DeploymentForm}
+          path={path}
         />
       </TestWrapper>
     )
@@ -146,24 +193,6 @@ describe('Acr Artifact Source tests', () => {
     expect(await waitFor(() => artifactSourceUtils.fromPipelineInputTriggerTab)).toBeCalled()
     expect(await waitFor(() => artifactSourceUtils.isFieldfromTriggerTabDisabled)).toBeCalled()
     expect(await waitFor(() => cdng.useGetBuildDetailsForAcrWithYaml)).toBeCalled()
-
-    act(() => {
-      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.subscription"]')!, {
-        target: { value: 'sub1' }
-      })
-    })
-
-    act(() => {
-      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.registry"]')!, {
-        target: { value: 'reg1' }
-      })
-    })
-
-    act(() => {
-      fireEvent.change(container.querySelector('[name="undefined.artifacts.sidecars[0].sidecar.spec.repository"]')!, {
-        target: { value: 'rep1' }
-      })
-    })
 
     expect(container).toMatchSnapshot()
   })
@@ -187,12 +216,12 @@ describe('Acr Artifact Source tests', () => {
               artifactSourceBaseFactory={new ArtifactSourceBaseFactory()}
               allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
               stepViewType={StepViewType.DeploymentForm}
+              path={path}
             />
           )}
         </Formik>
       </TestWrapper>
     )
-
     expect(container).toMatchSnapshot()
   })
 })

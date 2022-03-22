@@ -63,6 +63,44 @@ export const template = {
   }
 }
 
+export const artifactsTagRegex = {
+  sidecars: [
+    {
+      sidecar: {
+        identifier: 'Sidecar',
+        type: 'Acr',
+        spec: {
+          connectorRef: '<+input>',
+          subscription: '<+input>',
+          registry: '<+input>',
+          repository: '<+input>',
+          tagRegex: '<+input>'
+        }
+      }
+    }
+  ]
+}
+
+export const templateTagRegex = {
+  artifacts: {
+    sidecars: [
+      {
+        sidecar: {
+          identifier: 'Sidecar',
+          type: 'Acr',
+          spec: {
+            connectorRef: '<+input>',
+            subscription: '<+input>',
+            registry: '<+input>',
+            repository: '<+input>',
+            tagRegex: '<+input>'
+          }
+        }
+      }
+    ]
+  }
+}
+
 export const artifactsWithValues = {
   sidecars: [
     {
@@ -121,20 +159,28 @@ export const templateWithValues = {
   }
 }
 
-export const mockSubscriptions = [
-  { name: 'sub1', label: 'Subscription 1' },
-  { name: 'sub2', label: 'Subscription 2' },
-  { name: 'sub3', label: 'Subscription 3' }
-]
+export const mockSubscriptions = {
+  resource: [
+    { value: 'sub1', label: 'Subscription 1' },
+    { value: 'sub2', label: 'Subscription 2' },
+    { value: 'sub3', label: 'Subscription 3' }
+  ]
+}
 
-export const mockRegistries = [
-  { name: 'reg1', label: 'Region 1' },
-  { name: 'reg2', label: 'Region 2' },
-  { name: 'reg3', label: 'Region 3' }
-]
+export const mockRegistries = {
+  resource: [
+    { value: 'reg1', label: 'Region 1' },
+    { value: 'reg2', label: 'Region 2' },
+    { value: 'reg3', label: 'Region 3' }
+  ]
+}
 
-export const mockRepositories = [
-  { name: 'rep1', label: 'Repository 1' },
-  { name: 'rep2', label: 'Repository 2' },
-  { name: 'rep3', label: 'Repository 3' }
-]
+export const mockRepositories = {
+  resource: [
+    { value: 'rep1', label: 'Repository 1' },
+    { value: 'rep2', label: 'Repository 2' },
+    { value: 'rep3', label: 'Repository 3' }
+  ]
+}
+
+export const path = 'stages[0].stage.spec.serviceConfig.serviceDefinition.spec'

@@ -1405,10 +1405,8 @@ export interface StringsMap {
   'connectors.azure.auth.certificate': string
   'connectors.azure.auth.secret': string
   'connectors.azure.clientId': string
-  'connectors.azure.clientIdPlaceholder': string
   'connectors.azure.environments.azureGlobal': string
   'connectors.azure.environments.usGov': string
-  'connectors.azure.tenantIdPlaceholder': string
   'connectors.azure.validation.certificate': string
   'connectors.azure.validation.clientId': string
   'connectors.azure.validation.environment': string
