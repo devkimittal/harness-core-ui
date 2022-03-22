@@ -107,7 +107,7 @@ describe('BuildTests snapshot test', () => {
 
   test('should render Reports UI', async () => {
     jest.spyOn(tiService, 'useReportsInfo').mockReturnValue({ data: InfoMock, refetch: jest.fn() } as any)
-    jest.spyOn(tiService, 'useTestInfo').mockReturnValue({ data: InfoMock, refetch: jest.fn() } as any)
+    jest.spyOn(tiService, 'useTestInfo').mockReturnValue({ data: [], refetch: jest.fn() } as any) // no ti response
     jest.spyOn(tiService, 'useReportSummary').mockReturnValue({ data: ReportsSummaryMock, refetch: jest.fn() } as any)
     jest.spyOn(tiService, 'useTestOverview').mockReturnValue({ data: TotalTestsZeroMock, refetch: jest.fn() } as any)
     jest.spyOn(tiService, 'useTestSuiteSummary').mockReturnValue({ data: TestSuiteMock, refetch: jest.fn() } as any)
@@ -138,7 +138,7 @@ describe('BuildTests snapshot test', () => {
     })
 
     jest.spyOn(tiService, 'useReportsInfo').mockReturnValue({ data: InfoMock, refetch: jest.fn() } as any)
-    jest.spyOn(tiService, 'useTestInfo').mockReturnValue({ data: InfoMock, refetch: jest.fn() } as any)
+    jest.spyOn(tiService, 'useTestInfo').mockReturnValue({ data: [], refetch: jest.fn() } as any) // no ti response
     jest.spyOn(tiService, 'useReportSummary').mockReturnValue({ data: ReportsSummaryMock, refetch: jest.fn() } as any)
     jest.spyOn(tiService, 'useTestOverview').mockReturnValue({ data: TotalTestsZeroMock, refetch: jest.fn() } as any)
     jest.spyOn(tiService, 'useTestSuiteSummary').mockReturnValue({ data: TestSuiteMock, refetch: jest.fn() } as any)

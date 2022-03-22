@@ -7,10 +7,10 @@
 
 import { Layout, Select, Heading, Container, Text, SelectOption, PageError } from '@wings-software/uicore'
 import { Color, FontVariation } from '@harness/design-system'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, SetStateAction, Dispatch } from 'react'
 import { useParams } from 'react-router-dom'
-import { get, uniqWith, isEqual, orderBy } from 'lodash-es'
-import { useStrings } from 'framework/strings'
+import { get } from 'lodash-es'
+import { useStrings, UseStringsReturn } from 'framework/strings'
 import {
   useReportSummary,
   useGetToken,
@@ -29,18 +29,18 @@ import { TestsOverview } from './TestsOverview'
 import { TestsExecutionResult } from './TestsExecutionResult'
 import { TestsSelectionBreakdown } from './TestsSelectionBreakdown'
 import { TICallToAction } from './TICallToAction'
-import { AllOption, AllStepsOption, AllStagesOption, getOptionalQueryParamKeys } from './TestsUtils'
+import {
+  AllOption,
+  AllStepsOption,
+  getOptionalQueryParamKeys,
+  setInitialStageAndSteps,
+  getUIType,
+  getError,
+  UI
+} from './TestsUtils'
 // import { TestsCoverage } from './TestsCoverage'
 import css from './BuildTests.module.scss'
 
-/* eslint-disable @typescript-eslint/no-shadow */
-enum UI {
-  TIAndReports,
-  TI,
-  Reports,
-  ZeroState,
-  LoadingState
-}
 /* eslint-enable @typescript-eslint/no-shadow */
 
 interface BuildTestsProps {
@@ -73,6 +73,103 @@ const renderTestsOverview = ({
   }
   return null
 }
+
+const renderHeader = ({
+  stageIdOptions,
+  selectedStageId,
+  getString,
+  setSelectedStageId,
+  stepIdOptions,
+  setStepIdOptions,
+  setSelectedStepId,
+  stepIdOptionsFromStageKeyMap,
+  selectedStepId,
+  testOverviewHasTests
+}: {
+  stageIdOptions: SelectOption[]
+  getString: UseStringsReturn['getString']
+  setSelectedStageId: Dispatch<SetStateAction<SelectOption | undefined>>
+  stepIdOptions: SelectOption[]
+  setStepIdOptions: Dispatch<SetStateAction<SelectOption[]>>
+  setSelectedStepId: Dispatch<SetStateAction<SelectOption | undefined>>
+  stepIdOptionsFromStageKeyMap: { [key: string]: SelectOption[] }
+  selectedStageId?: SelectOption
+  selectedStepId?: SelectOption
+  testOverviewHasTests: boolean
+}): JSX.Element => (
+  <Container
+    flex
+    padding={{ bottom: 'small' }}
+    margin={{ bottom: 'medium' }}
+    style={{ borderBottom: '1px solid #D9DAE6', justifyContent: 'space-between' }}
+  >
+    <Container flex style={{ justifyContent: 'initial' }}>
+      <Heading level={5} color={Color.BLACK} style={{ fontWeight: 600 }}>
+        {getString('pipeline.testsReports.testExecutions')}
+      </Heading>
+      {stageIdOptions && selectedStageId && (
+        <div style={{ width: '222px', marginLeft: 'var(--spacing-5)' }}>
+          <Select
+            fill
+            value={selectedStageId}
+            items={stageIdOptions}
+            onChange={option => {
+              setSelectedStageId(option)
+              if (option.value === AllOption.value) {
+                const newStepIdOptions = [...stepIdOptions]
+                // Add All Steps option if not present
+                if (!stepIdOptions.some(stepIdOption => stepIdOption.value === AllOption.value)) {
+                  newStepIdOptions.unshift(AllStepsOption)
+                  setStepIdOptions(newStepIdOptions)
+                }
+                setSelectedStepId(newStepIdOptions[0])
+              } else if (option.value) {
+                const stageStepIdOptions = stepIdOptionsFromStageKeyMap[option.value as string] || []
+                const newStepIdOptions = [...stageStepIdOptions].filter(
+                  stepIdOption => stepIdOption.value !== AllOption.value
+                )
+                // Remove All Steps option if only 1 option available
+                if (newStepIdOptions.length === 1) {
+                  setStepIdOptions(stageStepIdOptions)
+                  setSelectedStepId(stageStepIdOptions[0])
+                } else {
+                  setStepIdOptions(stageStepIdOptions)
+                  setSelectedStepId(stageStepIdOptions[1])
+                }
+              }
+            }}
+          />
+        </div>
+      )}
+      {stepIdOptions && selectedStepId && (
+        <div style={{ width: '222px', marginLeft: 'var(--spacing-5)' }}>
+          <Select
+            fill
+            value={selectedStepId}
+            items={stepIdOptions}
+            disabled={selectedStageId?.value === AllOption.value && selectedStepId.value === AllOption.value}
+            onChange={option => setSelectedStepId(option)}
+          />
+        </div>
+      )}
+    </Container>
+    {testOverviewHasTests && (
+      <Text
+        className={css.poweredByTi}
+        font={{ variation: FontVariation.TINY, weight: 'semi-bold' }}
+        icon="upgrade-bolt"
+        iconProps={{
+          intent: 'primary',
+          size: 16,
+          color: Color.PRIMARY_8
+        }}
+        color={Color.PRIMARY_8}
+      >
+        {getString('pipeline.testsReports.poweredByTI')}
+      </Text>
+    )}
+  </Container>
+)
 
 export function TIAndReports({
   header,
@@ -170,9 +267,11 @@ export function Reports({
   stageId,
   stepId,
   serviceToken,
-  testsCountDiff
+  testsCountDiff,
+  hasTIStep
 }: {
   header: JSX.Element
+  hasTIStep: boolean
   reportSummaryData?: TestReportSummary | null
   stageId?: string
   stepId?: string
@@ -209,7 +308,7 @@ export function Reports({
               skippedTests={reportSummaryData.skipped_tests}
             />
           )}
-        {NG_LICENSES_ENABLED && <TICallToAction />}
+        {NG_LICENSES_ENABLED && !hasTIStep && <TICallToAction />}
       </Layout.Horizontal>
       <Layout.Horizontal spacing="large">
         {/* <TestsCoverage /> */}
@@ -221,6 +320,7 @@ export function Reports({
     </>
   )
 }
+
 function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): React.ReactElement | null {
   const context = useExecutionContext()
   const { getString } = useStrings()
@@ -239,6 +339,8 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
   } = useGetToken({
     queryParams: { accountId }
   })
+
+  const [hasTIStep, setHasTIStep] = useState<boolean>(false)
 
   const [stageIdOptions, setStageIdOptions] = useState<SelectOption[]>([])
   const [selectedStageId, setSelectedStageId] = useState<SelectOption>()
@@ -313,68 +415,20 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
 
   useEffect(() => {
     if (reportInfoData && testInfoData) {
-      const uniqItems = uniqWith([...reportInfoData, ...testInfoData], isEqual)
-      if (uniqItems?.length < 1) {
-        return // no test results
-      }
-
-      let uniqueStageIdOptions: SelectOption[] | any = [] // any includes additionally index for ordering below
-      const uniqueStepIdOptionsFromStageKeyMap: { [key: string]: SelectOption[] | any } = {}
-      const pipelineOrderedStagesMap: { [key: string]: number } = {}
-      Array.from(context?.pipelineStagesMap?.values() || {})?.forEach(
-        (stage, index) => (pipelineOrderedStagesMap[`${stage.nodeIdentifier}`] = index)
-      )
-
-      uniqItems.forEach(({ stage, step }) => {
-        if (stage && !uniqueStageIdOptions.some((option: { value: string }) => option.value === stage)) {
-          uniqueStageIdOptions.push({
-            label: `Stage: ${stage}`,
-            value: stage,
-            index: typeof stage === 'string' && pipelineOrderedStagesMap[stage]
-          })
-        }
-        if (stage && Array.isArray(uniqueStepIdOptionsFromStageKeyMap?.[stage])) {
-          uniqueStepIdOptionsFromStageKeyMap[stage].push({
-            label: `Step: ${step}`,
-            value: step
-          })
-          if (!uniqueStepIdOptionsFromStageKeyMap[stage].includes(AllStepsOption)) {
-            uniqueStepIdOptionsFromStageKeyMap[stage].unshift(AllStepsOption)
-          }
-        } else if (stage && step) {
-          uniqueStepIdOptionsFromStageKeyMap[stage] = [
-            {
-              label: `Step: ${step}`,
-              value: step
-            }
-          ]
-        }
+      setInitialStageAndSteps({
+        reportInfoData,
+        testInfoData,
+        context,
+        setStepIdOptionsFromStageKeyMap,
+        setSelectedStageId,
+        setSelectedStepId,
+        setStageIdOptions,
+        setStepIdOptions
       })
 
-      setStepIdOptionsFromStageKeyMap(uniqueStepIdOptionsFromStageKeyMap)
-
-      let selectedStageIndex = 0
-      if (uniqueStageIdOptions.length > 1) {
-        uniqueStageIdOptions = orderBy(uniqueStageIdOptions, 'index')
-        uniqueStageIdOptions.unshift(AllStagesOption)
-        selectedStageIndex = 1
-        setSelectedStageId(uniqueStageIdOptions[1])
-      } else {
-        setSelectedStageId(uniqueStageIdOptions[0])
+      if (testInfoData.length > 0) {
+        setHasTIStep(true)
       }
-
-      const selectedStepOptions =
-        typeof selectedStageIndex !== 'undefined' &&
-        uniqueStepIdOptionsFromStageKeyMap[uniqueStageIdOptions[selectedStageIndex].value as string]
-
-      if (selectedStepOptions.length > 1) {
-        setSelectedStepId(selectedStepOptions[1])
-      } else {
-        setSelectedStepId(selectedStepOptions[0])
-      }
-
-      setStageIdOptions(uniqueStageIdOptions)
-      setStepIdOptions(selectedStepOptions)
     }
   }, [reportInfoData, testInfoData])
 
@@ -442,16 +496,7 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
   const reportSummaryHasTests = (reportSummaryData?.total_tests || 0) > 0
   const testOverviewHasTests = (testOverviewData?.total_tests || 0) > 0
 
-  const uiType =
-    reportSummaryHasTests && testOverviewHasTests
-      ? UI.TIAndReports
-      : !reportSummaryHasTests && testOverviewHasTests
-      ? UI.TI
-      : reportSummaryHasTests && !testOverviewHasTests
-      ? UI.Reports
-      : reportInfoLoading || testInfoLoading
-      ? UI.LoadingState
-      : UI.ZeroState
+  const uiType = getUIType({ reportSummaryHasTests, testOverviewHasTests, reportInfoLoading, testInfoLoading })
 
   useEffect(() => {
     if (status && stageId && stepId) {
@@ -478,13 +523,15 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
     return null
   }
 
-  const error =
-    (reportInfoData && reportInfoData?.length > 0 && reportSummaryError) ||
-    serviceTokenError ||
-    (testInfoData && testInfoData?.length > 0 && testOverviewError) ||
-    reportInfoError ||
+  const error = getError({
+    reportInfoData,
+    reportSummaryError,
+    serviceTokenError,
+    testInfoData,
+    testOverviewError,
+    reportInfoError,
     testInfoError
-
+  })
   if (error) {
     return (
       <PageError
@@ -510,81 +557,6 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
     return <PageSpinner />
   }
 
-  const header = (
-    <Container
-      flex
-      padding={{ bottom: 'small' }}
-      margin={{ bottom: 'medium' }}
-      style={{ borderBottom: '1px solid #D9DAE6', justifyContent: 'space-between' }}
-    >
-      <Container flex style={{ justifyContent: 'initial' }}>
-        <Heading level={5} color={Color.BLACK} style={{ fontWeight: 600 }}>
-          {getString('pipeline.testsReports.testExecutions')}
-        </Heading>
-        {stageIdOptions && selectedStageId && (
-          <div style={{ width: '222px', marginLeft: 'var(--spacing-5)' }}>
-            <Select
-              fill
-              value={selectedStageId}
-              items={stageIdOptions}
-              onChange={option => {
-                setSelectedStageId(option)
-                if (option.value === AllOption.value) {
-                  const newStepIdOptions = [...stepIdOptions]
-                  // Add All Steps option if not present
-                  if (!stepIdOptions.some(stepIdOption => stepIdOption.value === AllOption.value)) {
-                    newStepIdOptions.unshift(AllStepsOption)
-                    setStepIdOptions(newStepIdOptions)
-                  }
-                  setSelectedStepId(newStepIdOptions[0])
-                } else if (option.value) {
-                  const stageStepIdOptions = stepIdOptionsFromStageKeyMap[option.value as string] || []
-                  const newStepIdOptions = [...stageStepIdOptions].filter(
-                    stepIdOption => stepIdOption.value !== AllOption.value
-                  )
-                  // Remove All Steps option if only 1 option available
-                  if (newStepIdOptions.length === 1) {
-                    setStepIdOptions(stageStepIdOptions)
-                    setSelectedStepId(stageStepIdOptions[0])
-                  } else {
-                    setStepIdOptions(stageStepIdOptions)
-                    setSelectedStepId(stageStepIdOptions[1])
-                  }
-                }
-              }}
-            />
-          </div>
-        )}
-        {stepIdOptions && selectedStepId && (
-          <div style={{ width: '222px', marginLeft: 'var(--spacing-5)' }}>
-            <Select
-              fill
-              value={selectedStepId}
-              items={stepIdOptions}
-              disabled={selectedStageId?.value === AllOption.value && selectedStepId.value === AllOption.value}
-              onChange={option => setSelectedStepId(option)}
-            />
-          </div>
-        )}
-      </Container>
-      {testOverviewHasTests && (
-        <Text
-          className={css.poweredByTi}
-          font={{ variation: FontVariation.TINY, weight: 'semi-bold' }}
-          icon="upgrade-bolt"
-          iconProps={{
-            intent: 'primary',
-            size: 16,
-            color: Color.PRIMARY_8
-          }}
-          color={Color.PRIMARY_8}
-        >
-          {getString('pipeline.testsReports.poweredByTI')}
-        </Text>
-      )}
-    </Container>
-  )
-
   let ui = null
   switch (uiType) {
     case UI.LoadingState:
@@ -593,7 +565,20 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
     case UI.ZeroState:
       ui = (
         <>
-          {stageIdOptions?.length > 1 || stepIdOptions?.length > 1 ? header : null}
+          {stageIdOptions?.length > 1 || stepIdOptions?.length > 1
+            ? renderHeader({
+                stageIdOptions,
+                selectedStageId,
+                getString,
+                setSelectedStageId,
+                stepIdOptions,
+                setStepIdOptions,
+                setSelectedStepId,
+                stepIdOptionsFromStageKeyMap,
+                selectedStepId,
+                testOverviewHasTests
+              })
+            : null}
           <BuildZeroState />
         </>
       )
@@ -601,7 +586,18 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
     case UI.TIAndReports:
       ui = (
         <TIAndReports
-          header={header}
+          header={renderHeader({
+            stageIdOptions,
+            selectedStageId,
+            getString,
+            setSelectedStageId,
+            stepIdOptions,
+            setStepIdOptions,
+            setSelectedStepId,
+            stepIdOptionsFromStageKeyMap,
+            selectedStepId,
+            testOverviewHasTests
+          })}
           testOverviewData={testOverviewData}
           reportSummaryData={reportSummaryData}
           stageId={stageId}
@@ -613,12 +609,41 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
       )
       break
     case UI.TI:
-      ui = <TI header={header} testOverviewData={testOverviewData} testsCountDiff={testsCountDiff} />
+      ui = (
+        <TI
+          header={renderHeader({
+            stageIdOptions,
+            selectedStageId,
+            getString,
+            setSelectedStageId,
+            stepIdOptions,
+            setStepIdOptions,
+            setSelectedStepId,
+            stepIdOptionsFromStageKeyMap,
+            selectedStepId,
+            testOverviewHasTests
+          })}
+          testOverviewData={testOverviewData}
+          testsCountDiff={testsCountDiff}
+        />
+      )
       break
     case UI.Reports:
       ui = (
         <Reports
-          header={header}
+          header={renderHeader({
+            stageIdOptions,
+            selectedStageId,
+            getString,
+            setSelectedStageId,
+            stepIdOptions,
+            setStepIdOptions,
+            setSelectedStepId,
+            stepIdOptionsFromStageKeyMap,
+            selectedStepId,
+            testOverviewHasTests
+          })}
+          hasTIStep={hasTIStep}
           reportSummaryData={reportSummaryData}
           stageId={stageId}
           stepId={stepId}
