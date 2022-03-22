@@ -47,9 +47,23 @@ describe('AccountSideNav', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('AccountSideNav test governance', () => {
+  test('AccountSideNav test pipeline governance', () => {
     jest.spyOn(FeatureFlag, 'useFeatureFlags').mockReturnValue({
-      OPA_PIPELINE_GOVERNANCE: true
+      OPA_PIPELINE_GOVERNANCE: true,
+      OPA_FF_GOVERNANCE: false
+    })
+    const renderObj = render(
+      <TestWrapper>
+        <AccountSideNav />
+      </TestWrapper>
+    )
+    expect(renderObj.getByText('common.governance')).toBeTruthy()
+  })
+
+  test('AccountSideNav test ff governance', () => {
+    jest.spyOn(FeatureFlag, 'useFeatureFlags').mockReturnValue({
+      OPA_PIPELINE_GOVERNANCE: false,
+      OPA_FF_GOVERNANCE: true
     })
     const renderObj = render(
       <TestWrapper>

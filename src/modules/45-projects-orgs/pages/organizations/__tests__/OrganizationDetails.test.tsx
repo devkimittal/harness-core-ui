@@ -127,9 +127,26 @@ describe('Organization Details', () => {
     expect(form).toBeTruthy()
   })
 
-  test('Governance should be visible', async () => {
+  test('Governance should be visible when pipeline governance enabled', async () => {
     mockImport('@common/hooks/useFeatureFlag', {
-      useFeatureFlags: () => ({ OPA_PIPELINE_GOVERNANCE: true })
+      useFeatureFlags: () => ({ OPA_PIPELINE_GOVERNANCE: true, OPA_FF_GOVERNANCE: false })
+    })
+
+    render(
+      <TestWrapper
+        path={routes.toOrganizationDetails({ ...orgPathProps })}
+        pathParams={{ accountId: 'testAcc', orgIdentifier: 'testOrg' }}
+      >
+        <OrganizationDetailsPage />
+      </TestWrapper>
+    )
+
+    expect(getByText('common.governance')).toBeTruthy()
+  })
+
+  test('Governance should be visible when ff governance enabled', async () => {
+    mockImport('@common/hooks/useFeatureFlag', {
+      useFeatureFlags: () => ({ OPA_PIPELINE_GOVERNANCE: false, OPA_FF_GOVERNANCE: true })
     })
 
     render(
