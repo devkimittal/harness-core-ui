@@ -8,14 +8,18 @@
 import type { LogLineData } from '@pipeline/components/LogsContent/LogsState/types'
 import type { LogLineData as ExecutionLog } from './ExecutionLog.types'
 
-export function convertLogDataToLogLineData(data: ExecutionLog): LogLineData {
-  const { text, searchIndices = {} } = data
-
-  const _searchIndices = {
-    level: searchIndices.logLevel,
-    time: searchIndices.createdAt,
-    out: searchIndices.log
+function convertSearchIndices(searchIndices: ExecutionLog['searchIndices']): LogLineData['searchIndices'] | undefined {
+  if (searchIndices) {
+    return {
+      level: searchIndices.logLevel,
+      time: searchIndices.createdAt,
+      out: searchIndices.log
+    }
   }
+}
+
+export function convertLogDataToLogLineData(data: ExecutionLog): LogLineData {
+  const { text, searchIndices } = data
 
   switch (text.logLevel) {
     case 'WARN':
@@ -25,7 +29,7 @@ export function convertLogDataToLogLineData(data: ExecutionLog): LogLineData {
           time: text.createdAt,
           out: `\u001b[1;33m\u001b[40m${text.log}\u001b[0m`
         },
-        searchIndices: _searchIndices
+        searchIndices: convertSearchIndices(searchIndices)
       }
     case 'ERROR':
       return {
@@ -34,7 +38,7 @@ export function convertLogDataToLogLineData(data: ExecutionLog): LogLineData {
           time: text.createdAt,
           out: `\u001b[1;31m\u001b[40m${text.log}\u001b[0m`
         },
-        searchIndices: _searchIndices
+        searchIndices: convertSearchIndices(searchIndices)
       }
     default:
       return {
@@ -43,7 +47,7 @@ export function convertLogDataToLogLineData(data: ExecutionLog): LogLineData {
           time: text.createdAt,
           out: text.log
         },
-        searchIndices: _searchIndices
+        searchIndices: convertSearchIndices(searchIndices)
       }
   }
 }

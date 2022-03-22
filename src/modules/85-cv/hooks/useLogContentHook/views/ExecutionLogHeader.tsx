@@ -32,6 +32,7 @@ const ExecutionLogHeader: React.FC<ExecutionLogHeaderProps> = ({
     verifyStepExecutionId: activityId
   })
 
+  /* istanbul ignore next */
   const { serviceName, envName } = verifyStepDeploymentActivitySummary?.resource ?? {}
 
   const { data, loading } = useGetVerifyStepHealthSources({

@@ -42,7 +42,7 @@ const search = (state: State, action: Action<ActionType.Search>): State => {
       const searchIndices: Partial<Record<TextKeys, number[]>> = {}
       dataKeys.forEach(key => {
         const value = log.text[key]
-        if (value) {
+        /* istanbul ignore else */ if (value) {
           const matches = value.match(searchRegex)
 
           if (matches && matches.length) {

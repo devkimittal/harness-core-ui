@@ -51,4 +51,14 @@ describe('Utils', () => {
       searchIndices: { level: [0], time: [1], out: [2] }
     })
   })
+
+  test('convertLogDataToLogLineData - default/INFO - without searchIndices', () => {
+    const logData = {
+      text: { logLevel: 'INFO', createdAt: '3/16/2022 8:23:10 AM', log: 'Learning engine task status: SUCCESS' }
+    }
+
+    expect(convertLogDataToLogLineData(logData)).toEqual({
+      text: { level: 'INFO', time: '3/16/2022 8:23:10 AM', out: 'Learning engine task status: SUCCESS' }
+    })
+  })
 })

@@ -106,7 +106,7 @@ const ExecutionLog: React.FC<ExecutionLogProps> = ({ activityId }) => {
               atBottomThreshold={Math.ceil(length / 3)}
               atBottomStateChange={setIsAtBottom}
               totalCount={length}
-              followOutput={_ => 'smooth'}
+              followOutput={/* istanbul ignore next */ _ => 'smooth'}
               itemContent={index => (
                 <MultiLogLine
                   {...convertLogDataToLogLineData(state.data[index])}

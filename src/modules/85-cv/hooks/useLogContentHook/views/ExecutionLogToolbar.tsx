@@ -32,8 +32,8 @@ const ExecutionLogToolbar: React.FC<ExecutionLogToolbarProps> = ({ state, action
     }
   }
 
+  /* istanbul ignore next */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>): void => {
-    /* istanbul ignore else */
     if (e.key === 'ArrowUp') {
       e.preventDefault()
       actions.goToPrevSearchResult()
@@ -43,6 +43,7 @@ const ExecutionLogToolbar: React.FC<ExecutionLogToolbarProps> = ({ state, action
     }
   }
 
+  /* istanbul ignore next */
   const getKeyDownListener = (e: KeyboardEvent): void => {
     const isMetaKey = navigator.userAgent.includes('Mac') ? e.metaKey : e.ctrlKey
 
@@ -52,7 +53,6 @@ const ExecutionLogToolbar: React.FC<ExecutionLogToolbarProps> = ({ state, action
     }
   }
 
-  /* istanbul ignore next */
   useGlobalEventListener('keydown', getKeyDownListener)
 
   /* istanbul ignore next */
