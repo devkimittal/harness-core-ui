@@ -820,3 +820,8 @@ customHealthSource:
   ServiceInstance:
     pathLabel: Provide Service Instance to map to Harness Service Instance
     pathModalHeader: Select path for Service Instance
+top: Top
+bottom: Bottom
+executionLogs: Execution Logs
+displayOnlyErrors: Display only errors
+download: Download

@@ -46,6 +46,9 @@ exports[`Unit tests for ExecutionVerificationView unit tests Ensure correct tabs
         >
           pipeline.verification.analysisTab.logs
         </div>
+        <span
+          style="flex-grow: 1;"
+        />
       </div>
       <div
         aria-hidden="false"
@@ -109,6 +112,9 @@ exports[`Unit tests for ExecutionVerificationView unit tests Ensure correct tabs
         >
           pipeline.verification.analysisTab.logs
         </div>
+        <span
+          style="flex-grow: 1;"
+        />
       </div>
       <div
         aria-hidden="false"
@@ -229,6 +235,9 @@ exports[`Unit tests for ExecutionVerificationView unit tests Ensure tabs are ren
         >
           pipeline.verification.analysisTab.logs
         </div>
+        <span
+          style="flex-grow: 1;"
+        />
       </div>
       <div
         aria-hidden="false"

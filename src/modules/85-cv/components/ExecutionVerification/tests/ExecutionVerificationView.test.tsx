@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { render, waitFor, screen } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
 import type { ExecutionNode } from 'services/pipeline-ng'
 import { ExecutionVerificationView } from '../ExecutionVerificationView'
@@ -24,6 +25,11 @@ jest.mock('../components/ExecutionVerificationSummary/ExecutionVerificationSumma
 jest.mock('../components/LogAnalysisContainer/LogAnalysisView.container', () => ({
   __esModule: true,
   default: () => <div className="LogAnalysisContainer" />
+}))
+
+jest.mock('@cv/hooks/useLogContentHook/views/ExecutionLog/ExecutionLog', () => ({
+  __esModule: true,
+  default: () => <div>Execution Logs Component</div>
 }))
 
 jest.mock('highcharts-react-official', () => () => <></>)
@@ -105,5 +111,25 @@ describe('Unit tests for ExecutionVerificationView unit tests', () => {
     expect(MetricsContainer.container.querySelector('.LogAnalysisContainer')).not.toBeInTheDocument()
     expect(MetricsContainer.container.querySelector('.deploymentMetrics')).toBeInTheDocument()
     expect(MetricsContainer.container).toMatchSnapshot()
+  })
+
+  test('should open the LogContent modal by clicking the Execution Logs button', async () => {
+    render(
+      <TestWrapper>
+        <ExecutionVerificationView step={{ progressData: { activityId: '1234_activityId' as any } }} />
+      </TestWrapper>
+    )
+
+    expect(screen.getByText('pipeline.verification.analysisTab.metrics')).toHaveAttribute('aria-selected', 'true')
+    expect(screen.queryByText('cv.executionLogs')).not.toBeInTheDocument()
+
+    userEvent.click(screen.getByText('pipeline.verification.analysisTab.logs'))
+
+    expect(screen.getByText('pipeline.verification.analysisTab.logs')).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText('cv.executionLogs')).toBeInTheDocument()
+
+    userEvent.click(screen.getByText('cv.executionLogs'))
+
+    await waitFor(() => expect(screen.getByText('Execution Logs Component')).toBeInTheDocument())
   })
 })

@@ -6,13 +6,24 @@
  */
 
 import React, { useMemo, useState } from 'react'
-import { Container, Tabs, Tab, NoDataCard, Layout } from '@wings-software/uicore'
+import {
+  Container,
+  Tabs,
+  Tab,
+  NoDataCard,
+  Layout,
+  FlexExpander,
+  Button,
+  ButtonVariation,
+  Color
+} from '@wings-software/uicore'
 import { useStrings } from 'framework/strings'
 import { useQueryParams } from '@common/hooks'
 import type { ExecutionNode } from 'services/pipeline-ng'
 import { Connectors } from '@connectors/constants'
 import { FeatureFlag } from '@common/featureFlags'
 import { useFeatureFlag } from '@common/hooks/useFeatureFlag'
+import { useLogContentHook } from '@cv/hooks/useLogContentHook/useLogContentHook'
 import { DeploymentMetrics } from './components/DeploymentMetrics/DeploymentMetrics'
 import { ExecutionVerificationSummary } from './components/ExecutionVerificationSummary/ExecutionVerificationSummary'
 import type { DeploymentNodeAnalysisResult } from './components/DeploymentProgressAndNodes/components/DeploymentNodes/DeploymentNodes.constants'
@@ -30,16 +41,24 @@ export function ExecutionVerificationView(props: ExecutionVerificationViewProps)
   const { step } = props
   const { getString } = useStrings()
   const [selectedNode, setSelectedNode] = useState<DeploymentNodeAnalysisResult | undefined>()
+  const [activeTab, setActiveTab] = useState<string>()
   const activityId = useMemo(() => getActivityId(step), [step])
   const { type } = useQueryParams<{ type?: string }>()
   const defaultTabId = useMemo(() => getDefaultTabId(getString, type), [type])
   const isErrorTrackingEnabled = useFeatureFlag(FeatureFlag.ERROR_TRACKING_ENABLED)
+  const isLogsTabActive = activeTab === getString('pipeline.verification.analysisTab.logs')
+
+  const { openLogContentHook } = useLogContentHook({ activityId })
 
   const content = activityId ? (
     <>
       <ManualInterventionVerifyStep step={step} />
       <InterruptedHistory interruptedHistories={step?.interruptHistories} />
-      <Tabs id="AnalysisTypeTabs" defaultSelectedTabId={defaultTabId}>
+      <Tabs
+        id="AnalysisTypeTabs"
+        defaultSelectedTabId={defaultTabId}
+        onChange={nextTab => setActiveTab(nextTab as string)}
+      >
         <Tab
           id={getString('pipeline.verification.analysisTab.metrics')}
           title={getString('pipeline.verification.analysisTab.metrics')}
@@ -74,6 +93,19 @@ export function ExecutionVerificationView(props: ExecutionVerificationViewProps)
               />
             }
           />
+        )}
+        <FlexExpander />
+        {isLogsTabActive && (
+          <Layout.Horizontal>
+            <Button
+              icon="api-docs"
+              withoutCurrentColor
+              iconProps={{ color: Color.BLACK, size: 20 }}
+              text={getString('cv.executionLogs')}
+              variation={ButtonVariation.LINK}
+              onClick={() => openLogContentHook()}
+            />
+          </Layout.Horizontal>
         )}
       </Tabs>
     </>

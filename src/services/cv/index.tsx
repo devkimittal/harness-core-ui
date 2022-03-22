@@ -153,6 +153,19 @@ export interface AnomaliesSummaryDTO {
   totalAnomalies?: number
 }
 
+export type ApiCallLogDTO = CVNGLogDTO & {
+  requestTime?: number
+  requests?: ApiCallLogDTOField[]
+  responseTime?: number
+  responses?: ApiCallLogDTOField[]
+}
+
+export interface ApiCallLogDTOField {
+  name?: string
+  type?: 'JSON' | 'XML' | 'NUMBER' | 'URL' | 'TEXT' | 'TIMESTAMP'
+  value?: string
+}
+
 export interface AppDMetricDefinitions {
   analysis?: AnalysisDTO
   baseFolder?: string
@@ -361,6 +374,38 @@ export type AwsSecretManagerDTO = ConnectorConfigDTO & {
   secretNamePrefix?: string
 }
 
+export interface AzureAuthCredentialDTO {
+  [key: string]: any
+}
+
+export interface AzureAuthDTO {
+  spec: AzureAuthCredentialDTO
+  type: 'Secret' | 'Certificate'
+}
+
+export type AzureClientKeyCertDTO = AzureAuthCredentialDTO & {
+  certificateRef: string
+}
+
+export type AzureClientSecretKeyDTO = AzureAuthCredentialDTO & {
+  secretRef: string
+}
+
+export type AzureConnector = ConnectorConfigDTO & {
+  azureEnvironmentType: 'AZURE' | 'AZURE_US_GOVERNMENT'
+  credential: AzureCredential
+  delegateSelectors?: string[]
+}
+
+export interface AzureCredential {
+  spec?: AzureCredentialSpec
+  type: 'InheritFromDelegate' | 'ManualConfig'
+}
+
+export interface AzureCredentialSpec {
+  [key: string]: any
+}
+
 export type AzureKeyVaultConnectorDTO = ConnectorConfigDTO & {
   azureEnvironmentType?: 'AZURE' | 'AZURE_US_GOVERNMENT'
   clientId: string
@@ -370,6 +415,12 @@ export type AzureKeyVaultConnectorDTO = ConnectorConfigDTO & {
   subscription: string
   tenantId: string
   vaultName: string
+}
+
+export type AzureManualDetails = AzureCredentialSpec & {
+  auth: AzureAuthDTO
+  clientId: string
+  tenantId: string
 }
 
 export interface BillingExportSpec {
@@ -462,6 +513,7 @@ export interface CVConfig {
   createNextTaskIteration?: number
   createdAt?: number
   demo?: boolean
+  deploymentVerificationEnabled?: boolean
   eligibleForDemo?: boolean
   enabled?: boolean
   envIdentifier: string
@@ -470,12 +522,14 @@ export interface CVConfig {
   fullyQualifiedIdentifier?: string
   identifier: string
   lastUpdatedAt?: number
+  liveMonitoringEnabled?: boolean
   monitoredServiceIdentifier?: string
   monitoringSourceName: string
   orgIdentifier: string
   productName?: string
   projectIdentifier: string
   serviceIdentifier: string
+  slienabled?: boolean
   type?:
     | 'APP_DYNAMICS'
     | 'SPLUNK'
@@ -668,6 +722,7 @@ export interface ConnectorInfoDTO {
     | 'AwsSecretManager'
     | 'Gcp'
     | 'Aws'
+    | 'Azure'
     | 'Artifactory'
     | 'Jira'
     | 'Nexus'
@@ -961,9 +1016,9 @@ export interface DeploymentVerificationJobInstanceSummary {
   additionalInfo?: AdditionalInfo
   durationMs?: number
   environmentName?: string
+  errorAnalysisSummary?: ErrorAnalysisSummary
   jobName?: string
   logsAnalysisSummary?: LogsAnalysisSummary
-  errorAnalysisSummary?: LogsAnalysisSummary
   progressPercentage?: number
   remainingTimeMs?: number
   risk?: 'NO_DATA' | 'NO_ANALYSIS' | 'HEALTHY' | 'OBSERVE' | 'NEED_ATTENTION' | 'UNHEALTHY'
@@ -1402,6 +1457,11 @@ export interface Error {
   status?: 'SUCCESS' | 'FAILURE' | 'ERROR'
 }
 
+export interface ErrorAnalysisSummary {
+  anomalousClusterCount?: number
+  totalClusterCount?: number
+}
+
 export interface ErrorMetadataDTO {
   type?: string
 }
@@ -1425,6 +1485,11 @@ export interface EventCount {
 export interface ExceptionInfo {
   exception?: string
   stackTrace?: string
+}
+
+export type ExecutionLogDTO = CVNGLogDTO & {
+  log?: string
+  logLevel?: 'INFO' | 'WARN' | 'ERROR'
 }
 
 export interface Failure {
@@ -2405,11 +2470,6 @@ export interface LogSampleRequestDTO {
 }
 
 export interface LogsAnalysisSummary {
-  anomalousClusterCount?: number
-  totalClusterCount?: number
-}
-
-export interface ErrorAnalysisSummary {
   anomalousClusterCount?: number
   totalClusterCount?: number
 }
@@ -11705,3 +11765,70 @@ export const getVerifyStepHealthSourcesPromise = (
     GetVerifyStepHealthSourcesQueryParams,
     GetVerifyStepHealthSourcesPathParams
   >(getConfig('cv/api'), `/verify-step/${verifyStepExecutionId}/healthSources`, props, signal)
+
+export interface GetVerifyStepLogsQueryParams {
+  accountId: string
+  logType: string
+  errorLogsOnly?: boolean
+  healthSources?: string[]
+  pageNumber?: number
+  pageSize?: number
+}
+
+export interface GetVerifyStepLogsPathParams {
+  verifyStepExecutionId: string
+}
+
+export type GetVerifyStepLogsProps = Omit<
+  GetProps<RestResponsePageCVNGLogDTO, unknown, GetVerifyStepLogsQueryParams, GetVerifyStepLogsPathParams>,
+  'path'
+> &
+  GetVerifyStepLogsPathParams
+
+/**
+ * get verify step logs
+ */
+export const GetVerifyStepLogs = ({ verifyStepExecutionId, ...props }: GetVerifyStepLogsProps) => (
+  <Get<RestResponsePageCVNGLogDTO, unknown, GetVerifyStepLogsQueryParams, GetVerifyStepLogsPathParams>
+    path={`/verify-step/${verifyStepExecutionId}/logs`}
+    base={getConfig('cv/api')}
+    {...props}
+  />
+)
+
+export type UseGetVerifyStepLogsProps = Omit<
+  UseGetProps<RestResponsePageCVNGLogDTO, unknown, GetVerifyStepLogsQueryParams, GetVerifyStepLogsPathParams>,
+  'path'
+> &
+  GetVerifyStepLogsPathParams
+
+/**
+ * get verify step logs
+ */
+export const useGetVerifyStepLogs = ({ verifyStepExecutionId, ...props }: UseGetVerifyStepLogsProps) =>
+  useGet<RestResponsePageCVNGLogDTO, unknown, GetVerifyStepLogsQueryParams, GetVerifyStepLogsPathParams>(
+    (paramsInPath: GetVerifyStepLogsPathParams) => `/verify-step/${paramsInPath.verifyStepExecutionId}/logs`,
+    { base: getConfig('cv/api'), pathParams: { verifyStepExecutionId }, ...props }
+  )
+
+/**
+ * get verify step logs
+ */
+export const getVerifyStepLogsPromise = (
+  {
+    verifyStepExecutionId,
+    ...props
+  }: GetUsingFetchProps<
+    RestResponsePageCVNGLogDTO,
+    unknown,
+    GetVerifyStepLogsQueryParams,
+    GetVerifyStepLogsPathParams
+  > & { verifyStepExecutionId: string },
+  signal?: RequestInit['signal']
+) =>
+  getUsingFetch<RestResponsePageCVNGLogDTO, unknown, GetVerifyStepLogsQueryParams, GetVerifyStepLogsPathParams>(
+    getConfig('cv/api'),
+    `/verify-step/${verifyStepExecutionId}/logs`,
+    props,
+    signal
+  )

@@ -138,6 +138,7 @@ allowpaths:
   - /verify-step/{verifyStepExecutionId}/all-node-names
   - /verify-step/{verifyStepExecutionId}/deployment-activity-summary
   - /verify-step/{verifyStepExecutionId}/healthSources
+  - /verify-step/{verifyStepExecutionId}/logs
   - /change-event/monitored-service-timeline
 operationIdOverrides:
   /appdynamics/applications.get: getAppDynamicsApplications

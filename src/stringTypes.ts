@@ -4695,6 +4695,7 @@ export interface StringsMap {
   'cv.anomalous': string
   'cv.anomalousMetrics': string
   'cv.bad': string
+  'cv.bottom': string
   'cv.burnRatePerDay': string
   'cv.changeSource.HarnessCDCurrentGen.applicationId': string
   'cv.changeSource.HarnessCDCurrentGen.selectHarnessAppId': string
@@ -4784,12 +4785,15 @@ export interface StringsMap {
   'cv.days': string
   'cv.dependenciesHealthWithCount': string
   'cv.deploymentVerification.failed': string
+  'cv.displayOnlyErrors': string
+  'cv.download': string
   'cv.errorBudget': string
   'cv.errorBudgetBurnDown': string
   'cv.errorBudgetIsSuccessfullyReset': string
   'cv.errorBudgetRecalculationInProgress': string
   'cv.errorBudgetRemaining': string
   'cv.evaluationPeriod': string
+  'cv.executionLogs': string
   'cv.failures': string
   'cv.filter': string
   'cv.forConfigurationYouWillNeedAtLeastOneMonitoredServiceWithAHealthSourceAndAMetric': string
@@ -5343,6 +5347,7 @@ export interface StringsMap {
   'cv.timeRemaining': string
   'cv.timeline': string
   'cv.toObjectiveValue': string
+  'cv.top': string
   'cv.trafficSplit': string
   'cv.trend': string
   'cv.tuesday': string
