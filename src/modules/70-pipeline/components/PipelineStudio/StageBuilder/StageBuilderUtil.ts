@@ -453,15 +453,15 @@ export const getLinkEventListeners = (
 
   return {
     [Event.AddLinkClicked]: (event: any) => {
-      const eventTemp = event
+      event = { ...event, ...event.data }
       dynamicPopoverHandler?.hide()
-      if (eventTemp.identifier) {
+      if (event.identifier) {
         dynamicPopoverHandler?.show(
-          `[data-linkid="${eventTemp.identifier}"]`,
+          `[data-linkid="${event.identifier}"]`,
           {
             addStageNew,
             isStageView: true,
-            event: eventTemp,
+            event: event,
             stagesMap,
             renderPipelineStage,
             contextType,
@@ -584,6 +584,7 @@ export const getNodeEventListerner = (
     // Can not remove this Any because of React Diagram Issue
     [Event.ClickNode]: (event: any) => {
       // const eventTemp = event as DefaultNodeEvent
+      event = { ...event, ...event?.data }
       dynamicPopoverHandler?.hide()
       /* istanbul ignore else */ if (event.entityType) {
         if (event.entityType === DiagramType.CreateNew) {
@@ -691,13 +692,13 @@ export const getNodeEventListerner = (
     },
     // Can not remove this Any because of React Diagram Issue
     [Event.RemoveNode]: (event: any) => {
-      const eventTemp = event
-      const stageIdToBeRemoved = eventTemp.identifier
+      event = { ...event, ...event?.data }
+      const stageIdToBeRemoved = event.identifier
       updateDeleteId(stageIdToBeRemoved)
       confirmDeleteStage()
     },
     [Event.AddParallelNode]: (event: any) => {
-      const eventTemp = event
+      event = { ...event, ...event?.data }
       dynamicPopoverHandler?.hide()
       updatePipelineView({
         ...pipelineView,
@@ -706,14 +707,14 @@ export const getNodeEventListerner = (
       })
       setSelectionRef.current({ stageId: undefined, sectionId: undefined })
 
-      if (eventTemp.identifier) {
+      if (event.identifier) {
         dynamicPopoverHandler?.show(
-          `[data-nodeid="${eventTemp.identifier}"] ~[data-nodeid="add-parallel"]`,
+          `[data-nodeid="${event.identifier}"] ~[data-nodeid="add-parallel"]`,
           {
             addStageNew,
             isParallel: true,
             isStageView: false,
-            event: eventTemp,
+            event: event,
             stagesMap,
             renderPipelineStage,
             contextType,
@@ -723,11 +724,12 @@ export const getNodeEventListerner = (
             closeTemplateSelector
           },
           { useArrows: false, darkMode: false, fixedPosition: false },
-          eventTemp.callback
+          event.callback
         )
       }
     },
     [Event.DropNodeEvent]: (event: any) => {
+      event = { ...event, ...event?.data }
       if (event.node?.identifier) {
         const dropNode = getStageFromPipelineContext(event?.node?.identifier).stage
         const current = getStageFromPipelineContext(event?.destination?.identifier)

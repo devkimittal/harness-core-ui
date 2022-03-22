@@ -37,9 +37,11 @@ function CreateNodeStage(props: any): React.ReactElement {
         event.stopPropagation()
         props?.fireEvent({
           type: Event.DropNodeEvent,
-          entityType: DiagramType.CreateNew,
-          node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-          destination: props
+          data: {
+            entityType: DiagramType.CreateNew,
+            node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+            destination: props
+          }
         })
       }}
       onClick={event => {
@@ -51,9 +53,11 @@ function CreateNodeStage(props: any): React.ReactElement {
         }
         props?.fireEvent({
           type: Event.AddLinkClicked,
-          entityType: DiagramType.CreateNew,
-          identifier: props.identifier,
-          target: event.target
+          data: {
+            entityType: DiagramType.CreateNew,
+            identifier: props.identifier,
+            target: event.target
+          }
         })
       }}
     >

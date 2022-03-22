@@ -47,9 +47,10 @@ function PipelineStageNode(props: any): JSX.Element {
         }
         props?.fireEvent({
           type: Event.ClickNode,
-          entityType: DiagramType.Default,
-          identifier: props?.identifier,
-          parentIdentifier: props?.parentIdentifier
+          data: {
+            entityType: DiagramType.Default,
+            ...props
+          }
         })
       }}
       onMouseDown={e => e.stopPropagation()}
@@ -76,9 +77,11 @@ function PipelineStageNode(props: any): JSX.Element {
         event.stopPropagation()
         props?.fireEvent({
           type: Event.DropNodeEvent,
-          entityType: DiagramType.Default,
-          node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-          destination: props
+          data: {
+            entityType: DiagramType.Default,
+            node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+            destination: props
+          }
         })
       }}
     >
@@ -145,8 +148,10 @@ function PipelineStageNode(props: any): JSX.Element {
             e.stopPropagation()
             props?.fireEvent({
               type: Event.RemoveNode,
-              identifier: props?.identifier,
-              node: props
+              data: {
+                identifier: props?.identifier,
+                node: props
+              }
             })
           }}
           withoutCurrentColor={true}
@@ -176,11 +181,13 @@ function PipelineStageNode(props: any): JSX.Element {
             event.stopPropagation()
             props?.fireEvent({
               type: Event.AddParallelNode,
-              identifier: props?.identifier,
-              parentIdentifier: props?.parentIdentifier,
-              entityType: DiagramType.Default,
-              node: props,
-              target: event.target
+              target: event.target,
+              data: {
+                identifier: props?.identifier,
+                parentIdentifier: props?.parentIdentifier,
+                entityType: DiagramType.Default,
+                node: props
+              }
             })
           }}
           className={cx(css.addNode, css.stageAddNode, { [css.visible]: showAddNode })}
@@ -194,11 +201,13 @@ function PipelineStageNode(props: any): JSX.Element {
             event.stopPropagation()
             props?.fireEvent({
               type: Event.AddLinkClicked,
-              entityType: DiagramType.Link,
-              node: props,
-              prevNodeIdentifier: props?.prevNodeIdentifier,
-              parentIdentifier: props?.parentIdentifier,
-              identifier: props?.identifier
+              data: {
+                entityType: DiagramType.Link,
+                node: props,
+                prevNodeIdentifier: props?.prevNodeIdentifier,
+                parentIdentifier: props?.parentIdentifier,
+                identifier: props?.identifier
+              }
             })
           }}
           onDragOver={event => {
@@ -216,10 +225,12 @@ function PipelineStageNode(props: any): JSX.Element {
             setShowAddLink(false)
             props?.fireEvent({
               type: Event.DropLinkEvent,
-              linkBeforeStepGroup: false,
-              entityType: DiagramType.Link,
-              node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-              destination: props
+              data: {
+                linkBeforeStepGroup: false,
+                entityType: DiagramType.Link,
+                node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+                destination: props
+              }
             })
           }}
           className={cx(css.addNodeIcon, css.left, css.stageAddIcon, {
@@ -236,12 +247,14 @@ function PipelineStageNode(props: any): JSX.Element {
             event.stopPropagation()
             props?.fireEvent({
               type: Event.AddLinkClicked,
-              linkBeforeStepGroup: true,
-              prevNodeIdentifier: props?.prevNodeIdentifier,
-              parentIdentifier: props?.parentIdentifier,
-              entityType: DiagramType.Link,
-              identifier: props?.identifier,
-              node: props
+              data: {
+                linkBeforeStepGroup: true,
+                prevNodeIdentifier: props?.prevNodeIdentifier,
+                parentIdentifier: props?.parentIdentifier,
+                entityType: DiagramType.Link,
+                identifier: props?.identifier,
+                node: props
+              }
             })
           }}
           onDragOver={event => {
@@ -252,10 +265,12 @@ function PipelineStageNode(props: any): JSX.Element {
             event.stopPropagation()
             props?.fireEvent({
               type: Event.DropLinkEvent,
-              linkBeforeStepGroup: true,
-              entityType: DiagramType.Link,
-              node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-              destination: props
+              data: {
+                linkBeforeStepGroup: true,
+                entityType: DiagramType.Link,
+                node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+                destination: props
+              }
             })
           }}
           className={cx(css.addNodeIcon, css.right, css.stageAddIcon, {

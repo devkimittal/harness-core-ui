@@ -83,8 +83,10 @@ export function StepGroupNode(props: any): JSX.Element {
                   e.stopPropagation()
                   props?.fireEvent({
                     type: Event.RemoveNode,
-                    identifier: props?.identifier,
-                    node: props
+                    data: {
+                      identifier: props?.identifier,
+                      node: props
+                    }
                   })
                 }}
                 withoutCurrentColor={true}
@@ -99,11 +101,14 @@ export function StepGroupNode(props: any): JSX.Element {
                 event.stopPropagation()
                 props?.fireEvent({
                   type: Event.AddLinkClicked,
-                  entityType: DiagramType.Link,
-                  node: props,
-                  prevNodeIdentifier: props?.prevNodeIdentifier,
-                  parentIdentifier: props?.parentIdentifier,
-                  identifier: props?.identifier
+                  target: event.target,
+                  data: {
+                    entityType: DiagramType.Link,
+                    node: props,
+                    prevNodeIdentifier: props?.prevNodeIdentifier,
+                    parentIdentifier: props?.parentIdentifier,
+                    identifier: props?.identifier
+                  }
                 })
               }}
               onDragOver={event => {
@@ -121,10 +126,13 @@ export function StepGroupNode(props: any): JSX.Element {
                 setShowAddLink(false)
                 props?.fireEvent({
                   type: Event.DropLinkEvent,
-                  linkBeforeStepGroup: false,
-                  entityType: DiagramType.Link,
-                  node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-                  destination: props
+                  target: event.target,
+                  data: {
+                    linkBeforeStepGroup: false,
+                    entityType: DiagramType.Link,
+                    node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+                    destination: props
+                  }
                 })
               }}
               className={classnames(defaultCss.addNodeIcon, defaultCss.left, defaultCss.stepAddIcon, {
@@ -149,20 +157,24 @@ export function StepGroupNode(props: any): JSX.Element {
               onDrop={(event: any) => {
                 props?.fireEvent({
                   type: Event.DropNodeEvent,
-                  entityType: DiagramType.Default,
-                  node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-                  destination: props
+                  data: {
+                    entityType: DiagramType.Default,
+                    node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+                    destination: props
+                  }
                 })
               }}
               onClick={(event: any) => {
                 event.stopPropagation()
                 props?.fireEvent({
                   type: Event.AddParallelNode,
-                  identifier: props?.identifier,
-                  parentIdentifier: props?.parentIdentifier,
-                  entityType: DiagramType.StepGroupNode,
-                  node: props,
-                  target: event.target
+                  target: event.target,
+                  data: {
+                    identifier: props?.identifier,
+                    parentIdentifier: props?.parentIdentifier,
+                    entityType: DiagramType.StepGroupNode,
+                    node: props
+                  }
                 })
               }}
             />

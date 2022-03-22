@@ -143,11 +143,13 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
             onClick={(event: any) => {
               props?.fireEvent({
                 type: Event.ClickNode,
-                identifier: props?.identifier,
-                parentIdentifier: props?.identifier,
-                entityType: DiagramType.CreateNew,
-                node: props,
-                target: event.target
+                target: event.target,
+                data: {
+                  identifier: props?.identifier,
+                  parentIdentifier: props?.identifier,
+                  entityType: DiagramType.CreateNew,
+                  node: props
+                }
               })
             }}
             name={null}
