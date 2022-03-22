@@ -5,6 +5,7 @@ common:
   newBudget: 'New Budget'
   budget: 'Budget'
   spendTillDate: 'Spend Till Date'
+  database: 'Database'
 allRegions: 'All Regions'
 allClusters: 'All Clusters'
 enforcementMessage:
@@ -88,7 +89,7 @@ co:
           asg: 'Add an ASG to be managed by the AutoStopping Rule. You can choose only one ASG to a single Rule'
           kubernetes: 'Add a cluster to be managed by the AutoStopping Rule.'
           ecs: 'Add an ECS Service to be managed by the AutoStopping Rule'
-          rds: 'Add the RDS instance(s) to be managed by this Autostopping Rule'
+          rds: 'Add the RDS instance to be managed by this Autostopping Rule'
         addResourceCta:
           instance: 'Add an instance'
           asg: 'Add a auto-scaling group'

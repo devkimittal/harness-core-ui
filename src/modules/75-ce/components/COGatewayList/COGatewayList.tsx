@@ -89,7 +89,9 @@ interface EmptyListPageProps {
 }
 
 function IconCell(tableProps: CellProps<Service>): JSX.Element {
+  const { getString } = useStrings()
   const isK8sRule = tableProps.row.original.kind === 'k8s'
+  const isRdsRule = !_isEmpty(tableProps.row.original.routing?.database)
   const getIcon = () => {
     return tableProps.value === 'spot'
       ? tableProps.row.original.disabled
@@ -99,15 +101,22 @@ function IconCell(tableProps: CellProps<Service>): JSX.Element {
       ? onDemandDisableIcon
       : odIcon
   }
+
+  const getDisplayValue = () => {
+    return isRdsRule ? getString('ce.common.database') : tableProps.value
+  }
+
   return (
     <Layout.Horizontal spacing="medium">
       {isK8sRule ? (
         <Icon name="app-kubernetes" size={21} />
+      ) : isRdsRule ? (
+        <Icon name="aws-rds" size={21} />
       ) : (
         <img className={css.fulFilmentIcon} src={getIcon()} alt="" width={'20px'} height={'19px'} aria-hidden />
       )}
       <Text lineClamp={3} color={tableProps.row.original.disabled ? textColor.disable : Color.GREY_500}>
-        {tableProps.value}
+        {getDisplayValue()}
       </Text>
     </Layout.Horizontal>
   )
