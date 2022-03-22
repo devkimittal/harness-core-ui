@@ -124,7 +124,7 @@ export function PipelineCardPanel(props: PipelineCardPanelProps): React.ReactEle
         data.parallel.forEach((nodeP, j: number) => {
           if (nodeP.stage) {
             const stagePath = `stages[${i}].parallel[${j}].stage`
-            const unresolvedStage = get(pipeline, stagePath)
+            const unresolvedStage = get(pipeline.template ? originalPipeline : pipeline, stagePath)
             stagesCards.push(
               <StageCard
                 originalStage={get(originalPipeline, stagePath)}
@@ -143,7 +143,7 @@ export function PipelineCardPanel(props: PipelineCardPanelProps): React.ReactEle
         })
       } /* istanbul ignore else */ else if (data.stage) {
         const stagePath = `stages[${i}].stage`
-        const unresolvedStage = get(pipeline, stagePath)
+        const unresolvedStage = get(pipeline.template ? originalPipeline : pipeline, stagePath)
         stagesCards.push(
           <StageCard
             key={data.stage.identifier}

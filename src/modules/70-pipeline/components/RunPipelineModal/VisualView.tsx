@@ -93,7 +93,8 @@ export default function VisualView(props: VisualViewProps): React.ReactElement {
   }
 
   const showPipelineInputSetForm = (): boolean => {
-    return !!(existingProvide === 'provide' || selectedInputSets?.length || executionView)
+    const x = !!(existingProvide === 'provide' || selectedInputSets?.length || executionView)
+    return x
   }
 
   const showVoidPipelineInputSetForm = (): boolean => {

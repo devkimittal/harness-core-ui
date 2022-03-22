@@ -453,78 +453,97 @@ export const validatePipeline = ({
   getString,
   path
 }: ValidatePipelineProps): FormikErrors<PipelineInfoConfig> => {
-  const errors = validateCICodebase({
-    pipeline,
-    template,
-    originalPipeline,
-    viewType,
-    getString,
-    path
-  })
-
-  if (getMultiTypeFromValue(template?.timeout) === MultiTypeInputType.RUNTIME) {
-    let timeoutSchema = getDurationValidationSchema({ minimum: '10s' })
-    if (viewType === StepViewType.DeploymentForm) {
-      timeoutSchema = timeoutSchema.required(getString?.('validation.timeout10SecMinimum'))
+  if (template.template) {
+    const errors = validatePipeline({
+      pipeline: pipeline.template?.templateInputs as PipelineInfoConfig,
+      template: template.template?.templateInputs as PipelineInfoConfig,
+      viewType,
+      originalPipeline: originalPipeline?.template?.templateInputs as PipelineInfoConfig,
+      getString
+    })
+    if (!isEmpty(errors)) {
+      return set({}, 'template.templateInputs', errors)
+    } else {
+      return {}
     }
-    const timeout = Yup.object().shape({
-      timeout: timeoutSchema
+  } else {
+    const errors = validateCICodebase({
+      pipeline,
+      template,
+      originalPipeline,
+      viewType,
+      getString,
+      path
     })
 
-    try {
-      timeout.validateSync(pipeline)
-    } catch (e) {
-      /* istanbul ignore else */
-      if (e instanceof Yup.ValidationError) {
-        const err = yupToFormErrors(e)
-
-        Object.assign(errors, err)
+    if (getMultiTypeFromValue(template?.timeout) === MultiTypeInputType.RUNTIME) {
+      let timeoutSchema = getDurationValidationSchema({ minimum: '10s' })
+      if (viewType === StepViewType.DeploymentForm) {
+        timeoutSchema = timeoutSchema.required(getString?.('validation.timeout10SecMinimum'))
       }
-    }
-  }
-
-  if (pipeline?.variables) {
-    const step = factory.getStep(StepType.CustomVariable)
-    const errorsResponse: any = step?.validateInputSet({ data: pipeline, template, getString, viewType })
-
-    if (!isEmpty(errorsResponse)) {
-      set(errors, 'variables', errorsResponse.variables)
-    }
-  }
-  pipeline.stages?.forEach((stageObj, index) => {
-    if (stageObj.stage) {
-      const originalStage = getStageFromPipeline(stageObj.stage.identifier, originalPipeline)
-      const errorsResponse = validateStage({
-        stage: stageObj.stage as StageElementConfig,
-        template: template?.stages?.[index]?.stage,
-        originalStage: originalStage?.stage,
-        getString,
-        viewType
+      const timeout = Yup.object().shape({
+        timeout: timeoutSchema
       })
-      if (!isEmpty(errorsResponse)) {
-        set(errors, `${isEmpty(path) ? '' : `${path}.`}stages[${index}].stage`, errorsResponse)
-      }
-    }
-    if (stageObj.parallel) {
-      stageObj.parallel.forEach((stageP, indexP: number) => {
-        if (stageP.stage) {
-          const originalStage = getStageFromPipeline(stageP.stage.identifier, originalPipeline)
-          const errorsResponse = validateStage({
-            stage: stageP.stage as StageElementConfig,
-            template: template?.stages?.[index].parallel?.[indexP]?.stage,
-            originalStage: originalStage?.stage,
-            getString,
-            viewType
-          })
-          if (!isEmpty(errorsResponse)) {
-            set(errors, `${isEmpty(path) ? '' : `${path}.`}stages[${index}].parallel[${indexP}].stage`, errorsResponse)
-          }
+
+      try {
+        timeout.validateSync(pipeline)
+      } catch (e) {
+        /* istanbul ignore else */
+        if (e instanceof Yup.ValidationError) {
+          const err = yupToFormErrors(e)
+
+          Object.assign(errors, err)
         }
-      })
+      }
     }
-  })
 
-  return errors
+    if (pipeline?.variables) {
+      const step = factory.getStep(StepType.CustomVariable)
+      const errorsResponse: any = step?.validateInputSet({ data: pipeline, template, getString, viewType })
+
+      if (!isEmpty(errorsResponse)) {
+        set(errors, 'variables', errorsResponse.variables)
+      }
+    }
+    pipeline.stages?.forEach((stageObj, index) => {
+      if (stageObj.stage) {
+        const originalStage = getStageFromPipeline(stageObj.stage.identifier, originalPipeline)
+        const errorsResponse = validateStage({
+          stage: stageObj.stage as StageElementConfig,
+          template: template?.stages?.[index]?.stage,
+          originalStage: originalStage?.stage,
+          getString,
+          viewType
+        })
+        if (!isEmpty(errorsResponse)) {
+          set(errors, `${isEmpty(path) ? '' : `${path}.`}stages[${index}].stage`, errorsResponse)
+        }
+      }
+      if (stageObj.parallel) {
+        stageObj.parallel.forEach((stageP, indexP: number) => {
+          if (stageP.stage) {
+            const originalStage = getStageFromPipeline(stageP.stage.identifier, originalPipeline)
+            const errorsResponse = validateStage({
+              stage: stageP.stage as StageElementConfig,
+              template: template?.stages?.[index].parallel?.[indexP]?.stage,
+              originalStage: originalStage?.stage,
+              getString,
+              viewType
+            })
+            if (!isEmpty(errorsResponse)) {
+              set(
+                errors,
+                `${isEmpty(path) ? '' : `${path}.`}stages[${index}].parallel[${indexP}].stage`,
+                errorsResponse
+              )
+            }
+          }
+        })
+      }
+    })
+
+    return errors
+  }
 }
 
 const getErrorsFlatten = memoize((errors: any): string[] => {

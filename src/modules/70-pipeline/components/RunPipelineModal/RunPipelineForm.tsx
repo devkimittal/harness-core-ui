@@ -156,7 +156,7 @@ function RunPipelineFormBasic({
     selectedStageItems: [getAllStageItem(getString)]
   })
   const { setPipeline: updatePipelineInVaribalesContext } = usePipelineVariables()
-  const [existingProvide, setExistingProvide] = useState<'existing' | 'provide'>('existing')
+  const [existingProvide, setExistingProvide] = useState<'existing' | 'provide'>('provide')
 
   useEffect(() => {
     getTemplateFromPipeline()

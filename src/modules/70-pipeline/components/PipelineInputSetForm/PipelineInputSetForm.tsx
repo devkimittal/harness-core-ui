@@ -197,6 +197,14 @@ export function PipelineInputSetFormInternal(props: PipelineInputSetFormProps): 
   } = props
   const { getString } = useStrings()
 
+  const isTemplatePipeline = !!template.template
+  const finalTemplate = isTemplatePipeline ? (template?.template?.templateInputs as PipelineInfoConfig) : template
+  const finalPath = isTemplatePipeline
+    ? !isEmpty(path)
+      ? `${path}.template.templateInputs`
+      : 'template.templateInputs'
+    : path
+
   const isCloneCodebaseEnabledAtLeastAtOneStage = originalPipeline?.stages?.some(
     stage =>
       Object.is(get(stage, 'stage.spec.cloneCodebase'), true) ||
@@ -219,7 +227,7 @@ export function PipelineInputSetFormInternal(props: PipelineInputSetFormProps): 
 
   return (
     <Layout.Vertical spacing="medium" className={cx(css.container, maybeContainerClass)}>
-      {getMultiTypeFromValue(template?.timeout) === MultiTypeInputType.RUNTIME ? (
+      {getMultiTypeFromValue(finalTemplate?.timeout) === MultiTypeInputType.RUNTIME ? (
         <div className={cx(stepCss.formGroup, stepCss.sm)}>
           <FormMultiTypeDurationField
             multiTypeDurationProps={{
@@ -230,12 +238,12 @@ export function PipelineInputSetFormInternal(props: PipelineInputSetFormProps): 
             }}
             className={stepCss.checkbox}
             label={getString('pipelineSteps.timeoutLabel')}
-            name="timeout"
+            name={!isEmpty(finalPath) ? `${finalPath}.timeout` : 'timeout'}
             disabled={readonly}
           />
         </div>
       ) : null}
-      {template?.variables && template?.variables?.length > 0 && (
+      {finalTemplate?.variables && finalTemplate?.variables?.length > 0 && (
         <>
           <Layout.Horizontal spacing="small" padding={{ top: 'medium', left: 'large', right: 0, bottom: 0 }}>
             <Text
@@ -258,15 +266,15 @@ export function PipelineInputSetFormInternal(props: PipelineInputSetFormProps): 
             type={StepType.CustomVariable}
             stepViewType={viewType}
             customStepProps={{
-              template: { variables: (template?.variables || []) as AllNGVariables[] },
-              path,
+              template: { variables: (finalTemplate?.variables || []) as AllNGVariables[] },
+              path: finalPath,
               allValues: { variables: (originalPipeline?.variables || []) as AllNGVariables[] }
             }}
           />
         </>
       )}
       {isCloneCodebaseEnabledAtLeastAtOneStage &&
-        getMultiTypeFromValue(template?.properties?.ci?.codebase?.build as unknown as string) ===
+        getMultiTypeFromValue(finalTemplate?.properties?.ci?.codebase?.build as unknown as string) ===
           MultiTypeInputType.RUNTIME && (
           <>
             <Layout.Horizontal spacing="small" padding={{ top: 'medium', left: 'large', right: 0, bottom: 0 }}>
@@ -282,15 +290,19 @@ export function PipelineInputSetFormInternal(props: PipelineInputSetFormProps): 
             <div className={css.topAccordion}>
               <div className={css.accordionSummary}>
                 <div className={css.nestedAccordions} style={{ width: '50%' }}>
-                  <CICodebaseInputSetForm path={path} readonly={readonly} originalPipeline={props.originalPipeline} />
+                  <CICodebaseInputSetForm
+                    path={finalPath}
+                    readonly={readonly}
+                    originalPipeline={props.originalPipeline}
+                  />
                 </div>
               </div>
             </div>
           </>
         )}
       <>
-        {template?.stages?.map((stageObj, index) => {
-          const pathPrefix = !isEmpty(path) ? `${path}.` : ''
+        {finalTemplate?.stages?.map((stageObj, index) => {
+          const pathPrefix = !isEmpty(finalPath) ? `${finalPath}.` : ''
           if (stageObj.stage) {
             const allValues = getStageFromPipeline(stageObj?.stage?.identifier || '', originalPipeline)
 

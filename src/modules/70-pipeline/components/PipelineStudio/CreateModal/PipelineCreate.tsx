@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Formik, FormikForm, Button, ButtonVariation } from '@wings-software/uicore'
+import { Container, Formik, FormikForm, Button, ButtonVariation, Text } from '@wings-software/uicore'
+import { Color } from '@wings-software/design-system'
 import * as Yup from 'yup'
 import { omit } from 'lodash-es'
 import { useParams } from 'react-router-dom'
@@ -21,6 +22,8 @@ import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import { GitSyncStoreProvider } from 'framework/GitRepoStore/GitSyncStoreContext'
 import GitContextForm, { IGitContextFormProps } from '@common/components/GitContextForm/GitContextForm'
 import type { EntityGitDetails } from 'services/pipeline-ng'
+import { getTemplateNameWithLabel } from '@pipeline/utils/templateUtils'
+import type { TemplateSummaryResponse } from 'services/template-ng'
 import { DefaultNewPipelineId } from '../PipelineContext/PipelineActions'
 import css from './PipelineCreate.module.scss'
 
@@ -31,17 +34,19 @@ interface PipelineInfoConfigWithGitDetails extends PipelineInfoConfig {
   branch: string
 }
 export interface PipelineCreateProps {
-  afterSave?: (values: PipelineInfoConfig, gitDetails?: EntityGitDetails) => void
+  afterSave?: (values: PipelineInfoConfig, gitDetails?: EntityGitDetails, template?: TemplateSummaryResponse) => void
   initialValues?: PipelineInfoConfigWithGitDetails
   closeModal?: () => void
   gitDetails?: IGitContextFormProps
+  template?: TemplateSummaryResponse
 }
 
 export default function CreatePipelines({
   afterSave,
   initialValues = { identifier: '', name: '', description: '', tags: {}, repo: '', branch: '' },
   closeModal,
-  gitDetails
+  gitDetails,
+  template
 }: PipelineCreateProps): JSX.Element {
   const { getString } = useStrings()
   const { pipelineIdentifier } = useParams<{ pipelineIdentifier: string }>()
@@ -72,7 +77,7 @@ export default function CreatePipelines({
           values.repo && values.repo.trim().length > 0
             ? { repoIdentifier: values.repo, branch: values.branch }
             : undefined
-        afterSave && afterSave(omit(values, 'repo', 'branch'), formGitDetails)
+        afterSave && afterSave(omit(values, 'repo', 'branch'), formGitDetails, template)
       }}
     >
       {formikProps => (
@@ -90,7 +95,17 @@ export default function CreatePipelines({
               <GitContextForm formikProps={formikProps} gitDetails={gitDetails} />
             </GitSyncStoreProvider>
           )}
-
+          {template && (
+            <Text
+              icon={'template-library'}
+              margin={{ top: 'medium', bottom: 'medium' }}
+              font={{ size: 'small' }}
+              iconProps={{ size: 12, margin: { right: 'xsmall' } }}
+              color={Color.BLACK}
+            >
+              {`Using Template: ${getTemplateNameWithLabel(template)}`}
+            </Text>
+          )}
           <Container padding={{ top: 'xlarge' }}>
             <Button
               variation={ButtonVariation.PRIMARY}

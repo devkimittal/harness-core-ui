@@ -79,7 +79,9 @@ import { NavigatedToPage } from '@common/constants/TrackingConstants'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import { GitSyncStoreProvider } from 'framework/GitRepoStore/GitSyncStoreContext'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
-import { useFeatureFlags } from '@common/hooks/useFeatureFlag'
+import { useFeatureFlag, useFeatureFlags } from '@common/hooks/useFeatureFlag'
+import { FeatureFlag } from '@common/featureFlags'
+import { NewPipelinePopover } from '@pipeline/pages/pipelines/views/NewPipelinePopover/NewPipelinePopover'
 import { PipelineGridView } from './views/PipelineGridView'
 import { PipelineListView } from './views/PipelineListView'
 import PipelineFilterForm from '../pipeline-deployment-list/PipelineFilterForm/PipelineFilterForm'
@@ -617,6 +619,9 @@ function PipelinesPage({ mockData }: CDPipelinesPageProps): React.ReactElement {
     }
   }
 
+  const isPipelineTemplateEnabled =
+    useFeatureFlag(FeatureFlag.NG_TEMPLATES) && window.location.origin !== 'https://app.harness.io'
+
   if (isDeleting) {
     return <PageSpinner />
   }
@@ -635,22 +640,26 @@ function PipelinesPage({ mockData }: CDPipelinesPageProps): React.ReactElement {
       {(isReseting || !!pipelineList?.content?.length || appliedFilter || isGitSyncEnabled || searchParam) && (
         <Page.SubHeader>
           <Layout.Horizontal>
-            <RbacButton
-              variation={ButtonVariation.PRIMARY}
-              data-testid="add-pipeline"
-              icon="plus"
-              text={getString('pipeline.newPipelineText')}
-              onClick={() => goToPipeline()}
-              tooltipProps={{
-                dataTooltipId: 'addPipeline'
-              }}
-              permission={{
-                permission: PermissionIdentifier.EDIT_PIPELINE,
-                resource: {
-                  resourceType: ResourceType.PIPELINE
-                }
-              }}
-            />
+            {isPipelineTemplateEnabled ? (
+              <NewPipelinePopover />
+            ) : (
+              <RbacButton
+                variation={ButtonVariation.PRIMARY}
+                data-testid="add-pipeline"
+                icon="plus"
+                text={getString('pipeline.newPipelineText')}
+                onClick={() => goToPipeline()}
+                tooltipProps={{
+                  dataTooltipId: 'addPipeline'
+                }}
+                permission={{
+                  permission: PermissionIdentifier.EDIT_PIPELINE,
+                  resource: {
+                    resourceType: ResourceType.PIPELINE
+                  }
+                }}
+              />
+            )}
             {isGitSyncEnabled && (
               <GitSyncStoreProvider>
                 <GitFilters

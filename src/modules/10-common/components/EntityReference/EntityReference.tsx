@@ -31,7 +31,7 @@ import { Scope } from '@common/interfaces/SecretsInterface'
 import { useStrings, UseStringsReturn } from 'framework/strings'
 import type { StringKeys } from 'framework/strings'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'
-import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
+import type { AccountPathProps, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { CollapsableList } from '../CollapsableList/CollapsableList'
 import css from './EntityReference.module.scss'
 
@@ -48,6 +48,17 @@ export function getScopeFromDTO<T extends ScopedObjectDTO>(obj: T): Scope {
     return Scope.ORG
   }
   return Scope.ACCOUNT
+}
+
+export const getScopeBasedProjectPathParams = (
+  { accountId, projectIdentifier, orgIdentifier }: ProjectPathProps,
+  scope: Scope
+) => {
+  return {
+    accountIdentifier: accountId,
+    projectIdentifier: scope === Scope.PROJECT ? projectIdentifier : undefined,
+    orgIdentifier: scope === Scope.PROJECT || scope === Scope.ORG ? orgIdentifier : undefined
+  }
 }
 
 export function getScopeFromValue(value: string): Scope {

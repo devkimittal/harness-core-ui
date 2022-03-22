@@ -338,47 +338,51 @@ export function RightBar(): JSX.Element {
         data-testid="input-variable"
       />
 
-      <Button
-        className={cx(css.iconButton, {
-          [css.selected]: type === DrawerTypes.PipelineNotifications
-        })}
-        variation={ButtonVariation.TERTIARY}
-        onClick={() => {
-          updatePipelineView({
-            ...pipelineView,
-            isDrawerOpened: true,
-            drawerData: { type: DrawerTypes.PipelineNotifications, title: `${pipeline?.name} : Notifications` },
-            isSplitViewOpen: false,
-            splitViewData: {}
-          })
-        }}
-        font={{ weight: 'semi-bold', size: 'xsmall' }}
-        icon="pipeline-deploy"
-        iconProps={{ size: 24 }}
-        text={getString('notifications.pipelineName')}
-        withoutCurrentColor={true}
-      />
+      {!pipeline.template && (
+        <Button
+          className={cx(css.iconButton, {
+            [css.selected]: type === DrawerTypes.PipelineNotifications
+          })}
+          variation={ButtonVariation.TERTIARY}
+          onClick={() => {
+            updatePipelineView({
+              ...pipelineView,
+              isDrawerOpened: true,
+              drawerData: { type: DrawerTypes.PipelineNotifications, title: `${pipeline?.name} : Notifications` },
+              isSplitViewOpen: false,
+              splitViewData: {}
+            })
+          }}
+          font={{ weight: 'semi-bold', size: 'xsmall' }}
+          icon="pipeline-deploy"
+          iconProps={{ size: 24 }}
+          text={getString('notifications.pipelineName')}
+          withoutCurrentColor={true}
+        />
+      )}
 
-      <Button
-        className={cx(css.iconButton, {
-          [css.selected]: type === DrawerTypes.FlowControl
-        })}
-        variation={ButtonVariation.TERTIARY}
-        onClick={() => {
-          updatePipelineView({
-            ...pipelineView,
-            isDrawerOpened: true,
-            drawerData: { type: DrawerTypes.FlowControl },
-            isSplitViewOpen: false,
-            splitViewData: {}
-          })
-        }}
-        font={{ weight: 'semi-bold', size: 'xsmall' }}
-        icon="settings"
-        withoutCurrentColor={true}
-        iconProps={{ size: 20 }}
-        text={getString('pipeline.barriers.flowControl')}
-      />
+      {!pipeline.template && (
+        <Button
+          className={cx(css.iconButton, {
+            [css.selected]: type === DrawerTypes.FlowControl
+          })}
+          variation={ButtonVariation.TERTIARY}
+          onClick={() => {
+            updatePipelineView({
+              ...pipelineView,
+              isDrawerOpened: true,
+              drawerData: { type: DrawerTypes.FlowControl },
+              isSplitViewOpen: false,
+              splitViewData: {}
+            })
+          }}
+          font={{ weight: 'semi-bold', size: 'xsmall' }}
+          icon="settings"
+          withoutCurrentColor={true}
+          iconProps={{ size: 20 }}
+          text={getString('pipeline.barriers.flowControl')}
+        />
+      )}
 
       {enableGovernanceSidebar && contextType === PipelineContextType.Pipeline && (
         <Button
@@ -404,7 +408,7 @@ export function RightBar(): JSX.Element {
         />
       )}
 
-      {!isYaml && (
+      {!pipeline.template && !isYaml && (
         <Button
           className={css.iconButton}
           text={getString('codebase')}
@@ -427,26 +431,28 @@ export function RightBar(): JSX.Element {
         />
       )}
 
-      <Button
-        className={cx(css.iconButton, {
-          [css.selected]: type === DrawerTypes.AdvancedOptions
-        })}
-        variation={ButtonVariation.TERTIARY}
-        onClick={() => {
-          updatePipelineView({
-            ...pipelineView,
-            isDrawerOpened: true,
-            drawerData: { type: DrawerTypes.AdvancedOptions },
-            isSplitViewOpen: false,
-            splitViewData: {}
-          })
-        }}
-        font={{ weight: 'semi-bold', size: 'xsmall' }}
-        icon="pipeline-advanced"
-        withoutCurrentColor={true}
-        iconProps={{ size: 24 }}
-        text={getString('pipeline.advancedOptions')}
-      />
+      {!pipeline.template && (
+        <Button
+          className={cx(css.iconButton, {
+            [css.selected]: type === DrawerTypes.AdvancedOptions
+          })}
+          variation={ButtonVariation.TERTIARY}
+          onClick={() => {
+            updatePipelineView({
+              ...pipelineView,
+              isDrawerOpened: true,
+              drawerData: { type: DrawerTypes.AdvancedOptions },
+              isSplitViewOpen: false,
+              splitViewData: {}
+            })
+          }}
+          font={{ weight: 'semi-bold', size: 'xsmall' }}
+          icon="pipeline-advanced"
+          withoutCurrentColor={true}
+          iconProps={{ size: 24 }}
+          text={getString('pipeline.advancedOptions')}
+        />
+      )}
       <div />
       {isCodebaseDialogOpen && (
         <Dialog
