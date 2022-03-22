@@ -16,6 +16,7 @@ import type {
 } from 'services/cv'
 
 export const errorMessage = 'TEST ERROR MESSAGE'
+const TEXT_LEARNING_ENGINE = 'Learning engine task info status: SUCCESS'
 
 export const pathParams = {
   accountId: 'TEST_ACCOUNT_ID',
@@ -59,7 +60,7 @@ export const executionLogs: ExecutionLogDTO[] = [
     startTime: 1647418800000,
     endTime: 1647418860000,
     traceableType: 'VERIFICATION_TASK',
-    log: 'Learning engine task info status: SUCCESS',
+    log: TEXT_LEARNING_ENGINE,
     logLevel: 'INFO',
     type: 'EXECUTION_LOG'
   }
@@ -68,7 +69,7 @@ export const executionLogs: ExecutionLogDTO[] = [
 export const executionLogState = {
   data: [
     {
-      text: { logLevel: 'INFO', createdAt: '3/16/2022 8:23:10 AM', log: 'Learning engine task info status: SUCCESS' }
+      text: { logLevel: 'INFO', createdAt: '3/16/2022 8:23:10 AM', log: TEXT_LEARNING_ENGINE }
     }
   ],
   searchData: { currentIndex: 0, linesWithResults: [], text: '' }
@@ -77,7 +78,7 @@ export const executionLogState = {
 export const executionLogStateWithSearch = {
   data: [
     {
-      text: { logLevel: 'INFO', createdAt: '3/16/2022 8:23:10 AM', log: 'Learning engine task info status: SUCCESS' },
+      text: { logLevel: 'INFO', createdAt: '3/16/2022 8:23:10 AM', log: TEXT_LEARNING_ENGINE },
       searchIndices: { logLevel: [0], log: [1] }
     }
   ],

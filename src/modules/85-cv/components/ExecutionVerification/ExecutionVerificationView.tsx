@@ -6,17 +6,8 @@
  */
 
 import React, { useMemo, useState } from 'react'
-import {
-  Container,
-  Tabs,
-  Tab,
-  NoDataCard,
-  Layout,
-  FlexExpander,
-  Button,
-  ButtonVariation,
-  Color
-} from '@wings-software/uicore'
+import { Container, Tabs, Tab, NoDataCard, Layout, FlexExpander, Button, ButtonVariation } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useQueryParams } from '@common/hooks'
 import type { ExecutionNode } from 'services/pipeline-ng'
@@ -46,7 +37,8 @@ export function ExecutionVerificationView(props: ExecutionVerificationViewProps)
   const { type } = useQueryParams<{ type?: string }>()
   const defaultTabId = useMemo(() => getDefaultTabId(getString, type), [type])
   const isErrorTrackingEnabled = useFeatureFlag(FeatureFlag.ERROR_TRACKING_ENABLED)
-  const isLogsTabActive = activeTab === getString('pipeline.verification.analysisTab.logs')
+  const TEXT_LOGS = getString('pipeline.verification.analysisTab.logs')
+  const isLogsTabActive = activeTab === TEXT_LOGS
 
   const { openLogContentHook } = useLogContentHook({ activityId })
 
@@ -77,8 +69,8 @@ export function ExecutionVerificationView(props: ExecutionVerificationViewProps)
           }
         />
         <Tab
-          id={getString('pipeline.verification.analysisTab.logs')}
-          title={getString('pipeline.verification.analysisTab.logs')}
+          id={TEXT_LOGS}
+          title={TEXT_LOGS}
           panel={<LogAnalysisContainer step={step} hostName={selectedNode?.hostName} />}
         />
         {isErrorTrackingEnabled && (
