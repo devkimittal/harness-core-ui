@@ -438,31 +438,6 @@ describe('Test COGatewayList', () => {
       servicesSpy.mockClear()
     })
 
-    test('render empty page component for no rules created', () => {
-      const servicesSpy = jest.spyOn(lwServices, 'useGetServices')
-      servicesSpy.mockImplementation(
-        () =>
-          ({
-            data: { response: null },
-            loading: false,
-            error: null,
-            refetch: jest.fn()
-          } as any)
-      )
-      const { container, getByText } = render(
-        <TestWrapper>
-          <COGatewayList />
-        </TestWrapper>
-      )
-      expect(container).toMatchSnapshot()
-
-      const createAsBtn = getByText('ce.co.newAutoStoppingRule')
-      expect('createAsBtn').toBeDefined()
-      act(() => {
-        fireEvent.click(createAsBtn)
-      })
-    })
-
     test('render table loader component when data is loading', () => {
       jest.spyOn(lwServices, 'useGetServices').mockImplementation(
         () =>
