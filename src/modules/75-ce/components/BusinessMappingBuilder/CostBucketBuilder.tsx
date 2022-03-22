@@ -32,6 +32,83 @@ import RuleViewer from './RuleViewer/RuleViewer'
 import type { PillData } from '../PerspectiveBuilderFilters/PerspectiveBuilderFilter'
 import css from './CostBucketBuilder.module.scss'
 
+interface HeaderActionButtonsProps {
+  isEditOpen: boolean | undefined
+  index: number
+  setFieldValue: any
+  removeCostBucket: () => void
+  namespace: string
+  isViewerOpen: boolean | undefined
+}
+
+const HeaderActionButtons: (props: HeaderActionButtonsProps) => React.ReactElement = ({
+  isEditOpen,
+  index,
+  setFieldValue,
+  removeCostBucket,
+  namespace,
+  isViewerOpen
+}) => {
+  if (isEditOpen) {
+    return (
+      <>
+        <Button
+          icon="tick"
+          iconProps={{
+            size: 20
+          }}
+          className={css.buttonNoPadding}
+          minimal
+          intent="primary"
+          onClick={async () => {
+            setFieldValue(`${namespace}[${index}].isOpen`, false)
+          }}
+        />
+        <Button
+          icon="cross"
+          className={css.buttonNoPadding}
+          iconProps={{
+            size: 20
+          }}
+          minimal
+          intent="primary"
+          onClick={() => {
+            removeCostBucket()
+          }}
+        />
+      </>
+    )
+  }
+  return (
+    <>
+      <Button
+        icon="Edit"
+        className={css.buttonNoPadding}
+        iconProps={{
+          size: 16
+        }}
+        minimal
+        intent="primary"
+        onClick={() => {
+          setFieldValue(`${namespace}[${index}].isOpen`, true)
+        }}
+      />
+      <Button
+        icon={isViewerOpen ? 'chevron-up' : 'chevron-down'}
+        className={css.buttonNoPadding}
+        iconProps={{
+          size: 20
+        }}
+        minimal
+        intent="primary"
+        onClick={() => {
+          setFieldValue(`${namespace}[${index}].isViewerOpen`, !isViewerOpen)
+        }}
+      />
+    </>
+  )
+}
+
 interface CostBucketBuilderProps {
   fieldValuesList: QlceViewFieldIdentifierData[]
   value: CostTargetType | SharedCostType
@@ -90,61 +167,14 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                   className={css.nameInput}
                 />
                 <FlexExpander />
-                {isEditOpen ? (
-                  <>
-                    <Button
-                      icon="tick"
-                      iconProps={{
-                        size: 20
-                      }}
-                      className={css.buttonNoPadding}
-                      minimal
-                      intent="primary"
-                      onClick={async () => {
-                        setFieldValue(`${namespace}[${index}].isOpen`, false)
-                      }}
-                    />
-                    <Button
-                      icon="cross"
-                      className={css.buttonNoPadding}
-                      iconProps={{
-                        size: 20
-                      }}
-                      minimal
-                      intent="primary"
-                      onClick={() => {
-                        removeCostBucket()
-                      }}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      icon="Edit"
-                      className={css.buttonNoPadding}
-                      iconProps={{
-                        size: 16
-                      }}
-                      minimal
-                      intent="primary"
-                      onClick={() => {
-                        setFieldValue(`${namespace}[${index}].isOpen`, true)
-                      }}
-                    />
-                    <Button
-                      icon={isViewerOpen ? 'chevron-up' : 'chevron-down'}
-                      className={css.buttonNoPadding}
-                      iconProps={{
-                        size: 20
-                      }}
-                      minimal
-                      intent="primary"
-                      onClick={() => {
-                        setFieldValue(`${namespace}[${index}].isViewerOpen`, !isViewerOpen)
-                      }}
-                    />
-                  </>
-                )}
+                <HeaderActionButtons
+                  isEditOpen={isEditOpen}
+                  index={index}
+                  setFieldValue={setFieldValue}
+                  removeCostBucket={removeCostBucket}
+                  namespace={namespace}
+                  isViewerOpen={isViewerOpen}
+                />
               </Layout.Horizontal>
               {isEditOpen ? (
                 <Container

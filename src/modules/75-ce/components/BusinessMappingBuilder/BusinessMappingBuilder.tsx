@@ -20,6 +20,7 @@ import {
 } from '@harness/uicore'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
+import { get } from 'lodash-es'
 import { useFetchViewFieldsQuery, QlceViewFilterWrapperInput, QlceViewFieldIdentifierData } from 'services/ce/services'
 import { CostBucketWidgetType, CostTargetType, SharedCostType } from '@ce/types'
 import { useCreateBusinessMapping } from 'services/ce'
@@ -29,7 +30,6 @@ import CostBucketStep from './CostBucketStep/CostBucketStep'
 import Step from './Step/Step'
 import ManageUnallocatedCost from './ManageUnallocatedCost/ManageUnallocatedCost'
 import css from './BusinessMappingBuilder.module.scss'
-import { get } from 'lodash'
 
 interface BusinessMappingForm {
   costTargets: Array<CostTargetType>
@@ -97,8 +97,8 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
     values.accountId = accountId
 
     values.costTargets.forEach(costTarget => {
-      delete costTarget?.isOpen
-      delete costTarget?.isViewerOpen
+      delete costTarget.isOpen
+      delete costTarget.isViewerOpen
       delete (costTarget as SharedCostType).strategy
     })
 
