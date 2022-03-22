@@ -42,7 +42,7 @@ describe('GitOps Adapters List snapshot test', () => {
   })
 
   test('Render and check adapters', async () => {
-    const { findByText: findByAdapterText } = setup()
+    const { getByText: findByAdapterText } = setup()
     adapatersMockData?.data?.content?.forEach(adapter => {
       expect(findByAdapterText(adapter?.name)).toBeTruthy()
     })

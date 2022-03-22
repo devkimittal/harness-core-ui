@@ -150,7 +150,7 @@ describe('BuildStageSetupShell snapshot test', () => {
 
   test('advances through tabs and finalizes saving when click "Done"', async () => {
     const contextMock = getContextValue()
-    const { container, findByTestId, findByText } = render(
+    const { container, findByTestId, getByText } = render(
       <TestWrapper pathParams={{ accountId: 'dummy', orgIdentifier: 'dummy', projectIdentifier: 'dummy' }}>
         <PipelineContext.Provider value={contextMock}>
           <StageErrorContext.Provider
@@ -168,10 +168,11 @@ describe('BuildStageSetupShell snapshot test', () => {
       </TestWrapper>
     )
     expect(container.querySelector('#stageDetails')).not.toBeNull()
-    fireEvent.click(await findByText('ci.next'))
-    await waitFor(() => expect(findByText('pipelineSteps.build.infraSpecifications.whereToRun')).not.toBeNull())
+    fireEvent.click(await getByText('ci.next'))
+    await waitFor(() => expect(getByText('pipelineSteps.build.infraSpecifications.whereToRun')).not.toBeNull())
     fireEvent.click(await findByTestId('ci.advancedLabel'))
-    fireEvent.click(await findByText('Done'))
+    await waitFor(() => getByText('Done'))
+    fireEvent.click(getByText('Done'))
     expect(contextMock.updatePipelineView).toHaveBeenCalled()
   })
 
