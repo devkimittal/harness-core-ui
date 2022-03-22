@@ -18,7 +18,11 @@ import {
   Dialog,
   Layout,
   MultiTypeInputType,
-  SelectOption
+  SelectOption,
+  VisualYamlSelectedView as SelectedView,
+  VisualYamlToggle,
+  getErrorInfoFromErrorObject,
+  Container
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
 import * as Yup from 'yup'
@@ -35,7 +39,9 @@ import {
   ServiceYaml,
   useGetServiceAccessList,
   useGetServiceList,
-  useUpsertServiceV2
+  useUpsertServiceV2,
+  useCreateServicesV2,
+  useGetYamlSchema
 } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'
 import { loggerFor } from 'framework/logging/logging'
@@ -46,12 +52,18 @@ import type { PipelineType } from '@common/interfaces/RouteInterfaces'
 import { useToaster } from '@common/exports'
 import { useVariablesExpression } from '@pipeline/components/PipelineStudio/PiplineHooks/useVariablesExpression'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
-import type { CompletionItemInterface } from '@common/interfaces/YAMLBuilderProps'
+import type {
+  CompletionItemInterface,
+  YamlBuilderHandlerBinding,
+  YamlBuilderProps
+} from '@common/interfaces/YAMLBuilderProps'
 
 import { NameIdDescriptionTags, PageSpinner } from '@common/components'
 import { usePermission } from '@rbac/hooks/usePermission'
 import { ResourceType } from '@rbac/interfaces/ResourceType'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
+import { getScopeFromDTO } from '@common/components/EntityReference/EntityReference'
+import YAMLBuilder from '@common/components/YAMLBuilder/YamlBuilder'
 import { StageErrorContext } from '@pipeline/context/StageErrorContext'
 import { DeployTabs } from '@cd/components/PipelineStudio/DeployStageSetupShell/DeployStageSetupShellUtils'
 import { getServiceRefSchema } from '@cd/components/PipelineSteps/PipelineStepsUtil'
@@ -71,6 +83,33 @@ interface NewEditServiceModalProps {
   closeModal?: () => void
 }
 
+const yamlBuilderReadOnlyModeProps: YamlBuilderProps = {
+  fileName: `service.yaml`,
+  entityType: 'Service',
+  width: '100%',
+  height: 194,
+  showSnippetSection: false,
+  yamlSanityConfig: {
+    removeEmptyString: false,
+    removeEmptyObject: false,
+    removeEmptyArray: false
+  }
+}
+
+const cleanData = (values: ServiceRequestDTO): ServiceRequestDTO => {
+  const newDescription = values.description?.toString().trim()
+  const newId = values.identifier?.toString().trim()
+  const newName = values.name?.toString().trim()
+  return {
+    name: newName,
+    identifier: newId,
+    orgIdentifier: values.orgIdentifier,
+    projectIdentifier: values.projectIdentifier,
+    description: newDescription,
+    tags: values.tags
+  }
+}
+
 export const NewEditServiceModal: React.FC<NewEditServiceModalProps> = ({
   isEdit,
   data,
@@ -86,6 +125,13 @@ export const NewEditServiceModal: React.FC<NewEditServiceModalProps> = ({
     accountId: string
   }>()
 
+  const [yamlHandler, setYamlHandler] = React.useState<YamlBuilderHandlerBinding | undefined>()
+  const [selectedView, setSelectedView] = React.useState<SelectedView>(SelectedView.VISUAL)
+  const { loading: createLoading, mutate: createService } = useCreateServicesV2({
+    queryParams: {
+      accountIdentifier: accountId
+    }
+  })
   const { loading: updateLoading, mutate: updateService } = useUpsertServiceV2({
     queryParams: {
       accountIdentifier: accountId
@@ -98,9 +144,16 @@ export const NewEditServiceModal: React.FC<NewEditServiceModalProps> = ({
   const { showSuccess, showError, clear } = useToaster()
 
   const onSubmit = React.useCallback(
-    async (values: ServiceRequestDTO) => {
+    async (value: ServiceRequestDTO) => {
       try {
-        if (isEdit && !isService) {
+        const values = cleanData(value)
+        if (!values.name) {
+          showError(getString('fieldRequired', { field: 'Service' }))
+        } else if (!values.identifier) {
+          showError(getString('common.validation.fieldIsRequired', { name: 'Identifier' }))
+        } else if (isEdit && id !== values.identifier) {
+          showError(getString('cd.editIdError', { id: id }))
+        } else if (isEdit && !isService) {
           const response = await updateService({
             ...omit(values, 'accountId', 'deleted'),
             orgIdentifier,
@@ -112,11 +165,7 @@ export const NewEditServiceModal: React.FC<NewEditServiceModalProps> = ({
             onCreateOrUpdate(values)
           }
         } else {
-          const response = await updateService({
-            ...omit(values, 'accountId', 'deleted'),
-            orgIdentifier,
-            projectIdentifier
-          })
+          const response = await createService([{ ...values, orgIdentifier, projectIdentifier }])
           if (response.status === 'SUCCESS') {
             clear()
             showSuccess(getString('cd.serviceCreated'))
@@ -124,56 +173,130 @@ export const NewEditServiceModal: React.FC<NewEditServiceModalProps> = ({
           }
         }
       } catch (e) {
-        showError(e?.data?.message || e?.message || getString('commonError'))
+        showError(getErrorInfoFromErrorObject(e, true))
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [onCreateOrUpdate, orgIdentifier, projectIdentifier, isEdit, isService]
   )
 
-  if (updateLoading) {
+  const formikRef = React.useRef<FormikProps<ServiceResponseDTO>>()
+  const id = data.identifier
+  const { data: serviceSchema } = useGetYamlSchema({
+    queryParams: {
+      entityType: 'Service',
+      projectIdentifier,
+      orgIdentifier,
+      accountIdentifier: accountId,
+      scope: getScopeFromDTO({ accountIdentifier: accountId, orgIdentifier, projectIdentifier })
+    }
+  })
+
+  const handleModeSwitch = React.useCallback(
+    (view: SelectedView) => {
+      if (view === SelectedView.VISUAL) {
+        const yaml = defaultTo(yamlHandler?.getLatestYaml(), '')
+        const serviceSetYamlVisual = parse(yaml).service as ServiceResponseDTO
+        if (serviceSetYamlVisual) {
+          formikRef.current?.setValues({
+            ...omit(cleanData(serviceSetYamlVisual) as ServiceResponseDTO)
+          })
+        }
+      }
+      setSelectedView(view)
+    },
+    [yamlHandler?.getLatestYaml, data]
+  )
+  if (createLoading || updateLoading) {
     return <PageSpinner />
   }
 
   return (
-    <Formik<Required<ServiceResponseDTO>>
-      initialValues={data as Required<ServiceResponseDTO>}
-      formName="deployService"
-      enableReinitialize={false}
-      onSubmit={values => {
-        onSubmit(values)
-      }}
-      validationSchema={Yup.object().shape({
-        name: NameSchema({ requiredErrorMsg: getString?.('fieldRequired', { field: 'Service' }) }),
-        identifier: IdentifierSchema()
-      })}
-    >
-      {formikProps => (
-        <FormikForm>
-          <NameIdDescriptionTags
-            formikProps={formikProps}
-            identifierProps={{
-              inputLabel: getString('name'),
-              inputGroupProps: {
-                inputGroup: {
-                  inputRef: ref => (inputRef.current = ref)
-                }
-              },
-              isIdentifierEditable: !isEdit
+    <>
+      <Container className={css.yamlToggle}>
+        <Layout.Horizontal flex={{ justifyContent: 'flex-start' }} padding-top="8px">
+          <VisualYamlToggle
+            selectedView={selectedView}
+            onChange={nextMode => {
+              handleModeSwitch(nextMode)
             }}
           />
-          <Layout.Horizontal spacing="small" padding={{ top: 'xlarge' }}>
-            <Button
-              variation={ButtonVariation.PRIMARY}
-              type={'submit'}
-              text={getString('save')}
-              data-id="service-save"
-            />
-            <Button variation={ButtonVariation.TERTIARY} text={getString('cancel')} onClick={closeModal} />
-          </Layout.Horizontal>
-        </FormikForm>
-      )}
-    </Formik>
+        </Layout.Horizontal>
+      </Container>
+      <Formik<Required<ServiceResponseDTO>>
+        initialValues={data as Required<ServiceResponseDTO>}
+        formName="deployService"
+        enableReinitialize={false}
+        onSubmit={values => {
+          onSubmit(values)
+        }}
+        validationSchema={Yup.object().shape({
+          name: NameSchema({ requiredErrorMsg: getString?.('fieldRequired', { field: 'Service' }) }),
+          identifier: IdentifierSchema()
+        })}
+      >
+        {formikProps => {
+          formikRef.current = formikProps
+          return (
+            <>
+              {selectedView === SelectedView.VISUAL ? (
+                <FormikForm>
+                  <NameIdDescriptionTags
+                    formikProps={formikProps}
+                    identifierProps={{
+                      inputLabel: getString('name'),
+                      inputGroupProps: {
+                        inputGroup: {
+                          inputRef: ref => (inputRef.current = ref)
+                        }
+                      },
+                      isIdentifierEditable: !isEdit
+                    }}
+                  />
+                  <Layout.Horizontal spacing="small" padding={{ top: 'xlarge' }}>
+                    <Button
+                      variation={ButtonVariation.PRIMARY}
+                      type={'submit'}
+                      text={getString('save')}
+                      data-id="service-save"
+                    />
+                    <Button variation={ButtonVariation.TERTIARY} text={getString('cancel')} onClick={closeModal} />
+                  </Layout.Horizontal>
+                </FormikForm>
+              ) : (
+                <Container className={css.editor}>
+                  <YAMLBuilder
+                    {...yamlBuilderReadOnlyModeProps}
+                    existingJSON={{
+                      service: {
+                        ...omit(formikProps?.values),
+                        description: defaultTo(formikProps.values.description, ''),
+                        tags: defaultTo(formikProps.values.tags, {})
+                      }
+                    }}
+                    bind={setYamlHandler}
+                    schema={serviceSchema?.data}
+                    showSnippetSection={false}
+                  />
+                  <Layout.Horizontal spacing={'xsmall'} padding={{ top: 'large' }}>
+                    <Button
+                      variation={ButtonVariation.PRIMARY}
+                      type="submit"
+                      text={getString('save')}
+                      onClick={() => {
+                        const latestYaml = defaultTo(yamlHandler?.getLatestYaml(), '')
+                        onSubmit(parse(latestYaml)?.service)
+                      }}
+                    />
+                    <Button variation={ButtonVariation.TERTIARY} onClick={closeModal} text={getString('cancel')} />
+                  </Layout.Horizontal>
+                </Container>
+              )}
+            </>
+          )
+        }}
+      </Formik>
+    </>
   )
 }
 
@@ -276,7 +399,13 @@ export const DeployServiceWidget: React.FC<DeployServiceProps> = ({
         title={state.isEdit ? getString('editService') : getString('newService')}
       >
         <NewEditServiceModal
-          data={state.data || { name: '', identifier: '' }}
+          data={{
+            name: defaultTo(state.data?.name, ''),
+            identifier: defaultTo(state.data?.identifier, ''),
+            orgIdentifier,
+            projectIdentifier,
+            ...state.data
+          }}
           isEdit={state.isEdit}
           isService={state.isService}
           onCreateOrUpdate={value => {
@@ -570,7 +699,13 @@ const DeployServiceInputStep: React.FC<DeployServiceProps & { formik?: any }> = 
         className={'padded-dialog'}
       >
         <NewEditServiceModal
-          data={state.data || { name: '', identifier: '', orgIdentifier, projectIdentifier }}
+          data={{
+            name: defaultTo(state.data?.name, ''),
+            identifier: defaultTo(state.data?.identifier, ''),
+            orgIdentifier,
+            projectIdentifier,
+            ...state.data
+          }}
           isEdit={state.isEdit}
           isService={state.isService}
           onCreateOrUpdate={values => {

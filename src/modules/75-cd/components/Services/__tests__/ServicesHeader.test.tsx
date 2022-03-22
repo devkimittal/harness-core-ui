@@ -10,6 +10,15 @@ import { render, fireEvent, getByText } from '@testing-library/react'
 import { TestWrapper, findDialogContainer } from '@common/utils/testUtils'
 import { ServicesHeader } from '@cd/components/Services/ServicesHeader/ServicesHeader'
 
+jest.mock('services/cd-ng', () => {
+  return {
+    useGetYamlSchema: jest.fn(() => ({ data: null })),
+    useDeleteServiceV2: jest.fn(() => ({ mutate: jest.fn() })),
+    useCreateServicesV2: jest.fn(() => ({ data: null })),
+    useUpsertServiceV2: jest.fn(() => ({ data: null }))
+  }
+})
+
 describe('ServiceHeader', () => {
   test('render', () => {
     const { container } = render(

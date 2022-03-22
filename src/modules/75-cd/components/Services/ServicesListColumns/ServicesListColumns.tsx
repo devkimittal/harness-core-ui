@@ -31,7 +31,7 @@ import { useStrings } from 'framework/strings'
 import { useDeleteServiceV2 } from 'services/cd-ng'
 
 import RbacMenuItem from '@rbac/components/MenuItem/MenuItem'
-import { NewEditServiceModalYaml } from '../ServicesListPage/ServiceModal'
+import { NewEditServiceModal } from '@cd/components/PipelineSteps/DeployServiceStep/DeployServiceStep'
 import css from './ServicesListColumns.module.scss'
 
 interface ServiceRow {
@@ -77,7 +77,7 @@ const ServiceMenu = (props: ServiceItemProps): React.ReactElement => {
         className={cx('padded-dialog', css.serviceDialogStyles)}
       >
         <Container>
-          <NewEditServiceModalYaml
+          <NewEditServiceModal
             data={
               {
                 ...pick(service, ['name', 'identifier', 'orgIdentifier', 'projectIdentifier', 'description', 'tags'])

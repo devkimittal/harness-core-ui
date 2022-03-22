@@ -14,19 +14,21 @@ import type { Column } from 'react-table'
 import { useModalHook } from '@harness/use-modal'
 import { Dialog } from '@blueprintjs/core'
 import { useEnvironmentStore, ParamsType } from '@cd/components/Environments/common'
-import { EnvironmentResponseDTO, useDeleteEnvironmentV2, useGetEnvironmentListForProject } from 'services/cd-ng'
+import { EnvironmentResponseDTO, useDeleteEnvironmentV2, useGetEnvironmentList } from 'services/cd-ng'
 import { useToaster } from '@common/exports'
 import RbacButton from '@rbac/components/Button/Button'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
-import { ResourceType } from '@rbac/interfaces/ResourceType'
-// eslint-disable-next-line no-restricted-imports
-import ListingPageTemplate from '@cf/components/ListingPageTemplate/ListingPageTemplate'
-// eslint-disable-next-line no-restricted-imports
-import { ModifiedByCell, TypeCell } from '@cf/pages/environments/EnvironmentsPage'
 import { useStrings } from 'framework/strings'
+import { NewEditEnvironmentModal } from '@cd/components/PipelineSteps/DeployEnvStep/DeployEnvStep'
+import { ResourceType } from '@rbac/interfaces/ResourceType'
+import EnvironmentListingPageTemplate from './EnvironmentListingPageTemplate'
+import {
+  EnvironmentDescription,
+  EnvironmentMenu,
+  EnvironmentName,
+  EnvironmentTypes
+} from '../EnvironmentsListColumns/EnvironmentsListColumns'
 import EmptyContent from './EmptyContent.svg'
-import { NewEditEnvironmentModalYaml } from './EnvironmentsModal'
-import { EnvironmentDescription, EnvironmentName } from '../EnvironmentsListColumns/EnvironmentsListColumns'
 import css from './EnvironmentsList.module.scss'
 
 export const EnvironmentList: React.FC = () => {
@@ -39,7 +41,7 @@ export const EnvironmentList: React.FC = () => {
   const [editable, setEditable] = React.useState(false)
 
   const queryParams = {
-    accountId,
+    accountIdentifier: accountId,
     orgIdentifier,
     projectIdentifier,
     page: page,
@@ -51,7 +53,7 @@ export const EnvironmentList: React.FC = () => {
     loading,
     error,
     refetch
-  } = useGetEnvironmentListForProject({
+  } = useGetEnvironmentList({
     queryParams
   })
   const { mutate: deleteEnvironment } = useDeleteEnvironmentV2({
@@ -77,7 +79,7 @@ export const EnvironmentList: React.FC = () => {
         className={cx('padded-dialog', css.dialogStylesEnv)}
       >
         <Container>
-          <NewEditEnvironmentModalYaml
+          <NewEditEnvironmentModal
             data={
               rowData && editable
                 ? {
@@ -92,6 +94,7 @@ export const EnvironmentList: React.FC = () => {
                 : { name: '', identifier: '', orgIdentifier, projectIdentifier }
             }
             isEdit={editable}
+            isEnvironment={!editable}
             onCreateOrUpdate={() => {
               ;(fetchDeploymentList.current as () => void)?.()
               hideModal()
@@ -107,13 +110,13 @@ export const EnvironmentList: React.FC = () => {
     ),
     [fetchDeploymentList, orgIdentifier, projectIdentifier, rowData, editable]
   )
-  const environments = envData?.data?.content
+  const environments = envData?.data?.content?.map(environmentContent => environmentContent.environment)
   const hasEnvs = Boolean(!loading && envData?.data?.content?.length)
   const emptyEnvs = Boolean(!loading && envData?.data?.content?.length === 0)
 
   const handleEnvEdit = (id: string): void => {
     const dataRow = environments?.find(temp => {
-      return temp.identifier === id
+      return temp?.identifier === id
     })
     setEditable(true)
     setRowData(dataRow)
@@ -152,12 +155,12 @@ export const EnvironmentList: React.FC = () => {
         id: 'type',
         accessor: 'type',
         width: '15%',
-        Cell: TypeCell
+        Cell: EnvironmentTypes
       },
       {
         id: 'modifiedBy',
         width: '10%',
-        Cell: ModifiedByCell,
+        Cell: EnvironmentMenu,
         actions: {
           onEdit: handleEnvEdit,
           onDelete: handleEnvDelete
@@ -170,10 +173,9 @@ export const EnvironmentList: React.FC = () => {
   useEffect(() => {
     fetchDeploymentList.current = refetch
   }, [fetchDeploymentList, refetch])
-
   return (
     <>
-      <ListingPageTemplate
+      <EnvironmentListingPageTemplate
         title={getString('environments')}
         titleTooltipId="ff_env_heading"
         toolbar={
@@ -235,7 +237,7 @@ export const EnvironmentList: React.FC = () => {
             </Container>
           </Container>
         )}
-      </ListingPageTemplate>
+      </EnvironmentListingPageTemplate>
     </>
   )
 }

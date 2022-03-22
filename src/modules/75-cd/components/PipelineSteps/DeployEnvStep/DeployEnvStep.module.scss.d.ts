@@ -12,5 +12,6 @@ declare const styles: {
   readonly inputWidth: string
   readonly label: string
   readonly thumbnailSelect: string
+  readonly yamlToggleEnv: string
 }
 export default styles

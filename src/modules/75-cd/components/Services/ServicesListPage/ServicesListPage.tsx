@@ -28,7 +28,7 @@ import RbacButton from '@rbac/components/Button/Button'
 import { GetServiceListQueryParams, ServiceResponseDTO, useGetServiceList } from 'services/cd-ng'
 import type { ModulePathParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import routes from '@common/RouteDefinitions'
-import { NewEditServiceModalYaml } from './ServiceModal'
+import { NewEditServiceModal } from '@cd/components/PipelineSteps/DeployServiceStep/DeployServiceStep'
 
 import ServicesGridView from '../ServicesGridView/ServicesGridView'
 import ServicesListView from '../ServicesListView/ServicesListView'
@@ -79,7 +79,7 @@ export const ServicesListPage: React.FC = () => {
         className={cx('padded-dialog', css.dialogStyles)}
       >
         <Container>
-          <NewEditServiceModalYaml
+          <NewEditServiceModal
             data={{ name: '', identifier: '', orgIdentifier, projectIdentifier }}
             isEdit={false}
             isService

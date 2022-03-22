@@ -219,7 +219,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                     <p
                       class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
                     >
-                      foobar
+                      gjhjghjhg
                     </p>
                     <div
                       class="Layout--horizontal StyledProps--main StyledProps--flex"
@@ -229,7 +229,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                         style="font-size: 12px; line-height: 24px; word-break: break-word;"
                       >
                         Id: 
-                        foobar
+                        gjhjghjhg
                       </p>
                     </div>
                   </div>
@@ -249,9 +249,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                     <p
                       class="StyledProps--font Text--lineclamp StyledProps--main content"
                       style="--text-line-clamp: 1;"
-                    >
-                      
-                    </p>
+                    />
                   </div>
                 </div>
               </div>
@@ -263,7 +261,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                 <p
                   class="StyledProps--font StyledProps--main"
                 >
-                  nonProduction
+                  preProduction
                 </p>
               </div>
               <div
@@ -332,7 +330,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                     <p
                       class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
                     >
-                      QB
+                      asdd
                     </p>
                     <div
                       class="Layout--horizontal StyledProps--main StyledProps--flex"
@@ -342,1252 +340,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                         style="font-size: 12px; line-height: 24px; word-break: break-word;"
                       >
                         Id: 
-                        QB
-                      </p>
-                      <div
-                        class="tags"
-                      >
-                        <span
-                          class="bp3-popover-wrapper"
-                        >
-                          <span
-                            class="bp3-popover-target"
-                          >
-                            <div
-                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
-                              tabindex="0"
-                            >
-                              <span
-                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
-                                data-icon="main-tags"
-                              >
-                                <svg
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  width="14"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
-                                    fill="#4d5969"
-                                  />
-                                </svg>
-                              </span>
-                              <p
-                                class="StyledProps--font StyledProps--main"
-                              >
-                                6
-                              </p>
-                            </div>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      Harness QB environment
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      asdfasdfsa
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        asdfasdfsa
-                      </p>
-                      <div
-                        class="tags"
-                      >
-                        <span
-                          class="bp3-popover-wrapper"
-                        >
-                          <span
-                            class="bp3-popover-target"
-                          >
-                            <div
-                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
-                              tabindex="0"
-                            >
-                              <span
-                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
-                                data-icon="main-tags"
-                              >
-                                <svg
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  width="14"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
-                                    fill="#4d5969"
-                                  />
-                                </svg>
-                              </span>
-                              <p
-                                class="StyledProps--font StyledProps--main"
-                              >
-                                3
-                              </p>
-                            </div>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      sadfdsafsdfsadfsadfsdafsfsadfsdafdsaf
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      EnvironmentJuan
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        EnvironmentJuan
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      Another Production
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        Another_Production
-                      </p>
-                      <div
-                        class="tags"
-                      >
-                        <span
-                          class="bp3-popover-wrapper"
-                        >
-                          <span
-                            class="bp3-popover-target"
-                          >
-                            <div
-                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
-                              tabindex="0"
-                            >
-                              <span
-                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
-                                data-icon="main-tags"
-                              >
-                                <svg
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  width="14"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
-                                    fill="#4d5969"
-                                  />
-                                </svg>
-                              </span>
-                              <p
-                                class="StyledProps--font StyledProps--main"
-                              >
-                                3
-                              </p>
-                            </div>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      Another production env that can be used
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  production
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      Production Env
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        Production_Env
-                      </p>
-                      <div
-                        class="tags"
-                      >
-                        <span
-                          class="bp3-popover-wrapper"
-                        >
-                          <span
-                            class="bp3-popover-target"
-                          >
-                            <div
-                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
-                              tabindex="0"
-                            >
-                              <span
-                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
-                                data-icon="main-tags"
-                              >
-                                <svg
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  width="14"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
-                                    fill="#4d5969"
-                                  />
-                                </svg>
-                              </span>
-                              <p
-                                class="StyledProps--font StyledProps--main"
-                              >
-                                3
-                              </p>
-                            </div>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      this is a production environment to run an application do be careful when handling it
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  production
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      new environment
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        new_environment
-                      </p>
-                      <div
-                        class="tags"
-                      >
-                        <span
-                          class="bp3-popover-wrapper"
-                        >
-                          <span
-                            class="bp3-popover-target"
-                          >
-                            <div
-                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
-                              tabindex="0"
-                            >
-                              <span
-                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
-                                data-icon="main-tags"
-                              >
-                                <svg
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  width="14"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
-                                    fill="#4d5969"
-                                  />
-                                </svg>
-                              </span>
-                              <p
-                                class="StyledProps--font StyledProps--main"
-                              >
-                                1
-                              </p>
-                            </div>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      this is an environment
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      tagged env
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        tagged_env
-                      </p>
-                      <div
-                        class="tags"
-                      >
-                        <span
-                          class="bp3-popover-wrapper"
-                        >
-                          <span
-                            class="bp3-popover-target"
-                          >
-                            <div
-                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
-                              tabindex="0"
-                            >
-                              <span
-                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
-                                data-icon="main-tags"
-                              >
-                                <svg
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  width="14"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
-                                    fill="#4d5969"
-                                  />
-                                </svg>
-                              </span>
-                              <p
-                                class="StyledProps--font StyledProps--main"
-                              >
-                                1
-                              </p>
-                            </div>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      Another Environment
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        Another_Environment
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      env42
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        env42
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 35%;"
-              >
-                <div
-                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
-                >
-                  <div
-                    class="destination"
-                  >
-                    <p
-                      class="StyledProps--font Text--lineclamp StyledProps--main content"
-                      style="--text-line-clamp: 1;"
-                    >
-                      the 42th
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 15%;"
-              >
-                <p
-                  class="StyledProps--font StyledProps--main"
-                >
-                  nonProduction
-                </p>
-              </div>
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 10%;"
-              >
-                <div
-                  class="Layout--horizontal StyledProps--main"
-                  style="align-items: center; justify-content: flex-end;"
-                >
-                  <div
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    <span
-                      class="bp3-popover-wrapper"
-                    >
-                      <span
-                        class="bp3-popover-target"
-                      >
-                        <button
-                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
-                          type="button"
-                        >
-                          <span
-                            class="bp3-icon StyledProps--main"
-                            data-icon="Options"
-                          >
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 4 16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                clip-rule="evenodd"
-                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="TableV2--row TableV2--card TableV2--clickable"
-              role="row"
-            >
-              <div
-                class="TableV2--cell"
-                role="cell"
-                style="width: 40%;"
-              >
-                <div
-                  class="name"
-                >
-                  <div
-                    class="Layout--vertical StyledProps--main"
-                  >
-                    <p
-                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
-                    >
-                      CF Default
-                    </p>
-                    <div
-                      class="Layout--horizontal StyledProps--main StyledProps--flex"
-                    >
-                      <p
-                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
-                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
-                      >
-                        Id: 
-                        default
+                        fdf
                       </p>
                     </div>
                   </div>
@@ -1670,6 +423,599 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="TableV2--row TableV2--card TableV2--clickable"
+              role="row"
+            >
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 40%;"
+              >
+                <div
+                  class="name"
+                >
+                  <div
+                    class="Layout--vertical StyledProps--main"
+                  >
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
+                    >
+                      ddsffdgg
+                    </p>
+                    <div
+                      class="Layout--horizontal StyledProps--main StyledProps--flex"
+                    >
+                      <p
+                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
+                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
+                      >
+                        Id: 
+                        ddsffdgg
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 35%;"
+              >
+                <div
+                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
+                >
+                  <div
+                    class="destination"
+                  >
+                    <p
+                      class="StyledProps--font Text--lineclamp StyledProps--main content"
+                      style="--text-line-clamp: 1;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 15%;"
+              >
+                <p
+                  class="StyledProps--font StyledProps--main"
+                >
+                  production
+                </p>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 10%;"
+              >
+                <div
+                  class="Layout--horizontal StyledProps--main"
+                  style="align-items: center; justify-content: flex-end;"
+                >
+                  <div
+                    class="StyledProps--font StyledProps--main"
+                  >
+                    <span
+                      class="bp3-popover-wrapper"
+                    >
+                      <span
+                        class="bp3-popover-target"
+                      >
+                        <button
+                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
+                          type="button"
+                        >
+                          <span
+                            class="bp3-icon StyledProps--main"
+                            data-icon="Options"
+                          >
+                            <svg
+                              fill="none"
+                              height="16"
+                              viewBox="0 0 4 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="TableV2--row TableV2--card TableV2--clickable"
+              role="row"
+            >
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 40%;"
+              >
+                <div
+                  class="name"
+                >
+                  <div
+                    class="Layout--vertical StyledProps--main"
+                  >
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
+                    >
+                      asdfdf
+                    </p>
+                    <div
+                      class="Layout--horizontal StyledProps--main StyledProps--flex"
+                    >
+                      <p
+                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
+                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
+                      >
+                        Id: 
+                        asdfdf
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 35%;"
+              >
+                <div
+                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
+                >
+                  <div
+                    class="destination"
+                  >
+                    <p
+                      class="StyledProps--font Text--lineclamp StyledProps--main content"
+                      style="--text-line-clamp: 1;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 15%;"
+              >
+                <p
+                  class="StyledProps--font StyledProps--main"
+                >
+                  preProduction
+                </p>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 10%;"
+              >
+                <div
+                  class="Layout--horizontal StyledProps--main"
+                  style="align-items: center; justify-content: flex-end;"
+                >
+                  <div
+                    class="StyledProps--font StyledProps--main"
+                  >
+                    <span
+                      class="bp3-popover-wrapper"
+                    >
+                      <span
+                        class="bp3-popover-target"
+                      >
+                        <button
+                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
+                          type="button"
+                        >
+                          <span
+                            class="bp3-icon StyledProps--main"
+                            data-icon="Options"
+                          >
+                            <svg
+                              fill="none"
+                              height="16"
+                              viewBox="0 0 4 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="TableV2--row TableV2--card TableV2--clickable"
+              role="row"
+            >
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 40%;"
+              >
+                <div
+                  class="name"
+                >
+                  <div
+                    class="Layout--vertical StyledProps--main"
+                  >
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
+                    >
+                      qa
+                    </p>
+                    <div
+                      class="Layout--horizontal StyledProps--main StyledProps--flex"
+                    >
+                      <p
+                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
+                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
+                      >
+                        Id: 
+                        qa
+                      </p>
+                      <div
+                        class="tags"
+                      >
+                        <span
+                          class="bp3-popover-wrapper"
+                        >
+                          <span
+                            class="bp3-popover-target"
+                          >
+                            <div
+                              class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsPopover StyledProps--flex StyledProps--flex-align-center-center"
+                              tabindex="0"
+                            >
+                              <span
+                                class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-grey600"
+                                data-icon="main-tags"
+                              >
+                                <svg
+                                  height="14"
+                                  viewBox="0 0 14 14"
+                                  width="14"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M7 0h-.2c-.2 0-.4.1-.6.3l-6 6c-.3.3-.3.8 0 1.1L2 9.1l4.6 4.6c.3.3.8.3 1.1 0l6-6c.2-.1.3-.3.3-.5v-.7-.3-1.3-2c0-.5-.4-1-1-1h-.9V1c0-.5-.4-1-1-1H7zm0 .6h4.2c.2 0 .4.2.4.4v.9h-1.1c-.3-.3-.5-.4-.8-.4s-.4.1-.6.3h-.5c-.2.1-.4.1-.6.3l-6 6s-.1.1-.1.2L.7 6.9c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1c0 .1.1.1.1.1zm1.9 1.8H13c.2 0 .4.2.4.4v4.3s0 .2-.1.2l-6 6c-.1.1-.2.1-.3 0L2.5 8.8c-.1-.1-.1-.2 0-.3l6-6s.1-.1.2-.1zm2.7.9c-.2 0-.5.1-.6.3-.4.4-.4.9 0 1.3s.9.4 1.3 0 .4-.9 0-1.3c-.3-.2-.5-.3-.7-.3zm0 .7c.1 0 .2 0 .2.1.1.1.1.3 0 .4s-.3.1-.4 0-.1-.3 0-.4c0-.1.1-.1.2-.1z"
+                                    fill="#4d5969"
+                                  />
+                                </svg>
+                              </span>
+                              <p
+                                class="StyledProps--font StyledProps--main"
+                              >
+                                1
+                              </p>
+                            </div>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 35%;"
+              >
+                <div
+                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
+                >
+                  <div
+                    class="destination"
+                  >
+                    <p
+                      class="StyledProps--font Text--lineclamp StyledProps--main content"
+                      style="--text-line-clamp: 1;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 15%;"
+              >
+                <p
+                  class="StyledProps--font StyledProps--main"
+                >
+                  production
+                </p>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 10%;"
+              >
+                <div
+                  class="Layout--horizontal StyledProps--main"
+                  style="align-items: center; justify-content: flex-end;"
+                >
+                  <div
+                    class="StyledProps--font StyledProps--main"
+                  >
+                    <span
+                      class="bp3-popover-wrapper"
+                    >
+                      <span
+                        class="bp3-popover-target"
+                      >
+                        <button
+                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
+                          type="button"
+                        >
+                          <span
+                            class="bp3-icon StyledProps--main"
+                            data-icon="Options"
+                          >
+                            <svg
+                              fill="none"
+                              height="16"
+                              viewBox="0 0 4 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="TableV2--row TableV2--card TableV2--clickable"
+              role="row"
+            >
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 40%;"
+              >
+                <div
+                  class="name"
+                >
+                  <div
+                    class="Layout--vertical StyledProps--main"
+                  >
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
+                    >
+                      asd
+                    </p>
+                    <div
+                      class="Layout--horizontal StyledProps--main StyledProps--flex"
+                    >
+                      <p
+                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
+                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
+                      >
+                        Id: 
+                        asd
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 35%;"
+              >
+                <div
+                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
+                >
+                  <div
+                    class="destination"
+                  >
+                    <p
+                      class="StyledProps--font Text--lineclamp StyledProps--main content"
+                      style="--text-line-clamp: 1;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 15%;"
+              >
+                <p
+                  class="StyledProps--font StyledProps--main"
+                >
+                  production
+                </p>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 10%;"
+              >
+                <div
+                  class="Layout--horizontal StyledProps--main"
+                  style="align-items: center; justify-content: flex-end;"
+                >
+                  <div
+                    class="StyledProps--font StyledProps--main"
+                  >
+                    <span
+                      class="bp3-popover-wrapper"
+                    >
+                      <span
+                        class="bp3-popover-target"
+                      >
+                        <button
+                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
+                          type="button"
+                        >
+                          <span
+                            class="bp3-icon StyledProps--main"
+                            data-icon="Options"
+                          >
+                            <svg
+                              fill="none"
+                              height="16"
+                              viewBox="0 0 4 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="TableV2--row TableV2--card TableV2--clickable"
+              role="row"
+            >
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 40%;"
+              >
+                <div
+                  class="name"
+                >
+                  <div
+                    class="Layout--vertical StyledProps--main"
+                  >
+                    <p
+                      class="StyledProps--font StyledProps--main StyledProps--color StyledProps--color-black"
+                    >
+                      sdf
+                    </p>
+                    <div
+                      class="Layout--horizontal StyledProps--main StyledProps--flex"
+                    >
+                      <p
+                        class="StyledProps--font StyledProps--main StyledProps--margin-top-xsmall StyledProps--margin-right-medium StyledProps--color StyledProps--color-grey500"
+                        style="font-size: 12px; line-height: 24px; word-break: break-word;"
+                      >
+                        Id: 
+                        sdf
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 35%;"
+              >
+                <div
+                  class="Layout--vertical StyledProps--main sourceDestinationWrapper"
+                >
+                  <div
+                    class="destination"
+                  >
+                    <p
+                      class="StyledProps--font Text--lineclamp StyledProps--main content"
+                      style="--text-line-clamp: 1;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 15%;"
+              >
+                <p
+                  class="StyledProps--font StyledProps--main"
+                >
+                  preProduction
+                </p>
+              </div>
+              <div
+                class="TableV2--cell"
+                role="cell"
+                style="width: 10%;"
+              >
+                <div
+                  class="Layout--horizontal StyledProps--main"
+                  style="align-items: center; justify-content: flex-end;"
+                >
+                  <div
+                    class="StyledProps--font StyledProps--main"
+                  >
+                    <span
+                      class="bp3-popover-wrapper"
+                    >
+                      <span
+                        class="bp3-popover-target"
+                      >
+                        <button
+                          class="bp3-button bp3-minimal Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--without-shadow Button--withLeftIcon"
+                          type="button"
+                        >
+                          <span
+                            class="bp3-icon StyledProps--main"
+                            data-icon="Options"
+                          >
+                            <svg
+                              fill="none"
+                              height="16"
+                              viewBox="0 0 4 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M2 12.5a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zm2-12a1 1 0 100 2 1 1 0 000-2zm-2 1a2 2 0 114 0 2 2 0 01-4 0zM2 7a1 1 0 100 2 1 1 0 000-2zM0 8a2 2 0 114 0 2 2 0 01-4 0z"
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1683,7 +1029,9 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
         <span
           class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small-semi"
         >
-          (1 - 15) of 20
+          7
+           of 
+          7
         </span>
         <div
           class="Layout--horizontal StyledProps--main"
@@ -1732,17 +1080,9 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
             </span>
           </button>
           <button
-            class="bp3-button Button--button StyledProps--font StyledProps--main Pagination--roundedButton Button--with-current-color"
-            type="button"
-          >
-            <span
-              class="bp3-button-text"
-            >
-              2
-            </span>
-          </button>
-          <button
-            class="bp3-button Button--button StyledProps--font StyledProps--main Pagination--roundedButton Pagination--buttonRight Button--with-current-color Button--withRightIcon Button--size Button--small"
+            class="bp3-button bp3-disabled Button--button StyledProps--font StyledProps--main Pagination--roundedButton Pagination--buttonRight Button--with-current-color Button--withRightIcon Button--size Button--small"
+            disabled=""
+            tabindex="-1"
             type="button"
           >
             <span
@@ -1772,7 +1112,7 @@ exports[`EnvironmentList Should go to edit modal by clicking edit 1`] = `
           </button>
         </div>
         <span>
-          Showing 15 per page
+          Showing 100 per page
         </span>
       </div>
     </footer>
@@ -2084,7 +1424,7 @@ exports[`EnvironmentList Should open Add Environment Modal on click 1`] = `
                         <p
                           class="StyledProps--font StyledProps--main Thumbnail--label StyledProps--color StyledProps--color-black"
                         >
-                          nonProduction
+                          preProduction
                         </p>
                       </div>
                       <input
@@ -2111,7 +1451,6 @@ exports[`EnvironmentList Should open Add Environment Modal on click 1`] = `
                   save
                 </span>
               </button>
-               
               <button
                 class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--variation Button--variation-tertiary"
                 type="button"

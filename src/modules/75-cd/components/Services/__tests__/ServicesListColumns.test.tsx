@@ -12,10 +12,16 @@ import mockImport from 'framework/utils/mockImport'
 import { TestWrapper, findDialogContainer } from '@common/utils/testUtils'
 import { ServiceName, ServiceDescription, ServiceMenu } from '../ServicesListColumns/ServicesListColumns'
 
-jest.mock('services/pipeline-ng', () => {
+jest.mock('services/cd-ng', () => {
   return {
-    useGetSchemaYaml: jest.fn(() => ({ data: null }))
+    useGetYamlSchema: jest.fn(() => ({ data: null })),
+    useDeleteServiceV2: jest.fn(() => ({ mutate: jest.fn() })),
+    useCreateServicesV2: jest.fn(() => ({ data: null })),
+    useUpsertServiceV2: jest.fn(() => ({ data: null }))
   }
+})
+const mutate = jest.fn(() => {
+  return Promise.resolve({ data: {} })
 })
 
 describe('ServiceListColumns', () => {
@@ -73,10 +79,6 @@ describe('ServiceMenu', () => {
   })
 
   test('Should allow deleting', async () => {
-    const mutate = jest.fn(() => {
-      return Promise.resolve({ data: {} })
-    })
-
     mockImport('services/cd-ng', {
       useDeleteServiceV2: () => ({
         mutate

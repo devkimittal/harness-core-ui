@@ -6,12 +6,13 @@
  */
 
 import React from 'react'
-import { render, fireEvent, getByText, act } from '@testing-library/react'
+import { render, fireEvent, getByText, act, waitFor } from '@testing-library/react'
 import { RUNTIME_INPUT_VALUE } from '@wings-software/uicore'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { StepViewType } from '@pipeline/components/AbstractSteps/Step'
-import { findDialogContainer } from '@common/utils/testUtils'
+import { findDialogContainer, TestWrapper } from '@common/utils/testUtils'
 import { fillAtForm, InputTypes } from '@common/utils/JestFormHelper'
+import { NewEditEnvironmentModal } from '../DeployEnvStep'
 import { DeployEnvironment } from '../DeployEnvStep.stories'
 import environments from './mock.json'
 import inputSetEnvironments from './envMock'
@@ -25,6 +26,33 @@ jest.mock('services/cd-ng', () => ({
   useGetEnvironmentAccessList: jest
     .fn()
     .mockImplementation(() => ({ loading: false, data: inputSetEnvironments, refetch: jest.fn() })),
+  useGetYamlSchema: jest.fn(() => ({ data: null })),
+  useCreateEnvironmentV2: jest.fn().mockImplementation(() => ({
+    cancel: jest.fn(),
+    loading: false,
+    mutate: jest.fn().mockImplementation(obj => {
+      environments.data.content.push({
+        environment: {
+          accountId: 'AQ8xhfNCRtGIUjq5bSM8Fg',
+          orgIdentifier: 'default',
+          projectIdentifier: 'asdasd',
+          identifier: obj.identifier,
+          name: obj.name,
+          description: null,
+          color: '#0063F7',
+          type: obj.type,
+          deleted: false,
+          tags: {},
+          version: 1
+        },
+        createdAt: null,
+        lastModifiedAt: null
+      })
+      return {
+        status: 'SUCCESS'
+      }
+    })
+  })),
   useUpsertEnvironmentV2: jest.fn().mockImplementation(() => ({
     cancel: jest.fn(),
     loading: false,
@@ -35,6 +63,15 @@ jest.mock('services/cd-ng', () => ({
     })
   }))
 }))
+
+const onSave = jest.fn()
+const onClose = jest.fn()
+const props = {
+  data: { name: '', identifier: '', description: '', tags: {} },
+  onCreateOrUpdate: onSave,
+  closeModal: onClose
+}
+
 describe('Test DeployEnvironment Step', () => {
   test('should render environment view and save', async () => {
     const { container, getByLabelText } = render(
@@ -79,7 +116,7 @@ describe('Test DeployEnvironment Step', () => {
       }
     ])
     fireEvent.click(getByText(dialog!, 'Change'))
-    fireEvent.click(getByLabelText('nonProduction'))
+    fireEvent.click(getByLabelText('preProduction'))
     await act(async () => {
       fireEvent.click(getByText(dialog!, 'save'))
     })
@@ -217,5 +254,56 @@ describe('Test DeployEnvironment Step', () => {
       "environmentRef: qa
       "
     `)
+  })
+})
+
+describe('render modal ', () => {
+  test('NewEditEnvironmentModal', () => {
+    const { container } = render(
+      <TestWrapper>
+        <NewEditEnvironmentModal isEdit={false} isEnvironment={true} {...props} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+    fireEvent.click(getByText(container, 'save'))
+    fireEvent.click(getByText(container, 'YAML'))
+    fireEvent.click(getByText(container, 'save'))
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should validate edit mode snapshot', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <NewEditEnvironmentModal
+          {...props}
+          isEdit={true}
+          isEnvironment={false}
+          data={{
+            name: 'Environment 101',
+            identifier: 'Environment_101',
+            description: '',
+            tags: { tag1: '', tag2: '' },
+            type: 'Production'
+          }}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => expect(container.querySelector('input[value="Environment 101"]')).toBeTruthy())
+
+    fillAtForm([
+      {
+        container,
+        fieldId: 'name',
+        type: InputTypes.TEXTFIELD,
+        value: 'Environment 102'
+      }
+    ])
+
+    await act(async () => {
+      fireEvent.click(getByText(container, 'save'))
+    })
+
+    expect(container).toMatchSnapshot()
   })
 })

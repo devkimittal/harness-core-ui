@@ -162,6 +162,35 @@ exports[`ServiceHeader should open and close the Services modal 1`] = `
     </button>
   </div>
   <div
+    class="StyledProps--font StyledProps--main yamlToggle"
+  >
+    <div
+      class="Layout--horizontal StyledProps--main StyledProps--flex StyledProps--flex-justifyContent-flex-start"
+      padding-top="8px"
+    >
+      <div
+        class="PillToggle--optionBtns"
+      >
+        <div
+          class="PillToggle--item PillToggle--selected"
+          data-name="toggle-option-one"
+          role="button"
+          tabindex="0"
+        >
+          VISUAL
+        </div>
+        <div
+          class="PillToggle--item"
+          data-name="toggle-option-two"
+          role="button"
+          tabindex="0"
+        >
+          YAML
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
     class="OverlaySpinner--overlaySpinner"
   >
     <form

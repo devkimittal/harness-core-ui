@@ -8,20 +8,29 @@
 import React from 'react'
 import { render, getByText, getAllByText, fireEvent, waitFor } from '@testing-library/react'
 import { TestWrapper, findDialogContainer } from '@common/utils/testUtils'
+import mockEnvironments from '@cd/components/PipelineSteps/DeployEnvStep/__tests__/mock.json'
 import mockImport from 'framework/utils/mockImport'
 import { EnvironmentList } from '../EnvironmentList/EnvironmentsList'
-import mockEnvironments from './mockEnvironments'
 
-jest.mock('services/pipeline-ng', () => {
+const mutate = jest.fn(() => {
+  return Promise.resolve({ data: {} })
+})
+jest.mock('services/cd-ng', () => {
   return {
-    useGetSchemaYaml: jest.fn(() => ({ data: null }))
+    useGetYamlSchema: jest.fn(() => ({ data: null })),
+    useGetEnvironmentList: jest
+      .fn()
+      .mockImplementation(() => ({ loading: false, data: mockEnvironments, refetch: jest.fn() })),
+    useCreateEnvironmentV2: jest.fn(() => ({ data: null })),
+    useUpsertEnvironmentV2: jest.fn(() => ({ data: null })),
+    useDeleteEnvironmentV2: jest.fn(() => ({ mutate }))
   }
 })
 
 describe('EnvironmentList', () => {
   test('EnvironmentList should render loading correctly', async () => {
     mockImport('services/cd-ng', {
-      useGetEnvironmentListForProject: () => ({ loading: true, refetch: jest.fn() })
+      useGetEnvironmentList: () => ({ loading: true, refetch: jest.fn() })
     })
 
     const { container } = render(
@@ -40,7 +49,7 @@ describe('EnvironmentList', () => {
     const message = 'ERROR OCCURS'
 
     mockImport('services/cd-ng', {
-      useGetEnvironmentListForProject: () => ({ error: { message }, refetch: jest.fn() })
+      useGetEnvironmentList: () => ({ error: { message }, refetch: jest.fn() })
     })
     render(
       <TestWrapper
@@ -55,7 +64,7 @@ describe('EnvironmentList', () => {
 
   test('EnvironmentList should render data correctly', async () => {
     mockImport('services/cd-ng', {
-      useGetEnvironmentListForProject: () => ({
+      useGetEnvironmentList: () => ({
         data: mockEnvironments,
         loading: false,
         error: undefined,
@@ -72,8 +81,8 @@ describe('EnvironmentList', () => {
       </TestWrapper>
     )
 
-    expect(getAllByText(document.body, mockEnvironments.data.content[0].name)).toBeDefined()
-    expect(getAllByText(document.body, mockEnvironments.data.content[1].name)).toBeDefined()
+    expect(getAllByText(document.body, mockEnvironments.data.content[0].environment.name)).toBeDefined()
+    expect(getAllByText(document.body, mockEnvironments.data.content[1].environment.name)).toBeDefined()
   })
   test('Should open Add Environment Modal on click', () => {
     const { container } = render(
@@ -92,7 +101,7 @@ describe('EnvironmentList', () => {
 
   test('Should go to edit modal by clicking edit', async () => {
     mockImport('services/cd-ng', {
-      useGetEnvironmentListForProject: () => ({
+      useGetEnvironmentList: () => ({
         data: mockEnvironments,
         loading: false,
         error: undefined,
@@ -116,18 +125,8 @@ describe('EnvironmentList', () => {
   })
 
   test('Should allow deleting', async () => {
-    const mutate = jest.fn(() => {
-      return Promise.resolve({ data: {} })
-    })
-
     mockImport('services/cd-ng', {
-      useDeleteEnvironmentV2: () => ({
-        mutate
-      })
-    })
-
-    mockImport('services/cd-ng', {
-      useGetEnvironmentListForProject: () => ({
+      useGetEnvironmentList: () => ({
         data: mockEnvironments,
         loading: false,
         error: undefined,

@@ -475,7 +475,7 @@ exports[`ServicesListPage Should open Add-ServiceModal, grid and list view on cl
                 >
                   <div
                     class="Text--withDocsTooltip"
-                    data-tooltip-id="addService_identifier"
+                    data-tooltip-id="deployService_identifier"
                   >
                     <p
                       class="StyledProps--font StyledProps--main"
@@ -542,7 +542,7 @@ exports[`ServicesListPage Should open Add-ServiceModal, grid and list view on cl
                   >
                     <span
                       class="Tooltip--acenter"
-                      data-tooltip-id="addService_name"
+                      data-tooltip-id="deployService_name"
                     >
                       name
                     </span>
@@ -642,7 +642,7 @@ exports[`ServicesListPage Should open Add-ServiceModal, grid and list view on cl
               </div>
             </div>
             <div
-              class="Layout--horizontal StyledProps--main editServiceSaveCancel"
+              class="Layout--horizontal Layout--layout-spacing-small StyledProps--main StyledProps--padding-top-xlarge"
             >
               <button
                 class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--variation Button--variation-primary"
@@ -655,7 +655,6 @@ exports[`ServicesListPage Should open Add-ServiceModal, grid and list view on cl
                   save
                 </span>
               </button>
-               
               <button
                 class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--variation Button--variation-tertiary"
                 type="button"

@@ -7,12 +7,18 @@
  **/
 // this is an auto-generated file, do not update this manually
 declare const styles: {
+  readonly content: string
   readonly dialogStylesEnv: string
+  readonly footer: string
+  readonly header: string
   readonly horizontalTabs: string
   readonly label: string
+  readonly layout: string
+  readonly loading: string
   readonly noEnvHeading: string
   readonly noEnvText: string
   readonly thumbnailSelect: string
+  readonly toolbar: string
   readonly yamlToggleEnv: string
 }
 export default styles

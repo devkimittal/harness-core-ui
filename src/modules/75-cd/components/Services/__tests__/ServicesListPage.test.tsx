@@ -14,12 +14,6 @@ import { TestWrapper, findDialogContainer } from '@common/utils/testUtils'
 import { serviceListResponse, serviceListResponseWithoutIdentifier } from '@cd/mock'
 import { ServicesListPage } from '../ServicesListPage/ServicesListPage'
 
-jest.mock('services/pipeline-ng', () => {
-  return {
-    useGetSchemaYaml: jest.fn(() => ({ data: null }))
-  }
-})
-
 jest.mock('services/cd-ng', () => {
   return {
     useGetServiceList: jest.fn(() => ({
@@ -27,6 +21,7 @@ jest.mock('services/cd-ng', () => {
       loading: false,
       refetch: jest.fn()
     })),
+    useGetYamlSchema: jest.fn(() => ({ data: null })),
     useCreateServicesV2: jest.fn(() => ({ mutate: jest.fn() })),
     useUpsertServiceV2: jest.fn(() => ({ mutate: jest.fn() })),
     useDeleteServiceV2: jest.fn(() => ({ mutate: jest.fn() }))

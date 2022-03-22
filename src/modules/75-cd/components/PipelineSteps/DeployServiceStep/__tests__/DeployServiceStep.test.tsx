@@ -6,22 +6,58 @@
  */
 
 import React from 'react'
-import { render, fireEvent, getByText, act } from '@testing-library/react'
+import { render, fireEvent, getByText, act, waitFor } from '@testing-library/react'
 import { RUNTIME_INPUT_VALUE } from '@wings-software/uicore'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { StepViewType } from '@pipeline/components/AbstractSteps/Step'
-import { findDialogContainer } from '@common/utils/testUtils'
+import { findDialogContainer, TestWrapper } from '@common/utils/testUtils'
 import { fillAtForm, InputTypes } from '@common/utils/JestFormHelper'
 import { DeployService } from '../DeployServiceStep.stories'
+import { NewEditServiceModal } from '../DeployServiceStep'
 import serviceData, { inputSetServiceData } from './serviceMock'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
+const onSave = jest.fn()
+const onClose = jest.fn()
+
+const props = {
+  isEdit: false,
+  data: { name: 'demo', identifier: 'demo1', orgIdentifier: 'orgIdentifier', projectIdentifier: 'projectIdentifier' },
+  isService: true,
+  onCreateOrUpdate: onSave,
+  closeModal: onClose
+}
 
 jest.mock('services/cd-ng', () => ({
   useGetServiceList: jest.fn().mockImplementation(() => ({ loading: false, data: serviceData, refetch: jest.fn() })),
   useGetServiceAccessList: jest
     .fn()
     .mockImplementation(() => ({ loading: false, data: inputSetServiceData, refetch: jest.fn() })),
+  useGetYamlSchema: jest.fn(() => ({ data: null })),
+  useCreateServicesV2: jest.fn().mockImplementation(() => ({
+    cancel: jest.fn(),
+    loading: false,
+    mutate: jest.fn().mockImplementation(obj => {
+      serviceData.data.content.push({
+        service: {
+          accountId: 'AQ8xhfNCRtGIUjq5bSM8Fg',
+          identifier: obj[0].identifier,
+          orgIdentifier: 'default',
+          projectIdentifier: 'asdsaff',
+          name: obj[0].name,
+          description: null,
+          deleted: false,
+          tags: {},
+          version: 9
+        },
+        createdAt: null,
+        lastModifiedAt: null
+      })
+      return {
+        status: 'SUCCESS'
+      }
+    })
+  })),
   useUpsertServiceV2: jest.fn().mockImplementation(() => ({
     cancel: jest.fn(),
     loading: false,
@@ -32,6 +68,7 @@ jest.mock('services/cd-ng', () => ({
     })
   }))
 }))
+
 describe('Test DeployService Step', () => {
   test('should render service view and save', async () => {
     const { container } = render(
@@ -248,5 +285,55 @@ describe('Test DeployService Step', () => {
       "serviceRef: QA
       "
     `)
+  })
+})
+
+describe('SeviceModal ', () => {
+  test('should render Services modal', () => {
+    const { container } = render(
+      <TestWrapper>
+        <NewEditServiceModal {...props} />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+    fireEvent.click(getByText(container, 'save'))
+    fireEvent.click(getByText(container, 'YAML'))
+    fireEvent.click(getByText(container, 'save'))
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should validate edit mode snapshot', async () => {
+    const { container } = render(
+      <TestWrapper>
+        <NewEditServiceModal
+          {...props}
+          isEdit={true}
+          isService={false}
+          data={{
+            name: 'Service 101',
+            identifier: 'Service_101',
+            orgIdentifier: 'orgIdentifier',
+            projectIdentifier: 'projectIdentifier'
+          }}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => expect(container.querySelector('input[value="Service 101"]')).toBeTruthy())
+
+    fillAtForm([
+      {
+        container,
+        fieldId: 'name',
+        type: InputTypes.TEXTFIELD,
+        value: 'Service 102'
+      }
+    ])
+
+    await act(async () => {
+      fireEvent.click(getByText(container, 'save'))
+    })
+
+    expect(container).toMatchSnapshot()
   })
 })

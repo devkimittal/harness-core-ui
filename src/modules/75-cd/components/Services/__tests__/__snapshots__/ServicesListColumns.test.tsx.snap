@@ -292,7 +292,7 @@ exports[`ServiceMenu Should go to editModal by clicking edit 2`] = `
                 >
                   <div
                     class="Text--withDocsTooltip"
-                    data-tooltip-id="addService_identifier"
+                    data-tooltip-id="deployService_identifier"
                   >
                     <p
                       class="StyledProps--font StyledProps--main"
@@ -332,7 +332,7 @@ exports[`ServiceMenu Should go to editModal by clicking edit 2`] = `
                   >
                     <span
                       class="Tooltip--acenter"
-                      data-tooltip-id="addService_name"
+                      data-tooltip-id="deployService_name"
                     >
                       name
                     </span>
@@ -432,7 +432,7 @@ exports[`ServiceMenu Should go to editModal by clicking edit 2`] = `
               </div>
             </div>
             <div
-              class="Layout--horizontal StyledProps--main editServiceSaveCancel"
+              class="Layout--horizontal Layout--layout-spacing-small StyledProps--main StyledProps--padding-top-xlarge"
             >
               <button
                 class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--variation Button--variation-primary"
@@ -445,7 +445,6 @@ exports[`ServiceMenu Should go to editModal by clicking edit 2`] = `
                   save
                 </span>
               </button>
-               
               <button
                 class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--variation Button--variation-tertiary"
                 type="button"

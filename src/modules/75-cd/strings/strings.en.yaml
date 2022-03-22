@@ -24,6 +24,10 @@ serviceCreated: '{{ $.common.serviceCreated }}'
 serviceUpdated: '{{ $.common.serviceUpdated }}'
 environmentCreated: '{{ $.common.environmentCreated }}'
 environmentUpdated: '{{ $.common.environmentUpdated }}'
+environmentDelete: 'Delete Environment '
+environments:
+  delete:
+    message: 'Are you sure you want to delete environment <strong>{{name}}</strong>? '
 namespaceValidation: Namespace must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character (e.g. 'my-name',  or '123-abc')
 releaseNameValidation: Release name must consist of lowercase alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character (e.g. http://example.com). Harness evaluates the release name using the regex [a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*
 cdTrialHomePage:

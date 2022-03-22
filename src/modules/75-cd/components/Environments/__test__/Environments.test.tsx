@@ -13,7 +13,7 @@ import { Environments } from '../Environments'
 jest.mock('services/cd-ng', () => {
   return {
     useEnvironmentStore: jest.fn(),
-    useGetEnvironmentListForProject: jest.fn(() => ({ refetch: jest.fn() })),
+    useGetEnvironmentList: jest.fn(() => ({ refetch: jest.fn() })),
     useDeleteEnvironmentV2: jest.fn(() => ({ mutate: jest.fn() }))
   }
 })

@@ -222,6 +222,7 @@ newEnvironment: New Environment
 editEnvironment: Edit Environment
 envType: Environment Type
 production: '{{$.common.production}}'
+preProduction: PreProduction
 nonProduction: Non-Production
 primaryArtifactText: Primary Artifact
 artifactDisplay: '{{image}} (tag: #{{tag}})'

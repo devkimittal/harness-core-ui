@@ -6,10 +6,17 @@
  */
 
 import React from 'react'
-import { Layout, TagsPopover, Text } from '@harness/uicore'
+import { Layout, TagsPopover, Text, Container } from '@harness/uicore'
 import { Color } from '@harness/design-system'
 import { defaultTo, isEmpty } from 'lodash-es'
-
+import { useConfirmAction } from '@common/hooks/useConfirmAction'
+import { useStrings } from 'framework/strings'
+import type { EnvironmentResponseDTO } from 'services/cd-ng'
+import RbacOptionsMenuButton from '@rbac/components/RbacOptionsMenuButton/RbacOptionsMenuButton'
+import { ResourceType } from '@rbac/interfaces/ResourceType'
+import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
+import { EnvironmentType } from '@common/constants/EnvironmentType'
+import { withTableData } from '@cd/utils/tableUtils'
 import css from './EnvironmentsListColumns.module.scss'
 
 interface EnvironmentRow {
@@ -69,5 +76,69 @@ const EnvironmentDescription = ({ row }: EnvironmentRow): React.ReactElement => 
     </Layout.Vertical>
   )
 }
+
+type EnvData = { environment: EnvironmentResponseDTO }
+const withEnvironment = withTableData<EnvironmentResponseDTO, EnvData>(({ row }) => ({ environment: row.original }))
+const withActions = withTableData<
+  EnvironmentResponseDTO,
+  EnvData & { actions: { [P in 'onEdit' | 'onDelete']?: (id: string) => void } }
+>(({ row, column }) => ({
+  environment: row.original,
+  actions: (column as any).actions as { [P in 'onEdit' | 'onDelete']?: (id: string) => void }
+}))
+
+export const EnvironmentTypes = withEnvironment(({ environment }) => {
+  const { getString } = useStrings()
+  return <Text>{getString(environment.type === EnvironmentType.PRODUCTION ? 'production' : 'preProduction')}</Text>
+})
+
+export const EnvironmentMenu = withActions(({ environment, actions }) => {
+  const { getString } = useStrings()
+  const identifier = environment.identifier as string
+  const deleteEnvironment = useConfirmAction({
+    title: getString('cd.environmentDelete'),
+    message: (
+      <span
+        dangerouslySetInnerHTML={{ __html: getString('cd.environments.delete.message', { name: environment.name }) }}
+      />
+    ),
+    action: () => {
+      actions.onDelete?.(identifier)
+    }
+  })
+
+  return (
+    <Layout.Horizontal style={{ alignItems: 'center', justifyContent: 'flex-end' }}>
+      <Container
+        onClick={(e: React.MouseEvent) => {
+          e.stopPropagation()
+        }}
+      >
+        <RbacOptionsMenuButton
+          items={[
+            {
+              icon: 'edit',
+              text: getString('edit'),
+              onClick: () => actions.onEdit?.(identifier),
+              permission: {
+                resource: { resourceType: ResourceType.ENVIRONMENT },
+                permission: PermissionIdentifier.EDIT_ENVIRONMENT
+              }
+            },
+            {
+              icon: 'trash',
+              text: getString('delete'),
+              onClick: deleteEnvironment,
+              permission: {
+                resource: { resourceType: ResourceType.ENVIRONMENT },
+                permission: PermissionIdentifier.DELETE_ENVIRONMENT
+              }
+            }
+          ]}
+        />
+      </Container>
+    </Layout.Horizontal>
+  )
+})
 
 export { EnvironmentName, EnvironmentDescription }
