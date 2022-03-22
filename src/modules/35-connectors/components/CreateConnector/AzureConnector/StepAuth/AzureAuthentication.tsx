@@ -6,6 +6,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
+import { FontVariation } from '@harness/design-system'
 import {
   Layout,
   Button,
@@ -15,7 +16,6 @@ import {
   Container,
   PageSpinner,
   ThumbnailSelect,
-  FontVariation,
   FormInput,
   SelectOption,
   ButtonVariation
