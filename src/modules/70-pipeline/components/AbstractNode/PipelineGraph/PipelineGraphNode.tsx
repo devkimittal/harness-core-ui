@@ -152,6 +152,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                 intersectingIndex={intersectingIndex}
                 readonly={readOnlyValue}
                 updateGraphLinks={updateGraphLinks}
+                selectedNodeId={selectedNode}
                 {...data}
               />
             ) : (
@@ -172,6 +173,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                   nextNode={nextNode}
                   updateGraphLinks={updateGraphLinks}
                   readonly={readOnlyValue}
+                  selectedNodeId={selectedNode}
                   {...data}
                 />
               )
@@ -204,6 +206,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                   nextNode={nextNode}
                   readonly={readOnlyValue}
                   updateGraphLinks={updateGraphLinks}
+                  selectedNodeId={selectedNode}
                 />
               )
             ) : (
@@ -226,6 +229,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                     identifier={currentNodeData.identifier}
                     intersectingIndex={intersectingIndex}
                     readonly={readOnlyValue}
+                    selectedNodeId={selectedNode}
                     updateGraphLinks={updateGraphLinks}
                   />
                 ) : indexRelativeToParent > intersectingIndex && intersectingIndex !== -1 ? null : (
@@ -246,6 +250,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                       nextNode={nextNode}
                       readonly={readOnlyValue}
                       updateGraphLinks={updateGraphLinks}
+                      selectedNodeId={selectedNode}
                     />
                   )
                 )}

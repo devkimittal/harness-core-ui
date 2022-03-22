@@ -36,6 +36,7 @@ function PipelineStepNode(props: any): JSX.Element {
     stepStatus,
     ExecutionPipelineNodeType.NORMAL
   )
+  const isNodeSelected = props.isSelected || props?.selectedNodeId === props?.id
   return (
     <div
       className={cx(css.defaultNode, 'default-node', {
@@ -100,7 +101,7 @@ function PipelineStepNode(props: any): JSX.Element {
         data-nodeid={props.id}
         draggable={true && !props.readonly}
         className={cx(css.defaultCard, {
-          [css.selected]: props?.isSelected,
+          [css.selected]: isNodeSelected,
           [css.failed]: stepStatus === ExecutionStatusEnum.Failed,
           [css.runningNode]: stepStatus === ExecutionStatusEnum.Running
         })}
@@ -146,9 +147,9 @@ function PipelineStepNode(props: any): JSX.Element {
         {(stepData?.icon || props?.icon) && (
           <Icon
             size={28}
-            color={props.isSelected ? Utils.getRealCSSColor(Color.WHITE) : stepIconColor}
+            color={isNodeSelected ? Color.WHITE : stepIconColor}
             name={stepData?.icon || props?.icon || 'cross'}
-            inverse={props?.isSelected || (stepStatus as string) === ExecutionStatusEnum.Failed}
+            inverse={isNodeSelected || (stepStatus as string) === ExecutionStatusEnum.Failed}
           />
         )}
         {secondaryIcon && (
@@ -160,7 +161,9 @@ function PipelineStepNode(props: any): JSX.Element {
             {...secondaryIconProps}
           />
         )}
-        {CODE_ICON && <Icon className={css.codeIcon} size={8} name={CODE_ICON} />}
+        {CODE_ICON && (
+          <Icon className={css.codeIcon} color={isNodeSelected ? Color.WHITE : undefined} size={8} name={CODE_ICON} />
+        )}
 
         <Button
           className={cx(css.closeNode, { [css.readonly]: props.readonly })}
