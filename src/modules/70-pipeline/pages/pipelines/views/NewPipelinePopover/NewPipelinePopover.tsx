@@ -98,6 +98,9 @@ export function NewPipelinePopover({
       position={Position.BOTTOM}
       className={cx(css.main, className)}
       portalClassName={cx(css.popover, portalClassName)}
+      usePortal={false}
+      minimal={true}
+      disabled={!canEdit}
       {...popoverProps}
     >
       <Button
