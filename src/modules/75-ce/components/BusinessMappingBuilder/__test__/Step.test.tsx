@@ -63,9 +63,40 @@ describe('test cases for Step Component', () => {
       </TestWrapper>
     )
 
+    expect(container).toMatchSnapshot()
     expect(queryByText(container, 'Sample Step')).toBeInTheDocument()
     const actionButton = queryByText(container, 'New')
     fireEvent.click(actionButton!)
     expect(actionClick).toHaveBeenCalledTimes(1)
+  })
+
+  test('should be able to render the component and click on create new button', async () => {
+    const actionClick = jest.fn()
+    const { container } = render(
+      <TestWrapper pathParams={params}>
+        <Step
+          stepProps={{
+            color: Color.PURPLE_900,
+            background: Color.PURPLE_100,
+            total: 3,
+            current: 2,
+            defaultOpen: false
+          }}
+          title="Sample Step"
+          actionButtonProps={{
+            showActionButton: true,
+            actionButtonText: 'New',
+            actionOnClick: actionClick
+          }}
+        >
+          <div />
+        </Step>
+      </TestWrapper>
+    )
+
+    expect(queryByText(container, 'Sample Step')).toBeInTheDocument()
+    const actionButton = queryByText(container, 'chevron-down')
+    fireEvent.click(actionButton!)
+    expect(container.querySelector("[aria-hidden='false']")).not.toBeNull()
   })
 })

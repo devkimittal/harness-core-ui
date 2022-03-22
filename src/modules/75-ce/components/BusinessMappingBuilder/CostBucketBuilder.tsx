@@ -164,10 +164,12 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                           {value.rules?.map((rule, index1) => {
                             const indexCopy = index1
 
+                            /* istanbul ignore next */
                             const removeRow: () => void = () => {
                               arrayHelper.remove(index1)
                             }
 
+                            /* istanbul ignore next */
                             const setField: (id: number, data: Omit<PillData, 'type'>) => void = (id, data) => {
                               setFieldValue(`${namespace}[${index}].rules[${indexCopy}].viewConditions[${id}]`, data)
                             }
@@ -194,11 +196,13 @@ const CostBucketBuilder: (props: CostBucketBuilderProps) => React.ReactElement =
                             }}
                             variation={ButtonVariation.SECONDARY}
                             text="OR"
-                            onClick={() => {
-                              arrayHelper.push({
-                                viewConditions: [EMPTY_PERSPECTIVE_RULE]
-                              })
-                            }}
+                            onClick={
+                              /* istanbul ignore next */ () => {
+                                arrayHelper.push({
+                                  viewConditions: [EMPTY_PERSPECTIVE_RULE]
+                                })
+                              }
+                            }
                           />
                         </Container>
                       )

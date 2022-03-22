@@ -56,9 +56,11 @@ const BusinessMapping: () => React.ReactElement = () => {
           canEscapeKeyClose
           position={Position.RIGHT}
           isOpen={drawerOpen}
-          onClose={() => {
-            setDrawerOpen(false)
-          }}
+          onClose={
+            /* istanbul ignore next */ () => {
+              setDrawerOpen(false)
+            }
+          }
         >
           <BusinessMappingBuilder />
         </Drawer>

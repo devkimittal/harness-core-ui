@@ -53,6 +53,7 @@ const CostBucketStep: (props: CostBucketStepProps) => React.ReactElement = ({
     <FieldArray
       name={namespace}
       render={arrayHelper => {
+        /* istanbul ignore next */
         const addNewCostBucket: () => void = () => {
           arrayHelper.push({
             name: '',
@@ -86,16 +87,18 @@ const CostBucketStep: (props: CostBucketStepProps) => React.ReactElement = ({
               }}
             >
               <DragDropContext
-                onDragEnd={(result: DropResult) => {
-                  if (!result.destination) {
-                    return
+                onDragEnd={
+                  /* istanbul ignore next */ (result: DropResult) => {
+                    if (!result.destination) {
+                      return
+                    }
+                    const res = Array.from(value)
+                    const [removed] = res.splice(result.source.index, 1)
+                    res.splice(result.destination.index, 0, removed)
+                    formikProps.setFieldValue(`${namespace}Key`, namespaceKey + 1)
+                    formikProps.setFieldValue(namespace, res as any)
                   }
-                  const res = Array.from(value)
-                  const [removed] = res.splice(result.source.index, 1)
-                  res.splice(result.destination.index, 0, removed)
-                  formikProps.setFieldValue(`${namespace}Key`, namespaceKey + 1)
-                  formikProps.setFieldValue(namespace, res as any)
-                }}
+                }
               >
                 <Droppable droppableId={`droppable-${namespace}`} type={`cost-bucket-${namespace}`}>
                   {provided => (

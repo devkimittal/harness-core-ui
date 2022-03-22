@@ -6,7 +6,9 @@
  */
 
 import React from 'react'
-import { queryByText, render } from '@testing-library/react'
+import { queryByText, render, fireEvent, act } from '@testing-library/react'
+import { Provider } from 'urql'
+import { fromValue } from 'wonka'
 import { TestWrapper } from '@common/utils/testUtils'
 import BusinessMapping from '../BusinessMapping'
 
@@ -18,6 +20,14 @@ const params = {
 
 jest.mock('services/ce', () => ({
   useGetBusinessMappingList: jest.fn().mockImplementation(() => ({
+    mutate: async () => {
+      return {
+        status: 'SUCCESS',
+        data: {}
+      }
+    }
+  })),
+  useCreateBusinessMapping: jest.fn().mockImplementation(() => ({
     mutate: async () => {
       return {
         status: 'SUCCESS',
@@ -36,5 +46,27 @@ describe('test cases for Business Mapping List Page', () => {
     )
 
     expect(queryByText(container, 'ce.businessMapping.newButton')).toBeInTheDocument()
+  })
+
+  test('should be able to render the list page and open side drawer', async () => {
+    const responseState = {
+      executeQuery: () => {
+        return fromValue({})
+      }
+    }
+    const { container } = render(
+      <TestWrapper pathParams={params}>
+        <Provider value={responseState as any}>
+          <BusinessMapping />
+        </Provider>
+      </TestWrapper>
+    )
+
+    const newButton = queryByText(container, 'ce.businessMapping.newButton')
+    act(() => {
+      fireEvent.click(newButton!)
+    })
+
+    expect(queryByText(document.body, 'ce.businessMapping.costBucket.title')).toBeInTheDocument()
   })
 })
