@@ -201,6 +201,7 @@ function ActivityCell(tableProps: CellProps<Service>): JSX.Element {
 }
 function ResourcesCell(tableProps: CellProps<Service>): JSX.Element {
   const { accountId } = useParams<AccountPathProps>()
+  const { getString } = useStrings()
   const isK8sRule = tableProps.row.original.kind === 'k8s'
   const { data, loading: healthLoading } = useHealthOfService({
     account_id: accountId,
@@ -264,7 +265,7 @@ function ResourcesCell(tableProps: CellProps<Service>): JSX.Element {
                   marginRight: 5
                 }}
               >
-                No. of instances:
+                {getString('ce.co.noOfInstances')}
               </Text>
               {!resourcesLoading && resources?.response ? (
                 <Link
@@ -307,7 +308,10 @@ function ResourcesCell(tableProps: CellProps<Service>): JSX.Element {
                   marginRight: 5
                 }}
               >
-                {`No. of Tasks: ${_defaultTo(tableProps.row.original.routing?.container_svc?.task_count, 0)}`}
+                {`${getString('ce.co.noOfTasks')} ${_defaultTo(
+                  tableProps.row.original.routing?.container_svc?.task_count,
+                  0
+                )}`}
               </Text>
               {getStateTag(tableProps.row.original.routing?.container_svc?.task_count ? 'active' : 'down')}
             </>

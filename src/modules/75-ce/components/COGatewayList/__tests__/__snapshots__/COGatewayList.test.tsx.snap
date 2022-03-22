@@ -732,7 +732,7 @@ exports[`Test COGatewayList clicking on a row should open info drawer 1`] = `
                           class="StyledProps--font StyledProps--main"
                           style="align-self: center; margin-right: 5px;"
                         >
-                          No. of instances:
+                          ce.co.noOfInstances
                         </p>
                         <span
                           class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-blue500"
@@ -965,7 +965,7 @@ exports[`Test COGatewayList clicking on a row should open info drawer 1`] = `
                           class="StyledProps--font StyledProps--main"
                           style="align-self: center; color: rgb(107, 109, 133); margin-right: 5px;"
                         >
-                          No. of instances:
+                          ce.co.noOfInstances
                         </p>
                         <span
                           class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-blue500"
@@ -1932,7 +1932,7 @@ exports[`Test COGatewayList clicking on refresh button refetch all rules 1`] = `
                           class="StyledProps--font StyledProps--main"
                           style="align-self: center; margin-right: 5px;"
                         >
-                          No. of instances:
+                          ce.co.noOfInstances
                         </p>
                         <span
                           class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-blue500"
@@ -2165,7 +2165,7 @@ exports[`Test COGatewayList clicking on refresh button refetch all rules 1`] = `
                           class="StyledProps--font StyledProps--main"
                           style="align-self: center; color: rgb(107, 109, 133); margin-right: 5px;"
                         >
-                          No. of instances:
+                          ce.co.noOfInstances
                         </p>
                         <span
                           class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-blue500"
@@ -3675,7 +3675,7 @@ exports[`Test COGatewayList renders without crashing 1`] = `
                           class="StyledProps--font StyledProps--main"
                           style="align-self: center; margin-right: 5px;"
                         >
-                          No. of instances:
+                          ce.co.noOfInstances
                         </p>
                         <span
                           class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-blue500"
@@ -3908,7 +3908,7 @@ exports[`Test COGatewayList renders without crashing 1`] = `
                           class="StyledProps--font StyledProps--main"
                           style="align-self: center; color: rgb(107, 109, 133); margin-right: 5px;"
                         >
-                          No. of instances:
+                          ce.co.noOfInstances
                         </p>
                         <span
                           class="bp3-icon StyledProps--main StyledProps--color StyledProps--color-blue500"

@@ -3722,6 +3722,8 @@ export interface StringsMap {
   'ce.co.landingPageText': string
   'ce.co.newAutoStoppingRule': string
   'ce.co.noData': string
+  'ce.co.noOfInstances': string
+  'ce.co.noOfTasks': string
   'ce.co.ruleDrawer.logs': string
   'ce.co.ruleDrawer.spendVsSavings': string
   'ce.co.ruleDrawer.usageTime': string

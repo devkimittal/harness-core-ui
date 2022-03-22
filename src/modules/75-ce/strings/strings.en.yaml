@@ -35,6 +35,8 @@ co:
   searchResultsText: 'Showing {{count}} search results for "{{text}}"'
   emptyResultText: 'No rules found for {{string}}'
   selectResourceGroupPlaceholder: '{{$.select}} Resource Groups'
+  noOfTasks: 'No. of tasks:'
+  noOfInstances: 'No. of instances:'
   landingPageText:
     '<b>AutoStopping Rules</b> dynamically make sure that your <i>non-production workloads</i> are <b>running (and costing you)
     only when you’re using them</b>, and never when they are idle. Additionally, run your workloads on fully

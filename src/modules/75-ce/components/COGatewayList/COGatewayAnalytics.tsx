@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 import { isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
 import { Switch, Tab } from '@blueprintjs/core'
 import copy from 'copy-to-clipboard'
-import { Layout, Container, Text, Icon, Link, Tabs, Heading } from '@wings-software/uicore'
+import { Layout, Container, Text, Icon, Link, Tabs, Heading, Color } from '@wings-software/uicore'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useParams } from 'react-router-dom'
@@ -275,9 +275,8 @@ const COGatewayAnalytics: React.FC<COGatewayAnalyticsProps> = props => {
                             resources as AllResourcesOfAccountResponse
                           )}
                           target="_blank"
-                          style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                         >
-                          {resources?.response?.length} Instances
+                          <Text>{`${resources?.response?.length} ${getString('common.instanceLabel')}`}</Text>
                         </Link>
                       ) : (
                         <Icon name="spinner" size={12} color="blue500" />
@@ -403,10 +402,10 @@ const CumulativeSavingsSection = (props: { service?: Service }) => {
   })
 
   return (
-    <Container padding="medium" style={{ backgroundColor: '#f7fbfe' }}>
+    <Container padding="medium" style={{ backgroundColor: 'var(--blue-50)' }}>
       <Layout.Horizontal spacing="large">
         {loading ? (
-          <Icon name="spinner" size={12} color="blue500" />
+          <Icon name="spinner" size={12} color={Color.BLUE_500} />
         ) : (
           <>
             {/* <Layout.Horizontal spacing="medium">

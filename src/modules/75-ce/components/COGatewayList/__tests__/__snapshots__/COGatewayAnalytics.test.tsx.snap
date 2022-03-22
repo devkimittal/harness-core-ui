@@ -407,7 +407,6 @@ exports[`Autostopping rule analytics drawer render analytics drawer 1`] = `
       </div>
       <div
         class="StyledProps--font StyledProps--main StyledProps--padding-medium"
-        style="background-color: rgb(247, 251, 254);"
       >
         <div
           class="Layout--horizontal Layout--layout-spacing-large StyledProps--main"
@@ -941,7 +940,6 @@ exports[`Autostopping rule analytics drawer render k8s rule analytics drawer 1`]
       </div>
       <div
         class="StyledProps--font StyledProps--main StyledProps--padding-medium"
-        style="background-color: rgb(247, 251, 254);"
       >
         <div
           class="Layout--horizontal Layout--layout-spacing-large StyledProps--main"
