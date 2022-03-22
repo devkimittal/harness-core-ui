@@ -423,8 +423,7 @@ export function AcrArtifact({
                         : getString('connectors.ACR.repositoryPlaceholder')
                     }
                     multiTypeInputProps={{
-                      onChange: () => {
-                        /* istanbul ignore next */
+                      onChange: /* istanbul ignore next */ () => {
                         tagList.length && setTagList([])
                         resetTag(formik)
                       },

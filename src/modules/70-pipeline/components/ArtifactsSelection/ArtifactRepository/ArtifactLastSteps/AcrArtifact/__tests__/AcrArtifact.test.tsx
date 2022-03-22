@@ -11,6 +11,7 @@ import { MultiTypeInputType } from '@wings-software/uicore'
 import { TestWrapper } from '@common/utils/testUtils'
 import { ArtifactType, TagTypes } from '@pipeline/components/ArtifactsSelection/ArtifactInterface'
 import { ServiceDeploymentType } from '@pipeline/utils/stageHelpers'
+import { ModalViewFor } from '@pipeline/components/ArtifactsSelection/ArtifactHelper'
 import { mockSubscriptions, mockRegistries, mockRepositories } from './mocks'
 import { AcrArtifact } from '../AcrArtifact'
 
@@ -18,7 +19,7 @@ const props = {
   name: 'Artifact details',
   expressions: [],
   allowableTypes: [MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION],
-  context: 2,
+  context: ModalViewFor.SIDECAR,
   handleSubmit: jest.fn(),
   artifactIdentifiers: [],
   selectedArtifact: 'Acr' as ArtifactType,
@@ -50,7 +51,31 @@ jest.mock('services/cd-ng', () => ({
 }))
 
 describe('Acr Artifact tests', () => {
-  test('Should match snapshot', () => {
+  test('Should match snapshot for primary artifact', () => {
+    const initialValues = {
+      identifier: '',
+      tag: '',
+      tagRegex: '',
+      repository: '',
+      subscription: '',
+      registry: '',
+      tagType: TagTypes.Value
+    }
+
+    const { container } = render(
+      <TestWrapper>
+        <AcrArtifact
+          key={'key'}
+          prevStepData={{ connectorId: { value: 'connectorRef' } }}
+          initialValues={initialValues}
+          {...props}
+          context={ModalViewFor.PRIMARY}
+        />
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+  test('Should match snapshot for sidecar artifact', () => {
     const initialValues = {
       identifier: '',
       tag: '',
