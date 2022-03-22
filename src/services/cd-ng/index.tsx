@@ -5780,6 +5780,7 @@ export interface PipelineInfoConfig {
   }
   timeout?: string
   variables?: NGVariable[]
+  template?: TemplateLinkConfig
 }
 
 export interface PipelineInfrastructure {

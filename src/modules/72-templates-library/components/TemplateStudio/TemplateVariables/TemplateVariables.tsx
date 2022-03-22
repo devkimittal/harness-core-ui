@@ -7,12 +7,12 @@
 
 import React, { useCallback } from 'react'
 import { MultiTypeInputType, NestedAccordionProvider, PageError } from '@wings-software/uicore'
-import { isEmpty, omit, set } from 'lodash-es'
+import { isEmpty, noop, omit, set } from 'lodash-es'
 import { useTemplateVariables } from '@pipeline/components/TemplateVariablesContext/TemplateVariablesContext'
 import { PageSpinner } from '@common/components'
 import StageCard from '@pipeline/components/PipelineStudio/PipelineVariables/Cards/StageCard'
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
-import type { StageElementConfig, StepElementConfig } from 'services/cd-ng'
+import type { PipelineInfoConfig, StageElementConfig, StepElementConfig } from 'services/cd-ng'
 import { StepCardPanel } from '@pipeline/components/PipelineStudio/PipelineVariables/Cards/StepCard'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import { DefaultNewStageId } from '@templates-library/components/TemplateStudio/StageTemplateCanvas/StageTemplateForm/StageTemplateForm'
@@ -20,6 +20,7 @@ import { GitSyncStoreProvider } from 'framework/GitRepoStore/GitSyncStoreContext
 import { sanitize } from '@common/utils/JSONUtils'
 import { VariablesHeader } from '@pipeline/components/PipelineStudio/PipelineVariables/VariablesHeader/VariablesHeader'
 import { TemplateType } from '@templates-library/utils/templatesUtils'
+import { PipelineCardPanel } from '@pipeline/components/PipelineStudio/PipelineVariables/PipelineVariables'
 import css from '@pipeline/components/PipelineStudio/PipelineVariables/PipelineVariables.module.scss'
 
 const TemplateVariables: React.FC = (): JSX.Element => {
@@ -54,6 +55,19 @@ const TemplateVariables: React.FC = (): JSX.Element => {
           <VariablesHeader enableSearch={false} />
           <div className={css.variableList}>
             <GitSyncStoreProvider>
+              {originalTemplate.type === TemplateType.Pipeline && (
+                <PipelineCardPanel
+                  variablePipeline={variablesTemplate as PipelineInfoConfig}
+                  pipeline={{ ...template.spec, identifier: DefaultNewStageId } as PipelineInfoConfig}
+                  originalPipeline={{ ...originalTemplate.spec, identifier: DefaultNewStageId } as PipelineInfoConfig}
+                  readonly={true}
+                  metadataMap={metadataMap}
+                  allowableTypes={allowableTypes}
+                  stepsFactory={factory}
+                  updateStage={onUpdate}
+                  updatePipeline={noop}
+                />
+              )}
               {originalTemplate.type === TemplateType.Stage && (
                 <StageCard
                   stage={variablesTemplate as StageElementConfig}
