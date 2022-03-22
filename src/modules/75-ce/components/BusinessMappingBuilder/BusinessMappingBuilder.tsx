@@ -6,7 +6,18 @@
  */
 
 import React from 'react'
-import { Button, Container, FlexExpander, Formik, FormikForm, Layout, FormInput, Color } from '@harness/uicore'
+import {
+  Button,
+  Container,
+  FlexExpander,
+  Formik,
+  FormikForm,
+  Layout,
+  FormInput,
+  Color,
+  useToaster,
+  getErrorInfoFromErrorObject
+} from '@harness/uicore'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { useFetchViewFieldsQuery, QlceViewFilterWrapperInput, QlceViewFieldIdentifierData } from 'services/ce/services'
@@ -18,6 +29,7 @@ import CostBucketStep from './CostBucketStep/CostBucketStep'
 import Step from './Step/Step'
 import ManageUnallocatedCost from './ManageUnallocatedCost/ManageUnallocatedCost'
 import css from './BusinessMappingBuilder.module.scss'
+import { get } from 'lodash'
 
 interface BusinessMappingForm {
   costTargets: Array<CostTargetType>
@@ -29,6 +41,7 @@ interface BusinessMappingForm {
 
 const BusinessMappingBuilder: () => React.ReactElement = () => {
   const { accountId } = useParams<AccountPathProps>()
+  const { showError } = useToaster()
   const [{ data }] = useFetchViewFieldsQuery({
     variables: {
       filters: [
@@ -45,7 +58,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
     }
   })
 
-  const fieldValuesList = data?.perspectiveFields?.fieldIdentifierData as QlceViewFieldIdentifierData[]
+  const fieldValuesList = get(data, 'perspectiveFields.fieldIdentifierData') as QlceViewFieldIdentifierData[]
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().trim().required(),
@@ -76,6 +89,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
     )
   })
 
+  /* istanbul ignore next */
   const handleSubmit: (values: BusinessMappingForm) => void = async values => {
     delete values.costTargetsKey
     delete values.sharedCostsKey
@@ -93,11 +107,15 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
       delete costTarget.isViewerOpen
     })
 
-    await mutate(values, {
-      queryParams: {
-        accountIdentifier: accountId
-      }
-    })
+    try {
+      await mutate(values, {
+        queryParams: {
+          accountIdentifier: accountId
+        }
+      })
+    } catch (e) {
+      showError(getErrorInfoFromErrorObject(e))
+    }
   }
 
   return (
@@ -110,9 +128,11 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
         costTargetsKey: 0,
         sharedCostsKey: 0
       }}
-      onSubmit={values => {
-        handleSubmit(values)
-      }}
+      onSubmit={
+        /* istanbul ignore next */ values => {
+          handleSubmit(values)
+        }
+      }
       render={formikProps => {
         return (
           <FormikForm>
@@ -145,7 +165,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
               <CostBucketStep
                 formikProps={formikProps}
                 namespace={'costTargets'}
-                value={formikProps.values.costTargets || []}
+                value={formikProps.values.costTargets}
                 fieldValuesList={fieldValuesList}
                 widgetType={CostBucketWidgetType.CostBucket}
                 stepProps={{
@@ -159,7 +179,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
               <CostBucketStep
                 formikProps={formikProps}
                 namespace={'sharedCosts'}
-                value={formikProps.values.sharedCosts || []}
+                value={formikProps.values.sharedCosts}
                 fieldValuesList={fieldValuesList}
                 isSharedCost={true}
                 widgetType={CostBucketWidgetType.SharedCostBucket}
