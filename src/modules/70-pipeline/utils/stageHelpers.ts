@@ -14,6 +14,7 @@ import { ManifestDataType } from '@pipeline/components/ManifestSelection/Manifes
 import type { ManifestTypes } from '@pipeline/components/ManifestSelection/ManifestInterface'
 import type { InputSetDTO } from './types'
 import type { DeploymentStageElementConfig, PipelineStageWrapper, StageElementWrapper } from './pipelineTypes'
+import { InfraDeploymentType } from '@cd/components/PipelineSteps/PipelineStepsUtil'
 
 export enum StageType {
   DEPLOY = 'Deployment',
@@ -37,7 +38,7 @@ export enum ServiceDeploymentType {
   pcf = 'pcf',
   ssh = 'ssh',
   ServerlessAwsLambda = 'ServerlessAwsLambda',
-  ServerlessAzureFunction = 'ServerlessAzureFunctions',
+  ServerlessAzureFunctions = 'ServerlessAzureFunctions',
   ServerlessGoogleFunctions = 'ServerlessGoogleFunctions',
   AmazonSAM = 'AwsSAM',
   AzureFunctions = 'AzureFunctions'
@@ -159,7 +160,7 @@ export const getHelpeTextForTags = (
 export const isServerlessDeploymentType = (deploymentType: string): boolean => {
   return (
     deploymentType === ServiceDeploymentType.ServerlessAwsLambda ||
-    deploymentType === ServiceDeploymentType.ServerlessAzureFunction ||
+    deploymentType === ServiceDeploymentType.ServerlessAzureFunctions ||
     deploymentType === ServiceDeploymentType.ServerlessGoogleFunctions ||
     deploymentType === ServiceDeploymentType.AmazonSAM ||
     deploymentType === ServiceDeploymentType.AzureFunctions

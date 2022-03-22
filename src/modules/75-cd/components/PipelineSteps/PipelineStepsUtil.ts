@@ -22,7 +22,16 @@ const releaseNameRegex = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a
 
 export enum InfraDeploymentType {
   KubernetesDirect = 'KubernetesDirect',
-  KubernetesGcp = 'KubernetesGcp'
+  KubernetesGcp = 'KubernetesGcp',
+  ServerlessAwsLambda = 'ServerlessAwsLambda',
+  ServerlessGCPLambda = 'ServerlessGCPLambda',
+  ServerlessAzureLambda = 'ServerlessAzureLambda'
+}
+
+export const deploymentTypeToInfraTypeMap = {
+  [ServiceDeploymentType.ServerlessAwsLambda]: InfraDeploymentType.ServerlessAwsLambda,
+  [ServiceDeploymentType.ServerlessAzureFunctions]: InfraDeploymentType.ServerlessAzureLambda,
+  [ServiceDeploymentType.ServerlessGoogleFunctions]: InfraDeploymentType.ServerlessGCPLambda
 }
 
 export function getNameSpaceSchema(

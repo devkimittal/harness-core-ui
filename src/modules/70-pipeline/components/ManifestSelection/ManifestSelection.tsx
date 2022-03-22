@@ -129,6 +129,7 @@ export default function ManifestSelection({
   }
 
   const deploymentType = getDeploymentType(stage, getStageFromPipeline, isPropagating)
+  console.log(deploymentType)
 
   return (
     <Layout.Vertical>

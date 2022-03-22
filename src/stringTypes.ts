@@ -7678,6 +7678,18 @@ export interface StringsMap {
   /**
    * @deprecated migrate this string to module level file
    */
+  'pipelineSteps.deploymentTypes.aws': string
+  /**
+   * @deprecated migrate this string to module level file
+   */
+  'pipelineSteps.deploymentTypes.azure': string
+  /**
+   * @deprecated migrate this string to module level file
+   */
+  'pipelineSteps.deploymentTypes.gcp': string
+  /**
+   * @deprecated migrate this string to module level file
+   */
   'pipelineSteps.deploymentTypes.gk8engine': string
   /**
    * @deprecated migrate this string to module level file

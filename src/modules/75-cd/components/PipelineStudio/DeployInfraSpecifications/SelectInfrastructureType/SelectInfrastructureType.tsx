@@ -15,6 +15,7 @@ import { StageErrorContext } from '@pipeline/context/StageErrorContext'
 import { DeployTabs } from '@cd/components/PipelineStudio/DeployStageSetupShell/DeployStageSetupShellUtils'
 import { InfraDeploymentType } from '@cd/components/PipelineSteps/PipelineStepsUtil'
 import css from './SelectInfrastructureType.module.scss'
+import { isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
 
 export function getInfraDeploymentTypeSchema(
   getString: UseStringsReturn['getString']
@@ -37,36 +38,70 @@ interface InfrastructureGroup {
 }
 
 interface SelectDeploymentTypeProps {
+  deploymentType: string
   selectedInfrastructureType?: string
   onChange: (deploymentType: string | undefined) => void
   isReadonly: boolean
 }
 
 export default function SelectDeploymentType(props: SelectDeploymentTypeProps): JSX.Element {
-  const { selectedInfrastructureType, onChange, isReadonly } = props
+  const { selectedInfrastructureType, onChange, isReadonly, deploymentType } = props
   const { getString } = useStrings()
-  const infraGroups: InfrastructureGroup[] = [
-    {
-      groupLabel: getString('pipelineSteps.deploy.infrastructure.directConnection'),
-      items: [
+  const infraGroups: InfrastructureGroup[] = isServerlessDeploymentType(deploymentType)
+    ? [
         {
-          label: getString('pipelineSteps.deploymentTypes.kubernetes'),
-          icon: 'service-kubernetes',
-          value: InfraDeploymentType.KubernetesDirect
+          groupLabel: '',
+          items: [
+            {
+              label: getString('pipelineSteps.deploymentTypes.aws'),
+              icon: 'service-aws',
+              value: InfraDeploymentType.ServerlessAwsLambda
+            }
+          ]
+        },
+        {
+          groupLabel: '',
+          items: [
+            {
+              label: getString('pipelineSteps.deploymentTypes.gcp'),
+              icon: 'gcp',
+              value: InfraDeploymentType.ServerlessGCPLambda
+            }
+          ]
+        },
+        {
+          groupLabel: '',
+          items: [
+            {
+              label: getString('pipelineSteps.deploymentTypes.azure'),
+              icon: 'service-azure',
+              value: InfraDeploymentType.ServerlessAzureLambda
+            }
+          ]
         }
       ]
-    },
-    {
-      groupLabel: getString('pipelineSteps.deploy.infrastructure.viaCloudProvider'),
-      items: [
+    : [
         {
-          label: getString('pipelineSteps.deploymentTypes.gk8engine'),
-          icon: 'google-kubernetes-engine',
-          value: InfraDeploymentType.KubernetesGcp
+          groupLabel: getString('pipelineSteps.deploy.infrastructure.directConnection'),
+          items: [
+            {
+              label: getString('pipelineSteps.deploymentTypes.kubernetes'),
+              icon: 'service-kubernetes',
+              value: InfraDeploymentType.KubernetesDirect
+            }
+          ]
+        },
+        {
+          groupLabel: getString('pipelineSteps.deploy.infrastructure.viaCloudProvider'),
+          items: [
+            {
+              label: getString('pipelineSteps.deploymentTypes.gk8engine'),
+              icon: 'google-kubernetes-engine',
+              value: InfraDeploymentType.KubernetesGcp
+            }
+          ]
         }
       ]
-    }
-  ]
 
   const { subscribeForm, unSubscribeForm } = React.useContext(StageErrorContext)
 

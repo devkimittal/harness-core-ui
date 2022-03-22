@@ -34,10 +34,29 @@ import { useValidationErrors } from '@pipeline/components/PipelineStudio/Pipline
 import type { DeploymentStageElementConfig, StageElementWrapper } from '@pipeline/utils/pipelineTypes'
 import SelectDeploymentType from '@cd/components/PipelineStudio/DeployInfraSpecifications/SelectInfrastructureType/SelectInfrastructureType'
 import { Scope } from '@common/interfaces/SecretsInterface'
-import { StageType } from '@pipeline/utils/stageHelpers'
+import { getDeploymentType, StageType } from '@pipeline/utils/stageHelpers'
 import stageCss from '../DeployStageSetupShell/DeployStage.module.scss'
+import { InfraDeploymentType } from '@cd/components/PipelineSteps/PipelineStepsUtil'
 
 const DEFAULT_RELEASE_NAME = 'release-<+INFRA_KEY>'
+
+export const deploymentTypeInfraTypeMap = {
+  Kubernetes: InfraDeploymentType.KubernetesDirect,
+  NativeHelm: InfraDeploymentType.KubernetesDirect,
+  amazonEcs: 'KubernetesDirect',
+  amazonAmi: 'KubernetesDirect',
+  awsCodeDeploy: 'KubernetesDirect',
+  winrm: 'KubernetesDirect',
+  awsLambda: 'KubernetesDirect',
+  pcf: 'KubernetesDirect',
+  Ssh: 'KubernetesDirect',
+  ServerlessAwsLambda: 'ServerlessAwsLambda',
+  ServerlessAzureFunctions: 'ServerlessAzureLambda',
+  ServerlessGoogleFunctions: 'ServerlessGCPLambda',
+  AmazonSAM: 'AwsSAM',
+  AzureFunctions: 'AzureFunctions'
+}
+
 export default function DeployInfraSpecifications(props: React.PropsWithChildren<unknown>): JSX.Element {
   const [initialInfrastructureDefinitionValues, setInitialInfrastructureDefinitionValues] =
     React.useState<Infrastructure>({})
@@ -122,12 +141,31 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
     return scope === Scope.PROJECT ? '' : RUNTIME_INPUT_VALUE
   }, [scope])
 
+  const deploymentType = getDeploymentType(
+    stage,
+    getStageFromPipeline,
+    !!stage?.stage?.spec?.serviceConfig?.useFromStage?.stage
+  )
+
+  // React.useEffect(() => {
+  //   const type = stage?.stage?.spec?.infrastructure?.infrastructureDefinition?.type
+  //   setSelectedDeploymentType(type)
+  //   const initialInfraDefValues = getInfrastructureDefaultValue(stage, type)
+  //   setInitialInfrastructureDefinitionValues(initialInfraDefValues)
+  // }, [stage])
+
   React.useEffect(() => {
-    const type = stage?.stage?.spec?.infrastructure?.infrastructureDefinition?.type
-    setSelectedDeploymentType(type)
-    const initialInfraDefValues = getInfrastructureDefaultValue(stage, type)
+    // const type = stage?.stage?.spec?.infrastructure?.infrastructureDefinition?.type
+    const selectedType = stage?.stage?.spec?.serviceConfig.serviceDefinition?.type
+    const selectedInfrastructureType = selectedType
+      ? deploymentTypeInfraTypeMap[selectedType]
+      : InfraDeploymentType.KubernetesDirect
+    setSelectedDeploymentType(selectedInfrastructureType)
+    const initialInfraDefValues = getInfrastructureDefaultValue(stage, selectedInfrastructureType)
     setInitialInfrastructureDefinitionValues(initialInfraDefValues)
-  }, [stage])
+  }, [stage?.stage?.spec?.serviceConfig.serviceDefinition?.type])
+
+  console.log('check selected', selectedDeploymentType)
 
   const onUpdateInfrastructureDefinition = (
     extendedSpec: K8SDirectInfrastructure | K8sGcpInfrastructure,
@@ -357,6 +395,7 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
     },
     [stage, debounceUpdateStage, stage?.stage?.spec?.infrastructure?.infrastructureDefinition]
   )
+
   return (
     <div className={stageCss.serviceOverrides} key="1">
       <DeployServiceErrors domRef={scrollRef as React.MutableRefObject<HTMLElement | undefined>} />
@@ -396,6 +435,7 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
             />
           </Text>
           <SelectDeploymentType
+            deploymentType={deploymentType}
             isReadonly={isReadonly}
             selectedInfrastructureType={selectedDeploymentType}
             onChange={deploymentType => {

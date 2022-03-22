@@ -95,7 +95,7 @@ const getCGTypes = (
 
 const getServerlessDeploymentTypes = (
   getString: (key: keyof StringsMap, vars?: Record<string, any> | undefined) => string,
-  SERVERLESS_SUPPORT = false
+  SERVERLESS_SUPPORT = true
 ): DeploymentTypeItem[] => {
   if (SERVERLESS_SUPPORT) {
     return [
@@ -109,7 +109,7 @@ const getServerlessDeploymentTypes = (
       // {
       //   label: getString('pipeline.serviceDeploymentTypes.serverlessAzureFunctions'),
       //   icon: 'service-serverless-azure',
-      //   value: ServiceDeploymentType.ServerlessAzureFunction,
+      //   value: ServiceDeploymentType.ServerlessAzureFunctions,
       //   disabled: true
       // },
       // {

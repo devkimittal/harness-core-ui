@@ -875,6 +875,9 @@ pipelineSteps:
   deploymentTypes:
     kubernetes: '{{$.kubernetesText}}'
     gk8engine: Google Kubernetes Engine
+    aws: AWS
+    gcp: GCP
+    azure: Azure
   skipSteadyStateCheck: Skip Steady State Check
   workload: 'Workload'
   stepNameRequired: 'Step Name is required'
