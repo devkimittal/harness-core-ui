@@ -73,6 +73,7 @@ import { updateStepWithinStage } from '@pipeline/components/PipelineStudio/Right
 import type { TemplateSummaryResponse } from 'services/template-ng'
 import { savePipeline, usePipelineContext } from '../PipelineContext/PipelineContext'
 import CreatePipelines from '../CreateModal/PipelineCreate'
+import PipelineErrors from './PipelineErrors/PipelineErrors'
 import { DefaultNewPipelineId, DrawerTypes } from '../PipelineContext/PipelineActions'
 import PipelineYamlView from '../PipelineYamlView/PipelineYamlView'
 import { RightBar } from '../RightBar/RightBar'
@@ -210,21 +211,22 @@ export function PipelineCanvas({
 
   useDocumentTitle([parse(pipeline?.name || getString('pipelines'))])
 
-  const [showErrorModal] = useModalHook(
+  const [showErrorModal, hideErrorModal] = useModalHook(
     () => (
       <Dialog
         isOpen={true}
         enforceFocus={false}
-        canEscapeKeyClose
-        canOutsideClickClose
-        onClose={hideModal}
-        title={getString('editService')}
+        // canEscapeKeyClose
+        // canOutsideClickClose
+        onClose={hideErrorModal}
+        title={'Pipeline cannot be saved because of below errors'}
         isCloseButtonShown
         className={cx('padded-dialog')}
       >
-        <div>Error {updatePipelineAPIResponse ? updatePipelineAPIResponse.metadata.schemaErrors.length : null}</div>
+        <PipelineErrors errors={updatePipelineAPIResponse.metadata.schemaErrors}/>
       </Dialog>
     ),
+    // Error {updatePipelineAPIResponse ? updatePipelineAPIResponse.metadata.schemaErrors.length : null}
     [updatePipelineAPIResponse]
   )
 
@@ -441,7 +443,7 @@ export function PipelineCanvas({
       // This is done because when git sync is enabled, errors are displayed in a modal
       if (!isGitSyncEnabled) {
         // @ts-ignore
-        if (response?.metadata?.schemaErrors) {
+        if (response?.metadata?.schemaErrors?.length) {
           setUpdatePipelineAPIResponse(response)
           showErrorModal()
         } else {

@@ -222,3 +222,83 @@ var xyz = schemaErrors.reduce((accum, item) => {
   accum[item.stageInfo.identifier] = accum[item.stageInfo.identifier] ? addToAccum() : [item]
   return accum
 }, {})
+
+
+var yaml = `
+pipeline:
+    name: 12TestPipeline
+    identifier: TestPipeline
+    allowStageExecutions: 12
+    projectIdentifier: defaultproject
+    orgIdentifier: default
+    tags: {}
+    stages:
+        - stage:
+              name: deployStage
+              identifier: deploy_stage1
+              type: Deployment
+              spec:
+                  serviceConfig:
+                      serviceRef: svc
+                      serviceDefinition:
+                          type: Kubernetes1
+                          spec:
+                              variables: []
+                  infrastructure:
+                      environmentRef: env
+                      infrastructureDefinition:
+                          type: KubernetesDirect
+                          spec:
+                              connectorRef: K8sConnector
+                              namespace: test
+                              releaseName: release-<+INFRA_KEY>
+                      allowSimultaneousDeployments: true
+                  execution:
+                      steps:
+                          - step:
+                                spec:
+                                    shell: Bash
+                                    onDelegate: true
+                                    source:
+                                        type: qwe
+                                        spec:
+                                            script: echo "Hi"
+                                    environmentVariables: []
+                                    outputVariables: []
+                                    executionTarget: {}
+                                timeout: 10md
+                      rollbackSteps: []
+                  serviceDependencies: []
+              failureStrategies:
+                  - onFailure:
+                        errors:
+                            - AllErrors
+                        action:
+                            type: StageRollback
+        - stage:
+              name: approval
+              identifier: approval
+              description: ""
+              type: Approval123
+              spec:
+                  execution:
+                      steps:
+                          - step:
+                                type: ShellScript
+                                name: ss
+                                identifier: ss
+                                spec:
+                                    shell: Bash
+                                    onDelegate: true
+                                    source:
+                                        type: Inline
+                                        spec:
+                                            script: echo "Hi"
+                                    environmentVariables: []
+                                    outputVariables: []
+                                    executionTarget: {}
+                                timeout: 10m
+                  serviceDependencies: []
+              tags: {}
+
+`
