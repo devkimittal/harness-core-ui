@@ -61,6 +61,7 @@ export default function MonitoredServiceOverview(props: MonitoredServiceOverview
           <Layout.Horizontal spacing="large">
             <FormInput.Select
               name="type"
+              tooltipProps={{ dataTooltipId: 'monitoredServiceType' }}
               items={MonitoredServiceTypeOptions}
               label={getString('typeLabel')}
               value={
@@ -139,6 +140,7 @@ export default function MonitoredServiceOverview(props: MonitoredServiceOverview
           isIdentifierEditable: formikProps.values?.type === ChangeSourceCategoryName.INFRASTRUCTURE ? true : false,
           inputLabel: getString('cv.monitoredServices.monitoredServiceName')
         }}
+        tooltipProps={{ dataTooltipId: 'NameIdDescriptionTagsHealthSource' }}
       />
     </CardWithOuterTitle>
   )

@@ -11,11 +11,16 @@ exports[`Validate SelectHealthSourceServices should not render RiskProfile when 
       <div
         class="StyledProps--font StyledProps--main checkBoxGroup"
       >
-        <p
-          class="StyledProps--font StyledProps--main groupLabel"
+        <div
+          class="Text--withDocsTooltip"
+          data-tooltip-id="assignLabel"
         >
-          cv.monitoredServices.assignLabel
-        </p>
+          <p
+            class="StyledProps--font StyledProps--main groupLabel"
+          >
+            cv.monitoredServices.assignLabel
+          </p>
+        </div>
         <div
           class="bp3-form-group"
         >
@@ -109,11 +114,16 @@ exports[`Validate SelectHealthSourceServices should render RiskProfile when cont
       <div
         class="StyledProps--font StyledProps--main checkBoxGroup"
       >
-        <p
-          class="StyledProps--font StyledProps--main groupLabel"
+        <div
+          class="Text--withDocsTooltip"
+          data-tooltip-id="assignLabel"
         >
-          cv.monitoredServices.assignLabel
-        </p>
+          <p
+            class="StyledProps--font StyledProps--main groupLabel"
+          >
+            cv.monitoredServices.assignLabel
+          </p>
+        </div>
         <div
           class="bp3-form-group"
         >

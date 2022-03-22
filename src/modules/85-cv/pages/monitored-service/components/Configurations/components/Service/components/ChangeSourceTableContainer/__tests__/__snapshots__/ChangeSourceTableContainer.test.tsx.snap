@@ -8,11 +8,16 @@ exports[`Test ChangeSourceTable should render 1`] = `
     <div
       class="bp3-card bp3-elevation-0 Card--card sectionCard shadow"
     >
-      <p
-        class="StyledProps--font StyledProps--main tableTitle"
+      <div
+        class="Text--withDocsTooltip"
+        data-tooltip-id="changeSourceTbale"
       >
-        cv.navLinks.adminSideNavLinks.activitySources
-      </p>
+        <p
+          class="StyledProps--font StyledProps--main tableTitle"
+        >
+          cv.navLinks.adminSideNavLinks.activitySources
+        </p>
+      </div>
       <div
         class="TableV2--table changeSourceTableWrapper"
       >
@@ -221,11 +226,16 @@ exports[`Test ChangeSourceTable should render 2`] = `
     <div
       class="bp3-card bp3-elevation-0 Card--card sectionCard shadow"
     >
-      <p
-        class="StyledProps--font StyledProps--main tableTitle"
+      <div
+        class="Text--withDocsTooltip"
+        data-tooltip-id="changeSourceTbale"
       >
-        cv.navLinks.adminSideNavLinks.activitySources
-      </p>
+        <p
+          class="StyledProps--font StyledProps--main tableTitle"
+        >
+          cv.navLinks.adminSideNavLinks.activitySources
+        </p>
+      </div>
       <div
         class="TableV2--table changeSourceTableWrapper"
       >

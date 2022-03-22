@@ -168,7 +168,9 @@ export default function HealthSourceTable({
       }
       return (
         <CardWithOuterTitle>
-          <Text className={css.tableTitle}>{getString('connectors.cdng.healthSources.label')}</Text>
+          <Text tooltipProps={{ dataTooltipId: 'healthSourcesLabel' }} className={css.tableTitle}>
+            {getString('connectors.cdng.healthSources.label')}
+          </Text>
           {renderHealthSourceTableInCV(healthSourceTableData)}
           <RbacButton
             icon="plus"

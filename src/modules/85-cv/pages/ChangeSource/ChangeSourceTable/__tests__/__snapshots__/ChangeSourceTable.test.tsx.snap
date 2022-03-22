@@ -2,11 +2,16 @@
 
 exports[`Test Change Source Table ChangeSource table renders empty with no data card 1`] = `
 <div>
-  <p
-    class="StyledProps--font StyledProps--main tableTitle"
+  <div
+    class="Text--withDocsTooltip"
+    data-tooltip-id="changeSourceTbale"
   >
-    cv.navLinks.adminSideNavLinks.activitySources
-  </p>
+    <p
+      class="StyledProps--font StyledProps--main tableTitle"
+    >
+      cv.navLinks.adminSideNavLinks.activitySources
+    </p>
+  </div>
   <div
     class="StyledProps--font StyledProps--main noData"
   >

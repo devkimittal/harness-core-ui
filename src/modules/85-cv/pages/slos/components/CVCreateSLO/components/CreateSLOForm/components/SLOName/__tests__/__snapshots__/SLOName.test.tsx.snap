@@ -295,7 +295,12 @@ exports[`Test SLOName component should render SLOName component 1`] = `
               class="bp3-label"
               for="userJourneyRef"
             >
-              cv.slos.userJourney
+              <span
+                class="Tooltip--acenter"
+                data-tooltip-id="serviceSelectOrCreate"
+              >
+                cv.slos.userJourney
+              </span>
                
               <span
                 class="bp3-text-muted"

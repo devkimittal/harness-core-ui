@@ -8,11 +8,16 @@ exports[`Validate should close drawer 1`] = `
     <div
       class="bp3-card bp3-elevation-0 Card--card sectionCard shadow"
     >
-      <p
-        class="StyledProps--font StyledProps--main tableTitle"
+      <div
+        class="Text--withDocsTooltip"
+        data-tooltip-id="healthSourcesLabel"
       >
-        connectors.cdng.healthSources.label
-      </p>
+        <p
+          class="StyledProps--font StyledProps--main tableTitle"
+        >
+          connectors.cdng.healthSources.label
+        </p>
+      </div>
       <div
         class="TableV2--table healthSourceTableWrapper"
       >
@@ -231,11 +236,16 @@ exports[`Validate should render HealthSourceTableContainer with data 1`] = `
     <div
       class="bp3-card bp3-elevation-0 Card--card sectionCard shadow"
     >
-      <p
-        class="StyledProps--font StyledProps--main tableTitle"
+      <div
+        class="Text--withDocsTooltip"
+        data-tooltip-id="healthSourcesLabel"
       >
-        connectors.cdng.healthSources.label
-      </p>
+        <p
+          class="StyledProps--font StyledProps--main tableTitle"
+        >
+          connectors.cdng.healthSources.label
+        </p>
+      </div>
       <div
         class="TableV2--table healthSourceTableWrapper"
       >
@@ -454,11 +464,16 @@ exports[`Validate should render HealthSourceTableContainer with no data 1`] = `
     <div
       class="bp3-card bp3-elevation-0 Card--card sectionCard shadow"
     >
-      <p
-        class="StyledProps--font StyledProps--main tableTitle"
+      <div
+        class="Text--withDocsTooltip"
+        data-tooltip-id="healthSourcesLabel"
       >
-        connectors.cdng.healthSources.label
-      </p>
+        <p
+          class="StyledProps--font StyledProps--main tableTitle"
+        >
+          connectors.cdng.healthSources.label
+        </p>
+      </div>
       <div
         class="StyledProps--font StyledProps--main noData"
       >

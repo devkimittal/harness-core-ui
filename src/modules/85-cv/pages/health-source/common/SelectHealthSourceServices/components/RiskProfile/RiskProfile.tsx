@@ -46,7 +46,9 @@ export function RiskProfile(props: RiskProfileProps): JSX.Element {
   if (loading) {
     metricPackContent = (
       <Container>
-        <Text className={css.groupLabel}>{getString('cv.monitoringSources.baselineDeviation')}</Text>
+        <Text tooltipProps={{ dataTooltipId: 'riskProfileBaselineDeviation' }} className={css.groupLabel}>
+          {getString('cv.monitoringSources.baselineDeviation')}
+        </Text>
         {[1, 2, 3, 4].map(val => (
           <Container
             key={val}

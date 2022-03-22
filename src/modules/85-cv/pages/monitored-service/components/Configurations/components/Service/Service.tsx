@@ -8,9 +8,9 @@
 import React, { useCallback } from 'react'
 import { noop } from 'lodash-es'
 import * as Yup from 'yup'
-import { Formik, FormikContext } from 'formik'
+import type { FormikContext } from 'formik'
 import { useParams } from 'react-router-dom'
-import { Text } from '@wings-software/uicore'
+import { Formik, Text } from '@wings-software/uicore'
 import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { PageSpinner } from '@common/components'
@@ -113,8 +113,9 @@ function Service({
 
   return (
     <Formik<MonitoredServiceForm>
+      formName="MonitoredServiceForm"
       initialValues={cachedInitialValues || initialValues}
-      onSubmit={() => noop}
+      onSubmit={() => noop as any}
       validationSchema={Yup.object().shape({
         name: Yup.string().nullable().required(getString('cv.monitoredServices.nameValidation')),
         type: Yup.string().nullable().required(getString('common.validation.typeIsRequired')),

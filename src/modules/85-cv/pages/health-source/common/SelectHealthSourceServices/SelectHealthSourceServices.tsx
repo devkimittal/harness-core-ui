@@ -26,7 +26,9 @@ export default function SelectHealthSourceServices({
   return (
     <Container className={css.main}>
       <Container className={css.checkBoxGroup}>
-        <Text className={css.groupLabel}>{getString('cv.monitoredServices.assignLabel')}</Text>
+        <Text tooltipProps={{ dataTooltipId: 'assignLabel' }} className={css.groupLabel}>
+          {getString('cv.monitoredServices.assignLabel')}
+        </Text>
 
         {!hideCV ? (
           <FormInput.CheckBox
