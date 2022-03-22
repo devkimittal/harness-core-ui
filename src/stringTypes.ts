@@ -496,6 +496,7 @@ export interface StringsMap {
   'common.purpose.service': string
   'common.purpose.setup': string
   'common.purpose.startATrial': string
+  'common.purpose.sto.continuous': string
   'common.purpose.welcome': string
   'common.pwsh': string
   'common.readOnly': string

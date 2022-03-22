@@ -5,15 +5,15 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { FC } from 'react'
+import React from 'react'
+import { Redirect, useParams } from 'react-router-dom'
 import type { SidebarContext } from '@common/navigation/SidebarProvider'
 import routes from '@common/RouteDefinitions'
 import { RouteWithLayout } from '@common/router'
-import { accountPathProps } from '@common/utils/routeUtils'
-import STOHomePage from '@sto-steps/pages/STOHomePage'
-import '@pipeline/components/CommonPipelineStages/PipelineStage'
-import '@sto-steps/components/PipelineStages/SecurityStage'
+import { accountPathProps, projectPathProps } from '@common/utils/routeUtils'
+import OverviewPage from '@sto-steps/pages/OverviewPage/OverviewPage'
 import STOSideNav from '@sto-steps/components/STOSideNav/STOSideNav'
+import '@sto-steps/components/PipelineStages/SecurityStage'
 
 const STOSideNavProps: SidebarContext = {
   navComponent: STOSideNav,
@@ -21,19 +21,28 @@ const STOSideNavProps: SidebarContext = {
   icon: 'sto-color-filled'
 }
 
-const STORoutes: FC = () => {
-  return (
-    <>
-      <RouteWithLayout
-        // licenseRedirectData={licenseRedirectData}
-        sidebarProps={STOSideNavProps}
-        path={[routes.toSTOHome({ ...accountPathProps })]}
-        exact
-      >
-        <STOHomePage />
-      </RouteWithLayout>
-    </>
-  )
+const RedirectToOverviewPage = (): React.ReactElement => {
+  const { accountId } = useParams<{ accountId: string }>()
+
+  return <Redirect to={routes.toSTOOverview({ accountId })} />
 }
 
-export default STORoutes
+export default (
+  <>
+    <RouteWithLayout
+      // licenseRedirectData={licenseRedirectData}
+      path={routes.toSTO({ ...accountPathProps })}
+      exact
+    >
+      <RedirectToOverviewPage />
+    </RouteWithLayout>
+
+    <RouteWithLayout
+      // licenseRedirectData={licenseRedirectData}
+      sidebarProps={STOSideNavProps}
+      path={routes.toSTOOverview({ ...accountPathProps, ...projectPathProps })}
+    >
+      <OverviewPage />
+    </RouteWithLayout>
+  </>
+)

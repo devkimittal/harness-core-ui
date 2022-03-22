@@ -88,6 +88,7 @@ export default function RouteDestinations(): React.ReactElement {
       {CING_ENABLED ? CIRoutes.props.children : null}
       {CDNG_ENABLED ? CDRoutes.props.children : null}
       {CVNG_ENABLED ? CVRoutes.props.children : null}
+      {SECURITY && STORoutes.props.children}
       <Route path="/account/:accountId/settings">
         <AuthSettingsRoutes />
       </Route>
@@ -97,7 +98,6 @@ export default function RouteDestinations(): React.ReactElement {
         </Route>
       ) : null}
       {CFNG_ENABLED && <CFRoutes />}
-      {SECURITY && <STORoutes />}
       <Route path="*">
         <NotFoundPage />
       </Route>
