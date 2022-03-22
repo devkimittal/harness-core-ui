@@ -178,7 +178,7 @@ const SideNavItems = () => {
             {isBusinessMappingEnabled ? (
               <SidebarLink
                 label={getString('ce.businessMapping.sideNavText')}
-                to={routes.toBusinessMapping({ accountId, perspectiveId: 'EUbryakiRBa59e0yXv_tww' })}
+                to={routes.toBusinessMapping({ accountId })}
               />
             ) : null}
           </Layout.Vertical>

@@ -1415,13 +1415,7 @@ const routes = {
   toCEOverview: withAccountId(() => '/ce/overview'),
   toCEPerspectiveDashboard: withAccountId(() => `/ce/perspective`),
   toCEAnomalyDetection: withAccountId(() => `/ce/anomaly-detection`),
-  toBusinessMapping: withAccountId(
-    ({
-      perspectiveId
-    }: AccountPathProps & {
-      perspectiveId: string
-    }) => `/ce/business-mapping/${perspectiveId}`
-  ),
+  toBusinessMapping: withAccountId(() => `/ce/business-mapping/`),
   /********************************************************************************************************************/
   toOldCustomDashboard: withAccountId(() => '/home/dashboards*'),
   toCustomDashboard: withAccountId(() => '/dashboards'),

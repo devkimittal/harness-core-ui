@@ -133,24 +133,29 @@ const PerspectiveBuilderFilter: React.FC<FilterPillProps> = ({
 
   const { perspectiveId } = useParams<{ perspectiveId: string }>()
 
+  const filters = [
+    ...getTimeFilters(getGMTStartDateTime(timeRange.from), getGMTEndDateTime(timeRange.to)),
+    {
+      idFilter: {
+        field: {
+          fieldId: service?.id,
+          fieldName: service?.name,
+          identifier: provider?.id,
+          identifierName: provider?.name
+        },
+        operator: QlceViewFilterOperator.In,
+        values: [pageInfo.searchValue]
+      }
+    } as QlceViewFilterWrapperInput
+  ]
+
+  if (perspectiveId) {
+    filters.push({ viewMetadataFilter: { viewId: perspectiveId, isPreview: true } } as QlceViewFilterWrapperInput)
+  }
+
   const [result] = useFetchPerspectiveFiltersValueQuery({
     variables: {
-      filters: [
-        { viewMetadataFilter: { viewId: perspectiveId, isPreview: true } } as QlceViewFilterWrapperInput,
-        ...getTimeFilters(getGMTStartDateTime(timeRange.from), getGMTEndDateTime(timeRange.to)),
-        {
-          idFilter: {
-            field: {
-              fieldId: service?.id,
-              fieldName: service?.name,
-              identifier: provider?.id,
-              identifierName: provider?.name
-            },
-            operator: QlceViewFilterOperator.In,
-            values: [pageInfo.searchValue]
-          }
-        } as QlceViewFilterWrapperInput
-      ],
+      filters: filters,
       offset: (pageInfo.page - 1) * LIMIT,
       limit: LIMIT
     },

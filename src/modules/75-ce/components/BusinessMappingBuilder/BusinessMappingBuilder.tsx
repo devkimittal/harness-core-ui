@@ -21,7 +21,7 @@ import {
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { get } from 'lodash-es'
-import { useFetchViewFieldsQuery, QlceViewFilterWrapperInput, QlceViewFieldIdentifierData } from 'services/ce/services'
+import { useFetchViewFieldsQuery, QlceViewFieldIdentifierData } from 'services/ce/services'
 import { CostBucketWidgetType, CostTargetType, SharedCostType } from '@ce/types'
 import { useCreateBusinessMapping } from 'services/ce'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
@@ -44,9 +44,7 @@ const BusinessMappingBuilder: () => React.ReactElement = () => {
   const { showError } = useToaster()
   const [{ data }] = useFetchViewFieldsQuery({
     variables: {
-      filters: [
-        { viewMetadataFilter: { viewId: 'EUbryakiRBa59e0yXv_tww', isPreview: true } } as QlceViewFilterWrapperInput
-      ]
+      filters: []
     }
   })
 

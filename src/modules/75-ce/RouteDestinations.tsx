@@ -401,7 +401,7 @@ const CERoutes: React.FC = () => {
         <RouteWithLayout
           licenseRedirectData={licenseRedirectData}
           sidebarProps={CESideNavProps}
-          path={routes.toBusinessMapping({ ...accountPathProps, perspectiveId: ':perspectiveId' })}
+          path={routes.toBusinessMapping({ ...accountPathProps })}
           exact
         >
           <BusinessMapping />
