@@ -41,14 +41,9 @@ import ConditionalExecutionTooltipWrapper from '@pipeline/components/Conditional
 import { StepMode as Modes } from '@pipeline/utils/stepUtils'
 import { useExecutionContext } from '@pipeline/context/ExecutionContext'
 import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
-import {
-  DiagramFactory,
-  DiagramNodes,
-  NodeType as DiagramNodeType
-} from '@pipeline/components/AbstractNode/DiagramFactory'
+import { DiagramFactory, NodeType as DiagramNodeType } from '@pipeline/components/AbstractNode/DiagramFactory'
 import { DiamondNodeWidget } from '@pipeline/components/AbstractNode/Nodes/DiamondNode/DiamondNode'
 import PipelineStageNode from '@pipeline/components/AbstractNode/Nodes/DefaultNode/PipelineStageNode'
-import { IconNode } from '@pipeline/components/AbstractNode/Nodes/IconNode/IconNode'
 import CreateNodeStage from '@pipeline/components/AbstractNode/Nodes/CreateNode/CreateNodeStage'
 import EndNodeStage from '@pipeline/components/AbstractNode/Nodes/EndNode/EndNodeStage'
 import StartNodeStage from '@pipeline/components/AbstractNode/Nodes/StartNode/StartNodeStage'
@@ -57,15 +52,11 @@ import css from './ExecutionGraph.module.scss'
 
 const diagram = new DiagramFactory('graph')
 diagram.registerNode('Deployment', PipelineStageNode, true)
+diagram.registerNode('CI', PipelineStageNode, true)
 diagram.registerNode(DiagramNodeType.CreateNode, CreateNodeStage)
 diagram.registerNode(DiagramNodeType.EndNode, EndNodeStage)
 diagram.registerNode(DiagramNodeType.StartNode, StartNodeStage)
-diagram.registerNode('StepGroup', DiagramNodes[DiagramNodeType.StepGroupNode])
-diagram.registerNode('Approval', DiamondNodeWidget)
-diagram.registerNode('JiraApproval', DiamondNodeWidget)
-diagram.registerNode('HarnessApproval', DiamondNodeWidget)
-diagram.registerNode('default-diamond', DiamondNodeWidget)
-diagram.registerNode('Barrier', IconNode)
+diagram.registerNode(['Approval', 'JiraApproval', 'HarnessApproval', 'default-diamond'], DiamondNodeWidget)
 
 export const CDPipelineStudioNew = diagram.render()
 const barrierSupportedStageTypes = [StageType.DEPLOY, StageType.APPROVAL]
@@ -231,7 +222,7 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
       {!isEmpty(pipelineExecutionDetail?.pipelineExecutionSummary?.pipelineIdentifier) && data.items?.length > 0 && (
         <>
           {NEW_PIP_STUDIO ? (
-            <CDPipelineStudioNew readonly data={data.items as PipelineGraphState[]} />
+            <CDPipelineStudioNew readonly data={data.items as PipelineGraphState[]} selectedNodeId={selectedStageId} />
           ) : (
             <ExecutionStageDiagram
               itemMouseEnter={onMouseEnter}
@@ -242,7 +233,7 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
               selectedIdentifier={selectedStageId}
               itemClickHandler={e => props.onSelectedStage(e.stage.identifier)}
               diagramContainerHeight={primaryPaneSize}
-              data={data}
+              data={data as ExecutionPipeline<GraphLayoutNode>}
               nodeStyle={{
                 width: 90,
                 height: 40

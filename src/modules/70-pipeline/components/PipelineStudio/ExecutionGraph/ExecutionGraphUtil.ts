@@ -503,13 +503,13 @@ export const removeStepOrGroupV2 = (state: ExecutionGraphState, entity: any, ski
   let isRemoved = false
   let data: ExecutionWrapper = state.stepsData
   // const layer = entity.getParent()
-  if (entity?.node?.parentIdentifier) {
-    const node = getStepFromId(data, entity?.node?.parentIdentifier || '', false).node
+  if (entity?.data?.node?.parentIdentifier) {
+    const node = getStepFromId(data, entity?.data?.node?.parentIdentifier || '', false).node
     if (node) {
       data = node
     }
   }
-  const response = getStepFromId(data, entity?.node?.identifier, true)
+  const response = getStepFromId(data, entity?.data?.node?.identifier, true)
   if (response.node) {
     const index = response.parent.indexOf(response.node)
     if (index > -1) {

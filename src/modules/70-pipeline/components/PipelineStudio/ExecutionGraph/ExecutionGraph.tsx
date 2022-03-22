@@ -80,6 +80,7 @@ import {
 } from '../../Diagram'
 import { CanvasButtons } from '../../CanvasButtons/CanvasButtons'
 import css from './ExecutionGraph.module.scss'
+import { ModuleName } from 'framework/types/ModuleName'
 
 const diagram = new DiagramFactory('graph')
 
@@ -416,14 +417,14 @@ function ExecutionGraphRef<T extends StageElementConfig>(
 
   const dropNodeListenerNew = (event: any): void => {
     const eventTemp = event
-    if (event?.node?.identifier && event?.node?.data) {
+    if (event?.data?.node?.identifier && event?.data?.node?.data) {
       const drop = getStepFromNode(
         state.stepsData,
         undefined,
         true,
         false,
-        event?.node?.identifier,
-        event?.node?.parentIdentifier
+        event?.data?.node?.identifier,
+        event?.data?.node?.parentIdentifier
       )
       const dropNode = drop?.node as ExecutionWrapperConfig
       const current = getStepFromNode(
@@ -431,31 +432,31 @@ function ExecutionGraphRef<T extends StageElementConfig>(
         eventTemp.entity,
         true,
         true,
-        event?.destination?.identifier,
-        event?.destination?.parentIdentifier
+        event?.data?.destination?.identifier,
+        event?.data?.destination?.parentIdentifier
       ) as {
         node: ExecutionWrapperConfig
         parent?: ExecutionWrapperConfig[]
       }
       const skipFlattenIfSameParallel = drop.parent === current.node?.parallel
       // Check Drop Node and Current node should not be same
-      if (event.node?.identifier !== event?.destination?.identifier && dropNode) {
-        if (dropNode?.stepGroup && event?.destination?.parentIdentifier) {
+      if (event.node?.identifier !== event?.data?.destination?.identifier && dropNode) {
+        if (dropNode?.stepGroup && event?.data?.destination?.parentIdentifier) {
           showError(getString('stepGroupInAnotherStepGroup'), undefined, 'pipeline.setgroup.error')
         } else {
           const isRemove = removeStepOrGroup(state, event, skipFlattenIfSameParallel)
           if (isRemove) {
             if (current.node) {
               if (
-                event?.entityType === DiagramType.CreateNew &&
-                event?.destination?.isInsideStepGroup &&
-                event?.destination?.nodeType === NodeType.StepGroupNode &&
-                event?.destination?.data?.length === 0
+                event?.data?.entityType === DiagramType.CreateNew &&
+                event?.data?.destination?.isInsideStepGroup &&
+                event?.data?.destination?.nodeType === NodeType.StepGroupNode &&
+                event?.data?.destination?.data?.length === 0
               ) {
                 if (current.node.stepGroup) current.node.stepGroup.steps.push(dropNode)
                 else if (current.node.parallel) {
                   const index = current.node.parallel.findIndex(
-                    obj => obj?.stepGroup?.identifier === event?.destination?.identifier
+                    obj => obj?.stepGroup?.identifier === event?.data?.destination?.identifier
                   )
                   if (index > -1) {
                     current.node.parallel?.[index].stepGroup?.steps.push(dropNode)
@@ -494,7 +495,8 @@ function ExecutionGraphRef<T extends StageElementConfig>(
     }
   }
 
-  const mouseEnterNodeListener = (event: any) => {
+  const mouseEnterNodeListener = (event: any): void => {
+    debugger
     const eventTemp = event as DefaultNodeEvent
     eventTemp.stopPropagation()
     dynamicPopoverHandler?.hide()
@@ -516,7 +518,8 @@ function ExecutionGraphRef<T extends StageElementConfig>(
     }
   }
 
-  const mouseLeaveNodeListener = (event: any) => {
+  const mouseLeaveNodeListener = (event: any): void => {
+    debugger
     const eventTemp = event as DefaultNodeEvent
     eventTemp.stopPropagation()
   }
@@ -608,26 +611,24 @@ function ExecutionGraphRef<T extends StageElementConfig>(
   const nodeListenersNew: NodeModelListener = {
     [Event.ClickNode]: (event: any) => {
       const eventTemp = event
-      // eventTemp.stopPropagation()
-      const stepState = state?.states?.get(event?.identifier)
+      const stepState = state?.states?.get(event?.data?.identifier)
       dynamicPopoverHandler?.hide()
-      const nodeRender = document.querySelector(`[data-nodeid="${eventTemp?.identifier}"]`)
-      // const layer = eventTemp.entity.getParent()
-      // const parentIdentifier = (event.entity.getParent().getOptions() as StepGroupNodeLayerOptions).identifier
-      if (eventTemp.entityType === DiagramType.CreateNew && nodeRender) {
+      const nodeRender = document.querySelector(`[data-nodeid="${eventTemp?.data?.identifier}"]`)
+
+      if (eventTemp?.data?.entityType === DiagramType.CreateNew && nodeRender) {
         if (event?.parentIdentifier === STATIC_SERVICE_GROUP_NAME) {
           addStep({
             entity: event.entity,
             isRollback: state.isRollback,
             isParallel: false,
             stepsMap: state.states,
-            parentIdentifier: (event.entity.getParent().getOptions() as StepGroupNodeLayerOptions).identifier
+            parentIdentifier: eventTemp?.data?.parentIdentifier // (event.entity.getParent().getOptions() as StepGroupNodeLayerOptions).identifier
           })
         } else {
-          handleAdd(false, nodeRender, !event?.parentIdentifier, { entity: { ...event } })
+          handleAdd(false, nodeRender, !event?.data?.parentIdentifier, { entity: { ...event } })
         }
       } else if (stepState && stepState.isStepGroupCollapsed) {
-        const stepStates = state.states.set(event.identifier, {
+        const stepStates = state.states.set(event?.data?.identifier, {
           ...stepState,
           isStepGroupCollapsed: !stepState.isStepGroupCollapsed
         })
@@ -640,16 +641,16 @@ function ExecutionGraphRef<T extends StageElementConfig>(
             undefined,
             false,
             false,
-            event?.identifier,
-            event?.parentIdentifier
+            event?.data?.identifier,
+            event?.data?.parentIdentifier
           ).node
         } else if (stepState?.stepType === StepType.SERVICE) {
-          node = getDependencyFromNode(state.dependenciesData, eventTemp.entity).node
+          node = getDependencyFromNode(state.dependenciesData, event?.data?.entity).node
         }
         /* istanbul ignore else */ if (node) {
           editStep({
             node: node,
-            isUnderStepGroup: event?.parentIdentifier,
+            isUnderStepGroup: event?.data?.parentIdentifier,
             isStepGroup: false,
             stepsMap: state.states,
             addOrEdit: 'edit',
@@ -663,30 +664,31 @@ function ExecutionGraphRef<T extends StageElementConfig>(
     [Event.RemoveNode]: (event: any) => {
       const eventTemp = event
       dynamicPopoverHandler?.hide()
+
       const isRemoved = removeStepOrGroup(state, eventTemp)
       if (isRemoved) {
         const newStateMap = new Map<string, StepState>([...state.states])
-        newStateMap.delete(eventTemp.entity?.getIdentifier())
+        newStateMap.delete(eventTemp?.data?.entity?.identifier)
         setState(prevState => ({
           ...prevState,
           states: newStateMap
         }))
         updateStageWithNewData(state)
-        trackEvent(StepActions.DeleteStep, { type: eventTemp.entityType || '' })
+        trackEvent(StepActions.DeleteStep, { type: eventTemp?.data?.entityType || '' })
       }
     },
     [Event.AddParallelNode]: (event: any) => {
       const eventTemp = event
       // eventTemp.stopPropagation()
-      const layer = eventTemp?.parentIdentifier
+      const layer = eventTemp?.data?.parentIdentifier
       if (layer) {
         const node = getStepFromNode(
           state.stepsData,
           undefined,
           false,
           false,
-          eventTemp?.identifier,
-          eventTemp?.parentIdentifier
+          eventTemp?.data?.identifier,
+          eventTemp?.data?.parentIdentifier
         ).node
         if (node) {
           handleAdd(true, eventTemp.target, false, { entity: { ...event } }, eventTemp.callback)

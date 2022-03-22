@@ -10,7 +10,6 @@ import cx from 'classnames'
 import type { IconName } from '@wings-software/uicore'
 import { Icon, Text, Color, Button, ButtonVariation } from '@wings-software/uicore'
 import { DiagramDrag, DiagramType, Event } from '@pipeline/components/Diagram'
-import { RunningIcon } from '@pipeline/components/ExecutionCard/MiniExecutionGraph/StageNode'
 import { ExecutionPipelineNodeType } from '@pipeline/components/ExecutionStageDiagram/ExecutionPipelineModel'
 import { getStatusProps } from '@pipeline/components/ExecutionStageDiagram/ExecutionStageDiagramUtils'
 import { ExecutionStatus, ExecutionStatusEnum } from '@pipeline/utils/statusHelpers'
@@ -35,7 +34,9 @@ function PipelineStageNode(props: any): JSX.Element {
 
   return (
     <div
-      className={cx(css.defaultNode, 'default-node', { draggable: !props.readonly })}
+      className={cx(css.defaultNode, 'default-node', {
+        draggable: !props.readonly
+      })}
       onMouseOver={() => allowAdd && setVisibilityOfAdd(true)}
       onMouseLeave={() => allowAdd && setVisibilityOfAdd(false)}
       onClick={event => {
@@ -88,11 +89,11 @@ function PipelineStageNode(props: any): JSX.Element {
         id={props.id}
         data-nodeid={props.id}
         draggable={!props.readonly}
-        className={cx(
-          css.defaultCard,
-          { [css.selected]: props?.isSelected },
-          { [css.failed]: stageStatus === ExecutionStatusEnum.Failed }
-        )}
+        className={cx(css.defaultCard, {
+          [css.selected]: props?.isSelected,
+          [css.failed]: stageStatus === ExecutionStatusEnum.Failed,
+          [css.runningNode]: stageStatus === ExecutionStatusEnum.Running
+        })}
         style={{
           width: 90,
           height: 40

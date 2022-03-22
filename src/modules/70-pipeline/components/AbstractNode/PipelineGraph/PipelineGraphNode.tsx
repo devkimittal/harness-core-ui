@@ -124,6 +124,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
   ): React.ReactElement | null => {
     const defaultNode = getDefaultNode()?.component
     const NodeComponent: React.FC<any> | undefined = getNode?.(data?.type)?.component || defaultNode
+
     const readOnlyValue = readonly || data.readonly
     return (
       <div

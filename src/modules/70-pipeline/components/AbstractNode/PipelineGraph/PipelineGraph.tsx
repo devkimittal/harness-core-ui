@@ -65,7 +65,7 @@ function PipelineGraph({
     []
   )
 
-  const updateGraphScale = (newScale: number) => {
+  const updateGraphScale = (newScale: number): void => {
     setGraphScale(newScale)
   }
 

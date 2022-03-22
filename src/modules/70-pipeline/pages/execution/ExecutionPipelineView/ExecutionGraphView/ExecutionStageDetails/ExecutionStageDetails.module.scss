@@ -11,6 +11,9 @@
   width: 100%;
   overflow: hidden;
 
+  background: linear-gradient(90deg, var(--white) 9px, transparent 1%) center,
+    linear-gradient(#f6fcff 9px, transparent 1%) center, #bbc1c4;
+  background-size: 10px 10px;
   &[data-layout='BOTTOM'] {
     height: 100%;
   }

@@ -67,6 +67,24 @@ export function IconNode(props: any): React.ReactElement {
           destination: props
         })
       }}
+      onMouseEnter={event => {
+        event.stopPropagation()
+
+        props?.fireEvent({
+          type: Event.MouseEnterNode,
+          target: event.target,
+          data: { ...props }
+        })
+      }}
+      onMouseLeave={event => {
+        event.stopPropagation()
+
+        props?.fireEvent({
+          type: Event.MouseLeaveNode,
+          target: event.target,
+          data: { ...props }
+        })
+      }}
     >
       <div
         id={props.id}
@@ -91,7 +109,7 @@ export function IconNode(props: any): React.ReactElement {
       >
         <div>
           {props.isInComplete && <Icon className={css.inComplete} size={12} name={'warning-sign'} color="orange500" />}
-          {props.canDelete && (
+          {props.canDelete && !props.readonly && (
             <Button
               className={cx(cssDefault.closeNode)}
               variation={ButtonVariation.PRIMARY}
@@ -99,7 +117,14 @@ export function IconNode(props: any): React.ReactElement {
               withoutCurrentColor
               icon="cross"
               iconProps={{ size: 10 }}
-              //   onMouseDown={e => onClick(e, props.node)}
+              onMouseDown={e => {
+                e.stopPropagation()
+                props?.fireEvent({
+                  type: Event.RemoveNode,
+                  identifier: props?.identifier,
+                  node: props
+                })
+              }}
             />
           )}
           <Icon name={props.icon as IconName} size={50} inverse={props.isSelected} />
@@ -123,7 +148,7 @@ export function IconNode(props: any): React.ReactElement {
           {props.name}
         </Text>
       )}
-      {allowAdd && CreateNode && (
+      {allowAdd && !props.readonly && CreateNode && (
         <CreateNode
           onMouseOver={() => allowAdd && setVisibilityOfAdd(true)}
           onMouseLeave={() => allowAdd && setVisibilityOfAdd(false)}
@@ -151,7 +176,7 @@ export function IconNode(props: any): React.ReactElement {
           data-nodeid="add-parallel"
         />
       )}
-      {!props.isParallelNode && (
+      {!props.isParallelNode && !props.readonly && (
         <div
           data-linkid={props?.identifier}
           onClick={event => {

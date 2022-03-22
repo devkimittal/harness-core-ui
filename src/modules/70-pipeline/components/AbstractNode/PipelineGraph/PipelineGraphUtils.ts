@@ -320,13 +320,17 @@ const trasformStageData = (stages: StageElementWrapperConfig[], graphType: Pipel
   return finalData
 }
 
+const getuniqueIdForStep = (step: ExecutionWrapperConfig): string =>
+  defaultTo(get(step, 'step.uuid') || get(step, 'step.id'), uuid() as string)
+
 const trasformStepsData = (steps: ExecutionWrapperConfig[], graphType: PipelineGraphType): PipelineGraphState[] => {
   const finalData: PipelineGraphState[] = []
   steps.forEach((step: ExecutionWrapperConfig) => {
     if (step?.step) {
       const { nodeType, iconName } = getNodeInfo(defaultTo(step.step.type, ''), graphType)
+
       finalData.push({
-        id: uuid() as string,
+        id: getuniqueIdForStep(step),
         identifier: step.step.identifier as string,
         name: step.step.name as string,
         type: step.step.type as string,
@@ -340,7 +344,7 @@ const trasformStepsData = (steps: ExecutionWrapperConfig[], graphType: PipelineG
       if (first.stepGroup) {
         const { iconName } = getNodeInfo('', graphType)
         finalData.push({
-          id: uuid() as string,
+          id: getuniqueIdForStep(first),
           identifier: first.stepGroup?.identifier as string,
           name: first.stepGroup?.name as string,
           type: 'StepGroup',
@@ -353,7 +357,7 @@ const trasformStepsData = (steps: ExecutionWrapperConfig[], graphType: PipelineG
       } else {
         const { nodeType, iconName } = getNodeInfo(first?.step?.type || '', graphType)
         finalData.push({
-          id: uuid() as string,
+          id: getuniqueIdForStep(first),
           identifier: first?.step?.identifier as string,
           name: first?.step?.name as string,
           type: first?.step?.type as string,
@@ -367,7 +371,7 @@ const trasformStepsData = (steps: ExecutionWrapperConfig[], graphType: PipelineG
     } else {
       const { iconName } = getNodeInfo('', graphType)
       finalData.push({
-        id: uuid() as string,
+        id: getuniqueIdForStep(step),
         identifier: step.stepGroup?.identifier as string,
         name: step.stepGroup?.name as string,
         type: 'StepGroup',
@@ -375,8 +379,6 @@ const trasformStepsData = (steps: ExecutionWrapperConfig[], graphType: PipelineG
         icon: iconName,
         data: step,
         graphType
-
-        // children: trasformStepsData(step.stepGroup?.steps as ExecutionWrapperConfig[], graphType)
       })
     }
   })

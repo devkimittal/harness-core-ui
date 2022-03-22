@@ -69,7 +69,7 @@ export default function StageHeader(props: StageHeaderProps): React.ReactElement
           </Container>
           <Layout.Vertical spacing={'xsmall'} style={{ flex: 1 }}>
             <Text style={{ fontSize: '12px', wordBreak: 'break-word' }} lineClamp={4} color={Color.RED_500}>
-              {data?.data?.failureInfo?.message || data?.data?.failureInfo?.errorMessage}
+              {data?.failureInfo?.message || data?.data?.failureInfo?.message || data?.data?.failureInfo?.errorMessage}
             </Text>
           </Layout.Vertical>
         </Layout.Horizontal>

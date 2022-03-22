@@ -33,9 +33,9 @@
     box-shadow: 0px 2px 4px 0px #60617029;
 
     &.selected {
-      background: linear-gradient(123.92deg, #0092e4 32.53%, #0778fc 112.21%);
-      border-color: var(--diagram-selected);
-      background: var(--pipeline-selected-node);
+      background: linear-gradient(123.92deg, #0092e4 32.53%, #0778fc 112.21%) !important;
+      border-color: var(--diagram-selected) !important;
+      background: var(--pipeline-selected-node) !important;
       border-width: 2px;
     }
     &:hover .closeNode {

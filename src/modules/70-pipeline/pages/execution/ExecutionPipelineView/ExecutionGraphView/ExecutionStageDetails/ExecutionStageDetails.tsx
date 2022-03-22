@@ -23,7 +23,7 @@ import type { ExecutionPathProps } from '@common/interfaces/RouteInterfaces'
 import { StepMode as Modes } from '@pipeline/utils/stepUtils'
 import type { ExecutionLayoutState } from '@pipeline/components/ExecutionLayout/ExecutionLayoutContext'
 import ConditionalExecutionTooltipWrapper from '@pipeline/components/ConditionalExecutionToolTip/ConditionalExecutionTooltipWrapper'
-import { processExecutionDataV1 } from '@pipeline/utils/execUtils'
+import { getExecutionStageDiagramListeners, processExecutionDataV1 } from '@pipeline/utils/execUtils'
 
 import { DiagramFactory, DiagramNodes, NodeType } from '@pipeline/components/AbstractNode/DiagramFactory'
 import { DiamondNodeWidget } from '@pipeline/components/AbstractNode/Nodes/DiamondNode/DiamondNode'
@@ -47,7 +47,7 @@ diagram.registerNode('Approval', DiamondNodeWidget)
 diagram.registerNode('JiraApproval', DiamondNodeWidget)
 diagram.registerNode('HarnessApproval', DiamondNodeWidget)
 diagram.registerNode('default-diamond', DiamondNodeWidget)
-diagram.registerNode('Barrier', IconNode)
+diagram.registerNode(['Barrier', 'ResourceConstraint'], IconNode)
 
 export const CDPipelineStudioNew = diagram.render()
 export interface ExecutionStageDetailsProps {
@@ -75,7 +75,6 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
   const [dynamicPopoverHandler, setDynamicPopoverHandler] = React.useState<
     DynamicPopoverHandlerBinding<unknown> | undefined
   >()
-
   const { executionIdentifier, accountId } = useParams<ExecutionPathProps>()
   const stage = pipelineStagesMap.get(selectedStageId)
   const {
@@ -103,6 +102,11 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
   }
 
   const refetchBarrierInfoRef = React.useCallback(refetchBarrierInfo, [])
+  React.useEffect(() => {
+    diagram.registerListeners(
+      getExecutionStageDiagramListeners({ data, onMouseEnter: onMouseEnterV1, allNodeMap, onMouseLeave })
+    )
+  }, [dynamicPopoverHandler])
   // load barrier info when barrier step is mouse over (when barrierSetupId is set)
   React.useEffect(() => {
     if (barrierSetupId) {
@@ -156,7 +160,33 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
       }
     }
   }
+  const onMouseLeave = (): void => {
+    dynamicPopoverHandler?.hide()
+    setBarrierSetupId(undefined)
+  }
 
+  const onMouseEnterV1 = ({ event, data: stageData }: { event: any; data: any }): void => {
+    // const currentStage = event.stage || event.group
+    const isFinished = stageData?.endTs
+    const hasStarted = stageData?.startTs
+    const status = stageData?.status
+    dynamicPopoverHandler?.show(
+      event.target,
+      {
+        event,
+        data: stageData
+      },
+      { useArrows: true, darkMode: false, fixedPosition: false }
+    )
+    if (!isFinished && hasStarted) {
+      if (stageData?.stepType === StepType.Barrier && status !== 'Success') {
+        setBarrierSetupId(stageData?.setupId)
+      }
+      if (stageData?.stepType === StepType.ResourceConstraint) {
+        setResourceUnit(stageData?.stepParameters?.spec?.resourceUnit)
+      }
+    }
+  }
   const renderPopover = ({
     data: stepInfo
   }: {
@@ -165,6 +195,7 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
       when: NodeRunInfo
     }
   }): JSX.Element => {
+    console.log(stepInfo)
     return (
       <HoverCard data={stepInfo}>
         {stepInfo?.when && <ConditionalExecutionTooltipWrapper data={stepInfo.when} mode={Modes.STEP} />}
@@ -198,7 +229,7 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
       {!isEmpty(selectedStageId) &&
         data.items?.length > 0 &&
         (NEW_PIP_STUDIO ? (
-          <CDPipelineStudioNew readonly data={data.items} />
+          <CDPipelineStudioNew readonly data={data.items} selectedNodeId={selectedStepId} />
         ) : (
           <ExecutionStageDiagram
             selectedIdentifier={selectedStepId}

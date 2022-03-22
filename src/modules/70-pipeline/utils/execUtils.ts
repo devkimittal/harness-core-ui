@@ -3,22 +3,22 @@ import type { IconName } from '@harness/uicore'
 import { isEmpty } from 'lodash-es'
 import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
 import type { ExecutionGraph, ExecutionNode, NodeRunInfo } from 'services/pipeline-ng'
+import { getStatusProps } from '@pipeline/components/ExecutionStageDiagram/ExecutionStageDiagramUtils'
+import { ExecutionPipelineNodeType } from '@pipeline/components/ExecutionStageDiagram/ExecutionPipelineModel'
+import { Event } from '@pipeline/components/Diagram'
 import {
   StepGroupRollbackIdentifier,
   NodeType,
   RollbackContainerCss,
   getIconDataBasedOnType,
   LITE_ENGINE_TASK,
-  getExecutionPipelineNodeType,
   processLiteEngineTask,
   RollbackIdentifier,
   TopLevelNodes,
   hasOnlyLiteEngineTask,
   StepTypeIconsMap
 } from './executionUtils'
-import { getStatusProps } from '@pipeline/components/ExecutionStageDiagram/ExecutionStageDiagramUtils'
 import type { ExecutionStatus } from './statusHelpers'
-import { ExecutionPipelineNodeType } from '@pipeline/components/ExecutionStageDiagram/ExecutionPipelineModel'
 interface ProcessParalellNodeArgs {
   nodeMap: ExecutionGraph['nodeMap']
   nodeAdjacencyListMap: ExecutionGraph['nodeAdjacencyListMap']
@@ -58,6 +58,7 @@ const processParallelNodeData = ({
             stepGroup: {
               name: parentNodeData?.name || /* istanbul ignore next */ '',
               identifier: parentNodeData?.identifier,
+              id: parentNodeData?.uuid as string,
               skipCondition: parentNodeData?.skipInfo?.evaluatedCondition
                 ? parentNodeData.skipInfo.skipCondition
                 : undefined,
@@ -71,6 +72,7 @@ const processParallelNodeData = ({
         : {
             name: parentNodeData?.name || /* istanbul ignore next */ '',
             identifier: parentNodeData?.identifier,
+            id: parentNodeData?.uuid as string,
             skipCondition: parentNodeData?.skipInfo?.evaluatedCondition
               ? parentNodeData.skipInfo.skipCondition
               : undefined,
@@ -92,7 +94,6 @@ interface ProcessStepGroupStepsArgs {
 }
 const processStepGroupSteps = ({ nodeAdjacencyListMap, id, nodeMap, rootNodes }: ProcessStepGroupStepsArgs): any[] => {
   const steps: any[] = []
-
   nodeAdjacencyListMap?.[id].children?.forEach((childId: string): void => {
     if (nodeMap?.[childId].stepType === NodeType.FORK) {
       const childrenNodes = processNodeDataV1(
@@ -101,7 +102,11 @@ const processStepGroupSteps = ({ nodeAdjacencyListMap, id, nodeMap, rootNodes }:
         nodeAdjacencyListMap,
         rootNodes
       )
-      steps.push(...childrenNodes.map(node => ({ step: node })))
+      if (nodeMap?.[childId].name === 'parallel') {
+        steps.push({ parallel: childrenNodes.map(node => ({ step: node })) })
+      } else {
+        steps.push(...childrenNodes.map(node => ({ step: node })))
+      }
     } else {
       steps.push({ step: nodeMap?.[childId] })
     }
@@ -139,6 +144,7 @@ const processSingleItem = ({
   const item = {
     name: nodeData?.name || /* istanbul ignore next */ '',
     identifier: nodeData?.identifier,
+    id: nodeData?.uuid,
     skipCondition: nodeData?.skipInfo?.evaluatedCondition ? nodeData.skipInfo.skipCondition : undefined,
     when: nodeData?.nodeRunInfo,
     status: nodeData?.status as ExecutionStatus,
@@ -230,13 +236,14 @@ ProcessGroupItemArgs): void => {
   const steps: Array<StepPipelineGraphState | ParallelStepPipelineGraphState> = []
 
   nodeAdjacencyListMap?.[id].children?.forEach(childId => {
-    const childStep = nodeMap[childId]
+    const childStep = nodeMap?.[childId]
+
     /** If we have parallel steps then create parallel object so that it can be processed by StepGroupGraphNode to create a Graph inside step group **/
-    if (childStep.name === 'parallel' && nodeAdjacencyListMap?.[childStep?.uuid as string]?.children?.length) {
+    if (childStep?.name === 'parallel' && nodeAdjacencyListMap?.[childStep?.uuid as string]?.children?.length) {
       const stepGroupChildrenNodes = nodeAdjacencyListMap?.[childStep?.uuid as string]?.children
       steps.push({
         parallel: stepGroupChildrenNodes?.map(childItemId => ({
-          step: nodeMap[childItemId]
+          step: nodeMap?.[childItemId]
         }))
       } as ParallelStepPipelineGraphState)
     } else {
@@ -252,6 +259,7 @@ ProcessGroupItemArgs): void => {
           name: childStep?.name || /* istanbul ignore next */ '',
           ...childStepIconData,
           identifier: childStep?.identifier as string,
+          uuid: childStep?.uuid as string,
           skipCondition: childStep?.skipInfo?.evaluatedCondition ? childStep.skipInfo.skipCondition : undefined,
           when: childStep?.nodeRunInfo,
           status: childStep?.status as ExecutionStatus,
@@ -277,7 +285,7 @@ ProcessGroupItemArgs): void => {
     when: nodeData?.nodeRunInfo,
     status: nodeData?.status as ExecutionStatus,
     type: nodeData?.stepType,
-
+    id: nodeData.uuid as string,
     data: nodeData
   }
   const finalDataItem = {
@@ -373,6 +381,7 @@ export const processExecutionDataV1 = (graph?: ExecutionGraph): any => {
                 group: {
                   name: nodeData.name || /* istanbul ignore next */ '',
                   identifier: nodeId,
+                  id: nodeData.uuid as string,
                   data: nodeData,
                   skipCondition: nodeData.skipInfo?.evaluatedCondition ? nodeData.skipInfo.skipCondition : undefined,
                   when: nodeData.nodeRunInfo,
@@ -431,4 +440,42 @@ export const processExecutionDataV1 = (graph?: ExecutionGraph): any => {
     }
   }
   return items
+}
+
+interface GetExecutionStageDiagramListenersParams {
+  data: any
+  onMouseEnter: ({ data, event }: { data: any; event: any }) => void
+  allNodeMap?: any
+  onMouseLeave: () => void
+}
+export const getExecutionStageDiagramListeners = ({
+  allNodeMap,
+  onMouseEnter,
+  onMouseLeave
+}: GetExecutionStageDiagramListenersParams): { [key: string]: (event: any) => void } => {
+  const nodeListeners: { [key: string]: (event?: any) => void } = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // [Event.ClickNode]: (event: any) => {
+    //   // /* istanbul ignore else */ if (autoPosition) {
+    //   //   setAutoPosition(false)
+    //   // }
+    //   const group = groupState?.get(event.entity.getIdentifier())
+    //   if (group && group.collapsed) {
+    //     updateGroupStage(event)
+    //   } else {
+    //     const stage = getStageFromDiagramEvent(event, data)
+    //     /* istanbul ignore else */ if (stage) itemClickHandler(new ItemClickEvent(stage, event.target))
+    //   }
+    // },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [Event.MouseEnterNode]: (event: any) => {
+      const stageData = allNodeMap[event?.data?.id]
+      if (stageData) onMouseEnter({ data: stageData, event })
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [Event.MouseLeaveNode]: () => {
+      onMouseLeave()
+    }
+  }
+  return nodeListeners
 }

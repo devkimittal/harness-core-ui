@@ -43,6 +43,8 @@
     rgba(100, 100, 100, 0.1) 50%,
     transparent 66%
   );
+  --pipeline-studio-bg: linear-gradient(90deg, #f6fcff 9px, transparent 1%) center,
+    linear-gradient(#f6fcff 9px, transparent 1%) center, #bbc1c4;
 
   --execution-pipeline-selected-running-bg-selected: linear-gradient(
     to top left,
@@ -61,14 +63,12 @@
   width: 100vw;
   position: relative;
   border-top: 2px solid var(--grey-100);
-  background: linear-gradient(90deg, #f6fcff 9px, transparent 1%) center,
-    linear-gradient(#f6fcff 9px, transparent 1%) center, #bbc1c4;
+  background: var(--pipeline-studio-bg);
   background-size: 10px 10px;
 }
 
 .graph-node {
   width: fit-content;
-  // height: 40px;
   opacity: 1;
   position: relative;
   border-radius: 8px;
