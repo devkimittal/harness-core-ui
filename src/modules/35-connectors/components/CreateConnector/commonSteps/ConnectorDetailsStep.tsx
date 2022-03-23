@@ -184,7 +184,7 @@ const ConnectorDetailsStep: React.FC<StepProps<ConnectorConfigDTO> & ConnectorDe
                     type="submit"
                     intent="primary"
                     rightIcon="chevron-right"
-                    disabled={loading}
+                    disabled={loading || !formikProps.isValid}
                     variation={ButtonVariation.PRIMARY}
                   >
                     <String stringID="continue" />
