@@ -25,3 +25,5 @@ eventSummary: Event Summary
 yamlDifference: YAML Difference
 noYamlDifference: There is no YAML difference associated with this event.
 resourceNameLabel: Resource Name
+excludeLoginEvents: Exclude Login Events
+excludeSystemEvents: Exclude System Events

@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react'
-import { DateRangePickerButton, Layout } from '@wings-software/uicore'
+import { DateRangePickerButton, Layout, DropDown, SelectOption } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
 import { Page } from '@common/exports'
 import { useGetAuditEventList } from 'services/audit'
@@ -18,6 +18,7 @@ import { useMutateAsGet } from '@common/hooks'
 import AuditTrailsFilters from '@audit-trail/components/AuditTrailsFilters'
 import ScopedTitle from '@common/components/Title/ScopedTitle'
 import { Scope } from '@common/interfaces/SecretsInterface'
+import { ShowEventFilterType, showEventTypeMap } from '@audit-trail/utils/RequestUtil'
 import AuditTrailsListView from './views/AuditTrailsListView'
 import AuditTrailsEmptyState from './audit_trails_empty_state.png'
 import css from './AuditTrailsPage.module.scss'
@@ -66,6 +67,15 @@ const AuditTrailsPage: React.FC = () => {
     }
   })
 
+  const getShowEventsDropdownList = (): SelectOption[] => {
+    return Object.keys(showEventTypeMap).map(key => {
+      return {
+        label: getString(showEventTypeMap[key as ShowEventFilterType]),
+        value: key
+      }
+    })
+  }
+
   const auditTrailTitle = getString('common.auditTrail')
   return (
     <>
@@ -98,15 +108,32 @@ const AuditTrailsPage: React.FC = () => {
       />
       <Page.SubHeader className={css.subHeaderContainer}>
         <Layout.Horizontal flex className={css.subHeader}>
-          <DateRangePickerButton
-            className={css.dateRange}
-            initialButtonText={getString('common.last7days')}
-            dateRangePickerProps={{ defaultValue: [startDate, endDate] }}
-            onChange={onDateChange}
-            renderButtonText={selectedDates =>
-              `${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`
-            }
-          />
+          <Layout.Horizontal>
+            <DateRangePickerButton
+              className={css.dateRange}
+              initialButtonText={getString('common.last7days')}
+              dateRangePickerProps={{ defaultValue: [startDate, endDate] }}
+              onChange={onDateChange}
+              renderButtonText={selectedDates =>
+                `${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`
+              }
+            />
+            <DropDown
+              items={getShowEventsDropdownList()}
+              filterable={false}
+              addClearBtn={true}
+              placeholder={getString('all')}
+              value={selectedFilterProperties?.staticFilter}
+              width={170}
+              onChange={selected => {
+                setSelectedFilterProperties({
+                  ...selectedFilterProperties,
+                  staticFilter: selected.value as AuditFilterProperties['staticFilter']
+                })
+              }}
+            />
+          </Layout.Horizontal>
+
           <Layout.Horizontal flex>
             <AuditTrailsFilters
               applyFilters={(properties: AuditFilterProperties) => {

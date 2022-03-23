@@ -84,6 +84,13 @@ export const getModuleNameFromAuditModule = (auditModule: AuditEventDTO['module'
   return undefined
 }
 
+export type ShowEventFilterType = Exclude<AuditFilterProperties['staticFilter'], undefined>
+
+export const showEventTypeMap: Record<ShowEventFilterType, StringKeys> = {
+  EXCLUDE_LOGIN_EVENTS: 'auditTrail.excludeLoginEvents',
+  EXCLUDE_SYSTEM_EVENTS: 'auditTrail.excludeSystemEvents'
+}
+
 export const getFilterPropertiesFromForm = (formData: AuditTrailFormType, accountId: string): AuditFilterProperties => {
   const filterProperties: AuditFilterProperties = { filterType: 'Audit' }
   const { actions, modules, users, resourceType, organizations, projects } = formData

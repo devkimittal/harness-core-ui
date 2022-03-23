@@ -11,7 +11,7 @@ import React from 'react'
 import { Get, GetProps, useGet, UseGetProps, Mutate, MutateProps, useMutate, UseMutateProps } from 'restful-react'
 
 import { getConfig, getUsingFetch, mutateUsingFetch, GetUsingFetchProps, MutateUsingFetchProps } from '../config'
-export const SPEC_VERSION = '2.0'
+export const SPEC_VERSION = '1.0'
 export interface AccessControlCheckError {
   code?:
     | 'DEFAULT_ERROR_CODE'
@@ -297,6 +297,7 @@ export interface AccessControlCheckError {
     | 'SCM_UNPROCESSABLE_ENTITY'
     | 'PROCESS_EXECUTION_EXCEPTION'
     | 'SCM_UNAUTHORIZED'
+    | 'SCM_INTERNAL_SERVER_ERROR'
     | 'DATA'
     | 'CONTEXT'
     | 'PR_CREATION_ERROR'
@@ -316,6 +317,10 @@ export interface AccessControlCheckError {
     | 'RESOURCE_ALREADY_EXISTS'
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
+    | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   correlationId?: string
   detailedMessage?: string
   failedPermissionChecks?: PermissionCheck[]
@@ -416,6 +421,7 @@ export interface AuditFilterProperties {
   resources?: ResourceDTO[]
   scopes?: ResourceScopeDTO[]
   startTime?: number
+  staticFilter?: 'EXCLUDE_LOGIN_EVENTS' | 'EXCLUDE_SYSTEM_EVENTS'
   tags?: {
     [key: string]: string
   }
@@ -732,6 +738,7 @@ export interface Error {
     | 'SCM_UNPROCESSABLE_ENTITY'
     | 'PROCESS_EXECUTION_EXCEPTION'
     | 'SCM_UNAUTHORIZED'
+    | 'SCM_INTERNAL_SERVER_ERROR'
     | 'DATA'
     | 'CONTEXT'
     | 'PR_CREATION_ERROR'
@@ -751,6 +758,10 @@ export interface Error {
     | 'RESOURCE_ALREADY_EXISTS'
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
+    | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   correlationId?: string
   detailedMessage?: string
   message?: string
@@ -1048,6 +1059,7 @@ export interface Failure {
     | 'SCM_UNPROCESSABLE_ENTITY'
     | 'PROCESS_EXECUTION_EXCEPTION'
     | 'SCM_UNAUTHORIZED'
+    | 'SCM_INTERNAL_SERVER_ERROR'
     | 'DATA'
     | 'CONTEXT'
     | 'PR_CREATION_ERROR'
@@ -1067,6 +1079,10 @@ export interface Failure {
     | 'RESOURCE_ALREADY_EXISTS'
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
+    | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   correlationId?: string
   errors?: ValidationError[]
   message?: string
@@ -1614,6 +1630,7 @@ export interface ResponseMessage {
     | 'SCM_UNPROCESSABLE_ENTITY'
     | 'PROCESS_EXECUTION_EXCEPTION'
     | 'SCM_UNAUTHORIZED'
+    | 'SCM_INTERNAL_SERVER_ERROR'
     | 'DATA'
     | 'CONTEXT'
     | 'PR_CREATION_ERROR'
@@ -1633,6 +1650,10 @@ export interface ResponseMessage {
     | 'RESOURCE_ALREADY_EXISTS'
     | 'INVALID_JSON_PAYLOAD'
     | 'POLICY_EVALUATION_FAILURE'
+    | 'POLICY_SET_ERROR'
+    | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
+    | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   exception?: Throwable
   failureTypes?: (
     | 'EXPIRED'
@@ -1728,6 +1749,10 @@ export type SampleErrorMetadataDTO = ErrorMetadataDTO & {
   sampleMap?: {
     [key: string]: string
   }
+}
+
+export type ScmErrorMetadataDTO = ErrorMetadataDTO & {
+  conflictCommitId?: string
 }
 
 export interface Scope {
@@ -2315,299 +2340,6 @@ export const testNotificationSettingPromise = (
     'POST',
     getConfig('audit/api'),
     `/channels/test`,
-    props,
-    signal
-  )
-
-export interface GetFilterListQueryParams {
-  pageIndex?: number
-  pageSize?: number
-  accountIdentifier: string
-  orgIdentifier?: string
-  projectIdentifier?: string
-  type:
-    | 'Connector'
-    | 'DelegateProfile'
-    | 'Delegate'
-    | 'PipelineSetup'
-    | 'PipelineExecution'
-    | 'Deployment'
-    | 'Audit'
-    | 'Template'
-}
-
-export type GetFilterListProps = Omit<
-  GetProps<ResponsePageFilterDTO, Failure | Error, GetFilterListQueryParams, void>,
-  'path'
->
-
-/**
- * Get Filter
- */
-export const GetFilterList = (props: GetFilterListProps) => (
-  <Get<ResponsePageFilterDTO, Failure | Error, GetFilterListQueryParams, void>
-    path={`/filters`}
-    base={getConfig('audit/api')}
-    {...props}
-  />
-)
-
-export type UseGetFilterListProps = Omit<
-  UseGetProps<ResponsePageFilterDTO, Failure | Error, GetFilterListQueryParams, void>,
-  'path'
->
-
-/**
- * Get Filter
- */
-export const useGetFilterList = (props: UseGetFilterListProps) =>
-  useGet<ResponsePageFilterDTO, Failure | Error, GetFilterListQueryParams, void>(`/filters`, {
-    base: getConfig('audit/api'),
-    ...props
-  })
-
-/**
- * Get Filter
- */
-export const getFilterListPromise = (
-  props: GetUsingFetchProps<ResponsePageFilterDTO, Failure | Error, GetFilterListQueryParams, void>,
-  signal?: RequestInit['signal']
-) =>
-  getUsingFetch<ResponsePageFilterDTO, Failure | Error, GetFilterListQueryParams, void>(
-    getConfig('audit/api'),
-    `/filters`,
-    props,
-    signal
-  )
-
-export interface PostFilterQueryParams {
-  accountIdentifier: string
-}
-
-export type PostFilterProps = Omit<
-  MutateProps<ResponseFilterDTO, Failure | Error, PostFilterQueryParams, FilterDTORequestBody, void>,
-  'path' | 'verb'
->
-
-/**
- * Create a Filter
- */
-export const PostFilter = (props: PostFilterProps) => (
-  <Mutate<ResponseFilterDTO, Failure | Error, PostFilterQueryParams, FilterDTORequestBody, void>
-    verb="POST"
-    path={`/filters`}
-    base={getConfig('audit/api')}
-    {...props}
-  />
-)
-
-export type UsePostFilterProps = Omit<
-  UseMutateProps<ResponseFilterDTO, Failure | Error, PostFilterQueryParams, FilterDTORequestBody, void>,
-  'path' | 'verb'
->
-
-/**
- * Create a Filter
- */
-export const usePostFilter = (props: UsePostFilterProps) =>
-  useMutate<ResponseFilterDTO, Failure | Error, PostFilterQueryParams, FilterDTORequestBody, void>('POST', `/filters`, {
-    base: getConfig('audit/api'),
-    ...props
-  })
-
-/**
- * Create a Filter
- */
-export const postFilterPromise = (
-  props: MutateUsingFetchProps<ResponseFilterDTO, Failure | Error, PostFilterQueryParams, FilterDTORequestBody, void>,
-  signal?: RequestInit['signal']
-) =>
-  mutateUsingFetch<ResponseFilterDTO, Failure | Error, PostFilterQueryParams, FilterDTORequestBody, void>(
-    'POST',
-    getConfig('audit/api'),
-    `/filters`,
-    props,
-    signal
-  )
-
-export interface UpdateFilterQueryParams {
-  accountIdentifier: string
-}
-
-export type UpdateFilterProps = Omit<
-  MutateProps<ResponseFilterDTO, Failure | Error, UpdateFilterQueryParams, FilterDTORequestBody, void>,
-  'path' | 'verb'
->
-
-/**
- * Update a Filter
- */
-export const UpdateFilter = (props: UpdateFilterProps) => (
-  <Mutate<ResponseFilterDTO, Failure | Error, UpdateFilterQueryParams, FilterDTORequestBody, void>
-    verb="PUT"
-    path={`/filters`}
-    base={getConfig('audit/api')}
-    {...props}
-  />
-)
-
-export type UseUpdateFilterProps = Omit<
-  UseMutateProps<ResponseFilterDTO, Failure | Error, UpdateFilterQueryParams, FilterDTORequestBody, void>,
-  'path' | 'verb'
->
-
-/**
- * Update a Filter
- */
-export const useUpdateFilter = (props: UseUpdateFilterProps) =>
-  useMutate<ResponseFilterDTO, Failure | Error, UpdateFilterQueryParams, FilterDTORequestBody, void>(
-    'PUT',
-    `/filters`,
-    { base: getConfig('audit/api'), ...props }
-  )
-
-/**
- * Update a Filter
- */
-export const updateFilterPromise = (
-  props: MutateUsingFetchProps<ResponseFilterDTO, Failure | Error, UpdateFilterQueryParams, FilterDTORequestBody, void>,
-  signal?: RequestInit['signal']
-) =>
-  mutateUsingFetch<ResponseFilterDTO, Failure | Error, UpdateFilterQueryParams, FilterDTORequestBody, void>(
-    'PUT',
-    getConfig('audit/api'),
-    `/filters`,
-    props,
-    signal
-  )
-
-export interface DeleteFilterQueryParams {
-  accountIdentifier: string
-  orgIdentifier?: string
-  projectIdentifier?: string
-  type:
-    | 'Connector'
-    | 'DelegateProfile'
-    | 'Delegate'
-    | 'PipelineSetup'
-    | 'PipelineExecution'
-    | 'Deployment'
-    | 'Audit'
-    | 'Template'
-}
-
-export type DeleteFilterProps = Omit<
-  MutateProps<ResponseBoolean, Failure | Error, DeleteFilterQueryParams, string, void>,
-  'path' | 'verb'
->
-
-/**
- * Delete a filter
- */
-export const DeleteFilter = (props: DeleteFilterProps) => (
-  <Mutate<ResponseBoolean, Failure | Error, DeleteFilterQueryParams, string, void>
-    verb="DELETE"
-    path={`/filters`}
-    base={getConfig('audit/api')}
-    {...props}
-  />
-)
-
-export type UseDeleteFilterProps = Omit<
-  UseMutateProps<ResponseBoolean, Failure | Error, DeleteFilterQueryParams, string, void>,
-  'path' | 'verb'
->
-
-/**
- * Delete a filter
- */
-export const useDeleteFilter = (props: UseDeleteFilterProps) =>
-  useMutate<ResponseBoolean, Failure | Error, DeleteFilterQueryParams, string, void>('DELETE', `/filters`, {
-    base: getConfig('audit/api'),
-    ...props
-  })
-
-/**
- * Delete a filter
- */
-export const deleteFilterPromise = (
-  props: MutateUsingFetchProps<ResponseBoolean, Failure | Error, DeleteFilterQueryParams, string, void>,
-  signal?: RequestInit['signal']
-) =>
-  mutateUsingFetch<ResponseBoolean, Failure | Error, DeleteFilterQueryParams, string, void>(
-    'DELETE',
-    getConfig('audit/api'),
-    `/filters`,
-    props,
-    signal
-  )
-
-export interface GetFilterQueryParams {
-  accountIdentifier: string
-  orgIdentifier?: string
-  projectIdentifier?: string
-  type:
-    | 'Connector'
-    | 'DelegateProfile'
-    | 'Delegate'
-    | 'PipelineSetup'
-    | 'PipelineExecution'
-    | 'Deployment'
-    | 'Audit'
-    | 'Template'
-}
-
-export interface GetFilterPathParams {
-  identifier: string
-}
-
-export type GetFilterProps = Omit<
-  GetProps<ResponseFilterDTO, Failure | Error, GetFilterQueryParams, GetFilterPathParams>,
-  'path'
-> &
-  GetFilterPathParams
-
-/**
- * Get Filter
- */
-export const GetFilter = ({ identifier, ...props }: GetFilterProps) => (
-  <Get<ResponseFilterDTO, Failure | Error, GetFilterQueryParams, GetFilterPathParams>
-    path={`/filters/${identifier}`}
-    base={getConfig('audit/api')}
-    {...props}
-  />
-)
-
-export type UseGetFilterProps = Omit<
-  UseGetProps<ResponseFilterDTO, Failure | Error, GetFilterQueryParams, GetFilterPathParams>,
-  'path'
-> &
-  GetFilterPathParams
-
-/**
- * Get Filter
- */
-export const useGetFilter = ({ identifier, ...props }: UseGetFilterProps) =>
-  useGet<ResponseFilterDTO, Failure | Error, GetFilterQueryParams, GetFilterPathParams>(
-    (paramsInPath: GetFilterPathParams) => `/filters/${paramsInPath.identifier}`,
-    { base: getConfig('audit/api'), pathParams: { identifier }, ...props }
-  )
-
-/**
- * Get Filter
- */
-export const getFilterPromise = (
-  {
-    identifier,
-    ...props
-  }: GetUsingFetchProps<ResponseFilterDTO, Failure | Error, GetFilterQueryParams, GetFilterPathParams> & {
-    identifier: string
-  },
-  signal?: RequestInit['signal']
-) =>
-  getUsingFetch<ResponseFilterDTO, Failure | Error, GetFilterQueryParams, GetFilterPathParams>(
-    getConfig('audit/api'),
-    `/filters/${identifier}`,
     props,
     signal
   )

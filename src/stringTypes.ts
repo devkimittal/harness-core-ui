@@ -793,6 +793,8 @@ export interface StringsMap {
   'auditTrail.emptyStateMessageTitle': string
   'auditTrail.eventSource': string
   'auditTrail.eventSummary': string
+  'auditTrail.excludeLoginEvents': string
+  'auditTrail.excludeSystemEvents': string
   'auditTrail.externalDataText': string
   'auditTrail.http': string
   'auditTrail.noYamlDifference': string
