@@ -30,7 +30,13 @@ import { get, noop, omit, debounce } from 'lodash-es'
 import cx from 'classnames'
 import { useStrings } from 'framework/strings'
 import { useExecutionContext } from '@pipeline/context/ExecutionContext'
-import { TestSuiteSummaryQueryParams, useTestSuiteSummary, useVgSearch, TestSuite } from 'services/ti-service'
+import {
+  TestSuiteSummaryQueryParams,
+  useTestSuiteSummary,
+  useVgSearch,
+  TestSuite,
+  TestReportSummary
+} from 'services/ti-service'
 import { CallGraphAPIResponse, TestsCallgraph } from './TestsCallgraph'
 import { TestsExecutionItem } from './TestsExecutionItem'
 import {
@@ -51,6 +57,7 @@ interface TestsExecutionProps {
   serviceToken: string
   showCallGraph?: boolean
   isAggregatedReports?: boolean
+  reportSummaryData?: TestReportSummary
 }
 
 const getEntireExecutionSummary = (executionSummaryContent: TestSuite[]): any =>
@@ -66,7 +73,8 @@ export function TestsExecution({
   stepId,
   serviceToken,
   showCallGraph,
-  isAggregatedReports
+  isAggregatedReports,
+  reportSummaryData
 }: TestsExecutionProps): React.ReactElement | null {
   const context = useExecutionContext()
   const { getString } = useStrings()
@@ -438,7 +446,11 @@ export function TestsExecution({
                       buildIdentifier={String(
                         context?.pipelineExecutionDetail?.pipelineExecutionSummary?.runSequence || ''
                       )}
-                      executionSummary={getEntireExecutionSummary(executionSummary?.content || [])}
+                      executionSummary={
+                        !showFailedTestsOnly && reportSummaryData
+                          ? reportSummaryData
+                          : getEntireExecutionSummary(executionSummary?.content || [])
+                      }
                       serviceToken={serviceToken}
                       status={showFailedTestsOnly ? 'failed' : undefined}
                       stageId={stageId}
