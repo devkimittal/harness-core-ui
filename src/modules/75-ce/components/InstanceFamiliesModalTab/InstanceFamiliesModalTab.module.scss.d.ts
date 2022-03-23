@@ -8,8 +8,10 @@
 // this is an auto-generated file, do not update this manually
 declare const styles: {
   readonly columnCheckbox: string
+  readonly gridContainer: string
   readonly headerGroup: string
   readonly hoverBackground: string
+  readonly overrideLabelPadding: string
   readonly rowCheckbox: string
   readonly rowCheckboxContainer: string
   readonly rowHeader: string

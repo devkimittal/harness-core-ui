@@ -834,20 +834,11 @@ exports[`test cases for node recommendations details should be able to render no
                       tabindex="0"
                     />
                   </div>
-                  <div
-                    class="StyledProps--font StyledProps--main"
+                  <p
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small StyledProps--margin-top-xsmall"
                   >
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      delegate.delegateCPU: 4 vCPU 
-                    </span>
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      ce.nodeRecommendation.ram: 7 GiB
-                    </span>
-                  </div>
+                    ce.nodeRecommendation.cpuAndMemeValWithBuffer
+                  </p>
                 </div>
               </div>
             </div>
@@ -1895,20 +1886,11 @@ exports[`test cases for node recommendations details should be able to render no
                       tabindex="0"
                     />
                   </div>
-                  <div
-                    class="StyledProps--font StyledProps--main"
+                  <p
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small StyledProps--margin-top-xsmall"
                   >
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      delegate.delegateCPU: 0 vCPU 
-                    </span>
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      ce.nodeRecommendation.ram: 0 GiB
-                    </span>
-                  </div>
+                    ce.nodeRecommendation.cpuAndMemeValWithBuffer
+                  </p>
                 </div>
               </div>
             </div>
@@ -2698,7 +2680,7 @@ exports[`test cases for node recommendations details should be able to render no
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey400"
           >
-             19.941vCPU
+             19.94vCPU
           </span>
         </div>
         <img
@@ -2720,7 +2702,7 @@ exports[`test cases for node recommendations details should be able to render no
           <span
             class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-h6 StyledProps--color StyledProps--color-grey400"
           >
-             65.924GiB
+             65.92GiB
           </span>
         </div>
         <img
@@ -2835,7 +2817,7 @@ exports[`test cases for node recommendations details should be able to render no
                             class="bp3-input"
                             data-testid="sumCpu-input"
                             type="text"
-                            value="19.941"
+                            value="19.94"
                           />
                         </div>
                       </div>
@@ -2858,7 +2840,7 @@ exports[`test cases for node recommendations details should be able to render no
                             class="bp3-input"
                             data-testid="sumMem-input"
                             type="text"
-                            value="65.924"
+                            value="65.92"
                           />
                         </div>
                       </div>
@@ -2970,20 +2952,11 @@ exports[`test cases for node recommendations details should be able to render no
                       tabindex="0"
                     />
                   </div>
-                  <div
-                    class="StyledProps--font StyledProps--main"
+                  <p
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small StyledProps--margin-top-xsmall"
                   >
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      delegate.delegateCPU: 19.94 vCPU 
-                    </span>
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      ce.nodeRecommendation.ram: 65.92 GiB
-                    </span>
-                  </div>
+                    ce.nodeRecommendation.cpuAndMemeValWithBuffer
+                  </p>
                 </div>
               </div>
             </div>
@@ -3190,23 +3163,15 @@ exports[`test cases for node recommendations details should be able to render no
             class="Layout--horizontal Layout--layout-spacing-small StyledProps--main"
           >
             <button
-              class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--variation Button--variation-primary"
+              class="bp3-button bp3-disabled Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--variation Button--variation-primary"
+              disabled=""
+              tabindex="-1"
               type="button"
             >
               <span
                 class="bp3-button-text"
               >
                 ce.nodeRecommendation.applyPreferences
-              </span>
-            </button>
-            <button
-              class="bp3-button Button--button StyledProps--font StyledProps--main Button--with-current-color Button--iconOnly Button--variation Button--variation-secondary"
-              type="button"
-            >
-              <span
-                class="bp3-button-text"
-              >
-                ce.recommendation.detailsPage.resetRecommendationText
               </span>
             </button>
           </div>
@@ -4051,20 +4016,11 @@ exports[`test cases for node recommendations details should be able to render no
                       tabindex="0"
                     />
                   </div>
-                  <div
-                    class="StyledProps--font StyledProps--main"
+                  <p
+                    class="StyledProps--font StyledProps--main StyledProps--font-variation-small StyledProps--margin-top-xsmall"
                   >
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      delegate.delegateCPU: 4 vCPU 
-                    </span>
-                    <span
-                      class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                    >
-                      ce.nodeRecommendation.ram: 7 GiB
-                    </span>
-                  </div>
+                    ce.nodeRecommendation.cpuAndMemeValWithBuffer
+                  </p>
                 </div>
               </div>
             </div>

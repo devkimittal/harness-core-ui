@@ -3790,6 +3790,7 @@ export interface StringsMap {
   'ce.nodeRecommendation.buffer': string
   'ce.nodeRecommendation.compare': string
   'ce.nodeRecommendation.costPerHour': string
+  'ce.nodeRecommendation.cpuAndMemeValWithBuffer': string
   'ce.nodeRecommendation.cpus': string
   'ce.nodeRecommendation.distribution': string
   'ce.nodeRecommendation.eks': string
@@ -3797,6 +3798,7 @@ export interface StringsMap {
   'ce.nodeRecommendation.fetchRecommendationError': string
   'ce.nodeRecommendation.gke': string
   'ce.nodeRecommendation.howItWorks': string
+  'ce.nodeRecommendation.inconsistentResourceReq': string
   'ce.nodeRecommendation.instaceFamiliesModalDesc': string
   'ce.nodeRecommendation.instanceFam': string
   'ce.nodeRecommendation.item1': string

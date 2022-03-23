@@ -122,10 +122,10 @@ const NodeRecommendationDetailsPage = () => {
               }
             >
               <Text
-                color="primary5"
+                color={Color.PRIMARY_5}
                 rightIcon="caret-down"
                 rightIconProps={{
-                  color: 'primary5'
+                  color: Color.PRIMARY_5
                 }}
                 className={css.actionText}
               >

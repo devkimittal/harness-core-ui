@@ -3,8 +3,7 @@
 exports[`test cases for instance family modal tab should be able to render instance family modal tab 1`] = `
 <div>
   <div
-    class="StyledProps--font StyledProps--main StyledProps--flex"
-    style="overflow: scroll; border: 1px solid #d9dae6;"
+    class="StyledProps--font StyledProps--main gridContainer StyledProps--flex"
   >
     <table
       role="table"
@@ -643,7 +642,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="StyledProps--font StyledProps--main rowCheckbox"
                 >
                   <label
-                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox overrideLabelPadding StyledProps--main"
                   >
                     <input
                       data-testid="series-checkbox-c2d"
@@ -870,7 +869,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="StyledProps--font StyledProps--main rowCheckbox"
                 >
                   <label
-                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox overrideLabelPadding StyledProps--main"
                   >
                     <input
                       checked=""
@@ -1065,7 +1064,7 @@ exports[`test cases for instance family modal tab should be able to render insta
                   class="StyledProps--font StyledProps--main rowCheckbox"
                 >
                   <label
-                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main"
+                    class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox overrideLabelPadding StyledProps--main"
                   >
                     <input
                       data-testid="series-checkbox-n1"
@@ -1282,8 +1281,7 @@ exports[`test cases for instance family modal tab should be able to render insta
 exports[`test cases for instance family modal tab should be able to render instance family modal tab when instance families are not present 1`] = `
 <div>
   <div
-    class="StyledProps--font StyledProps--main StyledProps--flex"
-    style="overflow: scroll; border: 1px solid #d9dae6;"
+    class="StyledProps--font StyledProps--main gridContainer StyledProps--flex"
   >
     <table
       role="table"

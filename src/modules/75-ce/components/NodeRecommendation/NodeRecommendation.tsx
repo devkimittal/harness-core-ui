@@ -153,11 +153,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const { sumCpu, sumMem, minNodes, maxcpu, maxmemory } = useMemo(() => {
     const recommendClusterRequest = ((timeRange.value === NodepoolTimeRangeType.LAST_DAY
       ? recommendationDetails.resourceRequirement
-      : nodeRecommendationRequestData.recommendClusterRequest) || {}) as RecommendClusterRequest
+      : nodeRecommendationRequestData?.recommendClusterRequest) || {}) as RecommendClusterRequest
 
     const totalResourceUsage = ((timeRange.value === NodepoolTimeRangeType.LAST_DAY
       ? recommendationDetails.totalResourceUsage
-      : nodeRecommendationRequestData.totalResourceUsage) || {}) as TotalResourceUsage
+      : nodeRecommendationRequestData?.totalResourceUsage) || {}) as TotalResourceUsage
 
     return { ...recommendClusterRequest, ...totalResourceUsage }
   }, [timeRange])
@@ -165,11 +165,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
   const { provider, region, service } = (recommendationDetails.recommended || {}) as RecommendationResponse
 
   const initialState = {
-    maxCpu: +defaultTo(maxcpu, 0).toFixed(3),
-    maxMemory: +defaultTo(maxmemory, 0).toFixed(3),
-    sumCpu: +defaultTo(sumCpu, 0).toFixed(3),
-    sumMem: +defaultTo(sumMem, 0).toFixed(3),
-    minNodes: +defaultTo(minNodes, 0).toFixed(3),
+    maxCpu: +defaultTo(maxcpu, 0).toFixed(2),
+    maxMemory: +defaultTo(maxmemory, 0).toFixed(2),
+    sumCpu: +defaultTo(sumCpu, 0).toFixed(2),
+    sumMem: +defaultTo(sumMem, 0).toFixed(2),
+    minNodes: +defaultTo(minNodes, 0).toFixed(2),
     includeTypes: includeTypes || [],
     includeSeries: includeSeries || [],
     excludeTypes: excludeTypes || [],
@@ -212,11 +212,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         }
         setUpdatedState(addBufferToState(state, buffer))
         UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
-      } catch (e) {
+      } catch (e: any) {
         showError(getString('ce.nodeRecommendation.fetchRecommendationError'))
       }
     } else {
-      showError('Inconsistent resource requirements')
+      showError(getString('ce.nodeRecommendation.inconsistentResourceReq'))
     }
   }
 
@@ -224,11 +224,11 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
     dispatch({
       type: ACTIONS.UPDATE_TIME_RANGE,
       data: {
-        maxCpu: +defaultTo(maxcpu, 0).toFixed(3),
-        maxMemory: +defaultTo(maxmemory, 0).toFixed(3),
-        sumCpu: +defaultTo(sumCpu, 0).toFixed(3),
-        sumMem: +defaultTo(sumMem, 0).toFixed(3),
-        minNodes: +defaultTo(minNodes, 0).toFixed(3)
+        maxCpu: +defaultTo(maxcpu, 0).toFixed(2),
+        maxMemory: +defaultTo(maxmemory, 0).toFixed(2),
+        sumCpu: +defaultTo(sumCpu, 0).toFixed(2),
+        sumMem: +defaultTo(sumMem, 0).toFixed(2),
+        minNodes: +defaultTo(minNodes, 0).toFixed(2)
       }
     })
     updateRecommendationDetails()
@@ -317,9 +317,9 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
       </Layout.Vertical>
       <Layout.Vertical spacing="large" padding="xlarge">
         <ResourceUtilizationCharts
-          sumCpu={+defaultTo(sumCpu, 0).toFixed(3)}
-          sumMem={+defaultTo(sumMem, 0).toFixed(3)}
-          minNodes={+defaultTo(minNodes, 0).toFixed(3)}
+          sumCpu={+defaultTo(sumCpu, 0).toFixed(2)}
+          sumMem={+defaultTo(sumMem, 0).toFixed(2)}
+          minNodes={+defaultTo(minNodes, 0).toFixed(2)}
           timeRange={timeRange}
         />
         <Text font={{ variation: FontVariation.H5 }} padding={{ top: 'xsmall' }}>

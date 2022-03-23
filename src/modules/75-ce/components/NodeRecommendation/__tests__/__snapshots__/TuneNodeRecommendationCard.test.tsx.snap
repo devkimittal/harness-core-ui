@@ -214,20 +214,11 @@ exports[`test cases for tune recommendation card should be able to render tune r
                   tabindex="0"
                 />
               </div>
-              <div
-                class="StyledProps--font StyledProps--main"
+              <p
+                class="StyledProps--font StyledProps--main StyledProps--font-variation-small StyledProps--margin-top-xsmall"
               >
-                <span
-                  class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                >
-                  delegate.delegateCPU: 30 vCPU 
-                </span>
-                <span
-                  class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                >
-                  ce.nodeRecommendation.ram: 120 GiB
-                </span>
-              </div>
+                ce.nodeRecommendation.cpuAndMemeValWithBuffer
+              </p>
             </div>
           </div>
         </div>
@@ -724,20 +715,11 @@ exports[`test cases for tune recommendation card should be able to render tune r
                   tabindex="0"
                 />
               </div>
-              <div
-                class="StyledProps--font StyledProps--main"
+              <p
+                class="StyledProps--font StyledProps--main StyledProps--font-variation-small StyledProps--margin-top-xsmall"
               >
-                <span
-                  class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                >
-                  delegate.delegateCPU: 30 vCPU 
-                </span>
-                <span
-                  class="StyledProps--font StyledProps--main StyledProps--inline StyledProps--font-variation-small"
-                >
-                  ce.nodeRecommendation.ram: 120 GiB
-                </span>
-              </div>
+                ce.nodeRecommendation.cpuAndMemeValWithBuffer
+              </p>
             </div>
           </div>
         </div>

@@ -5,6 +5,12 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
+.gridContainer {
+  overflow: scroll;
+  background-color: var(--grey-50);
+  border: 1px solid var(--grey-200);
+}
+
 table {
   border-spacing: 0;
   overflow: hidden;
@@ -78,7 +84,7 @@ table {
     }
   }
 
-  label[class*='bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox StyledProps--main'] {
+  .overrideLabelPadding {
     padding: 0px !important;
   }
 

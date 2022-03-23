@@ -750,8 +750,8 @@ nodeRecommendation:
   item3: Max CPUs
   item4: Max Memory
   resourceNeed: Resource needs
-  cpus: 'CPU(vCPU):'
-  mem: 'RAM(GiB):'
+  cpus: 'CPU (vCPU):'
+  mem: 'RAM (GiB):'
   nodeCount: Node count
   minNode: 'Min Nodes:'
   maxNode: 'Max Nodes:'
@@ -784,6 +784,8 @@ nodeRecommendation:
   instaceFamiliesModalDesc: 'You can specify Preferred Instance Families for Compute Optimised or Storage Optimised Performance. The alogrithm will create a recommendation out of this pool of preferred instances that is most economical to you.'
   updatePreferences: 'Recommendations updated by preferences set.'
   fetchRecommendationError: 'Error in fetching recommended cluster'
+  inconsistentResourceReq: 'Inconsistent resource requirements'
+  cpuAndMemeValWithBuffer: '{{ $.delegate.delegateCPU }}: {{ cpu }} vCPU {{ $.ce.nodeRecommendation.ram }}: {{ mem }} GiB'
 budgets:
   sideNavText: Budgets
   confirmDeleteBudgetTitle: Delete Budget

@@ -6,7 +6,7 @@
  */
 
 import React, { useMemo, useState } from 'react'
-import { Container, Text, Color, FontVariation, Checkbox, Layout } from '@harness/uicore'
+import { Container, Text, FontVariation, Checkbox, Layout } from '@harness/uicore'
 import { CellProps, useTable, Column } from 'react-table'
 import cx from 'classnames'
 import { flatten } from 'lodash-es'
@@ -97,6 +97,7 @@ export const InstanceFamiliesModalTab: React.FC<TabProps> = ({ data, state, disp
         <Container className={css.rowCheckboxContainer}>
           <Container className={css.rowCheckbox}>
             <Checkbox
+              className={css.overrideLabelPadding}
               checked={status === CheckboxStatus.CHECKED}
               indeterminate={status === CheckboxStatus.INDETERMINATE}
               onClick={() => handleInstanceSeriesCheckbox(status, val)}
@@ -144,7 +145,7 @@ export const InstanceFamiliesModalTab: React.FC<TabProps> = ({ data, state, disp
   )
 
   return (
-    <Container background={Color.GREY_50} flex style={{ overflow: 'scroll', border: '1px solid #D9DAE6' }}>
+    <Container flex className={css.gridContainer}>
       <Grid
         data={formatData(series, types)}
         columns={columns}

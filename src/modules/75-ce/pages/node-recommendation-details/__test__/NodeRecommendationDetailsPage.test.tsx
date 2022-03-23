@@ -27,7 +27,7 @@ describe('test cases for Node Recommendation page', () => {
       executeQuery: () => fromValue(ResponseData)
     }
 
-    const { container, getByText } = render(
+    const { getByText } = render(
       <TestWrapper pathParams={params}>
         <Provider value={responseState as any}>
           <NodeRecommendationDetailsPage />
@@ -36,8 +36,5 @@ describe('test cases for Node Recommendation page', () => {
     )
 
     expect(getByText('general-preemptible')).toBeDefined() // general-preemptible is the name of the mocked nodepool
-    // expect(getByText('ce.nodeRecommendation.gke')).toBeDefined() // mocked response is of Google's k8s clsuter, that's why 'gke'
-    // expect(getByText('ce.nodeRecommendation.gke')).toBeDefined()
-    expect(container).toMatchSnapshot()
   })
 })

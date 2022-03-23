@@ -20,7 +20,7 @@ import {
 import { Slider } from '@blueprintjs/core'
 import { isEqual } from 'lodash-es'
 import { useStrings } from 'framework/strings'
-import { addBufferToValue } from '@ce/utils/recommendationUtils'
+import { addBufferToState, addBufferToValue } from '@ce/utils/recommendationUtils'
 import { ACTIONS, Action, IState } from './constants'
 import css from './NodeRecommendation.module.scss'
 
@@ -210,14 +210,12 @@ const Buffer: React.FC<{
           onChange={val => setBuffer(val)}
           className={css.bufferSlider}
         />
-        <Container>
-          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
-            'delegate.delegateCPU'
-          )}: ${addBufferToValue(state.sumCpu, buffer)} vCPU `}</Text>
-          <Text inline font={{ variation: FontVariation.SMALL }}>{`${getString(
-            'ce.nodeRecommendation.ram'
-          )}: ${addBufferToValue(state.sumMem, buffer)} GiB`}</Text>
-        </Container>
+        <Text font={{ variation: FontVariation.SMALL }} margin={{ top: 'xsmall' }}>
+          {getString('ce.nodeRecommendation.cpuAndMemeValWithBuffer', {
+            cpu: addBufferToValue(state.sumCpu, buffer),
+            mem: addBufferToValue(state.sumMem, buffer)
+          })}
+        </Text>
       </Layout.Vertical>
     </Container>
   )
@@ -334,7 +332,7 @@ const InstanceFamilies: React.FC<{
       </Container>
       {state.includeSeries.length || state.includeTypes.length ? (
         <TextInput
-          value={[...state.includeSeries, ...state.includeTypes].toString()}
+          value={[...state.includeSeries, ...state.includeTypes].join(', ')}
           contentEditable={false}
           className={css.instaceFamilyInput}
           readOnly
@@ -364,11 +362,7 @@ const ApplyPreferencesButtonGroup: React.FC<{
 }> = ({ updateRecommendationDetails, state, initialState, updatedState, dispatch, setBuffer, buffer, loading }) => {
   const { getString } = useStrings()
 
-  const stateWithBuffer = {
-    ...state,
-    sumCpu: addBufferToValue(state.sumCpu, buffer),
-    sumMem: addBufferToValue(state.sumMem, buffer)
-  }
+  const stateWithBuffer = addBufferToState(state, buffer)
 
   return (
     <Layout.Horizontal spacing="small">
