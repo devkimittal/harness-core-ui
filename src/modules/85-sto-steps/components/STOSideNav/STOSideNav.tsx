@@ -5,11 +5,11 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useEffect } from 'react'
+import { ProjectSelector } from '@projects-orgs/components/ProjectSelector/ProjectSelector'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Layout } from '@wings-software/uicore'
 import { Tabs, Tab } from '@blueprintjs/core'
-import { useTelemetry } from '@common/hooks/useTelemetry'
 import routes from '@common/RouteDefinitions'
 import type { PipelinePathProps } from '@common/interfaces/RouteInterfaces'
 import { SidebarLink } from '@common/navigation/SideNav/SideNav'
@@ -18,46 +18,40 @@ import { useStrings } from 'framework/strings'
 import css from './STOSideNav.module.scss'
 
 export default function STOSideNav(): React.ReactElement {
-  const { currentUserInfo } = useAppStore()
   const { getString } = useStrings()
-  const { identifyUser } = useTelemetry()
+  // Telemetry?
 
-  useEffect(() => {
-    identifyUser(currentUserInfo.email)
-  }, [])
-  useTelemetry({ pageName: 'STOPage' })
   return (
     <Layout.Vertical spacing="small">
       <Tabs id="navTab" selectedTabId={'account'} className={css.sideNavTabs}>
-        <Tab id="account" title={getString('account')} panel={<AccountPanel />} />
+        <Tab id="account" title={getString('account')} panel={<Panel />} />
         <Tabs.Expander />
-        <Tab id="project" title={getString('projectLabel')} panel={<ProjectPanel />} />
+        <Tab id="project" title={getString('projectLabel')} panel={<Panel isProjectMode />} />
       </Tabs>
     </Layout.Vertical>
   )
 }
 
-const AccountPanel = () => {
-  const { accountId } = useParams<PipelinePathProps>()
-  const { getString } = useStrings()
-  // const { trackEvent } = useTelemetry()
-
-  return (
-    <Layout.Vertical spacing="small">
-      <React.Fragment>
-        <SidebarLink label={getString('overview')} to={routes.toSTOOverview({ accountId })} />
-      </React.Fragment>
-    </Layout.Vertical>
-  )
+interface PanelProps {
+  isProjectMode?: boolean
 }
 
-const ProjectPanel = () => {
+const Panel: React.FC<PanelProps> = ({ isProjectMode }) => {
   const { accountId } = useParams<PipelinePathProps>()
   const { getString } = useStrings()
-  // const { trackEvent } = useTelemetry()
+  const { updateAppStore } = useAppStore()
+  // Telemetry?
 
   return (
     <Layout.Vertical spacing="small">
+      {isProjectMode && (
+        <ProjectSelector
+          onSelect={data => {
+            updateAppStore({ selectedProject: data })
+          }}
+        />
+      )}
+
       <React.Fragment>
         <SidebarLink label={getString('overview')} to={routes.toSTOOverview({ accountId })} />
       </React.Fragment>
