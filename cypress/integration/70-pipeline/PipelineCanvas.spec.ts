@@ -218,8 +218,10 @@ describe('Execution Stages', () => {
   Object.entries<ValidObject>(stepsData).forEach(([key, value]) => {
     it(`Stage Steps - ${key}`, () => {
       cy.visit(
-        '#/account/accountId/cd/orgs/default/projects/project1/pipelines/testPipeline_Cypress/pipeline-studio/?stageId=j&sectionId=SERVICE'
-      ).wait(1000)
+        '#/account/accountId/cd/orgs/default/projects/project1/pipelines/testPipeline_Cypress/pipeline-studio/?stageId=j&sectionId=SERVICE',
+        { timeout: 30000 }
+      )
+      cy.wait(2000)
       cy.contains('p', 'testStage_Cypress').click()
       cy.contains('span', 'Execution').click()
       stepLibrarySelection(key, value?.resourceName, value?.warningCheck)
@@ -247,7 +249,10 @@ describe('Input Sets', () => {
     }).as('applyTemplates')
     cy.intercept('GET', servicesCallV2, servicesV2AccessResponse).as('servicesCallV2')
 
-    cy.visit('#/account/accountId/cd/orgs/default/projects/project1/pipelines/testPipeline_Cypress/input-sets')
+    cy.visit('#/account/accountId/cd/orgs/default/projects/project1/pipelines/testPipeline_Cypress/input-sets', {
+      timeout: 30000
+    })
+    cy.wait(2000)
   })
 
   it('Input Set Creation & Deletion', () => {
