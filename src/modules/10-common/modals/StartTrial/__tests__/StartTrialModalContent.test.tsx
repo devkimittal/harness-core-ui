@@ -20,7 +20,6 @@ jest.mock('framework/LicenseStore/LicenseStoreContext')
 const useLicenseStoreMock = useLicenseStore as jest.MockedFunction<any>
 jest.mock('services/cd-ng')
 const useUpdateAccountDefaultExperienceNGMock = useUpdateAccountDefaultExperienceNG as jest.MockedFunction<any>
-const updateLSDefaultExperienceMock = jest.fn()
 useLicenseStoreMock.mockImplementation(() => {
   return {
     licenseInformation: {}
@@ -127,7 +126,6 @@ describe('StartTrialModalContent', () => {
       fireEvent.click(getByText('common.purpose.cd.1stGen.title'))
       fireEvent.click(getByText('common.launchFirstGen'))
       await waitFor(() => expect(updateDefaultExperience).toHaveBeenCalled())
-      expect(updateLSDefaultExperienceMock).toHaveBeenCalled()
     })
   })
 })
