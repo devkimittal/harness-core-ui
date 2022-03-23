@@ -53,18 +53,22 @@ export function IconNode(props: any): React.ReactElement {
         }
         props?.fireEvent({
           type: Event.ClickNode,
-          entityType: DiagramType.Default,
-          identifier: props?.identifier,
-          parentIdentifier: props?.parentIdentifier
+          target: event.target,
+          data: {
+            entityType: DiagramType.IconNode,
+            ...props
+          }
         })
       }}
       onDrop={event => {
-        event.stopPropagation()
         props?.fireEvent({
           type: Event.DropNodeEvent,
-          entityType: DiagramType.Default,
-          node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
-          destination: props
+          target: event.target,
+          data: {
+            entityType: DiagramType.Default,
+            node: JSON.parse(event.dataTransfer.getData(DiagramDrag.NodeDrag)),
+            destination: props
+          }
         })
       }}
       onMouseEnter={event => {
@@ -90,7 +94,7 @@ export function IconNode(props: any): React.ReactElement {
         id={props.id}
         className={cx(cssDefault.defaultCard, css.iconNode, { [cssDefault.selected]: props.isSelected })}
         data-nodeid={props.identifier}
-        draggable={true}
+        draggable={!props.readonly}
         onDragStart={event => {
           event.stopPropagation()
           event.dataTransfer.setData(DiagramDrag.NodeDrag, JSON.stringify(props))
@@ -156,11 +160,13 @@ export function IconNode(props: any): React.ReactElement {
             event.stopPropagation()
             props?.fireEvent({
               type: Event.AddParallelNode,
-              identifier: props?.identifier,
-              parentIdentifier: props?.parentIdentifier,
-              entityType: DiagramType.Default,
-              node: props,
-              target: event.target
+              target: event.target,
+              data: {
+                identifier: props?.identifier,
+                parentIdentifier: props?.parentIdentifier,
+                entityType: DiagramType.Default,
+                node: props
+              }
             })
           }}
           className={cx(

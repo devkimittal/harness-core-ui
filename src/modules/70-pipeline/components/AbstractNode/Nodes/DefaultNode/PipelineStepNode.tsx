@@ -99,7 +99,7 @@ function PipelineStepNode(props: any): JSX.Element {
       <div
         id={props.id}
         data-nodeid={props.id}
-        draggable={true && !props.readonly}
+        draggable={!props.readonly}
         className={cx(css.defaultCard, {
           [css.selected]: isNodeSelected,
           [css.failed]: stepStatus === ExecutionStatusEnum.Failed,
@@ -150,6 +150,7 @@ function PipelineStepNode(props: any): JSX.Element {
             color={isNodeSelected ? Color.WHITE : stepIconColor}
             name={stepData?.icon || props?.icon || 'cross'}
             inverse={isNodeSelected || (stepStatus as string) === ExecutionStatusEnum.Failed}
+            className={css.primaryIcon}
           />
         )}
         {secondaryIcon && (
@@ -187,7 +188,7 @@ function PipelineStepNode(props: any): JSX.Element {
       </div>
       {props.name && (
         <Text
-          width={125}
+          width={90}
           font={{ size: 'normal', align: 'center' }}
           color={props.defaultSelected ? Color.GREY_900 : Color.GREY_600}
           className={css.stepNameText}

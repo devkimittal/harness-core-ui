@@ -25,6 +25,7 @@ declare const styles: {
   readonly markerEnd: string
   readonly markerStart: string
   readonly nameText: string
+  readonly primaryIcon: string
   readonly readonly: string
   readonly right: string
   readonly runningNode: string

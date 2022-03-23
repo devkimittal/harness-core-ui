@@ -90,3 +90,12 @@
     right: 6px;
   }
 }
+.primaryIcon {
+  &:global(.bp3-icon) {
+    svg {
+      path {
+        fill: currentColor !important;
+      }
+    }
+  }
+}

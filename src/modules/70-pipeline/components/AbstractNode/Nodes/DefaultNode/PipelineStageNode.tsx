@@ -102,7 +102,25 @@ function PipelineStageNode(props: any): JSX.Element {
           height: 40
         }}
         onMouseOver={() => allowAdd && setVisibilityOfAdd(true)}
-        onMouseLeave={() => allowAdd && setVisibilityOfAdd(false)}
+        onMouseEnter={event => {
+          event.stopPropagation()
+
+          props?.fireEvent({
+            type: Event.MouseEnterNode,
+            target: event.target,
+            data: { ...props }
+          })
+        }}
+        onMouseLeave={event => {
+          allowAdd && setVisibilityOfAdd(false)
+          event.stopPropagation()
+          setVisibilityOfAdd(false)
+          props?.fireEvent({
+            type: Event.MouseLeaveNode,
+            target: event.target,
+            data: { ...props }
+          })
+        }}
         onDragStart={event => {
           event.stopPropagation()
           event.dataTransfer.setData(DiagramDrag.NodeDrag, JSON.stringify(props))

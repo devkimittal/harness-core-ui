@@ -47,9 +47,11 @@ import PipelineStageNode from '@pipeline/components/AbstractNode/Nodes/DefaultNo
 import CreateNodeStage from '@pipeline/components/AbstractNode/Nodes/CreateNode/CreateNodeStage'
 import EndNodeStage from '@pipeline/components/AbstractNode/Nodes/EndNode/EndNodeStage'
 import StartNodeStage from '@pipeline/components/AbstractNode/Nodes/StartNode/StartNodeStage'
+import { getExecutionStageDiagramListeners } from '@pipeline/utils/execUtils'
 import CDInfo from './components/CD/CDInfo/CDInfo'
 import css from './ExecutionGraph.module.scss'
 
+const NEW_PIP_STUDIO = localStorage.getItem('IS_NEW_PIP_STUDIO_ACTIVE') === 'true'
 const diagram = new DiagramFactory('graph')
 diagram.registerNode('Deployment', PipelineStageNode, true)
 diagram.registerNode('CI', PipelineStageNode, true)
@@ -115,7 +117,6 @@ const processExecutionData = (
 export interface ExecutionGraphProps {
   onSelectedStage(stage: string): void
 }
-const NEW_PIP_STUDIO = localStorage.getItem('IS_NEW_PIP_STUDIO_ACTIVE') === 'true'
 
 export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactElement {
   const { executionIdentifier } = useParams<ExecutionPathProps>()
@@ -133,7 +134,8 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
         : processLayoutNodeMap(pipelineExecutionDetail?.pipelineExecutionSummary),
     [pipelineExecutionDetail?.pipelineExecutionSummary]
   )
-  const data: ExecutionPipeline<GraphLayoutNode> | ExecutionPipeline<PipelineGraphState> = useMemo(() => {
+  const data: any = useMemo(() => {
+    //ExecutionPipeline<GraphLayoutNode> | ExecutionPipeline<PipelineGraphState>
     return {
       items: NEW_PIP_STUDIO
         ? processExecutionDataForGraph(nodeData as PipelineGraphState[])
@@ -154,6 +156,20 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
   })
 
   React.useEffect(() => {
+    diagram.registerListeners(
+      getExecutionStageDiagramListeners({
+        allNodeMap: pipelineExecutionDetail?.pipelineExecutionSummary?.layoutNodeMap,
+        onMouseLeave: () => {
+          dynamicPopoverHandler?.hide()
+          setStageSetupIdId('')
+        },
+        onMouseEnter: onMouseEnterV1,
+        onStepSelect: (id: string) => props.onSelectedStage(id)
+      })
+    )
+  }, [pipelineExecutionDetail?.pipelineExecutionSummary?.layoutNodeMap, dynamicPopoverHandler])
+
+  React.useEffect(() => {
     if (stageSetupId) {
       fetchBarrierInfo({
         queryParams: {
@@ -164,7 +180,7 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
     }
   }, [stageSetupId, executionIdentifier])
 
-  const onMouseEnter = (event: any) => {
+  const onMouseEnter = (event: any): void => {
     const stage = event.stage
     dynamicPopoverHandler?.show(
       event.stageTarget,
@@ -180,7 +196,23 @@ export default function ExecutionGraph(props: ExecutionGraphProps): React.ReactE
       setStageSetupIdId(stage?.data?.nodeUuid)
     }
   }
+  const onMouseEnterV1 = ({ event, data: stageData }: { event: any; data: any }): void => {
+    const currentStage = { stageData, data: stageData } as any
+    const isFinished = currentStage?.endTs
+    const hasStarted = currentStage?.startTs
 
+    dynamicPopoverHandler?.show(
+      event.target,
+      {
+        event,
+        data: currentStage
+      },
+      { useArrows: true, darkMode: false, fixedPosition: false }
+    )
+    if (!isFinished && hasStarted) {
+      setStageSetupIdId(currentStage?.nodeUuid)
+    }
+  }
   const renderPopover = ({
     data: popoverData
   }: {

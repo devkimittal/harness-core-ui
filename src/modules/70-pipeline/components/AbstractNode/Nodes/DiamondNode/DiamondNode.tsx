@@ -75,7 +75,13 @@ export function DiamondNodeWidget(props: any): JSX.Element {
         </div>
         <div className="execution-running-animation" />
         {props.icon && (
-          <Icon size={28} inverse={isSelected} name={props.icon} color={isSelected ? Color.WHITE : Color.PRIMARY_7} />
+          <Icon
+            size={28}
+            className={css.primaryIcon}
+            inverse={isSelected}
+            name={props.icon}
+            color={isSelected ? Color.WHITE : Color.PRIMARY_7}
+          />
         )}
         {props.isInComplete && <Icon className={css.inComplete} size={12} name={'warning-sign'} color="orange500" />}
         {props?.tertiaryIcon && (

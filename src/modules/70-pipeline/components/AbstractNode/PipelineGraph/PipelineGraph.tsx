@@ -22,8 +22,8 @@ import {
 import GraphActions from '../GraphActions/GraphActions'
 import { PipelineGraphRecursive } from './PipelineGraphNode'
 import type { NodeCollapsibleProps, NodeDetails, NodeIds, PipelineGraphState, SVGPathRecord } from '../types'
+// import SVGMarker from '../Nodes/SVGMarker'
 import css from './PipelineGraph.module.scss'
-import SVGMarker from '../Nodes/SVGMarker'
 
 interface ControlPosition {
   x: number

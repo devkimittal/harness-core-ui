@@ -1,3 +1,10 @@
+/*
+ * Copyright 2022 Harness Inc. All rights reserved.
+ * Use of this source code is governed by the PolyForm Shield 1.0.0 license
+ * that can be found in the licenses directory at the root of this repository, also available at
+ * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
+ */
+
 // import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
 import type { IconName } from '@harness/uicore'
 import { isEmpty } from 'lodash-es'
@@ -443,30 +450,22 @@ export const processExecutionDataV1 = (graph?: ExecutionGraph): any => {
 }
 
 interface GetExecutionStageDiagramListenersParams {
-  data: any
   onMouseEnter: ({ data, event }: { data: any; event: any }) => void
   allNodeMap?: any
   onMouseLeave: () => void
+  onStepSelect: (id: string) => void
 }
 export const getExecutionStageDiagramListeners = ({
   allNodeMap,
   onMouseEnter,
-  onMouseLeave
+  onMouseLeave,
+  onStepSelect
 }: GetExecutionStageDiagramListenersParams): { [key: string]: (event: any) => void } => {
   const nodeListeners: { [key: string]: (event?: any) => void } = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    // [Event.ClickNode]: (event: any) => {
-    //   // /* istanbul ignore else */ if (autoPosition) {
-    //   //   setAutoPosition(false)
-    //   // }
-    //   const group = groupState?.get(event.entity.getIdentifier())
-    //   if (group && group.collapsed) {
-    //     updateGroupStage(event)
-    //   } else {
-    //     const stage = getStageFromDiagramEvent(event, data)
-    //     /* istanbul ignore else */ if (stage) itemClickHandler(new ItemClickEvent(stage, event.target))
-    //   }
-    // },
+    [Event.ClickNode]: (event: any) => {
+      onStepSelect(event?.data?.id)
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [Event.MouseEnterNode]: (event: any) => {
       const stageData = allNodeMap[event?.data?.id]

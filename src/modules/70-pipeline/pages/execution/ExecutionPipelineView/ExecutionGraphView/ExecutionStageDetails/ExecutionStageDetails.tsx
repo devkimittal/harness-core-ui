@@ -102,11 +102,13 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
   }
 
   const refetchBarrierInfoRef = React.useCallback(refetchBarrierInfo, [])
+
   React.useEffect(() => {
     diagram.registerListeners(
-      getExecutionStageDiagramListeners({ data, onMouseEnter: onMouseEnterV1, allNodeMap, onMouseLeave })
+      getExecutionStageDiagramListeners({ onMouseEnter: onMouseEnterV1, allNodeMap, onMouseLeave, onStepSelect })
     )
-  }, [dynamicPopoverHandler])
+  }, [dynamicPopoverHandler, allNodeMap])
+
   // load barrier info when barrier step is mouse over (when barrierSetupId is set)
   React.useEffect(() => {
     if (barrierSetupId) {
@@ -164,6 +166,8 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
     dynamicPopoverHandler?.hide()
     setBarrierSetupId(undefined)
   }
+
+  const onStepSelect = (id: string): void => props.onStepSelect(id)
 
   const onMouseEnterV1 = ({ event, data: stageData }: { event: any; data: any }): void => {
     // const currentStage = event.stage || event.group
