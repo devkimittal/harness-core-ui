@@ -8,6 +8,7 @@
 import React from 'react'
 import { RenderResult, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import mockImport from 'framework/utils/mockImport'
 import { TestWrapper } from '@common/utils/testUtils'
 import EnvironmentDetailsBody from '@cf/pages/environment-details/EnvironmentDetailsBody'
 import * as cfServices from 'services/cf'
@@ -138,13 +139,18 @@ describe('EnvironmentDetailsBody', () => {
       type: 'server'
     }
 
+    const mutate = jest.fn(() => {
+      return Promise.resolve({ data: {} })
+    })
+
+    mockImport('services/cf', {
+      useDeleteAPIKey: () => ({ mutate })
+    })
+
     useGetAllAPIKeysMock.mockReturnValue(getMockResponseData([existingKey]))
     renderComponent()
 
-    expect(screen.getByText(existingKey.name)).toBeInTheDocument()
-
-    const deleteBtn = screen.getByRole('button', { name: 'trash' })
-    userEvent.click(deleteBtn)
+    userEvent.click(screen.getByRole('button', { name: 'trash' }))
 
     await waitFor(() => {
       expect(screen.queryByText('cf.environments.apiKeys.deleteTitle')).toBeInTheDocument()
@@ -153,6 +159,7 @@ describe('EnvironmentDetailsBody', () => {
     userEvent.click(screen.getByRole('button', { name: 'confirm' }))
 
     await waitFor(() => {
+      expect(mutate).toBeCalledTimes(1)
       expect(screen.queryByText('cf.environments.apiKeys.deleteTitle')).not.toBeInTheDocument()
     })
   })
