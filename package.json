@@ -83,7 +83,7 @@
     "immer": "^9.0.6",
     "jsonc-parser": "^2.0.2",
     "lodash-es": "^4.17.15",
-    "marked": "^3.0.8",
+    "marked": "^4.0.10",
     "masonry-layout": "^4.2.2",
     "ml-matrix": "^6.5.0",
     "moment": "^2.25.3",
