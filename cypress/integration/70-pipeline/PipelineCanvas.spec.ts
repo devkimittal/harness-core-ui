@@ -222,7 +222,9 @@ describe('Execution Stages', () => {
   Object.entries<ValidObject>(stepsData).forEach(([key, value]) => {
     it(`Stage Steps - ${key}`, () => {
       cy.visit(pipelineStudioRoute, { timeout: 30000 })
-      cy.wait(3000)
+      cy.wait('@inputSetsTemplateCall')
+      cy.wait('@pipelineDetails')
+      cy.wait(2000)
       cy.get(`div[data-testid="pipeline-studio"]`, {
         timeout: 5000
       }).should('be.visible')
