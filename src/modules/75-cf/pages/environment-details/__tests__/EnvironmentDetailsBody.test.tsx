@@ -14,10 +14,10 @@ import EnvironmentDetailsBody from '@cf/pages/environment-details/EnvironmentDet
 import * as cfServices from 'services/cf'
 import type { ApiKey } from 'services/cf'
 
+const showSuccess = jest.fn()
 jest.mock('@common/exports', () => ({
   useToaster: () => ({
-    showSuccess: jest.fn(),
-    showError: jest.fn()
+    showSuccess
   })
 }))
 
@@ -159,7 +159,8 @@ describe('EnvironmentDetailsBody', () => {
     userEvent.click(screen.getByRole('button', { name: 'confirm' }))
 
     await waitFor(() => {
-      expect(mutate).toBeCalledTimes(1)
+      expect(mutate).toBeCalledWith(existingKey.identifier)
+      expect(showSuccess).toHaveBeenCalledWith('cf.environments.apiKeys.deleteSuccess')
       expect(screen.queryByText('cf.environments.apiKeys.deleteTitle')).not.toBeInTheDocument()
     })
   })
