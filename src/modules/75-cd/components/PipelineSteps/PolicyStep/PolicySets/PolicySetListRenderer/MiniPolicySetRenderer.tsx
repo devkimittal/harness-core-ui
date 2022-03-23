@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 import { Spinner } from '@blueprintjs/core'
 
-import { Color, Layout, Text, useToaster } from '@harness/uicore'
+import { Color, Icon, Layout, Text } from '@harness/uicore'
 import { LinkedPolicy, useGetPolicySet } from 'services/pm'
 
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
@@ -22,11 +22,11 @@ import css from './PolicySetListRenderer.module.scss'
 
 interface MiniPolicySetRendererProps {
   policySetId: string
+  deletePolicySet: (policySetId: string) => void
 }
 
-export function MiniPolicySetRenderer({ policySetId }: MiniPolicySetRendererProps) {
+export function MiniPolicySetRenderer({ policySetId, deletePolicySet }: MiniPolicySetRendererProps) {
   const { accountId: accountIdentifier, projectIdentifier, orgIdentifier } = useParams<ProjectPathProps>()
-  const { showError } = useToaster()
 
   const policySetType = policySetId.includes('account.')
     ? PolicySetType.ACCOUNT
@@ -47,17 +47,31 @@ export function MiniPolicySetRenderer({ policySetId }: MiniPolicySetRendererProp
     policyset: policySetId
   })
 
-  if (error) {
-    showError(getErrorMessage(error))
-    return null
-  } else {
-    return (
+  const onDelete = () => {
+    deletePolicySet(policySetId)
+  }
+
+  return (
+    <Layout.Horizontal flex={{ justifyContent: 'flex-start', alignItems: 'center' }} margin={{ bottom: 'small' }}>
       <Layout.Horizontal
         className={css.policySetHolder}
+        height={'36px'}
+        width={'500px'}
         flex={{ justifyContent: 'space-between', alignItems: 'center' }}
+        padding={{
+          right: 'medium',
+          left: 'medium'
+        }}
+        margin={{
+          right: 'small'
+        }}
       >
         {loading ? (
           <Spinner size={Spinner.SIZE_SMALL} />
+        ) : error ? (
+          <Text lineClamp={1} color={Color.RED_800}>
+            {getErrorMessage(error)}
+          </Text>
         ) : policySet ? (
           <>
             <Text lineClamp={1} color={Color.BLACK}>
@@ -72,8 +86,9 @@ export function MiniPolicySetRenderer({ policySetId }: MiniPolicySetRendererProp
           </>
         ) : null}
       </Layout.Horizontal>
-    )
-  }
+      <Icon name="main-trash" onClick={onDelete} />
+    </Layout.Horizontal>
+  )
 }
 
 interface MiniPoliciesRendererProps {

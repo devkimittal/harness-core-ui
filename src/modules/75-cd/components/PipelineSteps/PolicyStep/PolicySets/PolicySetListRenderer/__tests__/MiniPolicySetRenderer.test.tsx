@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 
 import { TestWrapper } from '@common/utils/testUtils'
 
@@ -64,7 +64,12 @@ jest.mock('services/pm', () => ({
 }))
 
 describe('Mini Policy Set Renderer', () => {
-  test('snapshot test', () => {
+  test('snapshot and delete action test', () => {
+    let policySetIds = ['account.test', 'org.test', 'test', 'loadingId']
+    const deletePolicySet = (policySetId: string) => {
+      policySetIds = policySetIds.filter(id => id !== policySetId)
+    }
+
     const { container } = render(
       <TestWrapper
         queryParams={{
@@ -73,12 +78,16 @@ describe('Mini Policy Set Renderer', () => {
           projectIdentifier: 'project'
         }}
       >
-        {['account.test', 'org.test', 'test', 'loadingId'].map(policySetId => (
-          <MiniPolicySetRenderer policySetId={policySetId} key={policySetId} />
+        {policySetIds.map(policySetId => (
+          <MiniPolicySetRenderer policySetId={policySetId} key={policySetId} deletePolicySet={deletePolicySet} />
         ))}
       </TestWrapper>
     )
 
     expect(container).toMatchSnapshot()
+
+    const deleteIcon = document.querySelector('[data-icon="main-trash"]')
+    fireEvent.click(deleteIcon!)
+    expect(policySetIds).toEqual(['org.test', 'test', 'loadingId'])
   })
 })
