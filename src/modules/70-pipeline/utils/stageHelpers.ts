@@ -17,7 +17,6 @@ import type { DependencyElement } from 'services/ci'
 import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
 import type { DeploymentStageElementConfig, PipelineStageWrapper, StageElementWrapper } from './pipelineTypes'
 import type { InputSetDTO } from './types'
-import { STATIC_SERVICE_GROUP_NAME } from './executionUtils'
 
 export enum StageType {
   DEPLOY = 'Deployment',
@@ -189,6 +188,8 @@ export const getSelectedDeploymentType = (
   }
   return get(stage, 'stage.spec.serviceConfig.serviceDefinition.type', null)
 }
+
+export const STATIC_SERVICE_GROUP_NAME = 'static_service_group'
 export const getDefaultBuildDependencies = (serviceDependencies: DependencyElement[]): PipelineGraphState => ({
   id: uuid() as string,
   identifier: STATIC_SERVICE_GROUP_NAME as string,
