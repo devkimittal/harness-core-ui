@@ -23,7 +23,6 @@ import type {
   MonitoredServiceWithHealthSources,
   MetricDTO,
   ServiceLevelIndicatorDTO,
-  MonitoredServiceResponse,
   MonitoredServiceDTO
 } from 'services/cv'
 import { initialValuesSLO } from './CVCreateSLO.constants'

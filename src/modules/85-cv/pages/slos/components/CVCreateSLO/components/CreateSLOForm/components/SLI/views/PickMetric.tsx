@@ -54,7 +54,8 @@ interface PickMetricProps extends Omit<SLIProps, 'children' | 'monitoredServices
   monitoredServiceData: ResponseMonitoredServiceResponse | null
 }
 
-const PickMetric: React.FC<PickMetricProps> = ({ formikProps, onAddNewMetric, monitoredServiceData, ...rest }) => {
+const PickMetric: React.FC<PickMetricProps> = props => {
+  const { formikProps, onAddNewMetric, monitoredServiceData, ...rest } = props
   const FLEX_START = 'flex-start'
   const { getString } = useStrings()
   const { showError } = useToaster()
