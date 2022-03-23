@@ -50,20 +50,20 @@ describe('Unit tests for timeline slider', () => {
     fireEvent.click(dragEnds[0])
     await waitFor(() =>
       expect(onDragEndMock).toHaveBeenLastCalledWith({
-        endX: NaN,
+        endX: 0,
         endXPercentage: NaN,
-        startX: NaN,
-        startXPercentage: NaN
+        startX: 15,
+        startXPercentage: Infinity
       })
     )
 
     fireEvent.click(dragEnds[1])
     await waitFor(() =>
       expect(onDragEndMock).toHaveBeenLastCalledWith({
-        endX: NaN,
+        endX: 0,
         endXPercentage: NaN,
-        startX: NaN,
-        startXPercentage: NaN
+        startX: 15,
+        startXPercentage: Infinity
       })
     )
 
@@ -71,10 +71,10 @@ describe('Unit tests for timeline slider', () => {
     fireEvent.click(drags[0])
     await waitFor(() =>
       expect(onDragEndMock).toHaveBeenLastCalledWith({
-        endX: NaN,
+        endX: 0,
         endXPercentage: NaN,
-        startX: NaN,
-        startXPercentage: NaN
+        startX: 15,
+        startXPercentage: Infinity
       })
     )
   })
