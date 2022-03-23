@@ -17,9 +17,9 @@ import { StepPalette } from '@pipeline/components/PipelineStudio/StepPalette/Ste
 import { TemplateContext } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateContext'
 import { DrawerSizes, DrawerTypes } from '@templates-library/components/TemplateStudio/TemplateContext/TemplateActions'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
-import type { StepElementConfig, EntityGitDetails } from 'services/cd-ng'
-import type { NGTemplateInfoConfig } from 'services/template-ng'
-import type { ModulePathParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
+import type { StepElementConfig } from 'services/cd-ng'
+import type { ModulePathParams } from '@common/interfaces/RouteInterfaces'
+import type { NGTemplateInfoConfigWithGitDetails } from 'framework/Templates/TemplateConfigModal/TemplateConfigModal'
 import { useFeatureFlags } from '@common/hooks/useFeatureFlag'
 import { getAllStepPaletteModuleInfos, getStepPaletteModuleInfosFromStage } from '@pipeline/utils/stepUtils'
 import type { StepPalleteModuleInfo } from 'services/pipeline-ng'
@@ -27,18 +27,7 @@ import TemplateVariablesWrapper from '@templates-library/components/TemplateStud
 import { TemplateInputs } from '@templates-library/components/TemplateInputs/TemplateInputs'
 import css from './RightDrawer.module.scss'
 
-type TemplateDetails = NGTemplateInfoConfig & {
-  accountId: string
-  gitDetails: EntityGitDetails
-  templateEntityType: 'Step' | 'Stage'
-}
-
-interface Props {
-  templateDetails: TemplateDetails
-}
-
-function TemplateInputsWrapper(props: Props) {
-  const { templateDetails } = props
+function TemplateInputsWrapper({ templateDetails }: { templateDetails: NGTemplateInfoConfigWithGitDetails }) {
   const { getString } = useStrings()
 
   const TemplateInputsHeader = (
@@ -66,7 +55,7 @@ export const RightDrawer: React.FC = (): JSX.Element => {
     updateTemplateView
   } = React.useContext(TemplateContext)
   const { type, data, ...restDrawerProps } = drawerData
-  const { module, accountId } = useParams<ModulePathParams & ProjectPathProps>()
+  const { module } = useParams<ModulePathParams>()
   const { CDNG_ENABLED, CING_ENABLED } = useFeatureFlags()
   const [stepPaletteModuleInfos, setStepPaletteModuleInfos] = React.useState<StepPalleteModuleInfo[]>([])
 
@@ -74,15 +63,15 @@ export const RightDrawer: React.FC = (): JSX.Element => {
     () => ({
       identifier: template.identifier,
       name: template.name,
-      accountId: accountId,
       orgIdentifier: template.orgIdentifier,
       projectIdentifier: template.projectIdentifier,
       versionLabel: template.versionLabel,
-      templateEntityType: template.type,
-      gitDetails
+      type: template.type,
+      repo: gitDetails?.repoIdentifier,
+      branch: gitDetails?.branch
     }),
-    [template, accountId]
-  ) as TemplateDetails
+    [template]
+  ) as NGTemplateInfoConfigWithGitDetails
 
   const closeDrawer = (e?: SyntheticEvent<HTMLElement, Event> | undefined): void => {
     e?.persist()
