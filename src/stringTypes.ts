@@ -521,9 +521,9 @@ export interface StringsMap {
   'common.request': string
   'common.resolveConflict': string
   'common.resourceCenter.bottomlayout.apiDocs': string
-  'common.resourceCenter.bottomlayout.changeLog': string
   'common.resourceCenter.bottomlayout.desc': string
   'common.resourceCenter.bottomlayout.docs': string
+  'common.resourceCenter.bottomlayout.releaseNote': string
   'common.resourceCenter.bottomlayout.sitestatus': string
   'common.resourceCenter.bottomlayout.university': string
   'common.resourceCenter.communityLevelUp': string

@@ -21,6 +21,18 @@ export const ResourceCenter = (): React.ReactElement => {
 
   const [show, setShow] = useState<boolean>(false)
 
+  function getReleaseNodeLink(): string {
+    switch (window.deploymentType) {
+      case 'COMMUNITY':
+      case 'ON_PREM': {
+        return 'https://ngdocs.harness.io/article/556wy85kbo-harness-on-prem-release-notes'
+      }
+      default:
+        return 'https://ngdocs.harness.io/article/7zkchy5lhj-harness-saa-s-release-notes-2022'
+    }
+  }
+  const releaseNodeLink = getReleaseNodeLink()
+
   if (!show) {
     return (
       <Icon
@@ -112,11 +124,7 @@ export const ResourceCenter = (): React.ReactElement => {
               'api-docs',
               'https://harness.io/docs/api/'
             )}
-            {getButton(
-              getString('common.resourceCenter.bottomlayout.changeLog'),
-              'change-log',
-              'https://changelog.harness.io/'
-            )}
+            {getButton(getString('common.resourceCenter.bottomlayout.releaseNote'), 'change-log', releaseNodeLink)}
             {getButton(
               getString('common.resourceCenter.bottomlayout.sitestatus'),
               'right-bar-notification',

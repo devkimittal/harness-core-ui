@@ -82,4 +82,57 @@ describe('ResourceCenter', () => {
       expect(queryByText('common.resourceCenter.ticketmenu.tickets')).not.toBeInTheDocument()
     })
   })
+
+  describe('release note', () => {
+    test('release note for saas', async () => {
+      window.deploymentType = 'SAAS'
+      const { getByTestId, getByText } = render(
+        <TestWrapper>
+          <ResourceCenter />
+        </TestWrapper>
+      )
+      fireEvent.click(getByTestId('question'))
+      const releaseNote = getByText('common.resourceCenter.bottomlayout.releaseNote').closest('a')
+      await waitFor(() => {
+        expect(releaseNote).toHaveAttribute(
+          'href',
+          'https://ngdocs.harness.io/article/7zkchy5lhj-harness-saa-s-release-notes-2022'
+        )
+      })
+    })
+
+    test('release note for community', async () => {
+      window.deploymentType = 'COMMUNITY'
+      const { getByTestId, getByText } = render(
+        <TestWrapper>
+          <ResourceCenter />
+        </TestWrapper>
+      )
+      fireEvent.click(getByTestId('question'))
+      const releaseNote = getByText('common.resourceCenter.bottomlayout.releaseNote').closest('a')
+      await waitFor(() => {
+        expect(releaseNote).toHaveAttribute(
+          'href',
+          'https://ngdocs.harness.io/article/556wy85kbo-harness-on-prem-release-notes'
+        )
+      })
+    })
+
+    test('release note for on prem', async () => {
+      window.deploymentType = 'ON_PREM'
+      const { getByTestId, getByText } = render(
+        <TestWrapper>
+          <ResourceCenter />
+        </TestWrapper>
+      )
+      fireEvent.click(getByTestId('question'))
+      const releaseNote = getByText('common.resourceCenter.bottomlayout.releaseNote').closest('a')
+      await waitFor(() => {
+        expect(releaseNote).toHaveAttribute(
+          'href',
+          'https://ngdocs.harness.io/article/556wy85kbo-harness-on-prem-release-notes'
+        )
+      })
+    })
+  })
 })

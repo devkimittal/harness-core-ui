@@ -774,7 +774,7 @@ resourceCenter:
     sitestatus: Site Status
     university: University
     apiDocs: API Docs
-    changeLog: Change log
+    releaseNote: Release Notes
   feedback:
     submit: Give us feedback
   communityLevelUp: Customer Support is available in Team and Enterprise plans.
