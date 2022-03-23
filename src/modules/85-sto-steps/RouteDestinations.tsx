@@ -40,7 +40,10 @@ export default (
     <RouteWithLayout
       // licenseRedirectData={licenseRedirectData}
       sidebarProps={STOSideNavProps}
-      path={routes.toSTOOverview({ ...accountPathProps, ...projectPathProps })}
+      path={[
+        routes.toSTOOverview({ ...accountPathProps }),
+        routes.toSTOProjectOverview({ ...accountPathProps, ...projectPathProps })
+      ]}
     >
       <OverviewPage />
     </RouteWithLayout>

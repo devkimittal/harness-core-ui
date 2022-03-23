@@ -1404,9 +1404,9 @@ const routes = {
   toSTO: withAccountId(() => `/sto`),
   toSTOHome: withAccountId(() => `/sto/home`),
   toSTOOverview: withAccountId(() => '/sto/overview'),
-  toSTOProject: withAccountId(
+  toSTOProjectOverview: withAccountId(
     ({ orgIdentifier, projectIdentifier }: ProjectPathProps) =>
-      `/sto/orgs/${orgIdentifier}/projects/${projectIdentifier}`
+      `/sto/orgs/${orgIdentifier}/projects/${projectIdentifier}/overview`
   ),
   /********************************************************************************************************************/
   toOldCustomDashboard: withAccountId(() => '/home/dashboards*'),
