@@ -220,7 +220,10 @@ describe('Execution Stages', () => {
   Object.entries<ValidObject>(stepsData).forEach(([key, value]) => {
     it(`Stage Steps - ${key}`, () => {
       cy.visit(pipelineStudioRoute, { timeout: 30000 })
-      cy.wait(2000)
+      cy.wait(3000)
+      cy.get(`div[data-testid="pipeline-studio"]`, {
+        timeout: 5000
+      }).should('be.visible')
       cy.contains('p', 'testStage_Cypress').click()
       cy.contains('span', 'Execution').click()
       stepLibrarySelection(key, value?.resourceName, value?.warningCheck)
