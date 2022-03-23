@@ -504,6 +504,7 @@ export interface StringsMap {
   'common.references': string
   'common.refresh': string
   'common.refreshPage': string
+  'common.region': string
   'common.reject': string
   'common.releaseName': string
   'common.remove': string
@@ -599,6 +600,7 @@ export interface StringsMap {
   'common.specified': string
   'common.specify': string
   'common.stable': string
+  'common.stage': string
   'common.start14dayTrial': string
   'common.startFree': string
   'common.startFreePlan': string
@@ -3312,6 +3314,8 @@ export interface StringsMap {
   'cd.pipelineSteps.executionTab.stepsCount': string
   'cd.pipelineSteps.infraTab.clusterError': string
   'cd.pipelineSteps.infraTab.deploymentType': string
+  'cd.pipelineSteps.infraTab.regionError': string
+  'cd.pipelineSteps.infraTab.stageError': string
   'cd.pipelineSteps.serviceTab.aboutYourService': string
   'cd.pipelineSteps.serviceTab.deploymentTypeRequired': string
   'cd.pipelineSteps.serviceTab.differentService': string
@@ -3375,6 +3379,8 @@ export interface StringsMap {
   'cd.steps.common.releaseNamePlaceholder': string
   'cd.steps.common.selectOrEnterClusterPlaceholder': string
   'cd.steps.kubernetesGcpStep.stepName': string
+  'cd.steps.serverless.regionPlaceholder': string
+  'cd.steps.serverless.stagePlaceholder': string
   'cd.terraformVarFiles': string
   'cd.testConnectionStepName': string
   'cd.tfVarStore': string

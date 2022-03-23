@@ -37,6 +37,7 @@ import { Scope } from '@common/interfaces/SecretsInterface'
 import { getDeploymentType, StageType } from '@pipeline/utils/stageHelpers'
 import stageCss from '../DeployStageSetupShell/DeployStage.module.scss'
 import { InfraDeploymentType } from '@cd/components/PipelineSteps/PipelineStepsUtil'
+import type { ServerlessAwsLambdaSpec } from '@cd/components/PipelineSteps/ServerlessAWSLambda/ServerlessAwsLambdaSpec'
 
 const DEFAULT_RELEASE_NAME = 'release-<+INFRA_KEY>'
 
@@ -164,8 +165,6 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
     const initialInfraDefValues = getInfrastructureDefaultValue(stage, selectedInfrastructureType)
     setInitialInfrastructureDefinitionValues(initialInfraDefValues)
   }, [stage?.stage?.spec?.serviceConfig.serviceDefinition?.type])
-
-  console.log('check selected', selectedDeploymentType)
 
   const onUpdateInfrastructureDefinition = (
     extendedSpec: K8SDirectInfrastructure | K8sGcpInfrastructure,
@@ -373,6 +372,31 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
           />
         )
       }
+      case 'ServerlessAwsLambda': {
+        return (
+          <StepWidget<ServerlessAwsLambdaSpec>
+            factory={factory}
+            key={stage?.stage?.identifier}
+            readonly={isReadonly}
+            initialValues={initialInfrastructureDefinitionValues as ServerlessAwsLambdaSpec}
+            type={StepType.ServerlessAwsLambda}
+            stepViewType={StepViewType.Edit}
+            allowableTypes={allowableTypes}
+            onUpdate={value =>
+              onUpdateInfrastructureDefinition(
+                {
+                  connectorRef: value.connectorRef,
+                  cluster: value.cluster,
+                  namespace: value.namespace,
+                  releaseName: value.releaseName,
+                  allowSimultaneousDeployments: value.allowSimultaneousDeployments
+                },
+                'KubernetesGcp'
+              )
+            }
+          />
+        )
+      }
       default: {
         return <div>Undefined deployment type</div>
       }
@@ -395,6 +419,8 @@ export default function DeployInfraSpecifications(props: React.PropsWithChildren
     },
     [stage, debounceUpdateStage, stage?.stage?.spec?.infrastructure?.infrastructureDefinition]
   )
+
+  console.log('selectedDeploymentType', selectedDeploymentType)
 
   return (
     <div className={stageCss.serviceOverrides} key="1">

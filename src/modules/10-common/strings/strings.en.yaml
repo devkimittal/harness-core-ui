@@ -118,6 +118,8 @@ configureOptions:
 namespace: Namespace
 cluster: Cluster
 releaseName: Release name
+region: Region
+stage: Stage
 seeDetails: See details
 errorCount: 'Error(s): {{count}}'
 datePickerShortcuts:

@@ -24,6 +24,7 @@ export enum StepType {
   K8sServiceSpec = 'K8sServiceSpec',
   K8sRollingDeploy = 'K8sRollingDeploy',
   CustomVariable = 'CustomVariable',
+  ServerlessAwsLambda = ' ServerlessAwsLambda',
   Dependency = 'Service',
   Plugin = 'Plugin',
   Run = 'Run',

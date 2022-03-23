@@ -11,6 +11,9 @@ steps:
     clusterDetails: Cluster Details
     selectOrEnterClusterPlaceholder: Select or add cluster
     releaseNamePlaceholder: Enter Release Name
+  serverless:
+    regionPlaceholder: Specify a region
+    stagePlaceholder: Specify a space
   kubernetesGcpStep:
     stepName: Specify your GCP Connector
 folderPath: Folder Path
@@ -82,6 +85,8 @@ pipelineSteps:
   infraTab:
     deploymentType: Infrastructure type selection is required
     clusterError: No cluster found with given Connector
+    regionError: No region found with given Connector
+    stageError: No stage found with given Connector
   executionTab:
     stepsCount: At least one step is required
 cdLaunchText: Launch CD First Generation
