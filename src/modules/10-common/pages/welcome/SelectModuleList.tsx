@@ -8,7 +8,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import type { IconName } from '@wings-software/uicore'
-import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import routes from '@common/RouteDefinitions'
 import { useUpdateAccountDefaultExperienceNG } from 'services/cd-ng'
@@ -53,7 +52,6 @@ const SelectModuleList: React.FC<SelectModuleListProps> = ({ onModuleClick, modu
   }
 
   const history = useHistory()
-  const { updateLSDefaultExperience } = useUpdateLSDefaultExperience()
 
   const getButtonProps = (buttonType: string): { clickHandle?: () => void; disabled?: boolean } => {
     switch (buttonType) {
@@ -69,7 +67,6 @@ const SelectModuleList: React.FC<SelectModuleListProps> = ({ onModuleClick, modu
               updateDefaultExperience({
                 defaultExperience: Experiences.NG
               }).then(() => {
-                updateLSDefaultExperience(Experiences.NG)
                 history.push(routes.toModuleHome({ accountId, module: buttonType, source: 'purpose' }))
               })
             } catch (error) {

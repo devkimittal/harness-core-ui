@@ -9,7 +9,6 @@ import React, { useState } from 'react'
 import { Button, Heading, Container, Layout, IconName, Icon, Text } from '@wings-software/uicore'
 import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
-import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { String, useStrings } from 'framework/strings'
 import { useQueryParams } from '@common/hooks'
 import type { StringsMap } from 'stringTypes'
@@ -41,7 +40,6 @@ const StartTrialModalContent: React.FC<StartTrialModalContentProps> = props => {
   const initialSelectedInfoCard = moduleInfoCards ? moduleInfoCards[0] : undefined
   const [selectedInfoCard, setSelectedInfoCard] = useState<ModuleInfoCard | undefined>(initialSelectedInfoCard)
   const { licenseInformation } = useLicenseStore()
-  const { updateLSDefaultExperience } = useUpdateLSDefaultExperience()
 
   const getModuleButton = (): React.ReactElement => {
     const handleOnClick = async (): Promise<void> => {
@@ -54,7 +52,6 @@ const StartTrialModalContent: React.FC<StartTrialModalContentProps> = props => {
           await updateDefaultExperience({
             defaultExperience: Experiences.CG
           })
-          updateLSDefaultExperience(Experiences.CG)
         }
         window.location.href = selectedInfoCard.route?.()
         return

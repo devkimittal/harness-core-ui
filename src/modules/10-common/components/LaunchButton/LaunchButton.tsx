@@ -6,9 +6,7 @@
  */
 
 import React from 'react'
-import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { isCDCommunity, useLicenseStore } from 'framework/LicenseStore/LicenseStoreContext'
-import { Experiences } from '@common/constants/Utils'
 import css from './LaunchButton.module.scss'
 
 export interface LaunchButtonProps {
@@ -17,10 +15,8 @@ export interface LaunchButtonProps {
 }
 export const LaunchButton: React.FC<LaunchButtonProps> = props => {
   const { licenseInformation } = useLicenseStore()
-  const { updateLSDefaultExperience } = useUpdateLSDefaultExperience()
 
   const launchUrlRedirect = (): void => {
-    updateLSDefaultExperience(Experiences.CG)
     window.location.href = props.redirectUrl
   }
 

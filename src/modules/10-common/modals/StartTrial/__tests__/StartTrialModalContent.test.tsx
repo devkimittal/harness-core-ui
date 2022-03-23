@@ -21,11 +21,6 @@ const useLicenseStoreMock = useLicenseStore as jest.MockedFunction<any>
 jest.mock('services/cd-ng')
 const useUpdateAccountDefaultExperienceNGMock = useUpdateAccountDefaultExperienceNG as jest.MockedFunction<any>
 const updateLSDefaultExperienceMock = jest.fn()
-jest.mock('@common/hooks/useUpdateLSDefaultExperience', () => ({
-  useUpdateLSDefaultExperience: jest.fn().mockImplementation(() => {
-    return { updateLSDefaultExperience: updateLSDefaultExperienceMock }
-  })
-}))
 useLicenseStoreMock.mockImplementation(() => {
   return {
     licenseInformation: {}

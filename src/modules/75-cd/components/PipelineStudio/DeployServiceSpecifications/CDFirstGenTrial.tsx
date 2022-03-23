@@ -9,7 +9,6 @@ import React from 'react'
 import { Button, Container, Layout, Text, useToaster } from '@wings-software/uicore'
 import { Color } from '@harness/design-system'
 import cdImage from '@cd/modals/images/cd.png'
-import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { useLicenseStore } from 'framework/LicenseStore/LicenseStoreContext'
 import { ModuleName } from 'framework/types/ModuleName'
 import { Experiences } from '@common/constants/Utils'
@@ -27,7 +26,6 @@ interface PropsInterface {
 export const CDFirstGenTrial: React.FC<PropsInterface> = ({ selectedDeploymentType, accountId }) => {
   const { getString } = useStrings()
   const { showError } = useToaster()
-  const { updateLSDefaultExperience } = useUpdateLSDefaultExperience()
   const { licenseInformation } = useLicenseStore()
   const isTrialAccount = licenseInformation[ModuleName.CD]?.licenseType === 'TRIAL'
   const title = selectedDeploymentType?.label
@@ -44,7 +42,6 @@ export const CDFirstGenTrial: React.FC<PropsInterface> = ({ selectedDeploymentTy
       await updateDefaultExperience({
         defaultExperience: updatedDefaultExperience
       })
-      updateLSDefaultExperience(updatedDefaultExperience)
     } catch (error) {
       showError(error.data?.message || getString('somethingWentWrong'))
     }

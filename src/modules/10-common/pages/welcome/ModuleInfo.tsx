@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button, Container, Text, Layout, Heading } from '@wings-software/uicore'
 import { Color } from '@harness/design-system'
-import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import routes from '@common/RouteDefinitions'
 import type { Module } from '@common/interfaces/RouteInterfaces'
@@ -42,7 +41,6 @@ const ModuleInfo: React.FC<ModuleProps> = ({ module = 'cd' }) => {
     accountIdentifier: accountId
   })
   const updatedDefaultExperience = !selectedInfoCard || selectedInfoCard?.isNgRoute ? Experiences.NG : Experiences.CG
-  const { updateLSDefaultExperience } = useUpdateLSDefaultExperience()
 
   const getModuleLink = (moduleLinkArg: Module): React.ReactElement => {
     async function handleUpdateDefaultExperience(): Promise<void> {
@@ -50,7 +48,6 @@ const ModuleInfo: React.FC<ModuleProps> = ({ module = 'cd' }) => {
         await updateDefaultExperience({
           defaultExperience: updatedDefaultExperience
         })
-        updateLSDefaultExperience(updatedDefaultExperience)
       } catch (error) {
         showError(error.data?.message || getString('somethingWentWrong'))
       }
