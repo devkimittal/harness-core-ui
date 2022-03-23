@@ -642,6 +642,7 @@ slos:
   confirmDeleteSLO: 'Are you sure you want to delete SLO: {{ name }}?'
   sloDeleted: '{{ name }} successfully deleted'
   sli: SLI
+  backToSLI: Back to SLI
   sloTargetAndBudgetPolicy: SLO Target & Error Budget Policy
   sloName: SLO Name
   userJourney: User Journey

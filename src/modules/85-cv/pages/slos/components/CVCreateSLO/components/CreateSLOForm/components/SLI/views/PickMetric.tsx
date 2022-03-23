@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useMemo } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import {
   Card,
   Container,
@@ -22,16 +22,13 @@ import {
   ButtonVariation
 } from '@wings-software/uicore'
 import type { RadioButtonProps } from '@wings-software/uicore/dist/components/RadioButton/RadioButton'
-import { useGetSloMetrics } from 'services/cv'
+import { ResponseMonitoredServiceResponse, useGetSloMetrics } from 'services/cv'
 import { useStrings } from 'framework/strings'
-import { useQueryParams } from '@common/hooks'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
-import routes from '@common/RouteDefinitions'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
 import { ResourceType } from '@rbac/interfaces/ResourceType'
 import RbacButton from '@rbac/components/Button/Button'
-import { getCVMonitoringServicesSearchParam, getErrorMessage } from '@cv/utils/CommonUtils'
-import { MonitoredServiceEnum } from '@cv/pages/monitored-service/MonitoredServicePage.constants'
+import { getErrorMessage } from '@cv/utils/CommonUtils'
 import SLOTargetChartWrapper from '@cv/pages/slos/components/SLOTargetChart/SLOTargetChart'
 import CVRadioLabelTextAndDescription from '@cv/components/CVRadioLabelTextAndDescription'
 import {
@@ -53,18 +50,16 @@ import {
 } from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.types'
 import css from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.module.scss'
 
-const PickMetric: React.FC<Omit<SLIProps, 'children' | 'monitoredServicesLoading' | 'monitoredServicesData'>> = ({
-  formikProps,
-  ...rest
-}) => {
+interface PickMetricProps extends Omit<SLIProps, 'children' | 'monitoredServicesLoading' | 'monitoredServicesData'> {
+  onAddNewMetric: () => void
+  monitoredServiceData: ResponseMonitoredServiceResponse | null
+}
+
+const PickMetric: React.FC<PickMetricProps> = ({ formikProps, onAddNewMetric, monitoredServiceData, ...rest }) => {
   const FLEX_START = 'flex-start'
   const { getString } = useStrings()
   const { showError } = useToaster()
-  const history = useHistory()
-  const { accountId, orgIdentifier, projectIdentifier, identifier } = useParams<
-    ProjectPathProps & { identifier?: string }
-  >()
-  const { monitoredServiceIdentifier } = useQueryParams<{ monitoredServiceIdentifier?: string }>()
+  const { accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps & { identifier?: string }>()
   const {
     monitoredServiceRef,
     healthSourceRef,
@@ -93,10 +88,11 @@ const PickMetric: React.FC<Omit<SLIProps, 'children' | 'monitoredServicesLoading
   })
 
   useEffect(() => {
-    if (monitoredServiceRef && healthSourceRef) {
+    if (monitoredServiceRef && healthSourceRef && monitoredServiceData) {
       refetchSLOMetrics()
     }
-  }, [monitoredServiceRef, healthSourceRef, refetchSLOMetrics])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monitoredServiceRef, healthSourceRef, monitoredServiceData])
 
   useEffect(() => {
     if (SLOMetricsError) {
@@ -139,24 +135,6 @@ const PickMetric: React.FC<Omit<SLIProps, 'children' | 'monitoredServicesLoading
       }
     ]
   }, [])
-
-  const addNewMetric = (): void => {
-    history.push({
-      pathname: routes.toCVAddMonitoringServicesEdit({
-        accountId,
-        orgIdentifier,
-        projectIdentifier,
-        identifier: monitoredServiceRef,
-        module: 'cv'
-      }),
-      search: getCVMonitoringServicesSearchParam({
-        tab: MonitoredServiceEnum.Configurations,
-        redirectToSLO: true,
-        sloIdentifier: identifier,
-        monitoredServiceIdentifier
-      })
-    })
-  }
 
   const goodOrBadRequestMetricLabel =
     eventType === SLIEventTypes.BAD
@@ -202,7 +180,7 @@ const PickMetric: React.FC<Omit<SLIProps, 'children' | 'monitoredServicesLoading
                     text={getString('cv.newMetric')}
                     variation={ButtonVariation.LINK}
                     disabled={!monitoredServiceRef}
-                    onClick={addNewMetric}
+                    onClick={onAddNewMetric}
                     permission={{
                       permission: PermissionIdentifier.EDIT_MONITORED_SERVICE,
                       resource: {
@@ -230,7 +208,7 @@ const PickMetric: React.FC<Omit<SLIProps, 'children' | 'monitoredServicesLoading
                 text={getString('cv.newMetric')}
                 variation={ButtonVariation.LINK}
                 disabled={!monitoredServiceRef}
-                onClick={addNewMetric}
+                onClick={onAddNewMetric}
                 permission={{
                   permission: PermissionIdentifier.EDIT_MONITORED_SERVICE,
                   resource: {

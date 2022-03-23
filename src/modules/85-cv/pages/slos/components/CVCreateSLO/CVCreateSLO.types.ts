@@ -13,8 +13,7 @@ import type {
   RatioSLIMetricSpec,
   SLOTarget,
   CalenderSLOTargetSpec,
-  WeeklyCalendarSpec,
-  ResponseListMonitoredServiceWithHealthSources
+  WeeklyCalendarSpec
 } from 'services/cv'
 import type { SLOTargetChartWithAPIGetSliGraphProps } from '@cv/pages/slos/components/SLOTargetChart/SLOTargetChart.types'
 import type { SelectOption } from '@pipeline/components/PipelineSteps/Steps/StepsTypes'
@@ -153,8 +152,6 @@ export interface SLIProps
   extends Omit<SLOTargetChartWithAPIGetSliGraphProps, 'serviceLevelIndicator' | 'monitoredServiceIdentifier'> {
   children: JSX.Element
   formikProps: FormikProps<SLOForm>
-  monitoredServicesLoading: boolean
-  monitoredServicesData: ResponseListMonitoredServiceWithHealthSources | null
 }
 
 export interface SLOTargetAndBudgetPolicyProps

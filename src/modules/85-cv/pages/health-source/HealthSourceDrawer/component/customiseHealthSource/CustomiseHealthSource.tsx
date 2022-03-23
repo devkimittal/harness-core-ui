@@ -66,7 +66,7 @@ export default function CustomiseHealthSource({
           projectIdentifier: params.projectIdentifier,
           serviceRef: sourceData.serviceRef,
           environmentRef: sourceData.environmentRef,
-          identifier: identifier.trim(),
+          identifier: identifier?.trim(),
           name,
           description,
           tags,

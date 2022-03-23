@@ -197,8 +197,6 @@ const CreateSLOForm: React.FC<CreateSLOFormProps> = ({
                   error={getErrorMessage(sliGraphError)}
                   retryOnError={fetchSliGraphData}
                   debounceFetchSliGraphData={debounceFetchSliGraphData}
-                  monitoredServicesData={monitoredServicesData}
-                  monitoredServicesLoading={monitoredServicesLoading}
                 >
                   <NavButtons />
                 </SLI>

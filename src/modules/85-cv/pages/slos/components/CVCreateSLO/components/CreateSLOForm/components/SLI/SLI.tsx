@@ -5,8 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { useMemo } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Heading,
   FontVariation,
@@ -17,51 +17,129 @@ import {
   Container,
   Text,
   Color,
-  ButtonVariation
+  ButtonVariation,
+  useToaster
 } from '@wings-software/uicore'
 import type { RadioButtonProps } from '@wings-software/uicore/dist/components/RadioButton/RadioButton'
 import { useStrings } from 'framework/strings'
-import { useQueryParams } from '@common/hooks'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
-import routes from '@common/RouteDefinitions'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
 import { ResourceType } from '@rbac/interfaces/ResourceType'
 import RbacButton from '@rbac/components/Button/Button'
-import { getCVMonitoringServicesSearchParam } from '@cv/utils/CommonUtils'
-import { MonitoredServiceEnum } from '@cv/pages/monitored-service/MonitoredServicePage.constants'
 import { defaultOption } from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.constants'
 import { SLIProps, SLOFormFields, SLITypes } from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.types'
 import { getHealthSourceOptions } from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.utils'
 import CVRadioLabelTextAndDescription from '@cv/components/CVRadioLabelTextAndDescription'
-import SLIContextualHelpText from './components/SLIContextualHelpText'
+import { useDrawer } from '@cv/hooks/useDrawerHook/useDrawerHook'
+import HealthSourceDrawerHeader from '@cv/pages/health-source/HealthSourceDrawer/component/HealthSourceDrawerHeader/HealthSourceDrawerHeader'
+import HealthSourceDrawerContent from '@cv/pages/health-source/HealthSourceDrawer/HealthSourceDrawerContent'
+import { HealthSource, useGetMonitoredService } from 'services/cv'
+import { createHealthsourceList } from '@cv/pages/health-source/HealthSourceTable/HealthSourceTable.utils'
+import type { UpdatedHealthSource } from '@cv/pages/health-source/HealthSourceDrawer/HealthSourceDrawerContent.types'
+import { getErrorMessage } from '@cv/utils/CommonUtils'
 import PickMetric from './views/PickMetric'
+import SLIContextualHelpText from './components/SLIContextualHelpText'
+import { getHealthSourceToEdit } from './SLI.utils'
 import css from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.module.scss'
 
-const SLI: React.FC<SLIProps> = ({
-  children,
-  formikProps,
-  monitoredServicesLoading,
-  monitoredServicesData,
-  ...rest
-}) => {
+const SLI: React.FC<SLIProps> = ({ children, formikProps, ...rest }) => {
   const FLEX_START = 'flex-start'
   const { getString } = useStrings()
-  const history = useHistory()
-  const { accountId, orgIdentifier, projectIdentifier, identifier } = useParams<
-    ProjectPathProps & { identifier: string }
-  >()
-  const { monitoredServiceIdentifier } = useQueryParams<{ monitoredServiceIdentifier?: string }>()
+  const { showError } = useToaster()
+  const { accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps & { identifier: string }>()
   const { values } = formikProps
+  const monitoredServiceRef = values?.monitoredServiceRef
 
-  const healthSourcesOptions = useMemo(
-    () => getHealthSourceOptions(monitoredServicesData?.data, values?.monitoredServiceRef),
-    [values?.monitoredServiceRef, monitoredServicesData]
-  )
+  const {
+    showDrawer: showHealthSourceDrawer,
+    hideDrawer: hideHealthSourceDrawer,
+    setDrawerHeaderProps
+  } = useDrawer({
+    createHeader: props => <HealthSourceDrawerHeader {...props} />,
+    createDrawerContent: props => <HealthSourceDrawerContent {...props} />
+  })
 
+  const {
+    data: monitoredServiceData,
+    refetch: fetchMonitoredServiceData,
+    loading: monitoredServicesLoading,
+    error: monitoredServiceError
+  } = useGetMonitoredService({
+    identifier: monitoredServiceRef,
+    queryParams: {
+      accountId,
+      orgIdentifier,
+      projectIdentifier
+    }
+  })
+
+  const isRunTimeInput = false
+  const monitoredService = monitoredServiceData?.data?.monitoredService
+  const { serviceRef, environmentRef } = monitoredService || {}
+  const { healthSources = [], changeSources = [] } = monitoredService?.sources || {}
+  const healthSourcesOptions = useMemo(() => getHealthSourceOptions(monitoredServiceData?.data), [monitoredServiceData])
   const activeHealthSource: SelectOption = useMemo(
     () => healthSourcesOptions.find(healthSource => healthSource.value === values.healthSourceRef) ?? defaultOption,
     [healthSourcesOptions, values.healthSourceRef]
   )
+
+  useEffect(() => {
+    if (monitoredServiceError) {
+      showError(getErrorMessage(monitoredServiceError))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monitoredServiceError])
+
+  const healthSourceDrawerHeaderProps = (
+    isEdit = false
+  ): {
+    isEdit: boolean
+    shouldRenderAtVerifyStep: boolean
+    onClick: () => void
+    breadCrumbRoute: { routeTitle: string }
+  } => {
+    return {
+      isEdit,
+      shouldRenderAtVerifyStep: true,
+      onClick: () => hideHealthSourceDrawer(),
+      breadCrumbRoute: { routeTitle: getString('cv.slos.backToSLI') }
+    }
+  }
+
+  const getHealthSourceDrawerProps = (updatedHealthSource?: UpdatedHealthSource) => {
+    const { name = '', identifier = '' } = monitoredService || {}
+    return {
+      isRunTimeInput,
+      shouldRenderAtVerifyStep: true,
+      serviceRef,
+      environmentRef,
+      monitoredServiceRef: { identifier, name },
+      rowData: updatedHealthSource,
+      tableData: updatedHealthSource
+        ? createHealthsourceList(healthSources as HealthSource[], updatedHealthSource)
+        : healthSources,
+      changeSources,
+      onSuccess: () => {
+        fetchMonitoredServiceData()
+        hideHealthSourceDrawer()
+      }
+    }
+  }
+
+  const onAddNewHealthSource = useCallback(() => {
+    const drawerProps = getHealthSourceDrawerProps()
+    showHealthSourceDrawer(drawerProps)
+    setDrawerHeaderProps?.(healthSourceDrawerHeaderProps())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monitoredService, serviceRef, environmentRef, healthSources, changeSources])
+
+  const onAddNewMetric = useCallback(() => {
+    const healthSourceToEdit = getHealthSourceToEdit(healthSources, formikProps)
+    const drawerProps = getHealthSourceDrawerProps(healthSourceToEdit)
+    showHealthSourceDrawer(drawerProps)
+    setDrawerHeaderProps?.(healthSourceDrawerHeaderProps(true))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monitoredService, serviceRef, environmentRef, healthSources, changeSources])
 
   const radioItems: Pick<RadioButtonProps, 'label' | 'value'>[] = useMemo(() => {
     const { AVAILABILITY, LATENCY } = SLITypes
@@ -121,23 +199,7 @@ const SLI: React.FC<SLIProps> = ({
                   text={getString('cv.healthSource.newHealthSource')}
                   variation={ButtonVariation.LINK}
                   disabled={!values.monitoredServiceRef}
-                  onClick={() => {
-                    history.push({
-                      pathname: routes.toCVAddMonitoringServicesEdit({
-                        accountId,
-                        orgIdentifier,
-                        projectIdentifier,
-                        identifier: values.monitoredServiceRef,
-                        module: 'cv'
-                      }),
-                      search: getCVMonitoringServicesSearchParam({
-                        tab: MonitoredServiceEnum.Configurations,
-                        redirectToSLO: true,
-                        sloIdentifier: identifier,
-                        monitoredServiceIdentifier
-                      })
-                    })
-                  }}
+                  onClick={onAddNewHealthSource}
                   permission={{
                     permission: PermissionIdentifier.EDIT_MONITORED_SERVICE,
                     resource: {
@@ -165,7 +227,12 @@ const SLI: React.FC<SLIProps> = ({
         </Layout.Horizontal>
       </Card>
 
-      <PickMetric formikProps={formikProps} {...rest} />
+      <PickMetric
+        formikProps={formikProps}
+        {...rest}
+        onAddNewMetric={onAddNewMetric}
+        monitoredServiceData={monitoredServiceData}
+      />
       {children}
     </>
   )

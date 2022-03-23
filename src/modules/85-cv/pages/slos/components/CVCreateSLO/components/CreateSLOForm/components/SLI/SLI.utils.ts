@@ -10,7 +10,7 @@ import type { SelectOption } from '@wings-software/uicore'
 import type { FormikProps } from 'formik'
 import { isEmpty } from 'lodash-es'
 import type { UseStringsReturn, StringKeys } from 'framework/strings'
-import type { MetricDTO, ResponseListMonitoredServiceWithHealthSources } from 'services/cv'
+import type { HealthSource, MetricDTO, ResponseListMonitoredServiceWithHealthSources } from 'services/cv'
 import { Comparators } from './SLI.types'
 import type { SLOForm } from '../../CreateSLO.types'
 import { SLIMetricEnum, SLITypeEnum } from './SLI.constants'
@@ -94,4 +94,8 @@ export const getComparatorSuffixLabelId = (comparator?: Comparators): StringKeys
   }
 
   return 'cv.thanObjectiveValue'
+}
+
+export const getHealthSourceToEdit = (healthSources: HealthSource[], formikProps: any): HealthSource | undefined => {
+  return healthSources?.find(healthSource => healthSource?.identifier === formikProps?.values?.healthSourceRef)
 }

@@ -5260,6 +5260,7 @@ export interface StringsMap {
   'cv.showYAMLChange': string
   'cv.sliMissingDataTypeIsRequired': string
   'cv.sloRecalculationInProgress': string
+  'cv.slos.backToSLI': string
   'cv.slos.configureSLIQueries': string
   'cv.slos.confirmDeleteSLO': string
   'cv.slos.contextualHelp.sli.availabilityDescription': string
