@@ -825,6 +825,7 @@ gitPullRequestNumber: Git Pull Request Number
 expressionsEvaluation: Expressions Evaluation
 deploymentFrequency: 'Deployment Frequency'
 retryPipeline: Retry Failed Pipeline
+openInNewTab: Open in new tab
 stagetoRetryFrom: Select the stage that you would like to resume from
 runAllParallelstages: Run all parallel stages
 runFailedStages: Run only failed stages

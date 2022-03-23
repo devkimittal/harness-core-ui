@@ -7,6 +7,8 @@
 
 import React from 'react'
 import { render, fireEvent, findByText, act, RenderResult, waitFor } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
+import { useStrings } from 'framework/strings'
 
 import { TestWrapper } from '@common/utils/testUtils'
 import * as useFeaturesLib from '@common/hooks/useFeatures'
@@ -14,8 +16,9 @@ import routes from '@common/RouteDefinitions'
 import { FeatureIdentifier } from 'framework/featureStore/FeatureIdentifier'
 import type { ExecutionStatus } from '@pipeline/utils/statusHelpers'
 import { HandleInterruptQueryParams, useHandleInterrupt, useHandleStageInterrupt } from 'services/pipeline-ng'
-import { accountPathProps, executionPathProps, pipelineModuleParams } from '@common/utils/routeUtils'
+import { accountPathProps, executionPathProps, pipelineModuleParams, pipelinePathProps } from '@common/utils/routeUtils'
 
+import type { Module } from '@common/interfaces/RouteInterfaces'
 import ExecutionActions from '../ExecutionActions'
 
 jest.mock('services/pipeline-ng', () => ({
@@ -43,6 +46,12 @@ jest.mock('@common/utils/YamlUtils', () => ({}))
 const TEST_PATH = routes.toExecutionPipelineView({
   ...accountPathProps,
   ...executionPathProps,
+  ...pipelineModuleParams
+})
+
+const pipelineDeploymentListPage = routes.toPipelineDeploymentList({
+  ...accountPathProps,
+  ...pipelinePathProps,
   ...pipelineModuleParams
 })
 
@@ -264,5 +273,72 @@ describe('<ExecutionActions /> tests', () => {
     const menuItems = result!.baseElement.querySelectorAll('.bp3-menu-item')
     const editPipelineMenuItem = Array.from(menuItems).find(item => item.textContent === 'editPipeline')
     expect(editPipelineMenuItem).toBeUndefined()
+  })
+
+  test('Open in new tab button visible on Execution History', () => {
+    const wrapper = ({ children }: React.PropsWithChildren<unknown>): React.ReactElement => (
+      <TestWrapper>{children}</TestWrapper>
+    )
+    const { result } = renderHook(() => useStrings(), { wrapper })
+
+    const { orgIdentifier, pipelineIdentifier, executionIdentifier, projectIdentifier, accountId } = pathParams
+    const module: Module = pathParams.module as Module
+
+    const executionPipelineViewRoute = routes.toExecutionPipelineView({
+      orgIdentifier,
+      pipelineIdentifier,
+      executionIdentifier,
+      projectIdentifier,
+      accountId,
+      module
+    })
+
+    const { getByText } = render(
+      <TestWrapper path={pipelineDeploymentListPage} pathParams={pathParams}>
+        <ExecutionActions
+          params={pathParams as any}
+          executionStatus="Expired"
+          refetch={jest.fn()}
+          showEditButton={false}
+        />
+      </TestWrapper>
+    )
+
+    const moreButton = getByText('more')?.closest('button')
+
+    act(() => {
+      fireEvent.click(moreButton!)
+    })
+
+    const openInNewTabButton = getByText(result.current.getString('pipeline.openInNewTab')) as HTMLAnchorElement
+    expect(openInNewTabButton).toBeDefined()
+    expect(openInNewTabButton?.href).toContain(executionPipelineViewRoute)
+  })
+
+  test('Open in new tab button unavailable on Pipeline View page', () => {
+    const wrapper = ({ children }: React.PropsWithChildren<unknown>): React.ReactElement => (
+      <TestWrapper>{children}</TestWrapper>
+    )
+    const { result } = renderHook(() => useStrings(), { wrapper })
+
+    const { getByText, queryByText } = render(
+      <TestWrapper path={TEST_PATH} pathParams={pathParams}>
+        <ExecutionActions
+          params={pathParams as any}
+          executionStatus="Expired"
+          refetch={jest.fn()}
+          showEditButton={false}
+        />
+      </TestWrapper>
+    )
+
+    const moreButton = getByText('more')?.closest('button')
+
+    act(() => {
+      fireEvent.click(moreButton!)
+    })
+
+    const openInNewTabButton = queryByText(result.current.getString('pipeline.openInNewTab'))
+    expect(openInNewTabButton).not.toBeInTheDocument()
   })
 })

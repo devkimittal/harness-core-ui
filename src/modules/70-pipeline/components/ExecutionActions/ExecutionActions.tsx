@@ -9,7 +9,7 @@ import React from 'react'
 import { Button, Popover, ButtonProps, useConfirmationDialog } from '@harness/uicore'
 import { useModalHook } from '@harness/use-modal'
 import { Dialog, IDialogProps, Intent, Menu, MenuItem } from '@blueprintjs/core'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, matchPath } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 
 import { HandleInterruptQueryParams, useHandleInterrupt, useHandleStageInterrupt } from 'services/pipeline-ng'
@@ -157,6 +157,7 @@ export default function ExecutionActions(props: ExecutionActionsProps): React.Re
 
   const { showSuccess } = useToaster()
   const { getString } = useStrings()
+  const location = useLocation()
 
   const { openDialog: openAbortDialog } = useConfirmationDialog({
     cancelButtonText: getString('cancel'),
@@ -176,6 +177,18 @@ export default function ExecutionActions(props: ExecutionActionsProps): React.Re
   const { abortText, pauseText, rerunText, resumeText } = getActionTexts(stageId)
 
   const interruptMethod = stageId ? stageInterrupt : interrupt
+
+  const executionPipelineViewRoute = routes.toExecutionPipelineView({
+    orgIdentifier,
+    pipelineIdentifier,
+    executionIdentifier,
+    projectIdentifier,
+    accountId,
+    module
+  })
+  const isExecutionPipelineViewPage = !!matchPath(location.pathname, {
+    path: executionPipelineViewRoute
+  })
 
   async function executeAction(interruptType: HandleInterruptQueryParams['interruptType']): Promise<void> {
     try {
@@ -311,6 +324,16 @@ export default function ExecutionActions(props: ExecutionActionsProps): React.Re
         <Popover position="bottom-right" minimal>
           <Button icon="more" {...commonButtonProps} className={css.more} />
           <Menu>
+            {!isExecutionPipelineViewPage && (
+              <Link
+                className="bp3-menu-item"
+                target="_blank"
+                to={executionPipelineViewRoute}
+                onClick={e => e.stopPropagation()}
+              >
+                {getString('pipeline.openInNewTab')}
+              </Link>
+            )}
             {showEditButton ? (
               <Link
                 className={`bp3-menu-item${!canEdit ? ' bp3-disabled' : ''}`}
