@@ -35,6 +35,7 @@ interface StepGroupGraphProps {
   updateGraphLinks: () => void
   readonly?: boolean
   hideLinks?: boolean
+  hideAdd?: boolean
 }
 
 interface LayoutStyles {
@@ -141,6 +142,7 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
           />
         </>
       ) : (
+        !props.hideAdd &&
         CreateNode &&
         !props.readonly && (
           <CreateNode

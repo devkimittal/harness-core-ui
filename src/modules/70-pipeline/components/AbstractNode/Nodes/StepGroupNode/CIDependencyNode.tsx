@@ -92,12 +92,12 @@ export function CIDependencyNode(props: any): JSX.Element {
               </div>
               <StepGroupGraph
                 hideLinks
+                hideAdd
                 alwaysShowCreateNode
                 {...props}
                 data={stepsData}
                 isNodeCollapsed={isNodeCollapsed}
                 readonly={props.readonly}
-                canAdd={false}
               />
             </div>
           </div>
