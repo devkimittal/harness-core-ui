@@ -57,7 +57,7 @@ interface TestsExecutionProps {
   serviceToken: string
   showCallGraph?: boolean
   isAggregatedReports?: boolean
-  reportSummaryData?: TestReportSummary
+  reportSummaryData?: TestReportSummary | null
 }
 
 const getEntireExecutionSummary = (executionSummaryContent: TestSuite[]): any =>
