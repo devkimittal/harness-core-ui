@@ -6,8 +6,7 @@
  */
 
 import React from 'react'
-import type { RenderResult } from '@testing-library/react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { RenderResult, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TestWrapper } from '@common/utils/testUtils'
 import EnvironmentDetailsBody from '@cf/pages/environment-details/EnvironmentDetailsBody'
@@ -129,5 +128,32 @@ describe('EnvironmentDetailsBody', () => {
     expect(apiKeyEl.querySelector('svg')).not.toBeInTheDocument()
 
     expect(screen.queryByText('cf.environments.apiKeys.redactionWarning')).not.toBeInTheDocument()
+  })
+
+  test('it should show Delete SDK key confirmation modal when trash icon is clicked', async () => {
+    const existingKey: ApiKey = {
+      name: 'EXISTING KEY NAME',
+      identifier: 'EXISTING KEY IDENTIFIER',
+      apiKey: 'existing-api-key',
+      type: 'server'
+    }
+
+    useGetAllAPIKeysMock.mockReturnValue(getMockResponseData([existingKey]))
+    renderComponent()
+
+    expect(screen.getByText(existingKey.name)).toBeInTheDocument()
+
+    const deleteBtn = screen.getByRole('button', { name: 'trash' })
+    userEvent.click(deleteBtn)
+
+    await waitFor(() => {
+      expect(screen.queryByText('cf.environments.apiKeys.deleteTitle')).toBeInTheDocument()
+    })
+
+    userEvent.click(screen.getByRole('button', { name: 'confirm' }))
+
+    await waitFor(() => {
+      expect(screen.queryByText('cf.environments.apiKeys.deleteTitle')).not.toBeInTheDocument()
+    })
   })
 })
