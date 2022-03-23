@@ -475,6 +475,7 @@ export const getLinkEventListeners = (
       }
     },
     [Event.DropLinkEvent]: (event: any) => {
+      event = { ...event, ...event.data }
       if (event?.node?.identifier === event?.destination?.identifier) {
         return
       }
@@ -587,10 +588,13 @@ export const getNodeEventListerner = (
       event = { ...event, ...event?.data }
       dynamicPopoverHandler?.hide()
       /* istanbul ignore else */ if (event.entityType) {
+        const domTarget =
+          document.querySelector(`[data-nodeid="${event.identifier}"]`) ||
+          (document.querySelector(`[data-nodeid="${event.id}"]`) as Element)
         if (event.entityType === DiagramType.CreateNew) {
           setSelectionRef.current({ stageId: undefined, sectionId: undefined })
           dynamicPopoverHandler?.show(
-            `[data-nodeid="${event.identifier}"]`,
+            domTarget,
             {
               addStageNew,
               isStageView: false,
@@ -607,7 +611,7 @@ export const getNodeEventListerner = (
         } else if (event.entityType === DiagramType.GroupNode && event?.identifier) {
           /* istanbul ignore else */ if (event?.nodesInfo) {
             dynamicPopoverHandler?.show(
-              `[data-nodeid="${event.identifier}"]`,
+              domTarget,
               {
                 isGroupStage: true,
                 groupSelectedStageId: event?.identifier,
@@ -635,7 +639,7 @@ export const getNodeEventListerner = (
             if (data?.stage?.name === EmptyStageName) {
               // TODO: check if this is unused code
               dynamicPopoverHandler?.show(
-                `[data-nodeid="${event.identifier}"]`,
+                domTarget,
                 {
                   isStageView: true,
                   data,
@@ -665,7 +669,7 @@ export const getNodeEventListerner = (
             } else {
               // TODO: check if this is unused code
               dynamicPopoverHandler?.show(
-                `[data-nodeid="${event.identifier}"]`,
+                domTarget,
                 {
                   isStageView: true,
                   data,

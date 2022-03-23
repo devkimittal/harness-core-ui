@@ -5,8 +5,9 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 .marker {
+  --pipeline-blue-color: #25a6f7;
   stroke: var(--pipeline-blue-color);
-  stroke-width: 0.5px;
+  stroke-width: 1px;
   fill: #fff;
 }
 .stageNode {

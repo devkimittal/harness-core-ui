@@ -11,9 +11,10 @@ import { v4 as uuid } from 'uuid'
 import type { ExecutionWrapperConfig, StageElementWrapperConfig } from 'services/cd-ng'
 import { StepTypeToPipelineIconMap } from '@pipeline/components/PipelineStudio/ExecutionGraph/ExecutionGraphUtil'
 import { stageTypeToIconMap } from '@pipeline/utils/constants'
+import type { DependencyElement } from 'services/ci'
+import { getDefaultBuildDependencies } from '@pipeline/utils/stageHelpers'
 import type { PipelineGraphState, SVGPathRecord } from '../types'
 import { PipelineGraphType } from '../types'
-import type { DependencyElement } from 'services/ci'
 
 const INITIAL_ZOOM_LEVEL = 1
 const ZOOM_INC_DEC_LEVEL = 0.1
@@ -262,23 +263,8 @@ const getPipelineGraphData = (
 
     if (Array.isArray(serviceDependencies)) {
       //CI module
-      graphState.unshift({
-        id: uuid() as string,
-        identifier: 'service-dependencies' as string,
-        name: 'Dependencies',
-        type: 'StepGroup',
-        nodeType: 'StepGroup',
-        icon: '' as IconName,
-        data: {
-          readonly: true,
-          name: 'Dependencies',
-          type: 'StepGroup',
-          nodeType: 'StepGroup',
-          steps: serviceDependencies.map(d => ({ step: d }))
-        },
-
-        graphType: pipGraphDataType
-      })
+      const dependencyStepGroup = getDefaultBuildDependencies(serviceDependencies)
+      graphState.unshift(dependencyStepGroup)
     }
   }
 
@@ -441,6 +427,7 @@ const getTerminalNodeLinks = ({
   }
   return finalNodeLinks
 }
+
 export {
   ZOOM_INC_DEC_LEVEL,
   INITIAL_ZOOM_LEVEL,

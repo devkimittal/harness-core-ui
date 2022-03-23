@@ -43,9 +43,13 @@ function GroupNode(props: any): React.ReactElement {
           event.stopPropagation()
           props?.fireEvent({
             type: Event.ClickNode,
-            entityType: DiagramType.GroupNode,
-            identifier: props?.identifier,
-            nodesInfo
+            target: event.target,
+            data: {
+              entityType: DiagramType.GroupNode,
+              identifier: props?.identifier,
+              nodesInfo,
+              id: nodesInfo?.[0]?.id || props.id
+            }
           })
         }}
         onMouseOver={() => allowAdd && setVisibilityOfAdd(true)}

@@ -195,7 +195,6 @@ export default function ExecutionStageDetails(props: ExecutionStageDetailsProps)
       when: NodeRunInfo
     }
   }): JSX.Element => {
-    console.log(stepInfo)
     return (
       <HoverCard data={stepInfo}>
         {stepInfo?.when && <ConditionalExecutionTooltipWrapper data={stepInfo.when} mode={Modes.STEP} />}

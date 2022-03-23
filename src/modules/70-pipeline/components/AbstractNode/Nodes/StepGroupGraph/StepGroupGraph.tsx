@@ -34,6 +34,8 @@ interface StepGroupGraphProps {
   isNodeCollapsed: boolean
   updateGraphLinks: () => void
   readonly?: boolean
+  hideLinks?: boolean
+  canAdd?: boolean
 }
 
 interface LayoutStyles {
@@ -99,6 +101,9 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
   }, [layoutStyles])
 
   const setSVGLinks = (): void => {
+    if (props.hideLinks) {
+      return
+    }
     const SVGLinks = getSVGLinksFromPipeline(state)
     const firstNodeIdentifier = state?.[0]?.id
     const lastNodeIdentifier = state?.[state?.length - 1]?.id
@@ -124,17 +129,20 @@ function StepGroupGraph(props: StepGroupGraphProps): React.ReactElement {
     <div className={css.main} style={layoutStyles} ref={graphRef}>
       <SVGComponent svgPath={svgPath} className={css.stepGroupSvg} />
       {props?.data?.length ? (
-        <PipelineGraphRecursive
-          getDefaultNode={props?.getDefaultNode}
-          parentIdentifier={props?.identifier}
-          fireEvent={props.fireEvent}
-          getNode={props.getNode}
-          nodes={state}
-          selectedNode={defaultTo(props?.selectedNodeId, '')}
-          startEndNodeNeeded={false}
-          readonly={props.readonly}
-        />
+        <>
+          <PipelineGraphRecursive
+            getDefaultNode={props?.getDefaultNode}
+            parentIdentifier={props?.identifier}
+            fireEvent={props.fireEvent}
+            getNode={props.getNode}
+            nodes={state}
+            selectedNode={defaultTo(props?.selectedNodeId, '')}
+            startEndNodeNeeded={false}
+            readonly={props.readonly}
+          />
+        </>
       ) : (
+        props?.canAdd &&
         CreateNode &&
         !props.readonly && (
           <CreateNode

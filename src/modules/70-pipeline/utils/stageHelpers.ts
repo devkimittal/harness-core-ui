@@ -6,14 +6,18 @@
  */
 
 import { defaultTo, get, isEmpty } from 'lodash-es'
-import { getMultiTypeFromValue, MultiTypeInputType } from '@wings-software/uicore'
+import { v4 as uuid } from 'uuid'
+import { getMultiTypeFromValue, IconName, MultiTypeInputType } from '@wings-software/uicore'
 import type { GraphLayoutNode, PipelineExecutionSummary } from 'services/pipeline-ng'
-import type { StringKeys } from 'framework/strings'
 import type { GetExecutionStrategyYamlQueryParams, PipelineInfoConfig, StageElementConfig } from 'services/cd-ng'
 import { ManifestDataType } from '@pipeline/components/ManifestSelection/Manifesthelper'
 import type { ManifestTypes } from '@pipeline/components/ManifestSelection/ManifestInterface'
-import type { InputSetDTO } from './types'
+import type { StringKeys } from 'framework/strings'
+import type { DependencyElement } from 'services/ci'
+import type { PipelineGraphState } from '@pipeline/components/AbstractNode/types'
 import type { DeploymentStageElementConfig, PipelineStageWrapper, StageElementWrapper } from './pipelineTypes'
+import type { InputSetDTO } from './types'
+import { STATIC_SERVICE_GROUP_NAME } from './executionUtils'
 
 export enum StageType {
   DEPLOY = 'Deployment',
@@ -185,3 +189,18 @@ export const getSelectedDeploymentType = (
   }
   return get(stage, 'stage.spec.serviceConfig.serviceDefinition.type', null)
 }
+export const getDefaultBuildDependencies = (serviceDependencies: DependencyElement[]): PipelineGraphState => ({
+  id: uuid() as string,
+  identifier: STATIC_SERVICE_GROUP_NAME as string,
+  name: 'Dependencies',
+  type: STATIC_SERVICE_GROUP_NAME,
+  nodeType: STATIC_SERVICE_GROUP_NAME,
+  icon: '' as IconName,
+  data: {
+    canDelete: false,
+    name: 'Dependencies',
+    type: STATIC_SERVICE_GROUP_NAME,
+    nodeType: STATIC_SERVICE_GROUP_NAME,
+    steps: serviceDependencies.length ? [{ parallel: serviceDependencies.map(d => ({ step: d })) }] : []
+  }
+})

@@ -23,6 +23,7 @@ import GraphActions from '../GraphActions/GraphActions'
 import { PipelineGraphRecursive } from './PipelineGraphNode'
 import type { NodeCollapsibleProps, NodeDetails, NodeIds, PipelineGraphState, SVGPathRecord } from '../types'
 import css from './PipelineGraph.module.scss'
+import SVGMarker from '../Nodes/SVGMarker'
 
 interface ControlPosition {
   x: number
@@ -156,9 +157,19 @@ interface SVGComponentProps {
 export function SVGComponent({ svgPath, className }: SVGComponentProps): React.ReactElement {
   return (
     <svg className={css.common}>
+      {/* <SVGMarker /> */}
       {svgPath.map((path, idx) => {
         const [[nodeId, pathValue]] = Object.entries(path)
-        return <path className={classNames(css.svgArrow, className)} id={`${nodeId}-link`} key={idx} d={pathValue} />
+        return (
+          <path
+            markerStart="url(#link-port)"
+            markerEnd="url(#link-port)"
+            className={classNames(css.svgArrow, className)}
+            id={`${nodeId}-link`}
+            key={idx}
+            d={pathValue}
+          />
+        )
       })}
     </svg>
   )

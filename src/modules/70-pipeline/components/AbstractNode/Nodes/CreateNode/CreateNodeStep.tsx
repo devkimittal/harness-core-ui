@@ -76,6 +76,7 @@ function CreateNodeStep(props: any): React.ReactElement {
         data-linkid={props.identifier}
         data-nodeid={props.identifier || props['data-nodeid']}
         className={cx(
+          props.className,
           cssDefault.defaultCard,
           css.createNode,
           css.stepAddIcon,
@@ -95,6 +96,7 @@ function CreateNodeStep(props: any): React.ReactElement {
           padding={{ top: 'small' }}
           lineClamp={2}
           style={{ marginLeft: '-30px', marginRight: '-30px' }}
+          className={props.titleClassName}
         >
           {props.name}
         </Text>

@@ -40,6 +40,7 @@ declare const styles: {
   readonly stepAddNode: string
   readonly stepGroupAddNode: string
   readonly stepMarker: string
+  readonly stepNameText: string
   readonly template: string
   readonly tertiaryIcon: string
   readonly visible: string

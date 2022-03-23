@@ -9,6 +9,9 @@
 declare const styles: {
   readonly closeNode: string
   readonly collapseIcon: string
+  readonly createnodeci: string
+  readonly createnodecimain: string
+  readonly createnodecititle: string
   readonly firstnode: string
   readonly horizontalBar: string
   readonly marginBottom: string

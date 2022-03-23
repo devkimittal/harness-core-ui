@@ -39,6 +39,8 @@ import { IconNode } from '@pipeline/components/AbstractNode/Nodes/IconNode/IconN
 import CreateNodeStep from '@pipeline/components/AbstractNode/Nodes/CreateNode/CreateNodeStep'
 import EndNodeStep from '@pipeline/components/AbstractNode/Nodes/EndNode/EndNodeStep'
 import StartNodeStep from '@pipeline/components/AbstractNode/Nodes/StartNode/StartNodeStep'
+import { StageType } from '@pipeline/utils/stageHelpers'
+import { CIDependencyNode } from '@pipeline/components/AbstractNode/Nodes/StepGroupNode/CIDependencyNode'
 import { ExecutionStepModel, GridStyleInterface } from './ExecutionStepModel'
 import { StepType as PipelineStepType } from '../../PipelineSteps/PipelineStepInterface'
 import {
@@ -80,11 +82,10 @@ import {
 } from '../../Diagram'
 import { CanvasButtons } from '../../CanvasButtons/CanvasButtons'
 import css from './ExecutionGraph.module.scss'
-import { ModuleName } from 'framework/types/ModuleName'
 
 const diagram = new DiagramFactory('graph')
 
-diagram.registerNode('Deployment', PipelineStepNode, true)
+diagram.registerNode('ShellScript', PipelineStepNode, true)
 diagram.registerNode(NodeType.CreateNode, CreateNodeStep)
 diagram.registerNode(NodeType.EndNode, EndNodeStep)
 diagram.registerNode(NodeType.StartNode, StartNodeStep)
@@ -94,6 +95,7 @@ diagram.registerNode('JiraApproval', DiamondNodeWidget)
 diagram.registerNode('HarnessApproval', DiamondNodeWidget)
 diagram.registerNode('default-diamond', DiamondNodeWidget)
 diagram.registerNode('Barrier', IconNode)
+diagram.registerNode(STATIC_SERVICE_GROUP_NAME, CIDependencyNode)
 
 export const CDPipelineStudioNew = diagram.render()
 export interface ExecutionGraphRefObj {
@@ -496,7 +498,6 @@ function ExecutionGraphRef<T extends StageElementConfig>(
   }
 
   const mouseEnterNodeListener = (event: any): void => {
-    debugger
     const eventTemp = event as DefaultNodeEvent
     eventTemp.stopPropagation()
     dynamicPopoverHandler?.hide()
@@ -519,7 +520,6 @@ function ExecutionGraphRef<T extends StageElementConfig>(
   }
 
   const mouseLeaveNodeListener = (event: any): void => {
-    debugger
     const eventTemp = event as DefaultNodeEvent
     eventTemp.stopPropagation()
   }
@@ -961,7 +961,9 @@ function ExecutionGraphRef<T extends StageElementConfig>(
   diagram.registerListeners(listerners)
 
   const stepsData = React.useMemo(() => {
-    const serviceDependencies: DependencyElement[] | undefined = get(stage, 'stage.spec.serviceDependencies', undefined)
+    const serviceDependencies: DependencyElement[] | undefined =
+      stage?.stage?.type === StageType.BUILD ? get(stage, 'stage.spec.serviceDependencies') : undefined
+
     return state?.isRollback
       ? getPipelineGraphData(stage?.stage?.spec?.execution?.rollbackSteps)
       : getPipelineGraphData(stage?.stage?.spec?.execution?.steps, serviceDependencies)

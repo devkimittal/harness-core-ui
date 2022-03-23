@@ -144,6 +144,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
               <GroupNode
                 key={data?.identifier}
                 fireEvent={fireEvent}
+                getNode={getNode}
                 className={classNames(css.graphNode, className)}
                 isSelected={selectedNode === data?.identifier}
                 isParallelNode={true}
@@ -220,6 +221,7 @@ const PipelineGraphNodeWithoutCollapse = React.forwardRef(
                   <GroupNode
                     {...data}
                     fireEvent={fireEvent}
+                    getNode={getNode}
                     className={classNames(css.graphNode, className)}
                     isSelected={selectedNode === currentNodeData?.identifier}
                     isParallelNode={true}

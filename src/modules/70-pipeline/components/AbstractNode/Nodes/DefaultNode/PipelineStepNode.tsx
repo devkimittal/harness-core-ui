@@ -135,7 +135,7 @@ function PipelineStepNode(props: any): JSX.Element {
         }}
         onMouseLeave={event => {
           event.stopPropagation()
-
+          setVisibilityOfAdd(false)
           props?.fireEvent({
             type: Event.MouseLeaveNode,
             target: event.target,
@@ -187,10 +187,10 @@ function PipelineStepNode(props: any): JSX.Element {
       </div>
       {props.name && (
         <Text
-          width={64}
+          width={125}
           font={{ size: 'normal', align: 'center' }}
           color={props.defaultSelected ? Color.GREY_900 : Color.GREY_600}
-          className={css.nameText}
+          className={css.stepNameText}
           padding={'small'}
           lineClamp={2}
         >

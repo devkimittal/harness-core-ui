@@ -17,7 +17,7 @@ import css from './DiamondNode.module.scss'
 
 export function DiamondNodeWidget(props: any): JSX.Element {
   const { getString } = useStrings()
-  const isSelected = props?.isSelected
+  const isSelected = props?.isSelected || props?.selectedNodeId === props?.id
   const [showAddLink, setShowAddLink] = React.useState(false)
 
   return (
@@ -74,7 +74,9 @@ export function DiamondNodeWidget(props: any): JSX.Element {
           </div> */}
         </div>
         <div className="execution-running-animation" />
-        {props.icon && <Icon size={28} inverse={isSelected} name={props.icon} style={{ color: 'white' }} />}
+        {props.icon && (
+          <Icon size={28} inverse={isSelected} name={props.icon} color={isSelected ? Color.WHITE : Color.PRIMARY_7} />
+        )}
         {props.isInComplete && <Icon className={css.inComplete} size={12} name={'warning-sign'} color="orange500" />}
         {props?.tertiaryIcon && (
           <Icon
@@ -126,7 +128,7 @@ export function DiamondNodeWidget(props: any): JSX.Element {
             color={isSelected ? Color.WHITE : Color.PRIMARY_7}
           />
         )}
-        {props.canDelete && (
+        {!props.readonly && (
           <Button
             className={cx(cssDefault.closeNode, css.diamondClose)}
             minimal

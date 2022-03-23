@@ -278,3 +278,12 @@
   background-color: var(--execution-pipeline-color-red) !important;
   border: solid 2px var(--execution-pipeline-color-dark-red) !important;
 }
+
+.stepNameText {
+  cursor: pointer;
+  line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: break-all;
+  height: 46px;
+  padding-left: 0 !important;
+}
