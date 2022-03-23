@@ -6,7 +6,8 @@
  */
 
 import React, { FC } from 'react'
-import { Color, Text } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { Clause } from 'services/cf'
 import FormatClause from '@cf/components/FormatClause/FormatClause'

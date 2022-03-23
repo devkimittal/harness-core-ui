@@ -7,8 +7,9 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Text, Container, Heading, Color, HarnessDocTooltip } from '@wings-software/uicore'
+import { Text, Container, Heading, HarnessDocTooltip } from '@wings-software/uicore'
 import { ProgressBar } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './BuildTests.module.scss'
 

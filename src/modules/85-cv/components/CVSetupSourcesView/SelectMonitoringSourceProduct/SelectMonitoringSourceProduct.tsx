@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { FormInput, Layout, Container, Text, Color, Card, CardBody } from '@wings-software/uicore'
+import { FormInput, Layout, Container, Text, Card, CardBody } from '@wings-software/uicore'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { StepLabelProps, StepLabel } from '../StepLabel/StepLabel'
 import { SetupSourceEmptyCardHeader } from '../SetupSourceCardHeader/SetupSourceCardHeader'

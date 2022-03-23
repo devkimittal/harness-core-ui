@@ -10,10 +10,8 @@ import { useParams, useHistory, Link } from 'react-router-dom'
 import cx from 'classnames'
 import {
   Card,
-  Color,
   Text,
   Icon,
-  FontVariation,
   PageBody,
   PageHeader,
   Button,
@@ -24,6 +22,7 @@ import {
   useConfirmationDialog
 } from '@wings-software/uicore'
 import { Intent } from '@blueprintjs/core'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useToaster } from '@common/components'
 import { Budget, useDeleteBudget } from 'services/ce'

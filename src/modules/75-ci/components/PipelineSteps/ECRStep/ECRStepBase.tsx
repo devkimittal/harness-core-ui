@@ -6,9 +6,10 @@
  */
 
 import React from 'react'
-import { Text, Formik, FormikForm, Accordion, Color, Container } from '@wings-software/uicore'
+import { Text, Formik, FormikForm, Accordion, Container } from '@wings-software/uicore'
 import type { FormikProps } from 'formik'
 import get from 'lodash/get'
+import { Color } from '@harness/design-system'
 import type { K8sDirectInfraYaml } from 'services/ci'
 import { Connectors } from '@connectors/constants'
 import type { StepFormikFowardRef } from '@pipeline/components/AbstractSteps/Step'

@@ -16,10 +16,10 @@ import {
   Button,
   Collapse,
   Text,
-  Utils,
-  Color
+  Utils
 } from '@wings-software/uicore'
 import type { FormikProps } from 'formik'
+import { Color } from '@harness/design-system'
 import type { IconName } from '@blueprintjs/core'
 import * as Yup from 'yup'
 import { useStrings } from 'framework/strings'

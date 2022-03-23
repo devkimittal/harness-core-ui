@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Button, Text, Color, StepProps, FormikForm, Formik, Container, Layout } from '@wings-software/uicore'
+import { Button, Text, StepProps, FormikForm, Formik, Container, Layout } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { Color } from '@harness/design-system'
 import type { SecretDTOV2 } from 'services/cd-ng'
 import { NameIdDescriptionTags } from '@common/components'
 import { StringUtils } from '@common/exports'

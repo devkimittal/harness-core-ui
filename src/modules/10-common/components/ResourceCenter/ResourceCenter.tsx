@@ -6,7 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Button, ButtonVariation, Color, FontVariation, Icon, Layout, Text } from '@wings-software/uicore'
+import { Button, ButtonVariation, Icon, Layout, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
+
 import { Drawer, Position } from '@blueprintjs/core'
 import cx from 'classnames'
 import { useStrings } from 'framework/strings'

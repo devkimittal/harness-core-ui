@@ -16,10 +16,10 @@ import {
   RadioButtonGroup,
   CodeBlock,
   Container,
-  Color,
   Layout,
   SelectOption
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import get from 'lodash/get'
 import cx from 'classnames'

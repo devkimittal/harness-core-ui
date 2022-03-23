@@ -6,7 +6,8 @@
  */
 
 import React, { FC } from 'react'
-import { FontVariation, Heading } from '@wings-software/uicore'
+import { Heading } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { Segment } from 'services/cf'
 import TargetSelect from './TargetSelect'

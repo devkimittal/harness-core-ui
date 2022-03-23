@@ -13,12 +13,12 @@ import {
   Text,
   StepProps,
   Container,
-  FontVariation,
   ButtonVariation,
   PageSpinner,
   ThumbnailSelect
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import {
   DelegateTypes,
   DelegateCardInterface,

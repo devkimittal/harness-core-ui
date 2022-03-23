@@ -11,8 +11,8 @@ import Highcharts from 'highcharts'
 import highchartsMore from 'highcharts/highcharts-more'
 import solidGauge from 'highcharts/modules/solid-gauge'
 import HighchartsReact from 'highcharts-react-official'
-import { Utils, Color } from '@wings-software/uicore'
-
+import { Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 interface GaugeChartProps {
   customChartOptions?: Highcharts.Options
 }

@@ -12,9 +12,7 @@ import {
   ExpandingSearchInput,
   Layout,
   Text,
-  FontVariation,
   Container,
-  Color,
   Popover,
   TableV2,
   useConfirmationDialog,
@@ -22,6 +20,7 @@ import {
 } from '@wings-software/uicore'
 import { Classes, Menu, MenuItem, Position, Intent } from '@blueprintjs/core'
 import type { CellProps, Renderer, Column } from 'react-table'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams, useHistory } from 'react-router-dom'
 import { Page } from '@common/exports'
 import { useFetchBudgetQuery, BudgetSummary } from 'services/ce/services'

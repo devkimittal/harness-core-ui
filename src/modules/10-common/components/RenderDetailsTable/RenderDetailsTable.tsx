@@ -7,7 +7,9 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Container, Color, Layout, Text, IconName, Icon, Tag, tagsType } from '@wings-software/uicore'
+import { Container, Layout, Text, IconName, Icon, Tag, tagsType } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+
 import { useStrings } from 'framework/strings'
 import css from './RenderDetailsTable.module.scss'
 

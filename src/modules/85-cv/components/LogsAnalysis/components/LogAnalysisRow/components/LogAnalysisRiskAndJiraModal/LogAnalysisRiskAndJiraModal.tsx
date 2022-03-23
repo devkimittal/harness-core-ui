@@ -6,8 +6,9 @@
  */
 
 import React, { useState, useCallback } from 'react'
-import { Container, Heading, Button, Text, Color } from '@wings-software/uicore'
+import { Container, Heading, Button, Text } from '@wings-software/uicore'
 import { Drawer } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import { useStrings } from 'framework/strings'

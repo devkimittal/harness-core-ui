@@ -10,8 +10,9 @@ import moment from 'moment'
 
 import { Position } from '@blueprintjs/core'
 import { DateRangePicker, DateRange, IDateRangeShortcut } from '@blueprintjs/datetime'
-import { Container, Color, Layout, Popover, Button, Text, PageSpinner } from '@wings-software/uicore'
+import { Container, Layout, Popover, Button, Text, PageSpinner } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import {
   GetActivitiesSummaryQueryParams,

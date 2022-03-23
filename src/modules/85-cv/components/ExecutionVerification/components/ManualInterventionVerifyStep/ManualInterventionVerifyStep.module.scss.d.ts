@@ -10,5 +10,6 @@ declare const styles: {
   readonly loading: string
   readonly manualInterventionTab: string
   readonly permissibleActions: string
+  readonly shadow: string
 }
 export default styles

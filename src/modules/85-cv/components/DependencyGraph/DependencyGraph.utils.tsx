@@ -79,6 +79,8 @@ export function formatNodes(nodes?: Node[], data?: Edge[]) {
     const secondaryColor = styles.getPropertyValue(getColorCode(Utils.getRealCSSColor(selectedColor?.secondary)))
 
     const LogoFactory = HarnessIcons[icon]
+    // eslint-disable-next-line
+    // @ts-ignore
     const Logo = LogoFactory()
 
     const ColoredLogo = replaceFill(Logo, primaryColor)

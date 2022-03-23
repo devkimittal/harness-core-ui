@@ -7,7 +7,6 @@
 
 import React from 'react'
 import {
-  Color,
   Container,
   Formik,
   FormikForm,
@@ -18,6 +17,7 @@ import {
   PageError
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import type { FormikProps } from 'formik'
 import { useParams } from 'react-router-dom'

@@ -11,5 +11,6 @@ export enum QueryType {
 }
 
 export type HealthSourceQueryTypeProps = {
+  value?: string
   onChange?: (item: QueryType) => void
 }

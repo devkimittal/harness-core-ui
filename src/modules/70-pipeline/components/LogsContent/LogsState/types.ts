@@ -6,7 +6,7 @@
  */
 
 import type { ReactNode } from 'react'
-import type { ExecutionNode, UnitProgress } from 'services/pipeline-ng'
+import type { ExecutionNode } from 'services/pipeline-ng'
 
 /**
  * different statues for loading of log data
@@ -161,6 +161,8 @@ export interface State {
   searchData: SearchData
 }
 
-export interface ProgressMapValue extends Pick<UnitProgress, 'startTime' | 'endTime'> {
+export interface ProgressMapValue {
   status: UnitLoadingStatus
+  startTime?: number
+  endTime?: number
 }

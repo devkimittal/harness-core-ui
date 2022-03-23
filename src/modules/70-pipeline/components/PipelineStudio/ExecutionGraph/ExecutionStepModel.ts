@@ -7,7 +7,8 @@
 
 import { get, isEmpty } from 'lodash-es'
 
-import { Color, Utils } from '@wings-software/uicore'
+import { Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { ExecutionPipelineNodeType } from '@pipeline/components/ExecutionStageDiagram/ExecutionPipelineModel'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import type { UseStringsReturn } from 'framework/strings'

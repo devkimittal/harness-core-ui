@@ -9,7 +9,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import {
   Container,
   Text,
-  Color,
   Layout,
   Formik,
   FormikForm,
@@ -21,10 +20,10 @@ import {
   ModalErrorHandler,
   ModalErrorHandlerBinding,
   PageSpinner,
-  FontVariation,
   useToaster,
   ButtonVariation
 } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import cx from 'classnames'
 import { debounce, defaultTo } from 'lodash-es'

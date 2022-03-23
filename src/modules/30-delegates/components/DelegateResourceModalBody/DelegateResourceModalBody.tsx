@@ -7,7 +7,8 @@
 
 import React, { useMemo } from 'react'
 import type { Column } from 'react-table'
-import { Color, Container, Layout, Text, Icon } from '@wings-software/uicore'
+import { Container, Layout, Text, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import ResourceHandlerTable from '@rbac/components/ResourceHandlerTable/ResourceHandlerTable'
 import { useGetDelegateGroupsV2, GetDelegatesStatusV2QueryParams, DelegateGroupDetails } from 'services/portal'
 import { PageSpinner } from '@common/components'

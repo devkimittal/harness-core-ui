@@ -20,8 +20,9 @@ import {
   getMonitoredServiceOptions
 } from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.utils'
 import { getSLIMetricOptions, getSLITypeOptions } from '@cv/pages/slos/components/CVCreateSLO/CVCreateSLO.constants'
+import type { MonitoredServiceDTO } from 'services/cv'
 import SLI from '../SLI'
-import { expectedHealthSourcesOptions, expectedMonitoredServiceOptions, mockedMonitoredServiceData } from './SLI.mock'
+import { expectedMonitoredServiceOptions, mockedMonitoredService, mockedMonitoredServiceData } from './SLI.mock'
 
 jest.mock('@cv/pages/slos/components/SLOTargetChart/SLOTargetChart', () => ({
   __esModule: true,
@@ -38,12 +39,7 @@ function WrapperComponent(props: { initialValues: any }): JSX.Element {
         {formikProps => {
           return (
             <FormikForm>
-              <SLI
-                formikProps={formikProps}
-                retryOnError={jest.fn()}
-                monitoredServicesLoading={false}
-                monitoredServicesData={{}}
-              >
+              <SLI formikProps={formikProps} retryOnError={jest.fn()}>
                 <></>
               </SLI>
             </FormikForm>
@@ -88,8 +84,8 @@ describe('Test SLI component', () => {
   })
 
   test('verify healthSourcesOptions method', async () => {
-    const actualHealthSources = getHealthSourceOptions(mockedMonitoredServiceData.data, 'Service_102_QA')
-    expect(actualHealthSources).toEqual(expectedHealthSourcesOptions)
+    const actualHealthSources = getHealthSourceOptions(mockedMonitoredService as MonitoredServiceDTO)
+    expect(actualHealthSources).toEqual([{ label: 'NR-1', value: 'NR1' }])
   })
 
   test('verify getSliTypeOptions method', async () => {

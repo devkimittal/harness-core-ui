@@ -17,10 +17,9 @@ import {
   Layout,
   MultiTypeInputType,
   Text,
-  Icon,
-  FontVariation,
-  Intent
+  Icon
 } from '@wings-software/uicore'
+import { Intent, FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import { FieldArray, FormikErrors, FormikProps, yupToFormErrors } from 'formik'
 import { v4 as uuid } from 'uuid'

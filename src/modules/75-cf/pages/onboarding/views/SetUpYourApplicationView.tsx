@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Container, Heading, Layout, Text, Color } from '@wings-software/uicore'
+import { Container, Heading, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { String, useStrings } from 'framework/strings'
 import type { ApiKey, FeatureFlagRequestRequestBody } from 'services/cf'
 import { LanguageSelection, PlatformEntry } from '@cf/components/LanguageSelection/LanguageSelection'

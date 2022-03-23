@@ -9,7 +9,6 @@ import React from 'react'
 import {
   Card,
   Text,
-  Color,
   Container,
   Layout,
   SparkChart,
@@ -20,7 +19,7 @@ import {
   ButtonSize,
   IconName
 } from '@wings-software/uicore'
-
+import { Color } from '@harness/design-system'
 import { Classes, Intent, Menu, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core'
 import { useParams, useHistory } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'

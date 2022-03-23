@@ -9,7 +9,6 @@ import React, { FC, useCallback, useEffect, useMemo } from 'react'
 import { get } from 'lodash-es'
 import {
   Container,
-  FontVariation,
   getMultiTypeFromValue,
   Heading,
   Layout,
@@ -17,6 +16,7 @@ import {
   RUNTIME_INPUT_VALUE,
   Text
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { Feature } from 'services/cf'
 import MultiTypeSelectorButton from '@common/components/MultiTypeSelectorButton/MultiTypeSelectorButton'

@@ -6,7 +6,8 @@
  */
 
 import React, { useCallback, useMemo, useState } from 'react'
-import { Layout, FormInput, Utils, Intent, useConfirmationDialog } from '@wings-software/uicore'
+import { Layout, FormInput, Utils, useConfirmationDialog } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { NameIdDescriptionTags } from '@common/components'
 import { useStrings } from 'framework/strings'
 import type { MonitoredServiceDTO } from 'services/cv'
@@ -60,6 +61,7 @@ export default function MonitoredServiceOverview(props: MonitoredServiceOverview
           <Layout.Horizontal spacing="large">
             <FormInput.Select
               name="type"
+              tooltipProps={{ dataTooltipId: 'monitoredServiceType' }}
               items={MonitoredServiceTypeOptions}
               label={getString('typeLabel')}
               value={
@@ -138,6 +140,7 @@ export default function MonitoredServiceOverview(props: MonitoredServiceOverview
           isIdentifierEditable: formikProps.values?.type === ChangeSourceCategoryName.INFRASTRUCTURE ? true : false,
           inputLabel: getString('cv.monitoredServices.monitoredServiceName')
         }}
+        tooltipProps={{ dataTooltipId: 'NameIdDescriptionTagsHealthSource' }}
       />
     </CardWithOuterTitle>
   )

@@ -6,8 +6,9 @@
  */
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { Color, StepWizard, useToaster } from '@wings-software/uicore'
+import { StepWizard, useToaster } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'
 
@@ -53,7 +54,7 @@ import type { Scope } from '@common/interfaces/SecretsInterface'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import { ArtifactActions } from '@common/constants/TrackingConstants'
 import type { DeploymentStageElementConfig, StageElementWrapper } from '@pipeline/utils/pipelineTypes'
-import { getDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
+import { getSelectedDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
 import StepNexusAuthentication from '@connectors/components/CreateConnector/NexusConnector/StepAuth/StepNexusAuthentication'
 import StepArtifactoryAuthentication from '@connectors/components/CreateConnector/ArtifactoryConnector/StepAuth/StepArtifactoryAuthentication'
 import { useFeatureFlags } from '@common/hooks/useFeatureFlag'
@@ -116,7 +117,7 @@ export default function ArtifactsSelection({
   const stepWizardTitle = getString('connectors.createNewConnector')
   const { NG_NEXUS_ARTIFACTORY } = useFeatureFlags()
   const { stage } = getStageFromPipeline<DeploymentStageElementConfig>(selectedStageId || '')
-  const deploymentType = getDeploymentType(stage, getStageFromPipeline, isPropagating)
+  const deploymentType = getSelectedDeploymentType(stage, getStageFromPipeline, isPropagating)
 
   useEffect(() => {
     if (isServerlessDeploymentType(deploymentType)) {

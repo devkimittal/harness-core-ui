@@ -10,17 +10,16 @@ import { useParams } from 'react-router-dom'
 import {
   Card,
   Container,
-  FontVariation,
   Heading,
   FormInput,
   Layout,
   Text,
-  Color,
   useToaster,
   SelectOption,
   Icon,
   ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import type { RadioButtonProps } from '@wings-software/uicore/dist/components/RadioButton/RadioButton'
 import { ResponseMonitoredServiceResponse, useGetSloMetrics } from 'services/cv'
 import { useStrings } from 'framework/strings'

@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
+import { isEmpty as _isEmpty, defaultTo as _defaultTo, uniq } from 'lodash-es'
 import type { FixedScheduleClient, GatewayDetails, Provider } from '@ce/components/COCreateGateway/models'
 import type { CcmMetaData } from 'services/ce/services'
 import type { HealthCheck, PortConfig, Service, ServiceDep } from 'services/lw'
@@ -193,5 +193,9 @@ export class Utils {
 
   static isUserAbortedRequest = (e: any) => {
     return e.message.includes('The user aborted a request')
+  }
+
+  static getAllCustomDomains = (serverNames: string[] = [], customDomains?: string[]): string[] => {
+    return uniq([...serverNames, ..._defaultTo(customDomains, [])])
   }
 }

@@ -12,13 +12,13 @@ import {
   Card,
   Text,
   Layout,
-  Color,
   ButtonVariation,
   Button,
-  FontVariation,
   ButtonSize,
   getErrorInfoFromErrorObject
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
+
 import { Page } from '@common/exports'
 import { useStrings } from 'framework/strings'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'

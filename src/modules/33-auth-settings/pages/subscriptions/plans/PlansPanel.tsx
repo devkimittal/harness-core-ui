@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Layout, Text, Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+import { Layout, Text } from '@wings-software/uicore'
 import cx from 'classnames'
 import { useStrings } from 'framework/strings'
 import type { FetchPlansQuery } from 'services/common/services'

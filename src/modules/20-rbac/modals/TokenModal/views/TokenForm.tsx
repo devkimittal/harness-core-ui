@@ -8,7 +8,6 @@
 import React, { useState } from 'react'
 import {
   Button,
-  Color,
   Container,
   Formik,
   FormikForm as Form,
@@ -20,6 +19,7 @@ import {
   Checkbox,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { omit } from 'lodash-es'

@@ -6,9 +6,10 @@
  */
 
 import React from 'react'
-import { Color, Icon, Layout, Text } from '@wings-software/uicore'
+import { Icon, Layout, Text } from '@wings-software/uicore'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 import css from './DashboardAPIErrorWidget.module.scss'

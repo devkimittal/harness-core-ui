@@ -6,7 +6,8 @@
  */
 
 import React, { ReactElement, useState } from 'react'
-import { TableV2, Text, Layout, Avatar, Icon, Container, Color, Popover } from '@wings-software/uicore'
+import { TableV2, Text, Layout, Avatar, Icon, Container, Popover } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { Column, Renderer, CellProps } from 'react-table'
 import { Link, useParams } from 'react-router-dom'
 import { PopoverInteractionKind, Position, Classes } from '@blueprintjs/core'

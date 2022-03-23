@@ -10,7 +10,6 @@ import { Link, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
 import {
   Button,
-  Color,
   FormInput,
   Formik,
   FormikForm,
@@ -20,6 +19,7 @@ import {
   Container,
   Text
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import routes from '@common/RouteDefinitions'
 import { useToaster } from '@common/components'
 import { useQueryParams } from '@common/hooks'

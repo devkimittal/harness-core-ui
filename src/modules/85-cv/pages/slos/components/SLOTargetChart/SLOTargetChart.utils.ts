@@ -8,7 +8,8 @@
 import moment from 'moment'
 import { minBy, maxBy } from 'lodash-es'
 import type Highcharts from 'highcharts'
-import { Color, Utils } from '@wings-software/uicore'
+import { Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { Point } from 'services/cv'
 
 const MILLISECONDS_PER_HOUR = 1000 * 60 * 60 * 4

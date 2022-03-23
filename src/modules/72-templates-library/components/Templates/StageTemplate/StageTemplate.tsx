@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Template, TemplateProps } from '@templates-library/components/AbstractTemplate/Template'
 import { TemplateType } from '@templates-library/utils/templatesUtils'
 import type { NGTemplateInfoConfig } from 'services/template-ng'

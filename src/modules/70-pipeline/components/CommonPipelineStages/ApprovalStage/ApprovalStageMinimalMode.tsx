@@ -8,7 +8,8 @@
 import React from 'react'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
-import { Button, Color, Container, FormikForm, Intent, Text } from '@wings-software/uicore'
+import { Button, Container, FormikForm, Text } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
 import {
   PipelineContextType,
   usePipelineContext

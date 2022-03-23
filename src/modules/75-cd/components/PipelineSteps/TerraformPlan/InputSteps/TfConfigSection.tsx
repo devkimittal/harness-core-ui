@@ -15,11 +15,11 @@ import {
   MultiTypeInputType,
   FormInput,
   Label,
-  Color,
   SelectOption,
   useToaster
 } from '@wings-software/uicore'
 import { connect } from 'formik'
+import { Color } from '@harness/design-system'
 import { useQueryParams } from '@common/hooks'
 import type { GitQueryParams } from '@common/interfaces/RouteInterfaces'
 import { useStrings } from 'framework/strings'

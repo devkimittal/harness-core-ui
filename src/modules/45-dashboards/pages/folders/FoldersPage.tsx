@@ -8,7 +8,6 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 import {
-  Color,
   Layout,
   Text,
   Container,
@@ -17,7 +16,6 @@ import {
   Heading,
   Icon,
   CardBody,
-  FontVariation,
   FormInput,
   Formik,
   FormikForm as Form,
@@ -27,7 +25,7 @@ import {
   TableV2
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
-
+import { FontVariation, Color } from '@harness/design-system'
 import { Select } from '@blueprintjs/select'
 
 import { Classes, Dialog, Menu } from '@blueprintjs/core'

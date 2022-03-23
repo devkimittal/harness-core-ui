@@ -10,7 +10,6 @@ import * as yup from 'yup'
 import {
   Button,
   Layout,
-  Color,
   Formik,
   FormikForm,
   FormInput,
@@ -22,6 +21,7 @@ import {
   shouldShowError
 } from '@wings-software/uicore'
 import { Divider } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import PasswordChecklist from '@common/components/PasswordChecklist/PasswordChecklist'
 import { PASSWORD_CHECKS_RGX, MIN_NUMBER_OF_CHARACTERS, MAX_NUMBER_OF_CHARACTERS } from '@common/constants/Utils'

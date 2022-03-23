@@ -9,7 +9,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MonacoDiffEditor } from 'react-monaco-editor'
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 
-import { Button, Container, Icon, Intent, Layout, Text, useConfirmationDialog } from '@wings-software/uicore'
+import { Button, Container, Icon, Layout, Text, useConfirmationDialog } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 import css from './GitDiffEditor.module.scss'

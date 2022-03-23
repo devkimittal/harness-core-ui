@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Text, Color, Container } from '@wings-software/uicore'
+import { Text, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { MonitoredServiceDTO } from 'services/cv'
 import { MonitoredServiceType } from '@cv/pages/monitored-service/components/Configurations/components/Service/components/MonitoredServiceOverview/MonitoredServiceOverview.constants'
 import css from './MonitoredServiceCategory.module.scss'

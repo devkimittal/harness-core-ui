@@ -14,10 +14,10 @@ import {
   PageError,
   NoDataCard,
   Layout,
-  Icon,
-  Color
+  Icon
 } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { useGetTimeSeriesMetricData } from 'services/cv'

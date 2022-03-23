@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Card, Color, Layout, Text } from '@wings-software/uicore'
+import { Card, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { ActiveServiceInstancesHeader } from '@cd/components/ServiceDetails/ActiveServiceInstances/ActiveServiceInstancesHeader'
 import { ActiveServiceInstancesContent } from '@cd/components/ServiceDetails/ActiveServiceInstances/ActiveServiceInstancesContent'

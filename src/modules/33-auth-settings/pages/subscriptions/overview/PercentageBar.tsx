@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container } from '@wings-software/uicore'
+import { Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import css from './PercentageBar.module.scss'
 
 interface PercentageBar {

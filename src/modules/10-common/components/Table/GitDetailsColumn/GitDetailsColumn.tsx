@@ -8,7 +8,8 @@
 import React from 'react'
 import type { CellProps, Renderer } from 'react-table'
 
-import { Color, Icon, Layout, Text } from '@wings-software/uicore'
+import { Icon, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { getRepoDetailsByIndentifier } from '@common/utils/gitSyncUtils'
 import { GitSyncStoreProvider, useGitSyncStore } from 'framework/GitRepoStore/GitSyncStoreContext'
 import type { EntityGitDetails } from 'services/pipeline-ng'

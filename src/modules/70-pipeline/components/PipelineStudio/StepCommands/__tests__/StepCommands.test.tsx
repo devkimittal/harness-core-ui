@@ -13,6 +13,7 @@ import { TestWrapper } from '@common/utils/testUtils'
 import { AbstractStepFactory } from '@pipeline/components/AbstractSteps/AbstractStepFactory'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { Step, StepProps } from '@pipeline/components/AbstractSteps/Step'
+import { StageType } from '@pipeline/utils/stageHelpers'
 
 import { StepCommandsWithRef } from '../StepCommands'
 
@@ -123,6 +124,68 @@ describe('<StepCommands /> tests', () => {
     )
 
     expect(queryByText('advancedTitle')).not.toBeInTheDocument()
+  })
+
+  test('should hide advanced tab for feature flag stage', async () => {
+    const { queryByText } = render(
+      <TestWrapper
+        path="/account/:accountId/:module/orgs/:orgIdentifier/projects/:projectIdentifier/pipelines/-1/pipeline-studio"
+        pathParams={{ accountId: 'dummy', orgIdentifier: 'dummy', projectIdentifier: 'dummy', module: 'cd' }}
+      >
+        <StepCommandsWithRef
+          step={{
+            identifier: 'testStep',
+            name: 'testStep',
+            type: 'Run',
+            spec: {
+              connectorRef: 'account.dockerdev',
+              image: 'maven:3-openjdk-8',
+              command: 'mvn clean compile war:war'
+            }
+          }}
+          allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+          onUpdate={jest.fn()}
+          stepsFactory={stepFactory}
+          isStepGroup={false}
+          isReadonly={false}
+          ref={{ current: null }}
+          stageType={StageType.FEATURE}
+        />
+      </TestWrapper>
+    )
+
+    expect(queryByText('advancedTitle')).not.toBeInTheDocument()
+  })
+
+  test('should show advanced tab for module and stage which are not feature flag', async () => {
+    const { queryByText } = render(
+      <TestWrapper
+        path="/account/:accountId/:module/orgs/:orgIdentifier/projects/:projectIdentifier/pipelines/-1/pipeline-studio"
+        pathParams={{ accountId: 'dummy', orgIdentifier: 'dummy', projectIdentifier: 'dummy', module: 'cd' }}
+      >
+        <StepCommandsWithRef
+          step={{
+            identifier: 'testStep',
+            name: 'testStep',
+            type: 'Run',
+            spec: {
+              connectorRef: 'account.dockerdev',
+              image: 'maven:3-openjdk-8',
+              command: 'mvn clean compile war:war'
+            }
+          }}
+          allowableTypes={[MultiTypeInputType.FIXED, MultiTypeInputType.RUNTIME, MultiTypeInputType.EXPRESSION]}
+          onUpdate={jest.fn()}
+          stepsFactory={stepFactory}
+          isStepGroup={false}
+          isReadonly={false}
+          ref={{ current: null }}
+          stageType={StageType.DEPLOY}
+        />
+      </TestWrapper>
+    )
+
+    expect(queryByText('advancedTitle')).toBeInTheDocument()
   })
 
   test('renders ok without tabs', async () => {

@@ -69,15 +69,26 @@ export default function PolicyInputSetStep(props: {
             allowedTypes={allowableTypes}
             skipRenderValueInExpressionLabel
             disabled={readonly}
+            disableTypeSelection={readonly}
             expressionRender={
               /* istanbul ignore next */ () => {
                 return (
-                  <MonacoTextField name={`${prefix}spec.policySpec.payload`} expressions={expressions} height={300} />
+                  <MonacoTextField
+                    name={`${prefix}spec.policySpec.payload`}
+                    expressions={expressions}
+                    height={300}
+                    disabled={readonly}
+                  />
                 )
               }
             }
           >
-            <MonacoTextField name={`${prefix}spec.policySpec.payload`} expressions={expressions} height={300} />
+            <MonacoTextField
+              name={`${prefix}spec.policySpec.payload`}
+              expressions={expressions}
+              height={300}
+              disabled={readonly}
+            />
           </MultiTypeFieldSelector>
         </div>
       )}

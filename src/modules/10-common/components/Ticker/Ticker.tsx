@@ -6,7 +6,8 @@
  */
 
 import * as React from 'react'
-import { Color, Icon } from '@wings-software/uicore'
+import { Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 
 import css from './Ticker.module.scss'

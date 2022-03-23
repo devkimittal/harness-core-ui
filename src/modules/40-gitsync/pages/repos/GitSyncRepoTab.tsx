@@ -12,7 +12,6 @@ import {
   Text,
   Container,
   Icon,
-  Color,
   Formik,
   FormikForm,
   FormInput,
@@ -26,6 +25,7 @@ import {
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import type { CellProps, Renderer, Column } from 'react-table'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'

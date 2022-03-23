@@ -5,17 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import {
-  Layout,
-  Select,
-  Color,
-  Heading,
-  Container,
-  Text,
-  SelectOption,
-  PageError,
-  FontVariation
-} from '@wings-software/uicore'
+import { Layout, Select, Heading, Container, Text, SelectOption, PageError } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { get, uniqWith, isEqual, orderBy } from 'lodash-es'
@@ -323,6 +314,10 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
   useEffect(() => {
     if (reportInfoData && testInfoData) {
       const uniqItems = uniqWith([...reportInfoData, ...testInfoData], isEqual)
+      if (uniqItems?.length < 1) {
+        return // no test results
+      }
+
       let uniqueStageIdOptions: SelectOption[] | any = [] // any includes additionally index for ordering below
       const uniqueStepIdOptionsFromStageKeyMap: { [key: string]: SelectOption[] | any } = {}
       const pipelineOrderedStagesMap: { [key: string]: number } = {}
@@ -343,6 +338,9 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
             label: `Step: ${step}`,
             value: step
           })
+          if (!uniqueStepIdOptionsFromStageKeyMap[stage].includes(AllStepsOption)) {
+            uniqueStepIdOptionsFromStageKeyMap[stage].unshift(AllStepsOption)
+          }
         } else if (stage && step) {
           uniqueStepIdOptionsFromStageKeyMap[stage] = [
             {
@@ -370,7 +368,6 @@ function BuildTests({ reportSummaryMock, testOverviewMock }: BuildTestsProps): R
         uniqueStepIdOptionsFromStageKeyMap[uniqueStageIdOptions[selectedStageIndex].value as string]
 
       if (selectedStepOptions.length > 1) {
-        selectedStepOptions.unshift(AllStepsOption)
         setSelectedStepId(selectedStepOptions[1])
       } else {
         setSelectedStepId(selectedStepOptions[0])

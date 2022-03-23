@@ -7,19 +7,8 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import {
-  Formik,
-  Page,
-  useToaster,
-  Container,
-  Layout,
-  Button,
-  Heading,
-  FontVariation,
-  Dialog,
-  Text,
-  Color
-} from '@wings-software/uicore'
+import { Formik, Page, useToaster, Container, Layout, Button, Heading, Dialog, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
 import routes from '@common/RouteDefinitions'

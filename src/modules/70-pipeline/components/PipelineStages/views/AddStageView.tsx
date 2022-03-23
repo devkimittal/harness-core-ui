@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { ButtonSize, ButtonVariation, Card, Icon, IconName, Layout, Heading, Color } from '@wings-software/uicore'
+import { ButtonSize, ButtonVariation, Card, Icon, IconName, Layout, Heading } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { ComingSoonIcon } from '@common/components/ComingSoonIcon/ComingSoonIcon'
 import { useTelemetry } from '@common/hooks/useTelemetry'

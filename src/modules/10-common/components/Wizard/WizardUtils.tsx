@@ -6,7 +6,8 @@
  */
 
 import React, { RefObject, SetStateAction, Dispatch } from 'react'
-import { Color, Icon, IconName, PageSpinner } from '@wings-software/uicore'
+import { Icon, IconName, PageSpinner } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { parse } from 'yaml'
 import type { FormikProps, FormikErrors } from 'formik'

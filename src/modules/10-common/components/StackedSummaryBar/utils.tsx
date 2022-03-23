@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, Icon, Text } from '@wings-software/uicore'
+import { Container, Icon, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { String } from 'framework/strings'
 
 export const handleZeroOrInfinityTrend = (trend: string | undefined, intentColor: Color): JSX.Element => {

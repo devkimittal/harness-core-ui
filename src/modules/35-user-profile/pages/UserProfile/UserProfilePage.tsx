@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Text, Layout, Avatar, Color, Button, ButtonVariation } from '@wings-software/uicore'
+import { Text, Layout, Avatar, Button, ButtonVariation } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useChangePassword } from '@user-profile/modals/useChangePassword/useChangePassword'
 import { useUserProfile } from '@user-profile/modals/UserProfile/useUserProfile'
 import { useStrings } from 'framework/strings'

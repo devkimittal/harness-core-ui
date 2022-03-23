@@ -7,7 +7,8 @@
 
 import React, { ReactElement } from 'react'
 import { Drawer, IDrawerProps } from '@blueprintjs/core'
-import { Avatar, Card, Color, Container, FontVariation, Layout, TableV2, Text } from '@harness/uicore'
+import { Avatar, Card, Container, Layout, TableV2, Text } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import type { Column, Renderer, CellProps } from 'react-table'
 import { useStrings } from 'framework/strings'
 import type { AuditEventDTO } from 'services/audit'

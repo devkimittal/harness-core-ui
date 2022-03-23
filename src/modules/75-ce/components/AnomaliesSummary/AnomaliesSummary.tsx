@@ -6,7 +6,8 @@
  */
 
 import React, { useMemo } from 'react'
-import { Container, Layout, Text, Color, Card, FontVariation } from '@wings-software/uicore'
+import { Container, Layout, Text, Card } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import {
   HorizontalLayout,

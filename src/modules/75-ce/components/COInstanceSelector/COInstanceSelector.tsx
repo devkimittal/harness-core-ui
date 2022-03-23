@@ -11,7 +11,6 @@ import type { CellProps } from 'react-table'
 import { isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
 import {
   Text,
-  Color,
   Container,
   ExpandingSearchInput,
   Layout,
@@ -22,6 +21,7 @@ import {
   Select,
   SelectOption
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { GatewayDetails, InstanceDetails } from '@ce/components/COCreateGateway/models'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import { ResourceGroup, useAllResourceGroups, useAllZones } from 'services/lw'

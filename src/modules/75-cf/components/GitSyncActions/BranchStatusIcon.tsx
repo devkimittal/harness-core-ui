@@ -6,8 +6,8 @@
  */
 
 import React, { ReactElement } from 'react'
-import { Text, Color, Container, Icon, Utils } from '@wings-software/uicore'
-
+import { Text, Container, Icon, Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './GitSyncActions.module.scss'
 

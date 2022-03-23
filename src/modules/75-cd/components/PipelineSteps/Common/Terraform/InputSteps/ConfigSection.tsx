@@ -16,11 +16,11 @@ import {
   MultiTypeInputType,
   FormInput,
   Label,
-  Color,
   useToaster,
   SelectOption
 } from '@wings-software/uicore'
 import { connect, FormikContext } from 'formik'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useVariablesExpression } from '@pipeline/components/PipelineStudio/PiplineHooks/useVariablesExpression'
 import { useQueryParams } from '@common/hooks'

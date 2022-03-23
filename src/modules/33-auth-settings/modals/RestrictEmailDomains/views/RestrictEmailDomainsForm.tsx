@@ -11,7 +11,6 @@ import { useParams } from 'react-router-dom'
 import {
   Layout,
   Text,
-  Color,
   Formik,
   FormikForm,
   FormInput,
@@ -20,6 +19,7 @@ import {
   ModalErrorHandlerBinding,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useToaster } from '@common/components'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import { useUpdateWhitelistedDomains } from 'services/cd-ng'

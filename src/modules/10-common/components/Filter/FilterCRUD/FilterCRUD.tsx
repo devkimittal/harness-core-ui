@@ -11,7 +11,6 @@ import cx from 'classnames'
 import { isEmpty, omitBy, truncate } from 'lodash-es'
 import {
   Button,
-  Color,
   Formik,
   FormInput,
   Icon,
@@ -23,6 +22,7 @@ import {
   ButtonVariation,
   useToaster
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import type { FormikProps, FormikErrors } from 'formik'
 import { Menu, Classes, Position, PopoverInteractionKind, Dialog, IDialogProps } from '@blueprintjs/core'

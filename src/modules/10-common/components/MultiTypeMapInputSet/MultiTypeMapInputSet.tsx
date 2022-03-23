@@ -11,15 +11,14 @@ import cx from 'classnames'
 import {
   Text,
   TextInput,
-  Intent,
   MultiTextInput,
   Button,
   getMultiTypeFromValue,
   MultiTypeInputType,
   MultiTextInputProps,
-  FontVariation,
   RUNTIME_INPUT_VALUE
 } from '@wings-software/uicore'
+import { Intent, FontVariation } from '@harness/design-system'
 import { connect, FormikContext } from 'formik'
 import { get, isEmpty } from 'lodash-es'
 import { ConfigureOptions, ConfigureOptionsProps } from '@common/components/ConfigureOptions/ConfigureOptions'

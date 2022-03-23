@@ -8,7 +8,6 @@
 import {
   Button,
   ButtonVariation,
-  Color,
   Formik,
   FormInput,
   getMultiTypeFromValue,
@@ -20,6 +19,7 @@ import {
   Text
 } from '@wings-software/uicore'
 import React from 'react'
+import { Color } from '@harness/design-system'
 import { unset, map, defaultTo } from 'lodash-es'
 import cx from 'classnames'
 import * as Yup from 'yup'

@@ -12,16 +12,25 @@ import { tooltipDictionary, TooltipEditor } from '@wings-software/ng-tooltip'
 interface NGTooltipEditorPortalInterface {
   onEditorClose: () => void
   showTooltipEditor: boolean
+  setPreviewDatasetFromLocalStorage: () => void
 }
 
-export const NGTooltipEditorPortal = ({ onEditorClose, showTooltipEditor }: NGTooltipEditorPortalInterface) => {
+export const NGTooltipEditorPortal = ({
+  onEditorClose,
+  showTooltipEditor,
+  setPreviewDatasetFromLocalStorage
+}: NGTooltipEditorPortalInterface) => {
   if (!showTooltipEditor) {
     return null
   }
 
   const ngTooltipEditorPortalRoot = document.getElementById('ngTooltipEditorRootParent')
   return ReactDOM.createPortal(
-    <TooltipEditor onClose={onEditorClose} tooltipDictionary={tooltipDictionary} />,
+    <TooltipEditor
+      onClose={onEditorClose}
+      tooltipDictionary={tooltipDictionary}
+      setPreviewDatasetFromLocalStorage={setPreviewDatasetFromLocalStorage}
+    />,
     ngTooltipEditorPortalRoot!
   )
 }

@@ -7,18 +7,9 @@
 
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Layout,
-  Button,
-  Formik,
-  FormInput,
-  Text,
-  StepProps,
-  Color,
-  FontVariation,
-  ButtonVariation
-} from '@wings-software/uicore'
+import { Layout, Button, Formik, FormInput, Text, StepProps, ButtonVariation } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { Color, FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { DelegateTypes, setupAWSFormData } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'

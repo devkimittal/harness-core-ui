@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Color, Container, Layout, Text, Icon } from '@wings-software/uicore'
+import { Container, Layout, Text, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { CellProps, Renderer } from 'react-table'
 import ResourceHandlerTable from '@rbac/components/ResourceHandlerTable/ResourceHandlerTable'
 import { useListSecretsV2, SecretDTOV2, SecretTextSpecDTO } from 'services/cd-ng'

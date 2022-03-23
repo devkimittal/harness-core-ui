@@ -12,15 +12,14 @@ import {
   Button,
   Popover,
   Avatar,
-  Color,
   Icon,
   ButtonVariation,
   useConfirmationDialog,
   useToaster,
   Page,
-  TableV2,
-  FontVariation
+  TableV2
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import type { CellProps, Renderer, Column } from 'react-table'
 import { Classes, Position, Menu, Intent, PopoverInteractionKind, MenuItem } from '@blueprintjs/core'
 import { useHistory, useParams } from 'react-router-dom'

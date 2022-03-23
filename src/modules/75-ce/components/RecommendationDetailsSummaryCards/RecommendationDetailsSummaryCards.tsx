@@ -5,7 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Card, Layout, Text, FontVariation, Color, Icon, Container } from '@wings-software/uicore'
+import { Card, Layout, Text, Icon, Container } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import React from 'react'
 import cx from 'classnames'
 import { useStrings } from 'framework/strings'

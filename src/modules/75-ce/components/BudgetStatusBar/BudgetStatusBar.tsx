@@ -6,8 +6,9 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Layout, Text, FontVariation, Container, Color } from '@wings-software/uicore'
+import { Layout, Text, Container } from '@wings-software/uicore'
 import cx from 'classnames'
+import { FontVariation, Color } from '@harness/design-system'
 import type { BudgetSummary } from 'services/ce/services'
 import { getAllBudgetCostInfo, getAllBudgetCostInfoReturnType, AlertStatus } from '@ce/utils/budgetUtils'
 import { useStrings } from 'framework/strings'

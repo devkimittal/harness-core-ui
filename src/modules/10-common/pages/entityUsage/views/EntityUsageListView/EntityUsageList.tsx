@@ -7,7 +7,8 @@
 
 import React, { useMemo } from 'react'
 import type { Column, Renderer, CellProps } from 'react-table'
-import { Text, Color, Layout, Icon, TableV2 } from '@wings-software/uicore'
+import { Text, Layout, Icon, TableV2 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { EntitySetupUsageDTO, ResponsePageEntitySetupUsageDTO } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'
 import ResourceDetailFactory from '@common/factories/ResourceDetailFactory'

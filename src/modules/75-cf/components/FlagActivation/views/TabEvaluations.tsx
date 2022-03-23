@@ -6,9 +6,10 @@
  */
 
 import React, { useMemo } from 'react'
-import { Color, Container, Icon, Layout, Text, PageError, NoDataCard } from '@wings-software/uicore'
+import { Container, Icon, Layout, Text, PageError, NoDataCard } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { clone } from 'lodash-es'
 import * as Moment from 'moment'
 import { extendMoment } from 'moment-range'

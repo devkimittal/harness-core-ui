@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Color, Text } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
 import type { CellProps } from 'react-table'
+import { Color } from '@harness/design-system'
 import type { InstanceDetails } from '@ce/components/COCreateGateway/models'
 
 export const TableCell = (tableProps: CellProps<InstanceDetails>): JSX.Element => {

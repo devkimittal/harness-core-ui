@@ -6,7 +6,7 @@
  */
 
 import moment from 'moment'
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { EventData } from '@cv/components/ActivitiesTimelineView/ActivitiesTimelineView'
 import type { ChangeEventMetadata, ChangeEventDTO } from 'services/cv'
 import type { UseStringsReturn } from 'framework/strings'

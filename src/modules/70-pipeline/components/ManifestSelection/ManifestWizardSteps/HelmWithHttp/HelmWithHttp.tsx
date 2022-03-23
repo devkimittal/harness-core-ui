@@ -16,11 +16,11 @@ import {
   getMultiTypeFromValue,
   MultiTypeInputType,
   Text,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import { Form } from 'formik'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import { get, isEmpty } from 'lodash-es'
 import { v4 as nameSpace, v5 as uuid } from 'uuid'

@@ -15,10 +15,10 @@ import {
   StepProps,
   Container,
   SelectOption,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import { setupNexusFormData } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'
 import type { ConnectorConfigDTO, ConnectorRequestBody, ConnectorInfoDTO } from 'services/cd-ng'

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useParams, NavLink } from 'react-router-dom'
-import { Container, Text, FlexExpander, FontVariation } from '@wings-software/uicore'
+import { Container, Text, FlexExpander } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { delegateTypeToIcon } from '@common/utils/delegateUtils'
 import { TagsViewer } from '@common/components/TagsViewer/TagsViewer'
 import routes from '@common/RouteDefinitions'

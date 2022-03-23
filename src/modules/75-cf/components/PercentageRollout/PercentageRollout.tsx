@@ -6,7 +6,8 @@
  */
 
 import React, { CSSProperties, FC, useMemo } from 'react'
-import { FontVariation, FormInput, Layout, SelectOption, Text } from '@wings-software/uicore'
+import { FormInput, Layout, SelectOption, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { Segment, Variation } from 'services/cf'
 import { CFVariationColors } from '@cf/constants'

@@ -8,7 +8,6 @@
 import React, { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
-  Color,
   Container,
   Icon,
   Pagination,
@@ -17,9 +16,9 @@ import {
   NoDataCard,
   Layout,
   PageError,
-  Card,
-  FontVariation
+  Card
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useGetAllLogsClusterData, useGetAllLogsData } from 'services/cv'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'

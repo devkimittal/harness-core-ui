@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TemplateTags renders correctly 1`] = `
+<div>
+  <div
+    class="StyledProps--font StyledProps--main container"
+  >
+    <div
+      class="StyledProps--font StyledProps--main"
+    >
+      <div
+        class="Layout--horizontal Layout--layout-spacing-xsmall StyledProps--main tagsContainer"
+      >
+        <span
+          class="Tag--main"
+        >
+          <span
+            class="bp3-tag tag"
+            style="max-width: 120px;"
+          >
+            <span
+              class="bp3-text-overflow-ellipsis bp3-fill"
+            >
+              firstTagKey:tag_1
+            </span>
+          </span>
+        </span>
+        <span
+          class="Tag--main"
+        >
+          <span
+            class="bp3-tag tag"
+            style="max-width: 120px;"
+          >
+            <span
+              class="bp3-text-overflow-ellipsis bp3-fill"
+            >
+              secondTagKey:tag_2
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

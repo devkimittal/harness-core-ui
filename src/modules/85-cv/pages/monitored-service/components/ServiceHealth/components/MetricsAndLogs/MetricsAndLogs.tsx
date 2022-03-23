@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Layout, Heading, Card, NoDataCard, FontVariation } from '@wings-software/uicore'
+import { Container, Layout, Heading, Card, NoDataCard } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import noServiceAvailableImage from '@cv/assets/noServiceAvailable.png'
 import { useStrings } from 'framework/strings'
 import LogAnalysis from '@cv/components/LogsAnalysis/LogAnalysis'

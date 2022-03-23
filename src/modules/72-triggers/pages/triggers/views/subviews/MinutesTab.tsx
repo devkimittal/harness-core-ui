@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { FormInput, Text, Color, Layout } from '@wings-software/uicore'
+import { FormInput, Text, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import ExpressionBreakdown, { ActiveInputs } from './ExpressionBreakdown'
 import Expression from './Expression'

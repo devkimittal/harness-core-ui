@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import { isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
 import {
   Button,
-  Color,
   Container,
   ExpandingSearchInput,
   Icon,
@@ -24,6 +23,7 @@ import {
 } from '@wings-software/uicore'
 import type { CellProps } from 'react-table'
 import type { SelectOption } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import { Region, useAllRegions, ContainerServiceServiceMinimal, useAllResourcesOfAccount, Resource } from 'services/lw'
 import { useStrings } from 'framework/strings'

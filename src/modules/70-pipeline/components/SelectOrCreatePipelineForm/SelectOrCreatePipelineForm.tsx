@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Text, Layout, Formik, FormikForm as Form, Button, Color, FormInput } from '@wings-software/uicore'
+import { Text, Layout, Formik, FormikForm as Form, Button, FormInput } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useStrings } from 'framework/strings'
 import PipelineSelect from '@pipeline/components/PipelineSelect/PipelineSelect'

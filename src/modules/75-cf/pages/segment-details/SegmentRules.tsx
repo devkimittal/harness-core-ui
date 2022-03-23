@@ -12,7 +12,6 @@ import {
   AvatarGroup,
   Button,
   Card,
-  Color,
   Container,
   Icon,
   Layout,
@@ -25,6 +24,7 @@ import {
   TextInput
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import { isEqual, omit } from 'lodash-es'
 import { Dialog, Divider, Spinner } from '@blueprintjs/core'
 import { useToaster } from '@common/exports'

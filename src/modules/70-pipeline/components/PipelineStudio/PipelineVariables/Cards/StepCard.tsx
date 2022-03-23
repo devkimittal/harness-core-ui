@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Color, FontVariation, MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
 import cx from 'classnames'
+import { FontVariation, Color } from '@harness/design-system'
 import { defaultTo } from 'lodash-es'
 import type { StepElementConfig } from 'services/cd-ng'
 import { StepWidget } from '@pipeline/components/AbstractSteps/StepWidget'

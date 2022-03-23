@@ -7,7 +7,8 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Color, Container, FormInput, Layout, Text, Utils } from '@wings-software/uicore'
+import { Container, FormInput, Layout, Text, Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import CardWithOuterTitle from '@cv/pages/health-source/common/CardWithOuterTitle/CardWithOuterTitle'
 import { HealthSoureSupportedConnectorTypes } from '@cv/pages/health-source/connectors/MonitoredServiceConnector.constants'

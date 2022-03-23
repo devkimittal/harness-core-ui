@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Text, Color } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { RiskValues, getRiskColorValue } from '@cv/utils/CommonUtils'
 import { useStrings } from 'framework/strings'
 import type { ColumnChartPopoverContentProps } from './ColumnChartPopoverContent.types'

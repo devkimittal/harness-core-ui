@@ -10,7 +10,8 @@ import ReactTimeago from 'react-timeago'
 import { useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 import cx from 'classnames'
-import { Card, Color, Icon, IconName, Layout, Text, useToaster } from '@wings-software/uicore'
+import { Card, Icon, IconName, Layout, Text, useToaster } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { GitSyncErrorDTO, listGitToHarnessErrorsForCommitPromise } from 'services/cd-ng'
 import {
   GitSyncErrorMessageItem,

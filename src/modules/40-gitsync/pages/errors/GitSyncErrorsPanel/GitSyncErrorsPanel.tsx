@@ -18,11 +18,10 @@ import {
   PillToggle,
   PillToggleProps,
   Text,
-  Icon,
-  FontVariation,
-  Color
+  Icon
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color, FontVariation } from '@harness/design-system'
 import {
   GitErrorExperienceSubTab,
   GitErrorExperienceTab,

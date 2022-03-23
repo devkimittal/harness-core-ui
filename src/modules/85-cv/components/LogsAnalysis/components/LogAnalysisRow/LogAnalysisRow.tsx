@@ -6,8 +6,9 @@
  */
 
 import React, { useMemo, useCallback, useState, useRef } from 'react'
-import { Container, Text, Color } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import { useParams } from 'react-router-dom'

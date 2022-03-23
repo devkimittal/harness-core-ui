@@ -11,7 +11,6 @@ import * as yup from 'yup'
 import {
   Layout,
   Heading,
-  Color,
   Formik,
   FormikForm,
   Container,
@@ -26,9 +25,9 @@ import {
   ThumbnailSelect,
   Label,
   getErrorInfoFromErrorObject,
-  FontVariation,
   Page
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { defaultTo } from 'lodash-es'
 import type { ToasterProps } from '@wings-software/uicore/dist/hooks/useToaster/useToaster'
 import { useStrings } from 'framework/strings'

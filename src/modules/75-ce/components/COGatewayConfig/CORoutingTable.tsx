@@ -181,6 +181,7 @@ const CORoutingTable: React.FC<CORoutingTableProps> = props => {
     <div className={css.portConfigTable}>
       <Formik
         initialValues={{ routingTableData: getInitialData() }}
+        enableReinitialize={true}
         onSubmit={values => {
           console.log(values) // eslint-disable-line
         }}

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, MultiTypeInputType } from '@wings-software/uicore'
+import { Container, MultiTypeInputType } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { debounce, isEmpty, isEqual, set } from 'lodash-es'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'
 import {

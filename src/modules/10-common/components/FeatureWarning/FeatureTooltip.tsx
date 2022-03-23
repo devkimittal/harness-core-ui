@@ -6,7 +6,8 @@
  */
 
 import React, { ReactElement } from 'react'
-import { Color, FontVariation, Layout, Text, ButtonVariation } from '@harness/uicore'
+import { Layout, Text, ButtonVariation } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { capitalize } from 'lodash-es'
 import type { IconName } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'

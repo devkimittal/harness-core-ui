@@ -14,9 +14,9 @@ import {
   MultiTypeInputType,
   FormikForm,
   Accordion,
-  Color,
   Container
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import get from 'lodash/get'
 import type { K8sDirectInfraYaml } from 'services/ci'

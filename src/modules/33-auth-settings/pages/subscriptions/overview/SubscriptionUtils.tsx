@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { capitalize } from 'lodash-es'
-import { Color, Text, Layout, Icon } from '@wings-software/uicore'
+import { Text, Layout, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { StringsMap } from 'stringTypes'
 import { useStrings } from 'framework/strings'
 import { Editions, ModuleLicenseType, CD_LICENSE_TYPE } from '@common/constants/SubscriptionTypes'

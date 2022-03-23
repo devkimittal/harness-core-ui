@@ -7,7 +7,6 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import {
-  Color,
   Container,
   Text,
   Pagination,
@@ -19,12 +18,12 @@ import {
   Layout,
   Button,
   ButtonVariation,
-  FontVariation,
   MultiSelectDropDown,
   MultiSelectOption,
   Icon
 } from '@wings-software/uicore'
 import { isEqual } from 'lodash-es'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import { useQueryParams } from '@common/hooks'

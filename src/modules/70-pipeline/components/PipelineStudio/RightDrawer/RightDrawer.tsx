@@ -161,6 +161,9 @@ const processNodeImpl = (
     if (item.delegateSelectors && item.tab === TabTypes.Advanced) {
       set(node, 'spec.delegateSelectors', item.delegateSelectors)
     }
+    if ((item as StepElementConfig)?.spec?.commandOptions && item.tab !== TabTypes.Advanced) {
+      set(node, 'spec.commandOptions', (item as StepElementConfig)?.spec?.commandOptions)
+    }
 
     // Delete values if they were already added and now removed
     if (node.timeout && !(item as StepElementConfig).timeout && item.tab !== TabTypes.Advanced) delete node.timeout
@@ -175,6 +178,16 @@ const processNodeImpl = (
     ) {
       delete node.spec.delegateSelectors
     }
+    if (
+      node.spec?.commandOptions &&
+      (!(item as StepElementConfig)?.spec?.commandOptions ||
+        (item as StepElementConfig)?.spec?.commandOptions?.length === 0) &&
+      item.tab !== TabTypes.Advanced
+    ) {
+      delete (item as StepElementConfig)?.spec?.commandOptions
+      delete node.spec.commandOptions
+    }
+
     if (item.template) {
       node.template = item.template
     }
@@ -216,10 +229,21 @@ const updateWithNodeIdentifier = async (
     data?.stepConfig?.onUpdate?.(processNode)
   } else if (drawerType === DrawerTypes.ProvisionerStepConfig && provisioner) {
     const processingNodeIdentifier = data?.stepConfig?.node?.identifier
-    updateStepWithinStage(provisioner, processingNodeIdentifier, processNode)
-
-    if (selectedStage?.stage) {
-      await updateStage(selectedStage.stage)
+    const stageData = produce(selectedStage, draft => {
+      const provisionerInternal = (draft?.stage as DeploymentStageElementConfig)?.spec?.infrastructure
+        ?.infrastructureDefinition?.provisioner
+      if (provisionerInternal) {
+        updateStepWithinStage(provisionerInternal, processingNodeIdentifier, processNode)
+      }
+    })
+    // update view data before updating pipeline because its async
+    updatePipelineView(
+      produce(pipelineView, draft => {
+        set(draft, 'drawerData.data.stepConfig.node', processNode)
+      })
+    )
+    if (stageData?.stage) {
+      await updateStage(stageData.stage)
     }
     data?.stepConfig?.onUpdate?.(processNode)
   }
@@ -854,7 +878,6 @@ export function RightDrawer(): React.ReactElement {
       )}
       {type === DrawerTypes.ProvisionerStepConfig && data?.stepConfig?.node && (
         <StepCommands
-          key={`step-form-${data.stepConfig.node.identifier}`}
           step={data.stepConfig.node as StepElementConfig}
           ref={formikRef}
           isReadonly={isReadonly}

@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Card, Color, Layout, Text, Icon, Popover, Container } from '@wings-software/uicore'
+import { Card, Layout, Text, Icon, Popover, Container } from '@wings-software/uicore'
 import { Position, PopoverInteractionKind, Classes } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import PercentageBar from './PercentageBar'
 import css from './SubscriptionUsageCard.module.scss'

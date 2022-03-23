@@ -7,8 +7,9 @@
 
 import React, { FC, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { Button, ButtonVariation, FontVariation, Heading, PageError, SelectOption } from '@wings-software/uicore'
+import { Button, ButtonVariation, Heading, PageError, SelectOption } from '@wings-software/uicore'
 import { FieldArray } from 'formik'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useGetAllTargetAttributes, Clause, Segment } from 'services/cf'
 import { ContainerSpinner } from '@common/components/ContainerSpinner/ContainerSpinner'

@@ -15,6 +15,8 @@
 
   .header {
     padding: var(--spacing-large);
+    padding-bottom: var(--spacing-medium);
+    padding-top: var(--spacing-medium);
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 128px;

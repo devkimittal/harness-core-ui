@@ -197,3 +197,5 @@ artifactPaths: Artifact Paths
 serviceList:
   noIdentifier: Selected service does not have any identifier associated with it.
 artifactRepoTooltip: Enter the name of the repository where the artifact source is located.
+serverlessDeployCommandOptions: Serverless Deploy Command Options
+serverlessCommandFlagOperations: serverless command flag operations

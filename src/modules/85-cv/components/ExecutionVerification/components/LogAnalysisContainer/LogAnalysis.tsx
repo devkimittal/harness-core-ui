@@ -6,8 +6,9 @@
  */
 
 import React, { useCallback, useEffect, useMemo } from 'react'
-import { Color, Container, Icon, Pagination, Select, Text, NoDataCard } from '@wings-software/uicore'
+import { Container, Icon, Pagination, Select, Text, NoDataCard } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { VerificationType } from '@cv/components/HealthSourceDropDown/HealthSourceDropDown.constants'
 import { useGetHealthSources } from 'services/cv'

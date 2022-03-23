@@ -97,6 +97,7 @@ export default function BasePolicyStep(props: {
             allowedTypes={allowableTypes}
             skipRenderValueInExpressionLabel
             disabled={readonly}
+            disableTypeSelection={readonly}
             expressionRender={
               /* istanbul ignore next */ () => {
                 return (

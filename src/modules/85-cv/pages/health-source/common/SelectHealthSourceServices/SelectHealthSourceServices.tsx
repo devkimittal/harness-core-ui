@@ -22,11 +22,13 @@ export default function SelectHealthSourceServices({
   hideSLIAndHealthScore
 }: SelectHealthSourceServicesProps): JSX.Element {
   const { getString } = useStrings()
-  const { continuousVerification, healthScore, serviceInstance } = values
+  const { continuousVerification, healthScore, serviceInstance, riskCategory } = values
   return (
     <Container className={css.main}>
       <Container className={css.checkBoxGroup}>
-        <Text className={css.groupLabel}>{getString('cv.monitoredServices.assignLabel')}</Text>
+        <Text tooltipProps={{ dataTooltipId: 'assignLabel' }} className={css.groupLabel}>
+          {getString('cv.monitoredServices.assignLabel')}
+        </Text>
 
         {!hideCV ? (
           <FormInput.CheckBox
@@ -48,6 +50,7 @@ export default function SelectHealthSourceServices({
           labelNamesResponse={labelNamesResponse}
           continuousVerificationEnabled={continuousVerification && !hideServiceIdentifier}
           serviceInstance={serviceInstance}
+          riskCategory={riskCategory}
         />
       )}
     </Container>

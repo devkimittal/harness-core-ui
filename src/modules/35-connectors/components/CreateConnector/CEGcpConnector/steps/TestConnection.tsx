@@ -12,17 +12,18 @@ import {
   Layout,
   StepProps,
   StepsProgress,
-  Intent,
   Heading,
   ModalErrorHandler,
   ModalErrorHandlerBinding
 } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ConnectorInfoDTO } from 'services/cd-ng'
 import { useGetTestConnectionResult } from 'services/cd-ng'
 import { useTelemetry } from '@common/hooks/useTelemetry'
-import { CE_GCP_CONNECTOR_CREATION_EVENTS } from '@connectors/trackingConstants'
+import { CCM_CONNECTOR_SAVE_EVENT, CE_GCP_CONNECTOR_CREATION_EVENTS } from '@connectors/trackingConstants'
 import { useStepLoadTelemetry } from '@connectors/common/useTrackStepLoad/useStepLoadTelemetry'
+import { Connectors } from '@connectors/constants'
 import css from '../CreateCeGcpConnector.module.scss'
 
 enum Status {
@@ -98,7 +99,7 @@ const TestConnection: React.FC<TestConnectionProps> = props => {
         text={getString('finish')}
         className={css.submitBtn}
         onClick={() => {
-          trackEvent(CE_GCP_CONNECTOR_CREATION_EVENTS.CONNECTOR_FINISH_CLICK, {})
+          trackEvent(CCM_CONNECTOR_SAVE_EVENT, { type: Connectors.CE_GCP })
           props.onClose?.()
         }}
       />

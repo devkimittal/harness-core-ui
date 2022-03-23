@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Text, Color, Container, Layout, Icon } from '@wings-software/uicore'
+import { Text, Container, Layout, Icon } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import type { Project } from 'services/cd-ng'
 import routes from '@common/RouteDefinitions'
 import { useStrings } from 'framework/strings'

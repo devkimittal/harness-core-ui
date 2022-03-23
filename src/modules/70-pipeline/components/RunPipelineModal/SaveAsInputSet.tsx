@@ -145,7 +145,7 @@ interface SaveAsInputSetProps {
   branch?: string
   isGitSyncEnabled?: boolean
   setFormErrors: Dispatch<SetStateAction<FormikErrors<InputSetDTO>>>
-  getInputSetsList: () => void
+  refetchParentData: () => void
 }
 
 function SaveAsInputSet({
@@ -161,7 +161,7 @@ function SaveAsInputSet({
   branch,
   isGitSyncEnabled = false,
   setFormErrors,
-  getInputSetsList
+  refetchParentData
 }: SaveAsInputSetProps): JSX.Element | null {
   const { getString } = useStrings()
 
@@ -186,7 +186,7 @@ function SaveAsInputSet({
     repoIdentifier,
     branch,
     createInputSet,
-    getInputSetsList,
+    refetchParentData,
     setFormErrors
   )
 
@@ -219,7 +219,7 @@ function SaveAsInputSet({
           })
         } else {
           createUpdateInputSet(omit(inputSetObj, 'repo', 'branch')).then(() => {
-            getInputSetsList()
+            refetchParentData()
           })
         }
       }

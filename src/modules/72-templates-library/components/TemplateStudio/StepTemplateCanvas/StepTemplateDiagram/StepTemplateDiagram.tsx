@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Color, Container, Layout, Text } from '@wings-software/uicore'
+import { Container, Layout, Text } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { noop, set } from 'lodash-es'
 import { StepPopover } from '@pipeline/components/PipelineStudio/StepPalette/StepPopover/StepPopover'
 import factory from '@pipeline/components/PipelineSteps/PipelineStepFactory'

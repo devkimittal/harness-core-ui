@@ -8,7 +8,8 @@
 import React from 'react'
 import { defaultTo } from 'lodash-es'
 
-import { Color, FontVariation, Icon, Layout, Text } from '@wings-software/uicore'
+import { Icon, Layout, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import type { GitSyncEntityDTO, PipelineInfoConfig } from 'services/cd-ng'
 import type { EntityGitDetails, NGTemplateInfoConfig } from 'services/template-ng'
 import { useGitSyncStore } from 'framework/GitRepoStore/GitSyncStoreContext'

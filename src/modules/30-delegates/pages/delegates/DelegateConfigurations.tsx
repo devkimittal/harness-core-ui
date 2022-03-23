@@ -18,7 +18,6 @@ import {
   Container,
   Button,
   FlexExpander,
-  Color,
   Heading,
   Utils,
   FormInput,
@@ -30,6 +29,7 @@ import {
   useToaster,
   Page
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import { PageSpinner } from '@common/components'
 import type { UseGetMockData } from '@common/utils/testUtils'

@@ -8,7 +8,6 @@
 import React, { useState, useMemo } from 'react'
 import {
   Button,
-  Color,
   Container,
   Formik,
   FormikForm as Form,
@@ -22,6 +21,7 @@ import {
   PageError,
   shouldShowError
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import type { StringsMap } from 'framework/strings/StringsContext'

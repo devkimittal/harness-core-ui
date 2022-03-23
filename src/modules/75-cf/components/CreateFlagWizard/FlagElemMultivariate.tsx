@@ -10,7 +10,6 @@ import * as yup from 'yup'
 import { isEqual } from 'lodash-es'
 import { Classes } from '@blueprintjs/core'
 import {
-  Color,
   Formik,
   FormikForm as Form,
   FormInput,
@@ -25,6 +24,7 @@ import {
   FlexExpander
 } from '@wings-software/uicore'
 import { FieldArray } from 'formik'
+import { Color } from '@harness/design-system'
 import { FormikEffect, FormikEffectProps } from '@common/components/FormikEffect/FormikEffect'
 import type { Variation } from 'services/cf'
 import { useStrings } from 'framework/strings'

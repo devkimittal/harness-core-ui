@@ -6,8 +6,9 @@
  */
 
 import React, { useEffect, useMemo, useState, useRef } from 'react'
-import { Container, Text, Heading, Color, Layout, Icon } from '@wings-software/uicore'
+import { Container, Text, Heading, Layout, Icon } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { Classes, Switch } from '@blueprintjs/core'
 import { String, useStrings } from 'framework/strings'
 import type { PlatformEntry } from '@cf/components/LanguageSelection/LanguageSelection'

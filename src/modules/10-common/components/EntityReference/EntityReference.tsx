@@ -17,14 +17,13 @@ import {
   Tab,
   Icon,
   IconName,
-  Color,
   ButtonVariation,
-  FontVariation,
   PageError,
   NoDataCard,
   NoDataCardProps,
   PaginationProps
 } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { Classes } from '@blueprintjs/core'
 import { debounce, isEmpty } from 'lodash-es'
 import { useParams } from 'react-router-dom'

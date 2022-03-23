@@ -7,7 +7,8 @@
 
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Text, SelectOption, useToaster, Color, Select } from '@wings-software/uicore'
+import { Container, Text, SelectOption, useToaster, Select } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import {
   useHandleManualInterventionInterrupt,
@@ -85,11 +86,18 @@ export function ManualInterventionVerifyStep(props: ManualInterventionVerifyStep
 
   if (isManualInterruption) {
     return (
-      <Container padding={'small'} background={Color.YELLOW_100} flex={{ justifyContent: 'flex-start' }} width={'100%'}>
-        <Text font={{ weight: 'bold', size: 'small' }} padding={{ right: 'small' }}>
+      <Container
+        className={css.shadow}
+        padding={'small'}
+        border={{ radius: 0 }}
+        background={Color.YELLOW_100}
+        flex={{ justifyContent: 'flex-start' }}
+        width={'100%'}
+      >
+        <Text font={{ weight: 'bold', size: 'small' }} color={Color.BLACK} padding={{ right: 'small' }}>
           {getString('cv.deploymentVerification.failed')}
         </Text>
-        <Container className={cx(css.manualInterventionTab, { [css.loading]: loading })}>
+        <Container color={Color.BLACK} className={cx(css.manualInterventionTab, { [css.loading]: loading })}>
           <Select
             className={css.permissibleActions}
             name={'permissibleActions'}

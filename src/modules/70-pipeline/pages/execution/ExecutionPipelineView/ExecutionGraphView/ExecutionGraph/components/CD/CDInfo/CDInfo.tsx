@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { get } from 'lodash-es'
-import { Container, Icon, Text, Layout, Color } from '@wings-software/uicore'
+import { Container, Icon, Text, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import BarrierStageTooltip from '../BarrierStageTooltip/BarrierStageTooltip'
 

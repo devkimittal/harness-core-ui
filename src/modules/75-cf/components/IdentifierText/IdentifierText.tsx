@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Button, Color, Container, FontVariation, Icon, Text, TextProps, Utils } from '@wings-software/uicore'
+import { Button, Container, Icon, Text, TextProps, Utils } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useToaster } from '@common/exports'
 import css from './IdentifierText.module.scss'

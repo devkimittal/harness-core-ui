@@ -9,7 +9,6 @@ import React, { useContext, useMemo } from 'react'
 import {
   ButtonSize,
   ButtonVariation,
-  Color,
   Container,
   DropDown,
   Icon,
@@ -20,6 +19,7 @@ import {
   Tabs,
   Text
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { defaultTo, isEmpty } from 'lodash-es'
 import { useStrings } from 'framework/strings'

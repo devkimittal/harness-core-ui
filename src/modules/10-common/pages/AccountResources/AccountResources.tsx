@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Layout, Text } from '@wings-software/uicore'
+import { Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Page } from '@common/exports'
 import { useStrings } from 'framework/strings'
 import ResourceCardList from '@common/components/ResourceCardList/ResourceCardList'

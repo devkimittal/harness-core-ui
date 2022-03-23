@@ -6,8 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Button, ButtonVariation, Color, Container, Layout, useConfirmationDialog } from '@wings-software/uicore'
+import { Button, ButtonVariation, Container, Layout, useConfirmationDialog } from '@wings-software/uicore'
 import { Intent } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import { isEqual } from 'lodash-es'
 import type { TemplateSummaryResponse } from 'services/template-ng'
 import { useStrings } from 'framework/strings'

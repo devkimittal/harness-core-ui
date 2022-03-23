@@ -22,7 +22,7 @@ connectThroughDelegate: Communication with the Git provider will be made through
 learnMore: Learn More about these settings
 configureHarnessFolder: Configure Harness Folder
 harnessFolderHeader: What is a Harness Folder?
-harnessFolderText: Harness folder allows to save the Harness configurations like Pipelines, Connectors, Delegates, trigger, etc alongside with the code in your git repository.
+harnessFolderText: Harness saves the configurations like Pipelines, Connectors, Templates etc. in the .harness folder created in the path that you specify.
 folderDetails: Folder Details
 selectHarnessFolder: Select Harness Folder
 selectDefaultBranch: Select Default Branch

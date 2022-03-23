@@ -8,7 +8,6 @@
 import {
   Button,
   ButtonVariation,
-  Color,
   Formik,
   FormInput,
   Layout,
@@ -21,6 +20,7 @@ import {
   Icon,
   HarnessDocTooltip
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { defaultTo, map } from 'lodash-es'

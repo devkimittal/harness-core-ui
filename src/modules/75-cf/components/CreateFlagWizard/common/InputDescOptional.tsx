@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Layout, FormInput, Button, Color } from '@wings-software/uicore'
+import { Layout, FormInput, Button } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import css from './InputDescOptional.module.scss'
 
 interface InputDescOptionalProps {

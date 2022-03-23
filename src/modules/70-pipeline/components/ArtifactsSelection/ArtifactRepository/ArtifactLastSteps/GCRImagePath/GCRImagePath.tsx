@@ -16,10 +16,10 @@ import {
   StepProps,
   Text,
   SelectOption,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import { Menu } from '@blueprintjs/core'
+import { FontVariation } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { Form } from 'formik'
 import * as Yup from 'yup'

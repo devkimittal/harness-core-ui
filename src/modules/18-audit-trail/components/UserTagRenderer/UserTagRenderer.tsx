@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Layout, Text, Avatar, Color } from '@wings-software/uicore'
+import { Layout, Text, Avatar } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { isEmail } from '@common/utils/Validation'
 import type { UserItem } from '../UserItemRenderer/UserItemRenderer'
 

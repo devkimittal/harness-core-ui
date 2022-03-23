@@ -12,17 +12,18 @@ import {
   Layout,
   StepProps,
   StepsProgress,
-  Intent,
   Heading,
   ModalErrorHandler,
   ModalErrorHandlerBinding
 } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ConnectorInfoDTO } from 'services/cd-ng'
 import { useGetTestConnectionResult } from 'services/cd-ng'
 import { useTelemetry } from '@common/hooks/useTelemetry'
-import { CE_AWS_CONNECTOR_CREATION_EVENTS } from '@connectors/trackingConstants'
+import { CCM_CONNECTOR_SAVE_EVENT, CE_AWS_CONNECTOR_CREATION_EVENTS } from '@connectors/trackingConstants'
 import { useStepLoadTelemetry } from '@connectors/common/useTrackStepLoad/useStepLoadTelemetry'
+import { Connectors } from '@connectors/constants'
 import css from '../CreateCeAwsConnector.module.scss'
 
 enum Status {
@@ -103,7 +104,7 @@ const TestConnection: React.FC<TestConnectionProps> = props => {
         rightIcon="chevron-right"
         className={css.submitBtn}
         onClick={() => {
-          trackEvent(CE_AWS_CONNECTOR_CREATION_EVENTS.CONNECTOR_FINISH_CLICK, {})
+          trackEvent(CCM_CONNECTOR_SAVE_EVENT, { connectorType: Connectors.CEAWS })
           props.onClose?.()
         }}
       />

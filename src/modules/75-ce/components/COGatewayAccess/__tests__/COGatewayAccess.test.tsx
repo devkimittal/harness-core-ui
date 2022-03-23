@@ -153,6 +153,8 @@ describe('Testing COGatewayAccess', () => {
           valid={true}
           setValidity={jest.fn()}
           allServices={[]}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -168,6 +170,8 @@ describe('Testing COGatewayAccess', () => {
           valid={true}
           setValidity={jest.fn()}
           allServices={[]}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -189,6 +193,8 @@ describe('Testing COGatewayAccess', () => {
           valid={true}
           setValidity={jest.fn()}
           allServices={[]}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -275,6 +281,8 @@ describe('Testing COGatewayAccess', () => {
           setGatewayDetails={jest.fn()}
           valid={true}
           setValidity={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -299,6 +307,8 @@ describe('Testing COGatewayAccess', () => {
           valid={true}
           setValidity={jest.fn()}
           allServices={[]}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )

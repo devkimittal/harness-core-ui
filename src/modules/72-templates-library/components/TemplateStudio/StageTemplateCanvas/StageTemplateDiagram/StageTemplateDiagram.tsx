@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, Layout, Text } from '@wings-software/uicore'
+import { Container, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { NodeModelListener } from '@projectstorm/react-diagrams-core'
 import { defaultTo, noop, set } from 'lodash-es'
 import { useParams } from 'react-router-dom'

@@ -7,7 +7,6 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
-  Color,
   ExpandingSearchInput,
   HarnessDocTooltip,
   Icon,
@@ -23,6 +22,7 @@ import {
   PageSpinner,
   ExpandingSearchInputHandle
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import { useHistory, useParams } from 'react-router-dom'
 import type { FormikProps } from 'formik'

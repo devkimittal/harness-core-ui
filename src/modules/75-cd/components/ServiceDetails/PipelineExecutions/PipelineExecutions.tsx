@@ -7,16 +7,8 @@
 
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Card,
-  Color,
-  Container,
-  ExpandingSearchInput,
-  Layout,
-  Text,
-  PageError,
-  NoDataCard
-} from '@wings-software/uicore'
+import { Card, Container, ExpandingSearchInput, Layout, Text, PageError, NoDataCard } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useGetDeploymentsByServiceId, GetDeploymentsByServiceIdQueryParams } from 'services/cd-ng'
 import type { ProjectPathProps, ServicePathProps } from '@common/interfaces/RouteInterfaces'
 import ExecutionCard from '@pipeline/components/ExecutionCard/ExecutionCard'

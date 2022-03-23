@@ -16,13 +16,12 @@ import {
   MultiTypeInputType,
   Formik,
   ButtonVariation,
-  Icon,
-  FontVariation
+  Icon
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
 import { Form, FieldArray, FieldArrayRenderProps } from 'formik'
 import { get, isEmpty, set } from 'lodash-es'
-
+import { FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import { v4 as nameSpace, v5 as uuid } from 'uuid'
 import { useStrings } from 'framework/strings'

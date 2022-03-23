@@ -5,8 +5,9 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Color, Container } from '@wings-software/uicore'
+import { Container } from '@wings-software/uicore'
 import React, { ReactElement } from 'react'
+import { Color } from '@harness/design-system'
 import type { UseGitSync } from '@cf/hooks/useGitSync'
 import GitSyncActions from '../GitSyncActions/GitSyncActions'
 

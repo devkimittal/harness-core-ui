@@ -15,10 +15,10 @@ import {
   MultiTypeInputType,
   Text,
   StepProps,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import cx from 'classnames'
+import { FontVariation } from '@harness/design-system'
 import { v4 as nameSpace, v5 as uuid } from 'uuid'
 import { Form } from 'formik'
 import * as Yup from 'yup'

@@ -6,7 +6,8 @@
  */
 
 import React, { ReactElement } from 'react'
-import { FontVariation, Text } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { Classes, Switch } from '@blueprintjs/core'
 import cx from 'classnames'
 import { usePermission } from '@rbac/hooks/usePermission'

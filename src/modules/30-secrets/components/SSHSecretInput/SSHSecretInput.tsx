@@ -16,9 +16,9 @@ import {
   Icon,
   Text,
   FormikTooltipContext,
-  Color,
   DataTooltipInterface
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ResponsePageSecretResponseWrapper, ConnectorInfoDTO } from 'services/cd-ng'
 import useCreateOrSelectSecretModal from '@secrets/modals/CreateOrSelectSecretModal/useCreateOrSelectSecretModal'

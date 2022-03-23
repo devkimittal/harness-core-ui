@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Card, Color, FontVariation, MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { Card, MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
 import cx from 'classnames'
+import { FontVariation, Color } from '@harness/design-system'
 import { isEmpty, lowerCase } from 'lodash-es'
 import type { PipelineInfoConfig } from 'services/cd-ng'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'

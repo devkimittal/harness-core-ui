@@ -10,7 +10,6 @@ import { FormGroup, IFormGroupProps, Intent, PopoverInteractionKind } from '@blu
 import {
   Layout,
   Icon,
-  Color,
   Button,
   Text,
   Tag,
@@ -20,12 +19,12 @@ import {
   FormikTooltipContext,
   DataTooltipInterface,
   HarnessDocTooltip,
-  FontVariation,
   ButtonVariation,
   Container,
   Popover
 } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color, FontVariation } from '@harness/design-system'
 import { isEmpty } from 'lodash-es'
 import {
   Failure,

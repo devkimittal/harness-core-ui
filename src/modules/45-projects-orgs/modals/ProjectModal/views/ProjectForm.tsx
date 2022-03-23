@@ -16,15 +16,14 @@ import {
   StepProps,
   SelectOption,
   Container,
-  Color,
   ModalErrorHandler,
   ModalErrorHandlerBinding,
   ButtonVariation,
   IconName,
-  FontVariation,
   Heading
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation, Color } from '@harness/design-system'
 import { DescriptionTags } from '@common/components/NameIdDescriptionTags/NameIdDescriptionTags'
 import type { Project } from 'services/cd-ng'
 import ProjectCard from '@projects-orgs/components/ProjectCard/ProjectCard'

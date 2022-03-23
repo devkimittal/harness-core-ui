@@ -18,12 +18,11 @@ import {
   Icon,
   FlexExpander,
   useToaster,
-  Color,
-  FontVariation,
   ButtonSize,
   ButtonVariation,
   Link
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { Popover, Position, Classes, PopoverInteractionKind } from '@blueprintjs/core'
 import { DEFAULT_GROUP_BY } from '@ce/utils/perspectiveUtils'
 import routes from '@common/RouteDefinitions'

@@ -15,11 +15,11 @@ import {
   IconName,
   Layout,
   StepProps,
-  ThumbnailSelect,
-  FontVariation
+  ThumbnailSelect
 } from '@wings-software/uicore'
 import { Form } from 'formik'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 import type { ConnectorConfigDTO } from 'services/cd-ng'

@@ -11,20 +11,9 @@ import { noop } from 'lodash-es'
 import { Classes, PopoverInteractionKind } from '@blueprintjs/core'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
-import {
-  Card,
-  Color,
-  Dialog,
-  FontVariation,
-  HarnessDocTooltip,
-  Icon,
-  Layout,
-  Popover,
-  Text,
-  Thumbnail,
-  Utils
-} from '@wings-software/uicore'
+import { Card, Dialog, HarnessDocTooltip, Icon, Layout, Popover, Text, Thumbnail, Utils } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color, FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import { useStrings, UseStringsReturn } from 'framework/strings'
 import { isCDCommunity, useLicenseStore } from 'framework/LicenseStore/LicenseStoreContext'

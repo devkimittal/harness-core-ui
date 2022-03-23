@@ -6,7 +6,8 @@
  */
 
 import React, { FC } from 'react'
-import { FontVariation, Text } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import type { Clause } from 'services/cf'
 import { useOperatorsFromYaml } from '@cf/constants'
 

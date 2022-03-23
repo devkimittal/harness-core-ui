@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Text, FontVariation, Label, Layout, TextInput } from '@wings-software/uicore'
+import { Text, Label, Layout, TextInput } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './RunPipelineForm.module.scss'
 interface ReplacedExpressionInputFormProps {

@@ -9,7 +9,6 @@ import React, { useState, useMemo } from 'react'
 import {
   Text,
   Layout,
-  Color,
   Icon,
   Button,
   Popover,
@@ -17,9 +16,9 @@ import {
   useToaster,
   TagsPopover,
   TableV2,
-  FontVariation,
   useConfirmationDialog
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import type { CellProps, Renderer, Column } from 'react-table'
 import { Menu, Classes, Position, Intent, TextArea, Tooltip } from '@blueprintjs/core'
 import { useParams, useHistory } from 'react-router-dom'
@@ -60,6 +59,11 @@ type CustomColumn = Column<ConnectorResponse> & {
 }
 
 export type ErrorMessage = ConnectorValidationResult & { useErrorHandler?: boolean }
+
+const connectorDetailsUrlWithGit = (url: string, gitInfo: EntityGitDetails = {}): string => {
+  const urlForGit = `${url}?repoIdentifier=${gitInfo.repoIdentifier}&branch=${gitInfo.branch}`
+  return gitInfo?.objectId ? urlForGit : url
+}
 
 export const RenderColumnConnector: Renderer<CellProps<ConnectorResponse>> = ({ row }) => {
   const data = row.original
@@ -286,7 +290,8 @@ const RenderColumnMenu: Renderer<CellProps<ConnectorResponse>> = ({ row, column 
         gitDetails: row.original?.gitDetails
       })
     } else {
-      history.push(routes.toConnectorDetails({ ...params, connectorId: data.connector?.identifier }))
+      const url = routes.toConnectorDetails({ ...params, connectorId: data.connector?.identifier })
+      history.push(connectorDetailsUrlWithGit(url, row.original?.gitDetails))
     }
   }
 
@@ -397,9 +402,7 @@ const ConnectorsListView: React.FC<ConnectorListViewProps> = props => {
       name="ConnectorsListView"
       onRowClick={connector => {
         const url = routes.toConnectorDetails({ ...params, connectorId: connector.connector?.identifier })
-        const gitInfo: EntityGitDetails = connector.gitDetails ?? {}
-        const urlForGit = `${url}?repoIdentifier=${gitInfo.repoIdentifier}&branch=${gitInfo.branch}`
-        history.push(gitInfo?.objectId ? urlForGit : url)
+        history.push(connectorDetailsUrlWithGit(url, connector.gitDetails))
       }}
       pagination={{
         itemCount: data?.totalItems || 0,

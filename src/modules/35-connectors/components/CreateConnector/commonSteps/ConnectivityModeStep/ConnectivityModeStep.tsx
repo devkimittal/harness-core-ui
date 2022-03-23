@@ -9,8 +9,6 @@ import React, { useState } from 'react'
 import {
   Button,
   ButtonVariation,
-  Color,
-  FontVariation,
   Formik,
   FormikForm,
   Layout,
@@ -20,6 +18,7 @@ import {
   Text
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import type {
   ConnectorConfigDTO,

@@ -14,12 +14,11 @@ import {
   Layout,
   StepProps,
   ThumbnailSelect,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import { Form } from 'formik'
 import * as Yup from 'yup'
-
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ConnectorConfigDTO } from 'services/cd-ng'
 import { manifestTypeIcons, manifestTypeLabels } from '../Manifesthelper'

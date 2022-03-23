@@ -7,7 +7,8 @@
 
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Icon, Text, FormInput, FontVariation, Container, SelectOption } from '@wings-software/uicore'
+import { Icon, Text, FormInput, Container, SelectOption } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { getErrorMessage } from '@cv/utils/CommonUtils'
 import { useGetAppdynamicsMetricStructure } from 'services/cv'

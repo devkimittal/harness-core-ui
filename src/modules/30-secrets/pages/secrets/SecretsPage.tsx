@@ -14,11 +14,11 @@ import {
   ExpandingSearchInput,
   Container,
   ButtonVariation,
-  Color,
   ButtonSize,
   PageSpinner,
   PageError
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Menu, PopoverInteractionKind, Position } from '@blueprintjs/core'
 import { useListSecretsV2, ResponsePageSecretResponseWrapper, Error } from 'services/cd-ng'
 import routes from '@common/RouteDefinitions'

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, Heading, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+import { Container, Heading, Text } from '@wings-software/uicore'
 import css from './AWSCOConnector.module.scss'
 
 const AWSConnectorExtension: React.FC = () => {

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { FontVariation, Icon, Text } from '@wings-software/uicore'
+import { Icon, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import css from './PipelineVariables.module.scss'
 
 function VariableAccordionSummary(props: { children: React.ReactNode; hideIcons?: boolean }) {

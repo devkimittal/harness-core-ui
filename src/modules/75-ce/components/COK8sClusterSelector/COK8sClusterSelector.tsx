@@ -12,7 +12,6 @@ import classNames from 'classnames'
 import ReactTimeago from 'react-timeago'
 import {
   Button,
-  Color,
   Container,
   ExpandingSearchInput,
   Icon,
@@ -21,6 +20,7 @@ import {
   Radio,
   Text
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Table, TagsPopover } from '@common/components'
 import useCreateConnectorModal from '@connectors/modals/ConnectorModal/useCreateConnectorModal'
 import { Connectors } from '@connectors/constants'

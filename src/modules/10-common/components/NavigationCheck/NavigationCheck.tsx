@@ -7,7 +7,9 @@
 
 import React, { useState, useEffect } from 'react'
 import { Prompt } from 'react-router-dom'
-import { Intent, useConfirmationDialog } from '@wings-software/uicore'
+import { useConfirmationDialog } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
+
 import type * as History from 'history'
 import { useStrings } from 'framework/strings'
 

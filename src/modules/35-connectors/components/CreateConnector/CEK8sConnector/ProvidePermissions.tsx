@@ -8,7 +8,6 @@
 import React, { useContext, useState } from 'react'
 import {
   Button,
-  Color,
   Heading,
   Icon,
   Layout,
@@ -18,6 +17,7 @@ import {
   Text
 } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { omit as _omit, defaultTo as _defaultTo } from 'lodash-es'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import { ConnectorInfoDTO, ConnectorRequestBody, useCreateConnector, useUpdateConnector } from 'services/cd-ng'

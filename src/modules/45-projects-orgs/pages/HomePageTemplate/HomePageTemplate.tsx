@@ -8,7 +8,6 @@
 import React, { useEffect } from 'react'
 import {
   ButtonVariation,
-  Color,
   Container,
   FlexExpander,
   Heading,
@@ -16,6 +15,7 @@ import {
   Link as ExternalLink,
   Text
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useQueryParams } from '@common/hooks'
 import { useToaster } from '@common/exports'

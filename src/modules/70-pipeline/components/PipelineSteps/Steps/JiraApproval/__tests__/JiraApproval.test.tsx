@@ -32,7 +32,6 @@ jest.mock('services/cd-ng', () => ({
   useGetJiraProjects: jest.fn(),
   useGetJiraIssueCreateMetadata: () => mockProjectMetadataResponse
 }))
-
 describe('Jira Approval fetch projects', () => {
   beforeAll(() => {
     // eslint-disable-next-line
@@ -268,5 +267,40 @@ describe('Jira Approval tests', () => {
       },
       name: 'jira approval step'
     })
+  })
+
+  test('Minimum time cannot be less than 10s', () => {
+    const response = new JiraApproval().validateInputSet({
+      data: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '1s',
+        type: 'JiraApproval',
+        spec: {
+          connectorRef: '',
+          projectKey: '',
+          issueType: '',
+          issueKey: '',
+          approvalCriteria: getDefaultCriterias(),
+          rejectionCriteria: getDefaultCriterias()
+        }
+      },
+      template: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '<+input>',
+        type: 'JiraApproval',
+        spec: {
+          connectorRef: '',
+          projectKey: '',
+          issueType: '',
+          issueKey: '',
+          approvalCriteria: getDefaultCriterias(),
+          rejectionCriteria: getDefaultCriterias()
+        }
+      },
+      viewType: StepViewType.TriggerForm
+    })
+    expect(response).toMatchSnapshot('Value must be greater than or equal to "10s"')
   })
 })

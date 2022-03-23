@@ -7,7 +7,8 @@
 
 import React, { ReactElement } from 'react'
 import cx from 'classnames'
-import { Layout, Text, Container, Button, Color } from '@wings-software/uicore'
+import { Layout, Text, Container, Button } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useLocalStorage } from '@common/hooks'
 import {

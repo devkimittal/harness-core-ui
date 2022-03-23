@@ -242,6 +242,7 @@ export function PrometheusHealthSource(props: PrometheusHealthSourceProps): JSX.
                         <SelectHealthSourceServices
                           values={{
                             sli: !!formikProps?.values?.sli,
+                            riskCategory: formikProps?.values?.riskCategory,
                             healthScore: !!formikProps?.values?.healthScore,
                             continuousVerification: !!formikProps?.values?.continuousVerification
                           }}

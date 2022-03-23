@@ -251,7 +251,7 @@ exports[`Testing COGatewayAccess DNS checkbox checks succesfully 1`] = `
                               role="tab"
                               tabindex="0"
                             >
-                              Routing
+                              ce.co.gatewayReview.routing
                             </div>
                             <div
                               aria-controls="bp3-tab-panel_tabsId1_healthcheck"
@@ -264,7 +264,7 @@ exports[`Testing COGatewayAccess DNS checkbox checks succesfully 1`] = `
                               role="tab"
                               tabindex="0"
                             >
-                              Health check
+                              ce.co.gatewayConfig.healthCheck
                             </div>
                           </div>
                           <div
@@ -887,12 +887,11 @@ exports[`Testing COGatewayAccess DNS checkbox checks succesfully 1`] = `
                         <div
                           class="Layout--horizontal Layout--layout-spacing-small StyledProps--main"
                         >
-                          <h3
-                            class="StyledProps--font StyledProps--font-h3 StyledProps--main StyledProps--font-weight-light"
-                            level="3"
+                          <p
+                            class="StyledProps--font StyledProps--main StyledProps--font-variation-h6 StyledProps--font-weight-light"
                           >
                             ce.co.autoStoppingRule.setupAccess.customDomain.helpText
-                          </h3>
+                          </p>
                         </div>
                         <div
                           class="Layout--horizontal StyledProps--main"
@@ -902,6 +901,7 @@ exports[`Testing COGatewayAccess DNS checkbox checks succesfully 1`] = `
                           >
                             <input
                               checked=""
+                              data-testid="noCustomDomain"
                               type="radio"
                               value="no"
                             />
@@ -960,21 +960,7 @@ exports[`Testing COGatewayAccess DNS checkbox checks succesfully 1`] = `
                             </div>
                           </div>
                         </div>
-                        <label
-                          class="bp3-control bp3-checkbox StyledProps--font Checkbox--checkbox publicAccessibleCheckboxContainer StyledProps--main"
-                        >
-                          <input
-                            checked=""
-                            name="publicallyAccessible"
-                            type="checkbox"
-                          />
-                          <span
-                            class="bp3-control-indicator"
-                          />
-                          This url is publicly accessible
-                        </label>
                       </div>
-                      
                     </div>
                   </div>
                 </form>

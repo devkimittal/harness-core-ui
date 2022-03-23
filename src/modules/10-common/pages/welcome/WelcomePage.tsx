@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Color, HarnessIcons, Container, Text, Layout, Heading, IconName } from '@wings-software/uicore'
+import { HarnessIcons, Container, Text, Layout, Heading, IconName } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import { useFeatureFlags } from '@common/hooks/useFeatureFlag'

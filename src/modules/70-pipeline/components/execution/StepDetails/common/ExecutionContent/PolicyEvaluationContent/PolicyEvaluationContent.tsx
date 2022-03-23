@@ -87,7 +87,7 @@ export function PolicyEvaluationContent({ step }: { step: ExecutionNode }) {
 }
 
 function PolicySetInfo({ policySet }: { policySet: { [key: string]: any } }) {
-  const { accountId: accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps>()
+  const { accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps>()
   const { getString } = useStrings()
 
   const { name, identifier, status, policyDetails: policies } = policySet
@@ -119,11 +119,11 @@ function PolicySetInfo({ policySet }: { policySet: { [key: string]: any } }) {
             <Layout.Horizontal flex={{ alignItems: 'center' }}>
               <Text lineClamp={1} width={'300px'} padding={{ right: 'small' }}>
                 <Link
-                  to={routes.toGovernancePolicySetsListing({
+                  to={routes.toGovernancePolicySetDetail({
                     accountId,
                     ...(scope === getString('orgLabel') && { orgIdentifier }),
                     ...(scope === getString('projectLabel') && { projectIdentifier }),
-                    module: 'cd'
+                    policySetIdentifier: defaultTo(policySet.identifier, '')
                   })}
                 >
                   {getString('pipeline.policyEvaluations.policySetName', { name })}
@@ -156,7 +156,7 @@ export function PolicyInfo({
   scope: string
   numberInList: number
 }) {
-  const { accountId: accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps>()
+  const { accountId, orgIdentifier, projectIdentifier } = useParams<ProjectPathProps>()
   const { getString } = useStrings()
 
   const { name: policyName, status, denyMessages, error: errorMessage } = policy
@@ -169,11 +169,11 @@ export function PolicyInfo({
         <Text lineClamp={1} width={'400px'} padding={{ right: 'small' }}>
           <Link
             to={{
-              pathname: routes.toGovernancePolicyListing({
+              pathname: routes.toGovernanceViewPolicy({
                 accountId,
                 ...(scope === getString('orgLabel') && { orgIdentifier }),
                 ...(scope === getString('projectLabel') && { projectIdentifier }),
-                module: 'cd'
+                policyIdentifier: defaultTo(policy.identifier, '')
               })
             }}
           >

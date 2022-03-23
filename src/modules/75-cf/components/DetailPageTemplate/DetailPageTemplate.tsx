@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Layout, Text, IconName, Color, Icon } from '@wings-software/uicore'
+import { Container, Layout, Text, IconName, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { TagsViewer } from '@common/components/TagsViewer/TagsViewer'
 import { IdentifierText } from '@cf/components/IdentifierText/IdentifierText'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'

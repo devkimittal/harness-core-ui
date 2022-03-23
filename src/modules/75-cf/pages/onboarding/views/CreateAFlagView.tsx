@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, TextInput, Heading, Layout, Text, Color } from '@wings-software/uicore'
+import { Container, TextInput, Heading, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { String, useStrings } from 'framework/strings'
 import type { FeatureFlagRequestRequestBody } from 'services/cf'
 import { CreateAFlagInfoView } from './CreateAFlagInfoView'

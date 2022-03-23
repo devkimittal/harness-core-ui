@@ -13,11 +13,11 @@ import {
   Heading,
   Container,
   StepsProgress,
-  Intent,
   ModalErrorHandler,
   ModalErrorHandlerBinding,
   Button
 } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import type { ConnectorInfoDTO, ConnectorConfigDTO } from 'services/cd-ng'
 import { useGetTestConnectionResult } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'

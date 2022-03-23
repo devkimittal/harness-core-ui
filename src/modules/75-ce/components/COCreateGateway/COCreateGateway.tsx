@@ -6,9 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Color, Container } from '@wings-software/uicore'
+import { Container } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
-
+import { Color } from '@harness/design-system'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import COProviderSelector from '@ce/components/COProviderSelector/COProviderSelector'
 import { useQueryParams } from '@common/hooks'

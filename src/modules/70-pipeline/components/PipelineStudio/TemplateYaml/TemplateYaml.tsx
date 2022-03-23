@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Color, Container, Text, Layout } from '@wings-software/uicore'
+import { Container, Text, Layout } from '@wings-software/uicore'
 import { defaultTo } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import MonacoEditor from '@common/components/MonacoEditor/MonacoEditor'
 
 import { yamlStringify } from '@common/utils/YamlHelperMethods'

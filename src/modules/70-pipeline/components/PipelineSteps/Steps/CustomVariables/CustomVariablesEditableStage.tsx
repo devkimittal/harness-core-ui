@@ -16,9 +16,9 @@ import {
   getMultiTypeFromValue,
   ButtonSize,
   ButtonVariation,
-  FontVariation,
   Text
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import * as Yup from 'yup'
 

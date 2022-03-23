@@ -6,7 +6,8 @@
  */
 
 import React, { useMemo } from 'react'
-import { Layout, Button, Text, FormInput, FormikForm, Container, Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+import { Layout, Button, Text, FormInput, FormikForm, Container } from '@wings-software/uicore'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useStrings } from 'framework/strings'

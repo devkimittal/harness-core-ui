@@ -6,9 +6,10 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { Container, Icon, Color, Text, PageError } from '@wings-software/uicore'
+import { Container, Icon, Text, PageError } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useGetVerifyStepDeploymentActivitySummary } from 'services/cv'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { allowedStrategiesAsPerStep } from '@pipeline/components/PipelineSteps/AdvancedSteps/FailureStrategyPanel/StrategySelection/StrategyConfig'

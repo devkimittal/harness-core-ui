@@ -9,8 +9,9 @@ import React from 'react'
 import merge from 'lodash-es/merge'
 import { deleteDB, IDBPDatabase, openDB } from 'idb'
 import { cloneDeep, defaultTo, isEqual, maxBy } from 'lodash-es'
-import { Color, VisualYamlSelectedView as SelectedView } from '@wings-software/uicore'
+import { VisualYamlSelectedView as SelectedView } from '@wings-software/uicore'
 import { parse } from 'yaml'
+import type { Color } from '@harness/design-system'
 import SessionToken from 'framework/utils/SessionToken'
 import { loggerFor } from 'framework/logging/logging'
 import { ModuleName } from 'framework/types/ModuleName'
@@ -231,59 +232,63 @@ const _fetchTemplate = async (props: FetchTemplateBoundProps, params: FetchTempl
     dispatch(TemplateContextActions.fetching())
     let data: TemplatePayload = await IdbTemplate.get(IdbTemplateStoreName, id)
     if ((!data || forceFetch) && templateIdentifier !== DefaultNewTemplateId) {
-      const templatesList: TemplateSummaryResponse[] = await getTemplatesByIdentifier(
-        {
-          ...queryParams,
-          templateListType: TemplateListType.All,
-          ...(repoIdentifier && branch ? { repoIdentifier, branch } : {})
-        },
-        templateIdentifier,
-        signal
-      )
-
-      const versions: string[] = templatesList.map(item => defaultTo(item.versionLabel, ''))
-      const defaultVersion = defaultTo(templatesList.find(item => item.stableTemplate)?.versionLabel, '')
-      const selectedVersion = versions.includes(versionLabel) ? versionLabel : defaultVersion
-      const stableVersion = templatesList.find(item => item.stableTemplate)?.versionLabel
-      const lastPublishedVersion = maxBy(templatesList, 'createdAt')?.versionLabel
-      const templateWithGitDetails = templatesList.find(item => item.versionLabel === selectedVersion)
-      id = getId(
-        queryParams.accountIdentifier,
-        defaultTo(queryParams.orgIdentifier, ''),
-        defaultTo(queryParams.projectIdentifier, ''),
-        templateIdentifier,
-        versionLabel,
-        defaultTo(gitDetails.repoIdentifier, templateWithGitDetails?.gitDetails?.repoIdentifier ?? ''),
-        defaultTo(gitDetails.branch, templateWithGitDetails?.gitDetails?.branch ?? '')
-      )
-      data = await IdbTemplate.get(IdbTemplateStoreName, id)
-      let template: NGTemplateInfoConfig
-      const templateYamlStr = defaultTo(templateWithGitDetails?.yaml, '')
       try {
-        template = defaultTo(parse(templateYamlStr)?.template, {})
-      } catch (e) {
-        // It is assumed that execution will come here, if there are only syntatical errors in yaml string
-        template = {
-          name: defaultTo(templateWithGitDetails?.name, ''),
-          identifier: defaultTo(templateWithGitDetails?.identifier, ''),
-          type: defaultTo(templateWithGitDetails?.childType, 'Step') as 'Step' | 'Stage',
-          versionLabel: defaultTo(templateWithGitDetails?.versionLabel, ''),
-          spec: {}
-        }
-      }
+        const templatesList: TemplateSummaryResponse[] = await getTemplatesByIdentifier(
+          {
+            ...queryParams,
+            templateListType: TemplateListType.All,
+            ...(repoIdentifier && branch ? { repoIdentifier, branch } : {})
+          },
+          templateIdentifier,
+          signal
+        )
 
-      dispatchTemplateSuccess({
-        dispatch,
-        data,
-        forceUpdate,
-        id,
-        stableVersion,
-        lastPublishedVersion,
-        template,
-        templateWithGitDetails,
-        templateYamlStr,
-        versions
-      })
+        const versions: string[] = templatesList.map(item => defaultTo(item.versionLabel, ''))
+        const defaultVersion = defaultTo(templatesList.find(item => item.stableTemplate)?.versionLabel, '')
+        const selectedVersion = versions.includes(versionLabel) ? versionLabel : defaultVersion
+        const stableVersion = templatesList.find(item => item.stableTemplate)?.versionLabel
+        const lastPublishedVersion = maxBy(templatesList, 'createdAt')?.versionLabel
+        const templateWithGitDetails = templatesList.find(item => item.versionLabel === selectedVersion)
+        id = getId(
+          queryParams.accountIdentifier,
+          defaultTo(queryParams.orgIdentifier, ''),
+          defaultTo(queryParams.projectIdentifier, ''),
+          templateIdentifier,
+          versionLabel,
+          defaultTo(gitDetails.repoIdentifier, templateWithGitDetails?.gitDetails?.repoIdentifier ?? ''),
+          defaultTo(gitDetails.branch, templateWithGitDetails?.gitDetails?.branch ?? '')
+        )
+        data = await IdbTemplate.get(IdbTemplateStoreName, id)
+        let template: NGTemplateInfoConfig
+        const templateYamlStr = defaultTo(templateWithGitDetails?.yaml, '')
+        try {
+          template = defaultTo(parse(templateYamlStr)?.template, {})
+        } catch (e) {
+          // It is assumed that execution will come here, if there are only syntatical errors in yaml string
+          template = {
+            name: defaultTo(templateWithGitDetails?.name, ''),
+            identifier: defaultTo(templateWithGitDetails?.identifier, ''),
+            type: defaultTo(templateWithGitDetails?.childType, 'Step') as 'Step' | 'Stage',
+            versionLabel: defaultTo(templateWithGitDetails?.versionLabel, ''),
+            spec: {}
+          }
+        }
+
+        dispatchTemplateSuccess({
+          dispatch,
+          data,
+          forceUpdate,
+          id,
+          stableVersion,
+          lastPublishedVersion,
+          template,
+          templateWithGitDetails,
+          templateYamlStr,
+          versions
+        })
+      } catch (_) {
+        logger.info('Failed to fetch template list')
+      }
     } else {
       dispatch(
         TemplateContextActions.success({

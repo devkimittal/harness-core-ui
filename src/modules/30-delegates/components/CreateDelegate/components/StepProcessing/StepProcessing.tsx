@@ -7,7 +7,8 @@
 
 import React, { useState, FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { Layout, Icon, Text, Color } from '@wings-software/uicore'
+import { Layout, Icon, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 import { useGetDelegatesHeartbeatDetailsV2 } from 'services/portal'

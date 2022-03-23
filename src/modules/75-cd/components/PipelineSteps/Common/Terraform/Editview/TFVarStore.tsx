@@ -13,7 +13,6 @@ import {
   Button,
   ButtonVariation,
   Card,
-  Color,
   Formik,
   Heading,
   Icon,
@@ -25,6 +24,7 @@ import {
   ButtonSize
 } from '@wings-software/uicore'
 import { Form } from 'formik'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ConnectorSelectedValue } from '@connectors/components/ConnectorReferenceField/ConnectorReferenceField'
 import { FormMultiTypeConnectorField } from '@connectors/components/ConnectorReferenceField/FormMultiTypeConnectorField'

@@ -7,16 +7,8 @@
 
 import React, { Dispatch, SetStateAction } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Container,
-  Card,
-  Switch,
-  Text,
-  Color,
-  Button,
-  ButtonVariation,
-  useConfirmationDialog
-} from '@wings-software/uicore'
+import { Container, Card, Switch, Text, Button, ButtonVariation, useConfirmationDialog } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { TagInput } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'

@@ -63,7 +63,7 @@ describe('RUN PIPELINE MODAL', () => {
       cy.clickSubmit()
     })
 
-    it.skip('should display the delete pipeline stage modal', () => {
+    it('should display the delete pipeline stage modal', () => {
       cy.wait(2000)
       cy.get('[icon="play"]').click({ force: true })
       cy.wait(2000)
@@ -170,7 +170,7 @@ describe('RUN PIPELINE MODAL', () => {
         cy.contains('span', 'cypress').should('be.visible')
       })
 
-      it.skip('visual to variable view for stage configuration', () => {
+      it('visual to variable view for stage configuration', () => {
         // Toggle to variable view
         cy.contains('span', 'Variables').click()
         cy.wait(2000)

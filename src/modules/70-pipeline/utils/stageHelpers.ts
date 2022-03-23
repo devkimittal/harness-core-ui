@@ -9,7 +9,7 @@ import { defaultTo, get, isEmpty } from 'lodash-es'
 import { getMultiTypeFromValue, MultiTypeInputType } from '@wings-software/uicore'
 import type { GraphLayoutNode, PipelineExecutionSummary } from 'services/pipeline-ng'
 import type { StringKeys } from 'framework/strings'
-import type { PipelineInfoConfig, StageElementConfig } from 'services/cd-ng'
+import type { GetExecutionStrategyYamlQueryParams, PipelineInfoConfig, StageElementConfig } from 'services/cd-ng'
 import { ManifestDataType } from '@pipeline/components/ManifestSelection/Manifesthelper'
 import type { ManifestTypes } from '@pipeline/components/ManifestSelection/ManifestInterface'
 import type { InputSetDTO } from './types'
@@ -22,7 +22,8 @@ export enum StageType {
   PIPELINE = 'Pipeline',
   APPROVAL = 'Approval',
   CUSTOM = 'Custom',
-  Template = 'Template'
+  Template = 'Template',
+  SECURITY = 'Security'
 }
 
 export enum ServiceDeploymentType {
@@ -169,14 +170,14 @@ export const isServerlessManifestType = (selectedManifest: ManifestTypes | null)
   return selectedManifest === ManifestDataType.ServerlessAwsLambda
 }
 
-export const getDeploymentType = (
+export const getSelectedDeploymentType = (
   stage: StageElementWrapper<DeploymentStageElementConfig> | undefined,
   getStageFromPipeline: <T extends StageElementConfig = StageElementConfig>(
     stageId: string,
     pipeline?: PipelineInfoConfig | undefined
   ) => PipelineStageWrapper<T>,
   isPropagating = false
-): string => {
+): GetExecutionStrategyYamlQueryParams['serviceDefinitionType'] => {
   if (isPropagating) {
     const parentStageId = get(stage, 'stage.spec.serviceConfig.useFromStage.stage', null)
     const parentStage = getStageFromPipeline<DeploymentStageElementConfig>(defaultTo(parentStageId, ''))

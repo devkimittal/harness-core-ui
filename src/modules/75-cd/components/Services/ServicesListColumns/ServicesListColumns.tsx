@@ -7,7 +7,6 @@
 
 import React, { useState } from 'react'
 import {
-  Color,
   Dialog,
   Button,
   Layout,
@@ -17,6 +16,7 @@ import {
   useToaster,
   Container
 } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { useHistory, useParams } from 'react-router-dom'
 import { defaultTo, isEmpty, pick } from 'lodash-es'

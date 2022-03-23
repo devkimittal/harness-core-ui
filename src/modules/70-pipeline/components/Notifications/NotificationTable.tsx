@@ -9,7 +9,6 @@ import React, { useState, useMemo } from 'react'
 import {
   Text,
   Layout,
-  Color,
   Button,
   Popover,
   Switch,
@@ -20,6 +19,7 @@ import {
   ButtonVariation,
   TableV2
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { CellProps, Renderer, Column } from 'react-table'
 import { Classes, Menu, PopoverInteractionKind, Position, Tag } from '@blueprintjs/core'
 import { startCase } from 'lodash-es'

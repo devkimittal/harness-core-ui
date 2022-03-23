@@ -8,7 +8,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import cx from 'classnames'
-import { SimpleTagInput, Text, Icon, Color } from '@wings-software/uicore'
+import { SimpleTagInput, Text, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useToaster } from '@common/exports'
 import { useStrings } from 'framework/strings'
 import { useGetDelegateSelectorsUpTheHierarchy } from 'services/portal'
@@ -141,7 +142,6 @@ export const DelegateSelectors = (props: DelegateSelectorsProps): React.ReactEle
             return validTag && validExpression
           }}
           placeholder={placeholder || getString('delegate.Delegate_Selector_placeholder')}
-          className={css.delegateInput}
         />
       )}
     </div>

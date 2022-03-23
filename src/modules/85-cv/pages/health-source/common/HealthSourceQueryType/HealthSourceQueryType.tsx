@@ -13,10 +13,11 @@ import { generateQueryTypeRadioButtonOptions } from './HealthSourceQueryType.uti
 import type { HealthSourceQueryTypeProps, QueryType } from './HealthSourceQueryType.types'
 
 export const HealthSourceQueryType = (props: HealthSourceQueryTypeProps): JSX.Element => {
-  const { onChange } = props
+  const { onChange, value } = props
   const { getString } = useStrings()
   return (
     <FormInput.RadioGroup
+      key={value}
       label={getString('cv.componentValidations.queryTypeLabel' as keyof StringsMap)}
       radioGroup={{ inline: true }}
       name="queryType"

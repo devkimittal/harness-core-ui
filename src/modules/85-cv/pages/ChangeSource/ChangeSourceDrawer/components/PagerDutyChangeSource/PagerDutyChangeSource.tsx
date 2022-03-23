@@ -6,8 +6,9 @@
  */
 
 import React, { useEffect, useMemo } from 'react'
-import { Container, FormInput, Layout, SelectOption, Utils, Color, Text } from '@wings-software/uicore'
+import { Container, FormInput, Layout, SelectOption, Utils, Text } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import { useStrings } from 'framework/strings'
 import { useGetServicesFromPagerDuty } from 'services/cv'

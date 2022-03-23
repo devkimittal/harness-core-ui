@@ -10,7 +10,6 @@ import {
   Text,
   Layout,
   Container,
-  Color,
   Icon,
   ButtonVariation,
   useToaster,
@@ -18,9 +17,10 @@ import {
   getErrorInfoFromErrorObject,
   Card,
   Button,
-  DropDown,
-  FontVariation
+  DropDown
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
+
 import { useParams } from 'react-router-dom'
 import ReactTimeago from 'react-timeago'
 import { defaultTo } from 'lodash-es'

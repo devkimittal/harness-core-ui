@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { DiagramEngine } from '@projectstorm/react-diagrams-core'
-import { Color, Utils } from '@wings-software/uicore'
+import { Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { DefaultLinkFactory } from './DefaultLinkFactory'
 import type { DefaultLinkModel } from './DefaultLinkModel'
 import { Event, DiagramDrag } from '../Constants'

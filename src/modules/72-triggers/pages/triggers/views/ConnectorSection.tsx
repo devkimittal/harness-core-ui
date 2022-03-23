@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { FormInput, Text, Color, TextInput, HarnessDocTooltip, FontVariation } from '@wings-software/uicore'
+import { FormInput, Text, TextInput, HarnessDocTooltip } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import type { ConnectorConfigDTO } from 'services/cd-ng'
 import { Connectors, connectorUrlType } from '@connectors/constants'

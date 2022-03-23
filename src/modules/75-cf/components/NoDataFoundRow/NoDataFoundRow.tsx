@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Text, Color } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { ItemContainer, ItemContainerProps } from '../ItemContainer/ItemContainer'
 
 export const NoDataFoundRow: React.FC<ItemContainerProps & { message: string }> = ({ message, ...props }) => (

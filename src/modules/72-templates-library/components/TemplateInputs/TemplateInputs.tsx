@@ -7,7 +7,6 @@
 
 import React from 'react'
 import {
-  Color,
   Container,
   MultiTypeInputType,
   Text,
@@ -17,6 +16,7 @@ import {
   PageError
 } from '@wings-software/uicore'
 import { parse } from 'yaml'
+import { Color } from '@harness/design-system'
 import { defaultTo, noop } from 'lodash-es'
 import cx from 'classnames'
 import { TemplateSummaryResponse, useGetTemplateInputSetYaml } from 'services/template-ng'

@@ -10,7 +10,6 @@ import {
   Button,
   ButtonSize,
   ButtonVariation,
-  Color,
   Container,
   DropDown,
   Icon,
@@ -21,6 +20,7 @@ import {
   useConfirmationDialog
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import { useParams, useHistory } from 'react-router-dom'
 import { defaultTo, isEmpty, isNil, merge } from 'lodash-es'
 import { Dialog } from '@blueprintjs/core'

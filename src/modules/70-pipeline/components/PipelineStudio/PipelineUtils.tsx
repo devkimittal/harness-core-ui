@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { ITreeNode } from '@blueprintjs/core'
-import { Text, Color } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import get from 'lodash-es/get'
 import type { UseStringsReturn } from 'framework/strings'
 

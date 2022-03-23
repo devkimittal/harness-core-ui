@@ -13,11 +13,11 @@ import {
   Layout,
   Button,
   IconName,
-  Color,
   Heading,
   Container,
   Card
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { cloneDeep, noop, uniqBy } from 'lodash-es'
 import { Drawer, IDrawerProps, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core'
 import cx from 'classnames'

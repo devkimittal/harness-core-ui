@@ -16,10 +16,10 @@ import {
   Accordion,
   HarnessDocTooltip,
   ThumbnailSelect,
-  Color,
   ButtonVariation
 } from '@wings-software/uicore'
 import type { Item } from '@wings-software/uicore/dist/components/ThumbnailSelect/ThumbnailSelect'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import * as Yup from 'yup'
 import { omit, set } from 'lodash-es'

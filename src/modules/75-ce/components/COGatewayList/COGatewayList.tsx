@@ -10,7 +10,6 @@ import type { CellProps } from 'react-table'
 import cx from 'classnames'
 import {
   Text,
-  Color,
   Layout,
   Container,
   Button,
@@ -23,9 +22,9 @@ import {
   Page,
   TableV2,
   ExpandingSearchInput,
-  FontVariation,
   PageHeader
 } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'

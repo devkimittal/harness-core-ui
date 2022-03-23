@@ -10,8 +10,9 @@ import { useParams, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import ReactTimeago from 'react-timeago'
 import { Intent } from '@blueprintjs/core'
-import { Color, Container, ExpandingSearchInput, Layout, Pagination, TableV2, Text } from '@wings-software/uicore'
+import { Container, ExpandingSearchInput, Layout, Pagination, TableV2, Text } from '@wings-software/uicore'
 import type { Cell, Column } from 'react-table'
+import { Color } from '@harness/design-system'
 import ListingPageTemplate from '@cf/components/ListingPageTemplate/ListingPageTemplate'
 import {
   CF_DEFAULT_PAGE_SIZE,

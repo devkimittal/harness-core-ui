@@ -11,7 +11,8 @@ import { NGTooltipEditorPortal } from '../TooltipEditor'
 
 const getDefaultProps = (showTooltipEditor: boolean) => ({
   onEditorClose: jest.fn(),
-  showTooltipEditor
+  showTooltipEditor,
+  setPreviewDatasetFromLocalStorage: jest.fn()
 })
 
 describe('Tooltip editor tests', () => {

@@ -18,10 +18,9 @@ import {
   MultiSelectDropDown,
   SelectOption,
   MultiSelectOption,
-  FontVariation,
-  Color,
   Dialog
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 import debounce from 'p-debounce'

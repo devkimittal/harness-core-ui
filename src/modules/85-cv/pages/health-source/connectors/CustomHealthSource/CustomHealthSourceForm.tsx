@@ -107,6 +107,7 @@ export default function CustomHealthSourceForm(props: CustomHealthSourceFormInte
                 values={{
                   sli: !!formValue.sli,
                   healthScore: !!formValue.healthScore,
+                  riskCategory: formValue?.riskCategory,
                   continuousVerification: !!formValue.continuousVerification
                 }}
                 hideServiceIdentifier

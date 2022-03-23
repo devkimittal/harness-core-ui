@@ -17,9 +17,9 @@ import {
   StepProps,
   Text,
   ButtonVariation,
-  FontVariation,
   SelectOption
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { Form } from 'formik'
 import * as Yup from 'yup'
 import { defaultTo, get, map, memoize, merge } from 'lodash-es'
@@ -68,6 +68,19 @@ function NoRepositoryResults({ error }: { error: GetDataError<Failure | Error> |
       </Text>
     </span>
   )
+}
+
+const getRepositoryValue = (
+  formData: ImagePathTypes & { connectorId?: string },
+  isServerlessDeploymentTypeSelected = false
+): string => {
+  if (isServerlessDeploymentTypeSelected) {
+    if (formData?.repository?.value) {
+      return formData?.repository?.value
+    }
+    return formData?.repository
+  }
+  return formData?.repository
 }
 
 function Artifactory({
@@ -250,7 +263,7 @@ function Artifactory({
       isServerlessDeploymentTypeSelected
     )
     merge(artifactObj.spec, {
-      repository: isServerlessDeploymentTypeSelected ? formData?.repository?.value : formData?.repository,
+      repository: getRepositoryValue(formData, isServerlessDeploymentTypeSelected),
       repositoryUrl: formData?.repositoryUrl,
       repositoryFormat: isServerlessDeploymentTypeSelected ? 'generic' : repositoryFormat
     })

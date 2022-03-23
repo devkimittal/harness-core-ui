@@ -10,7 +10,6 @@ import {
   Accordion,
   Button,
   ButtonVariation,
-  Color,
   Formik,
   FormInput,
   getMultiTypeFromValue,
@@ -23,6 +22,7 @@ import {
   Text,
   StepWizard
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Classes, Dialog, IOptionProps, IDialogProps } from '@blueprintjs/core'
 import * as Yup from 'yup'
 import { v4 as uuid } from 'uuid'

@@ -6,13 +6,7 @@
  */
 
 import type { StringNGVariable, NumberNGVariable, SecretNGVariable, PipelineInfoConfig } from 'services/cd-ng'
-import type {
-  NodeRunInfo,
-  ExpressionBlock,
-  EntityGitDetails,
-  EntityValidityDetails,
-  InputSetResponse
-} from 'services/pipeline-ng'
+import type { NodeRunInfo, EntityGitDetails, EntityValidityDetails, InputSetResponse } from 'services/pipeline-ng'
 
 export type AllNGVariables = StringNGVariable | NumberNGVariable | SecretNGVariable
 
@@ -21,6 +15,11 @@ export interface ExecutionPageQueryParams {
   stage?: string
   step?: string
   retryStep?: string
+}
+
+export interface ExpressionBlock {
+  expression?: string
+  expressionValue?: string
 }
 
 export interface ConditionalExecutionNodeRunInfo extends NodeRunInfo {

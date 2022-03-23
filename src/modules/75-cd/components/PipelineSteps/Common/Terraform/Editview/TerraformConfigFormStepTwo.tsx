@@ -8,7 +8,6 @@
 import React from 'react'
 import {
   Button,
-  Color,
   Formik,
   Layout,
   Heading,
@@ -19,6 +18,7 @@ import {
   MultiTypeInputType,
   StepProps
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { Form } from 'formik'
 import { useVariablesExpression } from '@pipeline/components/PipelineStudio/PiplineHooks/useVariablesExpression'

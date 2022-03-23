@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Icon, SelectOption, Text, Button, Container, Layout, Color } from '@wings-software/uicore'
+import { Icon, SelectOption, Text, Button, Container, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Select } from '@blueprintjs/select'
 import { MenuItem } from '@blueprintjs/core'
 import cx from 'classnames'

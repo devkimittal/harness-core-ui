@@ -16,10 +16,10 @@ import {
   Layout,
   MultiTypeInputType,
   StepProps,
-  FontVariation,
   ButtonSize
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { set } from 'lodash-es'
 import { ConfigureOptions } from '@common/components/ConfigureOptions/ConfigureOptions'

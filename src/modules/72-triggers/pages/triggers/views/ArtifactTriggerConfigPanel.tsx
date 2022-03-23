@@ -6,7 +6,8 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { Layout, Text, Label, Container, Color, HarnessDocTooltip, PageSpinner } from '@wings-software/uicore'
+import { Layout, Text, Label, Container, HarnessDocTooltip, PageSpinner } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { NameIdDescriptionTags } from '@common/components'
 import { useStrings } from 'framework/strings'
 import { SelectArtifactModal } from './modals'

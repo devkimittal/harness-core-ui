@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Icon, Layout, Text, Utils, Button, ButtonVariation, FontVariation, Color } from '@wings-software/uicore'
+import { Icon, Layout, Text, Utils, Button, ButtonVariation } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { Intent, PopoverPosition } from '@blueprintjs/core'
 import type { FormikErrors } from 'formik'
 import cx from 'classnames'

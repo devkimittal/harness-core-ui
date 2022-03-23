@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Layout, FormInput, Text, Color, HarnessDocTooltip } from '@wings-software/uicore'
+import { Layout, FormInput, Text, HarnessDocTooltip } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { eventTypes } from '../utils/TriggersWizardPageUtils'
 import { GitSourceProviders } from '../utils/TriggersListUtils'

@@ -6,8 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Container, Layout, Icon, TextInput, Color } from '@wings-software/uicore'
+import { Container, Layout, Icon, TextInput } from '@wings-software/uicore'
 import { Popover, PopoverInteractionKind, Position } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import {
   QlceViewFieldIdentifierData,
   ViewFieldIdentifier,

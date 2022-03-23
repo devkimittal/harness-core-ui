@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Card, Icon, Layout, Text, Color, Checkbox } from '@wings-software/uicore'
+import { Card, Icon, Layout, Text, Checkbox } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { Permission } from 'services/rbac'
 import RbacFactory from '@rbac/factories/RbacFactory'
 import type { ResourceType, ResourceCategory } from '@rbac/interfaces/ResourceType'

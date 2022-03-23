@@ -7,15 +7,8 @@
 
 import React from 'react'
 import { connect } from 'formik'
-import {
-  Text,
-  getMultiTypeFromValue,
-  MultiTypeInputType,
-  FormikForm,
-  Color,
-  Container,
-  Layout
-} from '@wings-software/uicore'
+import { Text, getMultiTypeFromValue, MultiTypeInputType, FormikForm, Container, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { isEmpty, startCase } from 'lodash-es'
 import cx from 'classnames'
 import { useStrings } from 'framework/strings'

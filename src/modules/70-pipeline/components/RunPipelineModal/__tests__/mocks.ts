@@ -9,6 +9,7 @@ import type { UseGetMockDataWithMutateAndRefetch } from '@common/utils/testUtils
 import type {
   ResponseInputSetResponse,
   ResponseInputSetTemplateResponse,
+  ResponseInputSetTemplateWithReplacedExpressionsResponse,
   ResponseListStageExecutionResponse,
   ResponseMergeInputSetResponse,
   ResponsePageInputSetSummaryResponse,
@@ -33,20 +34,22 @@ export const mockCreateInputSetResponse: UseGetMockDataWithMutateAndRefetch<Resp
   }
 }
 
-export const mockPipelineTemplateYaml: UseGetMockDataWithMutateAndRefetch<ResponseInputSetTemplateResponse> = {
-  loading: false,
-  refetch: jest.fn(),
-  mutate: jest.fn(),
-  data: {
-    correlationId: '',
-    status: 'SUCCESS',
-    metaData: null as unknown as undefined,
+export const mockPipelineTemplateYaml: UseGetMockDataWithMutateAndRefetch<ResponseInputSetTemplateWithReplacedExpressionsResponse> =
+  {
+    loading: false,
+    refetch: jest.fn(),
+    mutate: jest.fn(),
     data: {
-      inputSetTemplateYaml:
-        'pipeline:\n  identifier: "First"\n  variables:\n  - name: "checkVariable1"\n    type: "String"\n    value: "<+input>"\n'
+      correlationId: '',
+      status: 'SUCCESS',
+      metaData: null as unknown as undefined,
+      data: {
+        hasInputSets: true,
+        inputSetTemplateYaml:
+          'pipeline:\n  identifier: "First"\n  variables:\n  - name: "checkVariable1"\n    type: "String"\n    value: "<+input>"\n'
+      }
     }
   }
-}
 
 export const mockPipelineTemplateYamlErrorResponse: UseGetMockDataWithMutateAndRefetch<ResponseInputSetTemplateResponse> =
   {
@@ -72,11 +75,12 @@ export const mockPipelineTemplateYamlForRerun: UseGetMockDataWithMutateAndRefetc
     status: 'SUCCESS',
     metaData: null as unknown as undefined,
     data: {
+      hasInputSets: true,
       inputSetTemplateYaml:
         'pipeline:\n  identifier: "First"\n  variables:\n  - name: "checkVariable1"\n    type: "String"\n    value: "<+input>"\n',
       inputSetYaml:
         'pipeline:\n  identifier: "First"\n  variables:\n  - name: "checkVariable1"\n    type: "String"\n    value: "variablevalue"\n'
-    }
+    } as any
   }
 }
 

@@ -6,17 +6,9 @@
  */
 
 import React, { useMemo } from 'react'
-import {
-  Icon,
-  Text,
-  Container,
-  Layout,
-  Heading,
-  Color,
-  timeToDisplayText,
-  HarnessDocTooltip
-} from '@wings-software/uicore'
+import { Icon, Text, Container, Layout, Heading, timeToDisplayText, HarnessDocTooltip } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { Duration } from '@common/exports'
 import { renderFailureRate } from './TestsUtils'

@@ -17,10 +17,9 @@ import {
   Container,
   NoDataCard,
   TableV2,
-  Intent,
-  useConfirmationDialog,
-  FontVariation
+  useConfirmationDialog
 } from '@wings-software/uicore'
+import { FontVariation, Intent } from '@harness/design-system'
 import { Classes, Menu, Position, PopoverInteractionKind, MenuItem } from '@blueprintjs/core'
 import type { ProjectPathProps, UserGroupPathProps } from '@common/interfaces/RouteInterfaces'
 import { useGetUsersInUserGroup, useRemoveMember, UserInfo } from 'services/cd-ng'

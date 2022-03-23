@@ -8,18 +8,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import * as Yup from 'yup'
-import {
-  Button,
-  Color,
-  Formik,
-  FormikForm,
-  FormInput,
-  Icon,
-  Layout,
-  Radio,
-  SelectOption,
-  Text
-} from '@wings-software/uicore'
+import { Button, Formik, FormikForm, FormInput, Icon, Layout, Radio, SelectOption, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useToaster } from '@common/exports'
 import type { AccessPointScreenMode } from '@ce/types'
 import { useStrings } from 'framework/strings'

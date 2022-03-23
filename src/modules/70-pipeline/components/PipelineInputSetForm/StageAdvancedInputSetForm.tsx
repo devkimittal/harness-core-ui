@@ -8,13 +8,13 @@
 import React, { useState } from 'react'
 import {
   Text,
-  Color,
   HarnessDocTooltip,
   Layout,
   Container,
   MultiTypeInputType,
   getMultiTypeFromValue
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { isEmpty, get } from 'lodash-es'
 import { connect, FormikContext } from 'formik'
 import cx from 'classnames'

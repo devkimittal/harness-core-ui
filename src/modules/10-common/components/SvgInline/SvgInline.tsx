@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Color, Text, Icon, Layout } from '@wings-software/uicore'
+import { Text, Icon, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 interface SvgInlineProps {

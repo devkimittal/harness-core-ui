@@ -7,8 +7,9 @@
 
 import React from 'react'
 import type { DiagramEngine } from '@projectstorm/react-diagrams-core'
-import { Icon, Text, Button, Color, ButtonVariation } from '@wings-software/uicore'
+import { Icon, Text, Button, ButtonVariation } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { Position } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
 import type { DefaultNodeModel } from './DefaultNodeModel'

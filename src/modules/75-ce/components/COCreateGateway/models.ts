@@ -7,7 +7,9 @@
 
 import type {
   AccessPoint,
+  AccessPointCore,
   ASGMinimal,
+  AzureAccessPointCore,
   ContainerSvc,
   HealthCheck,
   PortConfig,
@@ -148,7 +150,29 @@ export interface CustomDomainDetails {
   }
 }
 
-export interface ActiveStepDetailsProps {
+export interface ASRuleCreationActiveStep {
   count?: number
   tabId?: string
+}
+
+export interface BaseFetchDetails {
+  gatewayDetails: GatewayDetails
+  accountId: string
+  projectId?: string
+  orgId?: string
+}
+
+export interface GetInitialAccessPointDetails extends BaseFetchDetails {
+  lbDetails?: AccessPointCore
+}
+
+export interface GetInitialAzureAccessPoint extends BaseFetchDetails {
+  lbDetails?: AzureAccessPointCore
+}
+
+export interface RuleCreationParams {
+  isAwsProvider?: boolean
+  isAzureProvider?: boolean
+  isCreateMode?: boolean
+  isGcpProvider?: boolean
 }

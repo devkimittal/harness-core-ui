@@ -18,9 +18,9 @@ import {
   FormikForm,
   FormInput,
   getMultiTypeFromValue,
-  MultiTypeInputType,
-  Intent
+  MultiTypeInputType
 } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { setFormikRef, StepFormikFowardRef, StepViewType } from '@pipeline/components/AbstractSteps/Step'
 import { useStrings } from 'framework/strings'
 import {

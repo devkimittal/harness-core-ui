@@ -7,7 +7,7 @@
 
 import React from 'react'
 import { render } from '@testing-library/react'
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { TestWrapper } from '@common/utils/testUtils'
 import { StackedSummaryBar } from '../StackedSummaryBar'
 

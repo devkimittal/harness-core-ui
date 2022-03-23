@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Button, Color, Container, Heading, Intent, Text } from '@wings-software/uicore'
+import { Button, Container, Heading, Text } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
+import { Intent, Color } from '@harness/design-system'
 import routes from '@common/RouteDefinitions'
 import { useStrings } from 'framework/strings'
 import theBasicsImage from './basics.svg'

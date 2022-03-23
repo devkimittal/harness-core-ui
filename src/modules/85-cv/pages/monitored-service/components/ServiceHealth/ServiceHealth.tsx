@@ -6,7 +6,8 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Container, FontVariation, Heading, Layout, Select, SelectOption } from '@wings-software/uicore'
+import { Container, Heading, Layout, Select, SelectOption } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import Card from '@cv/components/Card/Card'
 import { useStrings } from 'framework/strings'
 import ChangeTimeline from '@cv/components/ChangeTimeline/ChangeTimeline'

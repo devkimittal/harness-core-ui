@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Button, ButtonVariation, Color, Heading, Layout, PageBody } from '@wings-software/uicore'
+import { Button, ButtonVariation, Heading, Layout, PageBody } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'

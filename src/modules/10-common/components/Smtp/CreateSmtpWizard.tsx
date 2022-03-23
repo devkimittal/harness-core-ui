@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { StepWizard, Color } from '@wings-software/uicore'
+import { StepWizard } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { NgSmtpDTO } from 'services/cd-ng'
 import StepSmtpDetails from './views/StepDetails'

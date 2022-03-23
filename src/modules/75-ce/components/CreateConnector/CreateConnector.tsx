@@ -7,8 +7,9 @@
 
 import React, { useState, useEffect, useMemo } from 'react'
 import { Dialog, IconName, IDialogProps } from '@blueprintjs/core'
-import { Button, CardSelect, Carousel, Color, Container, Heading, Icon, Layout, Text } from '@wings-software/uicore'
+import { Button, CardSelect, Carousel, Container, Heading, Icon, Layout, Text } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import useCreateConnectorModal from '@connectors/modals/ConnectorModal/useCreateConnectorModal'
 import { Connectors } from '@connectors/constants'
 import type { ConnectorInfoDTO } from 'services/cd-ng'

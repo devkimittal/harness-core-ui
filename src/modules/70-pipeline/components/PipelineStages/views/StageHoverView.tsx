@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { FontVariation, Icon, IconName, Layout, Text } from '@wings-software/uicore'
+import { Icon, IconName, Layout, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { SelectedAddStageTypeData } from './AddStageView'
 import css from './AddStageView.module.scss'

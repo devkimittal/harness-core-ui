@@ -50,6 +50,8 @@ interface COGatewayAccessProps {
   setGatewayDetails: (gw: GatewayDetails) => void
   activeStepDetails?: { count?: number; tabId?: string } | null
   allServices: Service[]
+  serverNames: string[]
+  setServerNames: (val: string[]) => void
 }
 
 const COGatewayAccess: React.FC<COGatewayAccessProps> = props => {
@@ -304,6 +306,8 @@ const COGatewayAccess: React.FC<COGatewayAccessProps> = props => {
                       setGatewayDetails={props.setGatewayDetails}
                       onInfoIconClick={() => setDrawerOpen(true)}
                       activeStepDetails={props.activeStepDetails}
+                      serverNames={props.serverNames}
+                      setServerNames={props.setServerNames}
                     />
                   }
                 ></Tab>

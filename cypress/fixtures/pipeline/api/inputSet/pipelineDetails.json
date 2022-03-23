@@ -1,0 +1,22 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "yamlPipeline": "pipeline:\n    name: testPipeline_Cypress\n    identifier: testPipeline_Cypress\n    allowStageExecutions: false\n    projectIdentifier: project1\n    orgIdentifier: default\n    tags: {}\n    stages:\n        - stage:\n              name: testStage_Cypress\n              identifier: testStage_Cypress\n              description: \"\"\n              type: Deployment\n              spec:\n                  serviceConfig:\n                      serviceRef: <+input>\n                      serviceDefinition:\n                          type: Kubernetes\n                          spec:\n                              variables:\n                                  - name: testVariable\n                                    type: String\n                                    value: varvalue\n                  infrastructure:\n                      environmentRef: testEnv\n                      infrastructureDefinition:\n                          type: KubernetesDirect\n                          spec:\n                              connectorRef: dynarace\n                              namespace: default\n                              releaseName: release-<+INFRA_KEY>\n                      allowSimultaneousDeployments: false\n                  execution:\n                      steps:\n                          - step:\n                                name: Rollout Deployment\n                                identifier: rolloutDeployment\n                                type: K8sRollingDeploy\n                                timeout: 10m\n                                spec:\n                                    skipDryRun: false\n                      rollbackSteps:\n                          - step:\n                                name: Rollback Rollout Deployment\n                                identifier: rollbackRolloutDeployment\n                                type: K8sRollingRollback\n                                timeout: 10m\n                                spec: {}\n              tags: {}\n              failureStrategies:\n                  - onFailure:\n                        errors:\n                            - AllErrors\n                        action:\n                            type: StageRollback\n",
+    "version": 0,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "modules": ["cd"]
+  },
+  "metaData": null,
+  "correlationId": "4fb4c4cf-fdfc-4812-9e6c-1de132e7c6d1"
+}

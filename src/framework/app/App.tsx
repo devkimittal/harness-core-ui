@@ -49,6 +49,7 @@ interface AppProps {
 }
 
 const Harness = (window.Harness = window.Harness || {})
+const PREVIEW_TOOLTIP_DATASET_KEY = 'previewTooltipDataset'
 
 const getRequestOptions = (): Partial<RequestInit> => {
   const token = SessionToken.getToken()
@@ -115,6 +116,8 @@ export function AppWithAuthentication(props: AppProps): React.ReactElement {
   }
 
   const [showTooltipEditor, setShowTooltipEditor] = useState(false)
+  const [tooltipDictionaryContext, setTooltipDictionaryContext] = useState(tooltipDictionary)
+
   Harness.openNgTooltipEditor = () => setShowTooltipEditor(true)
   Harness.openTooltipEditor = () => setShowTooltipEditor(true)
 
@@ -155,6 +158,32 @@ export function AppWithAuthentication(props: AppProps): React.ReactElement {
     }
   })
 
+  const onEditorClose = React.useCallback(() => {
+    setShowTooltipEditor(false)
+    setTooltipDictionaryContext(tooltipDictionary)
+  }, [])
+
+  const onPreviewDatasetFromLocalStorage = React.useCallback(() => {
+    if (showTooltipEditor) {
+      const fromLocalStorage = localStorage.getItem(PREVIEW_TOOLTIP_DATASET_KEY)
+      if (typeof fromLocalStorage === 'string') {
+        try {
+          const parsed = JSON.parse(fromLocalStorage)
+          const isExpired = Date.now() > parsed?.expiry
+          if (!isExpired) {
+            setTooltipDictionaryContext(parsed.value)
+          } else {
+            setTooltipDictionaryContext(tooltipDictionary)
+            localStorage.removeItem(PREVIEW_TOOLTIP_DATASET_KEY)
+          }
+        } catch (e) {
+          setTooltipDictionaryContext(tooltipDictionary)
+          window.alert(`Error while parsing preview dataset - ${e}`)
+        }
+      }
+    }
+  }, [showTooltipEditor])
+
   return (
     <RestfulProvider
       base="/"
@@ -164,7 +193,7 @@ export function AppWithAuthentication(props: AppProps): React.ReactElement {
       onResponse={globalResponseHandler}
     >
       <StringsContextProvider initialStrings={props.strings}>
-        <TooltipContextProvider initialTooltipDictionary={tooltipDictionary}>
+        <TooltipContextProvider initialTooltipDictionary={tooltipDictionaryContext}>
           <AppStoreProvider>
             <AppErrorBoundary>
               <FeaturesProvider>
@@ -173,7 +202,8 @@ export function AppWithAuthentication(props: AppProps): React.ReactElement {
                     <RouteDestinations />
                     <NGTooltipEditorPortal
                       showTooltipEditor={showTooltipEditor}
-                      onEditorClose={() => setShowTooltipEditor(false)}
+                      onEditorClose={onEditorClose}
+                      setPreviewDatasetFromLocalStorage={onPreviewDatasetFromLocalStorage}
                     />
                   </PermissionsProvider>
                 </LicenseStoreProvider>

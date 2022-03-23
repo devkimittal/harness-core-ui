@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Text, SelectOption, Container, Layout, Color, MultiTypeInputType } from '@wings-software/uicore'
+import { Text, SelectOption, Container, Layout, MultiTypeInputType } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { connect } from 'formik'
 import type { K8sDirectInfraYaml } from 'services/ci'

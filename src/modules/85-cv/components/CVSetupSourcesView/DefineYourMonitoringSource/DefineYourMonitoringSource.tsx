@@ -6,9 +6,10 @@
  */
 
 import React from 'react'
-import { Container, Text, Card, CardBody, Color } from '@wings-software/uicore'
+import { Container, Text, Card, CardBody } from '@wings-software/uicore'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'
 import type { FormikProps } from 'formik'
+import { Color } from '@harness/design-system'
 import { NameIdDescriptionTags } from '@common/components'
 import { SetupSourceCardHeader, SetupSourceCardHeaderProps } from '../SetupSourceCardHeader/SetupSourceCardHeader'
 import css from './DefineYourMonitoringSource.module.scss'

@@ -6,17 +6,8 @@
  */
 
 import React, { ReactElement } from 'react'
-import {
-  ButtonVariation,
-  Dialog,
-  Layout,
-  Button,
-  FontVariation,
-  Heading,
-  Icon,
-  Text,
-  Color
-} from '@wings-software/uicore'
+import { ButtonVariation, Dialog, Layout, Button, Heading, Icon, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 export interface GitErrorModalProps {

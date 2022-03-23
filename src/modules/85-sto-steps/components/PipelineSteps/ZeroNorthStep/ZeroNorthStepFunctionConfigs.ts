@@ -28,7 +28,7 @@ export const transformValuesFieldsConfig = [
   },
   {
     name: specConnectorRef,
-    type: TransformValuesTypes.Text
+    type: TransformValuesTypes.ConnectorRef
   },
   {
     name: specPrivileged,

@@ -19,10 +19,10 @@ import {
   FormikForm,
   ModalErrorHandlerBinding,
   ModalErrorHandler,
-  FontVariation,
   FlexExpander
 } from '@wings-software/uicore'
 import { TagInput } from '@blueprintjs/core'
+import { FontVariation } from '@harness/design-system'
 import moment from 'moment'
 import { useStrings } from 'framework/strings'
 import formatCost from '@ce/utils/formatCost'

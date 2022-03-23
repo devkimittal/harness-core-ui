@@ -9,7 +9,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { debounce as _debounce, isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
 import { Drawer } from '@blueprintjs/core'
 import { Container, Layout, Button } from '@wings-software/uicore'
-import type { ActiveStepDetailsProps, GatewayDetails } from '@ce/components/COCreateGateway/models'
+import type { ASRuleCreationActiveStep, GatewayDetails } from '@ce/components/COCreateGateway/models'
 import COHelpSidebar from '@ce/components/COHelpSidebar/COHelpSidebar'
 import type { Service } from 'services/lw'
 import { CONFIG_IDLE_TIME_CONSTRAINTS, CONFIG_STEP_IDS, CONFIG_TOTAL_STEP_COUNTS, RESOURCES } from '@ce/constants'
@@ -28,7 +28,7 @@ interface COGatewayConfigProps {
   setGatewayDetails: (gwDetails: GatewayDetails) => void
   valid: boolean
   setValidity: (tab: boolean) => void
-  activeStepDetails?: ActiveStepDetailsProps | null
+  activeStepDetails?: ASRuleCreationActiveStep | null
   allServices: Service[]
 }
 

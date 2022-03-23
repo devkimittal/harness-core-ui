@@ -6,8 +6,8 @@
  */
 
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { Color, Container, Heading, Text, useConfirmationDialog } from '@wings-software/uicore'
-
+import { Container, Heading, Text, useConfirmationDialog } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import { SetupSourceLayout } from '@cv/components/CVSetupSourcesView/SetupSourceLayout/SetupSourceLayout'
@@ -80,7 +80,8 @@ export default function CloudMetricsHealthSource<T>(props: CloudMetricsHealthSou
     continuousVerification = false,
     isManualQuery,
     isCustomCreatedMetric,
-    serviceInstance
+    serviceInstance,
+    riskCategory
   } = formikProps?.values
 
   return (
@@ -130,6 +131,7 @@ export default function CloudMetricsHealthSource<T>(props: CloudMetricsHealthSou
                     values={{
                       sli,
                       healthScore,
+                      riskCategory,
                       serviceInstance,
                       continuousVerification
                     }}

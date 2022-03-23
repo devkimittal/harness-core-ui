@@ -15,9 +15,9 @@ import {
   Button,
   StepProps,
   Text,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { Form } from 'formik'
 import * as Yup from 'yup'
 import { defaultTo, isEmpty, merge } from 'lodash-es'

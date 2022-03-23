@@ -8,8 +8,8 @@
 import React, { useMemo } from 'react'
 import ReactTimeago from 'react-timeago'
 import type { Column, Renderer, CellProps } from 'react-table'
-import { Text, Color, Layout, TableV2 } from '@wings-software/uicore'
-
+import { Text, Layout, TableV2 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { EntitySetupUsageDTO, PageEntitySetupUsageDTO } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'
 import ResourceDetailFactory from '@common/factories/ResourceDetailFactory'

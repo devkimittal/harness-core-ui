@@ -22,10 +22,11 @@ interface RiskProfileProps {
   labelNamesResponse?: ReturnType<typeof useGetLabelNames>
   continuousVerificationEnabled?: boolean
   serviceInstance?: string
+  riskCategory?: string
 }
 
 export function RiskProfile(props: RiskProfileProps): JSX.Element {
-  const { metricPackResponse, labelNamesResponse, continuousVerificationEnabled, serviceInstance } = props
+  const { metricPackResponse, labelNamesResponse, continuousVerificationEnabled, serviceInstance, riskCategory } = props
   const { error, loading, data } = metricPackResponse
   const { getString } = useStrings()
   const { showError, clear } = useToaster()
@@ -46,7 +47,9 @@ export function RiskProfile(props: RiskProfileProps): JSX.Element {
   if (loading) {
     metricPackContent = (
       <Container>
-        <Text className={css.groupLabel}>{getString('cv.monitoringSources.baselineDeviation')}</Text>
+        <Text tooltipProps={{ dataTooltipId: 'riskProfileBaselineDeviation' }} className={css.groupLabel}>
+          {getString('cv.monitoringSources.baselineDeviation')}
+        </Text>
         {[1, 2, 3, 4].map(val => (
           <Container
             key={val}
@@ -64,6 +67,7 @@ export function RiskProfile(props: RiskProfileProps): JSX.Element {
         label={getString('cv.monitoringSources.riskCategoryLabel')}
         name={FieldNames.RISK_CATEGORY}
         items={metricPackOptions}
+        key={riskCategory}
       />
     )
   }

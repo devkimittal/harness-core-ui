@@ -7,7 +7,7 @@
 
 import React from 'react'
 import type { SelectOption } from '@wings-software/uicore'
-import { Intent } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { defaultTo, keyBy } from 'lodash-es'
 import { Tooltip } from '@blueprintjs/core'
 import type { PipelineInfoConfig } from 'services/cd-ng'

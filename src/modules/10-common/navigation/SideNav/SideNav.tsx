@@ -8,7 +8,8 @@
 import React, { ReactElement } from 'react'
 import cx from 'classnames'
 import { NavLink as Link, NavLinkProps } from 'react-router-dom'
-import { Text, Layout, Color, IconName, Icon, Container } from '@wings-software/uicore'
+import { Text, Layout, IconName, Icon, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import css from './SideNav.module.scss'
 
 export interface SideNavProps {

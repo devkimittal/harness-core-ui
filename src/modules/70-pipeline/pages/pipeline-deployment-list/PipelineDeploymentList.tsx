@@ -7,7 +7,8 @@
 
 import React, { useCallback } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import { Text, Icon, OverlaySpinner, Container, Layout, Color } from '@wings-software/uicore'
+import { Text, Icon, OverlaySpinner, Container, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import routes from '@common/RouteDefinitions'
 import {
   useGetListOfExecutions,

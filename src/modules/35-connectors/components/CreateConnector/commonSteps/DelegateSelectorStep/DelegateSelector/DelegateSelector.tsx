@@ -8,7 +8,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
-import { ButtonVariation, Color, Container, HarnessDocTooltip, Layout, Text } from '@wings-software/uicore'
+import { ButtonVariation, Container, HarnessDocTooltip, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { IOptionProps, Radio } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
 import { DelegateSelectors, useToaster } from '@common/components'
@@ -254,7 +255,11 @@ export const DelegateSelector: React.FC<DelegateSelectorProps> = props => {
 
   const CustomComponent = useMemo(() => {
     return (
-      <Layout.Horizontal flex={{ alignItems: 'center', justifyContent: 'flex-start' }} margin={{ bottom: 'medium' }}>
+      <Layout.Horizontal
+        flex={{ alignItems: 'center', justifyContent: 'flex-start' }}
+        spacing="small"
+        margin={{ bottom: 'medium' }}
+      >
         {DelegateSelectorsCustomComponent}
         {DelegateSelectorCountComponent}
       </Layout.Horizontal>

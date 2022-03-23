@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Card, Color, Container, Icon, Layout, Text, ButtonVariation, PageError } from '@wings-software/uicore'
+import { Card, Container, Icon, Layout, Text, ButtonVariation, PageError } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import ReactTimeago from 'react-timeago'
 import { defaultTo } from 'lodash-es'

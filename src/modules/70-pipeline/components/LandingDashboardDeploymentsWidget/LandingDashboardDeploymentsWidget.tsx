@@ -7,8 +7,9 @@
 
 import React, { useMemo, useState, useEffect } from 'react'
 import cx from 'classnames'
-import { Card, Color, Container, FontVariation, Icon, Layout, Select, SelectOption, Text } from '@wings-software/uicore'
+import { Card, Container, Icon, Layout, Select, SelectOption, Text } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { FontVariation, Color } from '@harness/design-system'
 import { defaultTo } from 'lodash-es'
 import type { TooltipFormatterContextObject } from 'highcharts'
 import type { GetDataError } from 'restful-react'

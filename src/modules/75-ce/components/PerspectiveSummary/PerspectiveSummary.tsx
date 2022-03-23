@@ -13,8 +13,6 @@ import {
   Container,
   FlexExpander,
   Icon,
-  FontVariation,
-  Color,
   Carousel,
   Button,
   Link,
@@ -22,6 +20,7 @@ import {
   ButtonVariation
 } from '@wings-software/uicore'
 import cx from 'classnames'
+import { FontVariation, Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import {

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { isEmpty } from 'lodash-es'
-import { Color, Heading, Layout, TabNavigation } from '@wings-software/uicore'
+import { Heading, Layout, TabNavigation } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { matchPath, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 import { Page } from '@common/exports'
 import routes from '@common/RouteDefinitions'

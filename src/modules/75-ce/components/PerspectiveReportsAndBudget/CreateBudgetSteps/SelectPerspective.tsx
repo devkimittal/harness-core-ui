@@ -7,10 +7,8 @@
 
 import React from 'react'
 import {
-  Color,
   Container,
   Text,
-  FontVariation,
   FormikForm,
   FormInput,
   Formik,
@@ -20,6 +18,7 @@ import {
   ButtonVariation,
   StepProps
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams, useHistory } from 'react-router-dom'
 import { get } from 'lodash-es'
 import { useToaster } from '@common/components'

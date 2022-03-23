@@ -11,10 +11,17 @@ import { useStrings } from 'framework/strings'
 import { HTTPRequestMethod } from './HTTPRequestMethod.types'
 import { CustomHealthValidationPathFieldNames } from '../../CustomHealthValidationPath.constants'
 
-export const HTTPRequestMethodOption = ({ onChange }: { onChange?: (val: HTTPRequestMethod) => void }) => {
+export const HTTPRequestMethodOption = ({
+  value,
+  onChange
+}: {
+  value?: string
+  onChange?: (val: HTTPRequestMethod) => void
+}) => {
   const { getString } = useStrings()
   return (
     <FormInput.RadioGroup
+      key={value}
       radioGroup={{ inline: true }}
       label={getString('connectors.requestMethod')}
       name={CustomHealthValidationPathFieldNames.REQUEST_METHOD}

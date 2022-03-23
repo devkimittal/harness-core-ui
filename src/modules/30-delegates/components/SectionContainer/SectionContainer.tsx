@@ -7,7 +7,8 @@
 
 import React, { ReactNode } from 'react'
 import cx from 'classnames'
-import { Container, Text, TextProps, HarnessDocTooltip, FontVariation } from '@wings-software/uicore'
+import { Container, Text, TextProps, HarnessDocTooltip } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import type { ContainerProps } from '@wings-software/uicore/dist/components/Container/Container'
 import css from './SectionContainer.module.scss'
 

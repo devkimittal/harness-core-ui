@@ -782,20 +782,6 @@ exports[`Test GatewayDetails renders review screen 1`] = `
                   <p
                     class="StyledProps--font StyledProps--main"
                   >
-                    Is it publicly accessible?
-                  </p>
-                  <p
-                    class="StyledProps--font StyledProps--main"
-                  >
-                    Yes
-                  </p>
-                </div>
-                <div
-                  class="Layout--horizontal Layout--layout-spacing-large StyledProps--main equalSpacing borderSpacing StyledProps--padding-bottom-medium"
-                >
-                  <p
-                    class="StyledProps--font StyledProps--main"
-                  >
                     Auto generated URL
                   </p>
                   <p

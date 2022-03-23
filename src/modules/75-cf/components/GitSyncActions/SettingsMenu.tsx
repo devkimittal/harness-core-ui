@@ -6,9 +6,9 @@
  */
 
 import React, { ReactElement } from 'react'
-import { Text, Layout, Color, Container, Switch } from '@wings-software/uicore'
+import { Text, Layout, Container, Switch } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
-
 interface SettingsMenuProps {
   isAutoCommitEnabled: boolean
   isGitSyncPaused: boolean

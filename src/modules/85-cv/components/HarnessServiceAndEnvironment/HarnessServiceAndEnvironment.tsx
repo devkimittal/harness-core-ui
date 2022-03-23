@@ -125,6 +125,7 @@ export function HarnessServiceAsFormField(props: {
   return (
     <FormInput.CustomRender
       {...customRenderProps}
+      tooltipProps={{ dataTooltipId: 'serviceSelectOrCreate' }}
       key={`${serviceProps.item?.value as string}`}
       render={formikProps => (
         <ServiceSelectOrCreate
@@ -150,6 +151,7 @@ export function HarnessEnvironmentAsFormField(props: {
   return (
     <FormInput.CustomRender
       {...customRenderProps}
+      tooltipProps={{ dataTooltipId: 'environmentSelectOrCreate' }}
       key={`${
         Array.isArray(environmentProps.item)
           ? (environmentProps.item?.[0]?.value as string)

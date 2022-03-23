@@ -8,8 +8,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import YAML from 'yaml'
 import { Classes, Switch } from '@blueprintjs/core'
-import { Text, Icon, Layout, Button, Card, IconName, Color, ButtonVariation, Container } from '@wings-software/uicore'
+import { Text, Icon, Layout, Button, Card, IconName, ButtonVariation, Container } from '@wings-software/uicore'
 import { defaultTo, get, isEmpty, set, startCase } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import produce from 'immer'
 import {
@@ -21,7 +22,8 @@ import {
   useGetExecutionStrategyYaml
 } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'
-import type { DeploymentStageElementConfig } from '@pipeline/utils/pipelineTypes'
+import type { DeploymentStageElementConfig, StageElementWrapper } from '@pipeline/utils/pipelineTypes'
+import { getSelectedDeploymentType } from '@pipeline/utils/stageHelpers'
 import { usePipelineContext } from '../PipelineContext/PipelineContext'
 import { DrawerTypes } from '../PipelineContext/PipelineActions'
 import Default from './resources/BlankCanvas.png'
@@ -93,15 +95,16 @@ function ExecutionStrategyRef(
 
   const serviceDefinitionType = useCallback((): GetExecutionStrategyYamlQueryParams['serviceDefinitionType'] => {
     const isPropagating = get(selectedStage, 'stage.spec.serviceConfig.useFromStage', null)
-    if (isPropagating) {
-      const parentStageId = isPropagating.stage
-      const parentStage = getStageFromPipeline<DeploymentStageElementConfig>(parentStageId || '')
-      return get(parentStage, 'stage.stage.spec.serviceConfig.serviceDefinition.type', null)
-    }
-    return get(selectedStage, 'stage.spec.serviceConfig.serviceDefinition.type', null)
+    return getSelectedDeploymentType(
+      selectedStage as StageElementWrapper<DeploymentStageElementConfig>,
+      getStageFromPipeline,
+      isPropagating
+    )
   }, [getStageFromPipeline, selectedStage])
 
-  const [selectedStrategy, setSelectedStrategy] = useState<StrategyType>('Rolling')
+  const [selectedStrategy, setSelectedStrategy] = useState<StrategyType>(
+    serviceDefinitionType() === 'ServerlessAwsLambda' ? 'Basic' : 'Rolling'
+  )
 
   const infoByType: { [key: string]: string } = {
     BlueGreen: getString('pipeline.executionStrategy.strategies.blueGreen.description'),
@@ -324,7 +327,7 @@ function ExecutionStrategyRef(
             text={getString('pipeline.executionStrategy.useStrategy')}
             onClick={() => {
               const newStage = produce(selectedStage, draft => {
-                const jsonFromYaml = YAML.parse(yamlSnippet?.data || '') as StageElementConfig
+                const jsonFromYaml = YAML.parse(defaultTo(yamlSnippet?.data, '')) as StageElementConfig
                 if (draft.stage && draft.stage.spec) {
                   draft.stage.failureStrategies = jsonFromYaml?.failureStrategies
                   ;(draft.stage.spec as DeploymentStageConfig).execution = (jsonFromYaml?.spec as DeploymentStageConfig)

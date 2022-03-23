@@ -6,7 +6,8 @@
  */
 
 import React, { Dispatch, SetStateAction } from 'react'
-import { Color, Layout, Switch, Collapse, useConfirmationDialog, Intent } from '@wings-software/uicore'
+import { Layout, Switch, Collapse, useConfirmationDialog } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useToaster } from '@common/components'
 import { AuthenticationMechanisms } from '@auth-settings/constants/utils'

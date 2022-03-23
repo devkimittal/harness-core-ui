@@ -15,13 +15,12 @@ import {
   Container,
   Layout,
   FormInput,
-  FontVariation,
   ModalErrorHandlerBinding,
   ModalErrorHandler,
-  Color,
   getErrorInfoFromErrorObject,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { NgSmtpDTO, SmtpConfigDTO, useValidateName } from 'services/cd-ng'

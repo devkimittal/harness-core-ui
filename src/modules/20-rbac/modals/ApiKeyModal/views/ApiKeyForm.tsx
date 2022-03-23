@@ -11,13 +11,13 @@ import {
   Layout,
   Formik,
   Text,
-  Color,
   Button,
   Container,
   ModalErrorHandler,
   ModalErrorHandlerBinding,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Form } from 'formik'
 import { useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'

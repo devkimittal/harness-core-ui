@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'
 import {
   Button,
-  Color,
   Formik,
   FormikForm as Form,
   Layout,
@@ -26,6 +25,7 @@ import {
   useToaster
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import { useStrings } from 'framework/strings'
 import { NameSchema } from '@common/utils/Validation'

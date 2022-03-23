@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import type { Color } from '@wings-software/uicore'
+import type { Color } from '@harness/design-system'
 import type { TemplateType } from '@templates-library/utils/templatesUtils'
 import type { TemplateFormRef } from '@templates-library/components/TemplateStudio/TemplateStudio'
 

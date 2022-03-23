@@ -8,9 +8,7 @@
 import React, { useContext, useMemo, useState } from 'react'
 import {
   Button,
-  Color,
   Container,
-  FontVariation,
   Heading,
   Layout,
   Pagination,
@@ -23,6 +21,7 @@ import {
 } from '@wings-software/uicore'
 import { get } from 'lodash-es'
 import type { Column } from 'react-table'
+import { FontVariation, Color } from '@harness/design-system'
 import type { EnvironmentResponseDTO } from 'services/cd-ng'
 import { ApiKey, useDeleteAPIKey, useGetAllAPIKeys } from 'services/cf'
 import { useToaster } from '@common/exports'

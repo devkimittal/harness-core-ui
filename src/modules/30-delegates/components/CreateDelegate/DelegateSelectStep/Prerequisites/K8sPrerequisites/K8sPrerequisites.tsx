@@ -8,7 +8,8 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-import { Layout, Color, Text, Container } from '@wings-software/uicore'
+import { Layout, Text, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { DelegateSizeDetails, useGetDelegateSizes } from 'services/portal'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'

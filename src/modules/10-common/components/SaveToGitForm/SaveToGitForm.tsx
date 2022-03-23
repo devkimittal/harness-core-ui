@@ -10,7 +10,6 @@ import { Popover, Position } from '@blueprintjs/core'
 import {
   Container,
   Text,
-  Color,
   Layout,
   Formik,
   FormikForm,
@@ -24,6 +23,7 @@ import {
   ModalErrorHandlerBinding,
   PageSpinner
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { debounce, isEmpty, pick, defaultTo } from 'lodash-es'
 import type { FormikContext } from 'formik'

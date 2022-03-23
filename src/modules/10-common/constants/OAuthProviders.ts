@@ -6,7 +6,7 @@
  */
 
 import type { IconName } from '@wings-software/uicore'
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 
 export type Providers = 'AZURE' | 'BITBUCKET' | 'GITHUB' | 'GITLAB' | 'GOOGLE' | 'LINKEDIN'
 

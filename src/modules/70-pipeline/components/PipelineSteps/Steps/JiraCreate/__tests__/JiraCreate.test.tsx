@@ -10,6 +10,7 @@ import { render, act, fireEvent, queryByAttribute, waitFor } from '@testing-libr
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { StepFormikRef, StepViewType } from '@pipeline/components/AbstractSteps/Step'
 import { useGetJiraProjects } from 'services/cd-ng'
+import { TestWrapper } from '@common/utils/testUtils'
 import { TestStepWidget, factory } from '../../__tests__/StepTestUtil'
 import { JiraCreate } from '../JiraCreate'
 import {
@@ -21,8 +22,10 @@ import {
   mockProjectMetadataResponse,
   mockProjectsResponse,
   mockProjectsErrorResponse,
-  getJiraCreateEditModePropsWithConnectorId
+  getJiraCreateEditModePropsWithConnectorId,
+  getJiraFieldRendererProps
 } from './JiraCreateTestHelper'
+import { JiraFieldsRenderer } from '../JiraFieldsRenderer'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 
@@ -302,5 +305,54 @@ describe('Jira Create tests', () => {
       },
       name: 'jira createe step'
     })
+  })
+
+  test('Jira Fields Renderer Test', () => {
+    const props = getJiraFieldRendererProps()
+    const { container } = render(
+      <TestWrapper>
+        <JiraFieldsRenderer {...props}></JiraFieldsRenderer>
+      </TestWrapper>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('Minimum time cannot be less than 10s', () => {
+    const response = new JiraCreate().validateInputSet({
+      data: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '1s',
+        type: 'JiraCreate',
+        spec: {
+          connectorRef: '',
+          projectKey: '',
+          issueType: '',
+          summary: '',
+          description: '',
+          fields: [],
+          selectedFields: [],
+          delegateSelectors: undefined
+        }
+      },
+      template: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '<+input>',
+        type: 'JiraCreate',
+        spec: {
+          connectorRef: '',
+          projectKey: '',
+          issueType: '',
+          summary: '',
+          description: '',
+          fields: [],
+          selectedFields: [],
+          delegateSelectors: undefined
+        }
+      },
+      viewType: StepViewType.TriggerForm
+    })
+    expect(response).toMatchSnapshot('Value must be greater than or equal to "10s"')
   })
 })

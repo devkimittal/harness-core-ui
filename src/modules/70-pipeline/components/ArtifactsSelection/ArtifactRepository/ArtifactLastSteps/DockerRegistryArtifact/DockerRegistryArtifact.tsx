@@ -6,9 +6,10 @@
  */
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { Formik, Layout, Button, StepProps, Text, ButtonVariation, FontVariation } from '@wings-software/uicore'
+import { Formik, Layout, Button, StepProps, Text, ButtonVariation } from '@wings-software/uicore'
 import { Form } from 'formik'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import { defaultTo } from 'lodash-es'
 import { useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'

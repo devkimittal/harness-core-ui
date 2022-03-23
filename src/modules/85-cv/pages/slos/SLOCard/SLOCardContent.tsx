@@ -6,16 +6,8 @@
  */
 
 import React, { useMemo, useState } from 'react'
-import {
-  Layout,
-  Color,
-  Container,
-  Heading,
-  FontVariation,
-  PillToggle,
-  PillToggleProps,
-  Text
-} from '@wings-software/uicore'
+import { Layout, Container, Heading, PillToggle, PillToggleProps, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { PageSpinner } from '@common/components'
 import { useStrings } from 'framework/strings'
 import { SLOTargetChart } from '@cv/pages/slos/components/SLOTargetChart/SLOTargetChart'

@@ -12,6 +12,7 @@ import { StepViewType, StepFormikRef } from '@pipeline/components/AbstractSteps/
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { factory, TestStepWidget } from '@pipeline/components/PipelineSteps/Steps/__tests__/StepTestUtil'
 import { HttpStep } from '../HttpStep'
+import type { HttpStepVariablesViewProps } from '../HttpStepVariablesView'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 
@@ -173,9 +174,20 @@ describe('Http Step', () => {
         url: RUNTIME_INPUT_VALUE,
         requestBody: RUNTIME_INPUT_VALUE,
         timeout: RUNTIME_INPUT_VALUE,
-        assertion: RUNTIME_INPUT_VALUE
-        // headers: RUNTIME_INPUT_VALUE
-        // outputVariables: RUNTIME_INPUT_VALUE
+        assertion: RUNTIME_INPUT_VALUE,
+        headers: [
+          {
+            key: 'Authorization',
+            value: 'value'
+          }
+        ],
+        outputVariables: [
+          {
+            name: 'someVar',
+            value: '<+input>',
+            type: 'String'
+          }
+        ]
       }
     }
     const { container } = render(
@@ -203,6 +215,66 @@ describe('Http Step', () => {
       />
     )
 
+    expect(container).toMatchSnapshot()
+  })
+
+  test('render inputvariables ', () => {
+    const props = {
+      initialValues: {
+        spec: {}
+      },
+      customStepProps: {
+        originalData: {
+          identifier: 'data',
+          name: 'demo',
+          spec: {},
+          type: StepType.HTTP
+        },
+        variablesData: {
+          type: StepType.HTTP,
+          identifier: 'demo',
+          name: 'demo',
+          description: 'Description',
+          timeout: 'step-timeout',
+          spec: {
+            headers: [
+              {
+                key: 'Authorization',
+                value: 'value'
+              }
+            ],
+            outputVariables: [
+              {
+                name: 'someVar',
+                value: '<+input>',
+                type: 'String'
+              }
+            ]
+          }
+        },
+        metadataMap: {}
+      } as HttpStepVariablesViewProps
+    }
+    const { container } = render(
+      <TestStepWidget
+        initialValues={{}}
+        type={StepType.HTTP}
+        customStepProps={props.customStepProps}
+        stepViewType={StepViewType.InputVariable}
+      />
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('renders empty inputVariables', () => {
+    const { container } = render(
+      <TestStepWidget
+        initialValues={{}}
+        type={StepType.HTTP}
+        stepViewType={StepViewType.InputVariable}
+        customStepProps={{}}
+      />
+    )
     expect(container).toMatchSnapshot()
   })
 })

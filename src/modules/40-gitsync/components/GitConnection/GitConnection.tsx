@@ -9,17 +9,9 @@ import React, { useState } from 'react'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'
 import { Radio } from '@blueprintjs/core'
-import {
-  Button,
-  Card,
-  Color,
-  Container,
-  getErrorInfoFromErrorObject,
-  Layout,
-  StepProps,
-  Text
-} from '@wings-software/uicore'
+import { Button, Card, Container, getErrorInfoFromErrorObject, Layout, StepProps, Text } from '@wings-software/uicore'
 import { defaultTo, pick } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { GitSyncConfig, ResponseSaasGitDTO, useIsSaasGit, usePostGitSync, usePostGitSyncSetting } from 'services/cd-ng'
 import { useToaster } from '@common/exports'

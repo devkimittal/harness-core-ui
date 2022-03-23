@@ -7,7 +7,6 @@
 
 import React, { useState, useEffect } from 'react'
 import {
-  Color,
   Dialog,
   FormInput,
   getErrorInfoFromErrorObject,
@@ -18,6 +17,7 @@ import {
   Text,
   useToggleOpen
 } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { defaultTo, isEmpty } from 'lodash-es'
 import { useStrings } from 'framework/strings'

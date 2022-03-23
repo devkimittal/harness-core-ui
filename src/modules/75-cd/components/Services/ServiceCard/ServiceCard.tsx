@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Card, Text, Color, Container, TagsPopover, Layout } from '@harness/uicore'
+import { Card, Text, Container, TagsPopover, Layout } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import { defaultTo, isEmpty } from 'lodash-es'
 import type { ServiceResponse } from 'services/cd-ng'
 import { ServiceMenu } from '../ServicesListColumns/ServicesListColumns'

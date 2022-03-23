@@ -7,7 +7,8 @@
 
 import React, { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Color, Container, Layout, Text, FontVariation } from '@wings-software/uicore'
+import { Container, Layout, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import {
   K8sRecommendationFilterDtoInput,
   RecommendationItemDto,

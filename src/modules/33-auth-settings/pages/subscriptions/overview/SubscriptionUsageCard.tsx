@@ -7,7 +7,8 @@
 
 import React from 'react'
 
-import { Card, Color, Heading, Layout } from '@wings-software/uicore'
+import { Card, Heading, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { ModuleName } from 'framework/types/ModuleName'
 import CCMUsageInfo from '@auth-settings/pages/subscriptions/overview/CCMUsageInfo'

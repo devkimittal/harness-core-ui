@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Button, Color, Container, Heading, Layout, Text } from '@wings-software/uicore'
+import { Button, Container, Heading, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useModuleInfo } from '@common/hooks/useModuleInfo'
 import { useTelemetry } from '@common/hooks/useTelemetry'

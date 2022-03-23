@@ -15,7 +15,6 @@ import {
   Layout,
   Formik,
   FormikForm,
-  Color,
   Text,
   Icon,
   ButtonVariation,
@@ -26,6 +25,7 @@ import {
   useToaster
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import { parse } from 'yaml'
 import { useHistory, useParams } from 'react-router-dom'
 

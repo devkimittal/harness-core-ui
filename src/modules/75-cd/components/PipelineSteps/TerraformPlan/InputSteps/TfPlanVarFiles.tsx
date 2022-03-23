@@ -8,16 +8,8 @@
 import React from 'react'
 import cx from 'classnames'
 
-import {
-  Color,
-  FormInput,
-  getMultiTypeFromValue,
-  Label,
-  MultiTypeInputType,
-  Container,
-  Text
-} from '@wings-software/uicore'
-
+import { FormInput, getMultiTypeFromValue, Label, MultiTypeInputType, Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useVariablesExpression } from '@pipeline/components/PipelineStudio/PiplineHooks/useVariablesExpression'
 

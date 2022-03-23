@@ -1,0 +1,5 @@
+customSyntax: postcss-scss
+rules:
+  color-no-hex: [true, { 'severity': 'warning' }]
+  color-named: [never, { 'severity': 'warning' }]
+  unit-no-unknown: true

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { IconName, Icon, Layout, Text } from '@wings-software/uicore'
-import { Color, Container } from '@harness/uicore'
+import { Container } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import type { StageType } from '@pipeline/utils/stageHelpers'
 import type { StageElementWrapper } from '@pipeline/utils/pipelineTypes'
 import { getStageType } from '@pipeline/utils/templateUtils'

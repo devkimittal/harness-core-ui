@@ -19,9 +19,9 @@ import {
   Button,
   ModalErrorHandlerBinding,
   ModalErrorHandler,
-  FontVariation,
   ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { setupAwsSecretManagerFormData } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import {

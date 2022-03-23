@@ -100,3 +100,11 @@ export enum CloudProvider {
   AZURE = 'AZURE',
   CLUSTER = 'CLUSTER'
 }
+
+export interface DNSLinkSetupFormVal {
+  usingCustomDomain: string
+  customURL: string | undefined
+  publicallyAccessible: string
+  dnsProvider: string
+  route53Account: string | undefined
+}

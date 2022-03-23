@@ -11,8 +11,6 @@ import {
   ButtonSize,
   ButtonVariation,
   Card,
-  Color,
-  FontVariation,
   Formik,
   FormInput,
   HarnessDocTooltip,
@@ -20,6 +18,7 @@ import {
   Layout,
   Text
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { isEmpty, unset } from 'lodash-es'
 import { Page } from '@common/exports'

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container } from '@wings-software/uicore'
+import { Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { noop } from 'lodash-es'
 import type { TemplateFormRef } from '@templates-library/components/TemplateStudio/TemplateStudio'
 import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'

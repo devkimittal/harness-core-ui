@@ -15,13 +15,12 @@ import {
   ModalErrorHandler,
   ModalErrorHandlerBinding,
   StepProps,
-  FontVariation,
   ButtonVariation,
   PageSpinner
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import type { ConnectorRequestBody, ConnectorInfoDTO } from 'services/cd-ng'
-
 import { useStrings } from 'framework/strings'
 import SecretInput from '@secrets/components/SecretInput/SecretInput'
 

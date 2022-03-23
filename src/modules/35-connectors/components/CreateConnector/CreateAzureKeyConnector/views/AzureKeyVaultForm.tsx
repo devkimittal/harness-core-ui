@@ -7,17 +7,8 @@
 
 import React, { useState } from 'react'
 import * as Yup from 'yup'
-import {
-  StepProps,
-  Container,
-  Text,
-  Formik,
-  FormikForm,
-  Layout,
-  Button,
-  FontVariation,
-  ButtonVariation
-} from '@wings-software/uicore'
+import { StepProps, Container, Text, Formik, FormikForm, Layout, Button, ButtonVariation } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { AzureKeyVaultConnectorDTO } from 'services/cd-ng'
 import { PageSpinner } from '@common/components'

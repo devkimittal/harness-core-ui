@@ -1,0 +1,16 @@
+{
+  "status": "ERROR",
+  "code": "SCHEMA_VALIDATION_FAILED",
+  "message": "Invalid yaml: $.pipeline.stages[0].stage.spec.execution: is missing but it is required",
+  "correlationId": "d174366f-e2dd-4e9a-8474-df2d47c12bec",
+  "detailedMessage": null,
+  "responseMessages": [
+    {
+      "code": "SCHEMA_VALIDATION_FAILED",
+      "level": "ERROR",
+      "message": "Invalid yaml: $.pipeline.stages[0].stage.spec.execution: is missing but it is required",
+      "exception": null,
+      "failureTypes": []
+    }
+  ]
+}

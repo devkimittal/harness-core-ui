@@ -8,7 +8,6 @@
 import React, { useState } from 'react'
 import {
   Button,
-  Color,
   Formik,
   FormikForm as Form,
   Layout,
@@ -20,6 +19,7 @@ import {
   ButtonVariation
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import { UserInfo, useUpdateUserInfo } from 'services/cd-ng'

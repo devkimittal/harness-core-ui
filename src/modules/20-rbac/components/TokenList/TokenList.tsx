@@ -7,16 +7,8 @@
 
 import React, { useMemo, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Color,
-  Intent,
-  Layout,
-  Text,
-  Button,
-  Table,
-  ButtonVariation,
-  useConfirmationDialog
-} from '@wings-software/uicore'
+import { Layout, Text, Button, Table, ButtonVariation, useConfirmationDialog } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
 import { Classes, Menu, Popover, Position } from '@blueprintjs/core'
 import type { CellProps, Column, Renderer } from 'react-table'
 import ReactTimeago from 'react-timeago'

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, FontVariation, Icon, Text } from '@wings-software/uicore'
+import { Container, Icon, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { getRiskColorValue } from '@cv/utils/CommonUtils'
 import { useStrings } from 'framework/strings'
 import type { MetricsAccordionPanelSummaryProps } from './MetricsAccordionPanelSummary.types'

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Color, Layout, Text } from '@wings-software/uicore'
+import { Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import routes from '@common/RouteDefinitions'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
 import { useStrings } from 'framework/strings'

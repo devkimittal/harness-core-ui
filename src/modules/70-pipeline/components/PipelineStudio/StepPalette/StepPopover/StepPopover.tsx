@@ -6,9 +6,9 @@
  */
 
 import React from 'react'
-import { Text, Popover, Container, Layout, Color, Card, Icon } from '@wings-software/uicore'
+import { Text, Popover, Container, Layout, Card, Icon } from '@wings-software/uicore'
 import { Classes, IPopoverProps, PopoverInteractionKind, Position } from '@blueprintjs/core'
-
+import { Color } from '@harness/design-system'
 import { isEmpty, isNil } from 'lodash-es'
 import cx from 'classnames'
 import { iconMap } from '@pipeline/components/PipelineStudio/StepPalette/iconMap'

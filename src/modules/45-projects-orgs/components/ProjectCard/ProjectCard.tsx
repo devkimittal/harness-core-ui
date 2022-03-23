@@ -7,8 +7,9 @@
 
 import React, { useState } from 'react'
 import cx from 'classnames'
-import { Card, Text, Layout, CardBody, Container, Color, FontVariation } from '@wings-software/uicore'
+import { Card, Text, Layout, CardBody, Container } from '@wings-software/uicore'
 import { Classes } from '@blueprintjs/core'
+import { FontVariation, Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import type { Project, ProjectAggregateDTO } from 'services/cd-ng'

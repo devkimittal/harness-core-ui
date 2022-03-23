@@ -7,8 +7,9 @@
 
 import { omit, isEqual } from 'lodash-es'
 import type { TabId } from '@blueprintjs/core'
-import { Color, SelectOption, Utils } from '@wings-software/uicore'
+import { SelectOption, Utils } from '@wings-software/uicore'
 import type { FormikProps } from 'formik'
+import { Color } from '@harness/design-system'
 import type { UseStringsReturn, StringKeys } from 'framework/strings'
 import type {
   ServiceLevelObjectiveDTO,
@@ -22,7 +23,8 @@ import type {
   MonitoredServiceWithHealthSources,
   MetricDTO,
   ServiceLevelIndicatorDTO,
-  MonitoredServiceResponse
+  MonitoredServiceResponse,
+  MonitoredServiceDTO
 } from 'services/cv'
 import { initialValuesSLO } from './CVCreateSLO.constants'
 import {
@@ -239,11 +241,11 @@ export function getMonitoredServiceOptions(
   )
 }
 
-export function getHealthSourceOptions(monitoredService?: MonitoredServiceResponse): SelectOption[] {
+export function getHealthSourceOptions(monitoredService?: MonitoredServiceDTO): SelectOption[] {
   return (
-    monitoredService?.monitoredService?.sources?.healthSources?.map(healthSource => ({
-      label: healthSource.name ?? '',
-      value: healthSource.identifier ?? ''
+    monitoredService?.sources?.healthSources?.map(healthSource => ({
+      label: healthSource?.name ?? '',
+      value: healthSource?.identifier ?? ''
     })) ?? []
   )
 }

@@ -13,7 +13,6 @@ import {
   ButtonProps,
   CardSelect,
   Collapse,
-  Color,
   Container,
   Formik,
   FormInput,
@@ -21,6 +20,7 @@ import {
   Layout,
   Text
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import * as Yup from 'yup'
 import { ResponseEnvironmentResponseDTO, useCreateEnvironment } from 'services/cd-ng'

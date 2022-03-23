@@ -5,10 +5,11 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Color, IconName } from '@wings-software/uicore'
+import type { IconName } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+import type { PMSPipelineSummaryResponse } from 'services/pipeline-ng'
 import type { StringKeys } from 'framework/strings'
 import type { ServiceDefinition } from 'services/cd-ng'
-import type { PMSPipelineSummaryResponse } from 'services/pipeline-ng'
 
 export const getStatusColor = (data: PMSPipelineSummaryResponse): string => {
   switch (data.executionSummaryInfo?.lastExecutionStatus) {

@@ -13,11 +13,11 @@ import {
   FormikForm,
   Button,
   Text,
-  Color,
   ModalErrorHandler,
   ModalErrorHandlerBinding,
   Layout
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 

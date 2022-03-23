@@ -15,16 +15,15 @@ import {
   FormikForm,
   ModalErrorHandlerBinding,
   Container,
-  Color,
   Icon,
   FormInput,
   IconName,
   Card,
-  FontVariation,
   SelectOption
 } from '@wings-software/uicore'
 import cx from 'classnames'
 import * as Yup from 'yup'
+import { FontVariation, Color } from '@harness/design-system'
 import { noop, pick, defaultTo } from 'lodash-es'
 import { useToaster, StringUtils } from '@common/exports'
 import { usePostGitSync, GitSyncConfig, ConnectorInfoDTO } from 'services/cd-ng'

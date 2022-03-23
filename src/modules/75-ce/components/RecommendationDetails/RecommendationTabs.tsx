@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Layout, Text, Color, FontVariation } from '@wings-software/uicore'
+import { Container, Layout, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 
 import { useStrings } from 'framework/strings'

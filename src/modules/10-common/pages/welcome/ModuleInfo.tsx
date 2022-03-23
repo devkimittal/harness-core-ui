@@ -7,7 +7,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Button, Color, Container, Text, Layout, Heading } from '@wings-software/uicore'
+import { Button, Container, Text, Layout, Heading } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import routes from '@common/RouteDefinitions'

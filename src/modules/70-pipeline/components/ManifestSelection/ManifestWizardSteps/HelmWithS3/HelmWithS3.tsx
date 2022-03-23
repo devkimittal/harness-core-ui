@@ -23,10 +23,9 @@ import {
   getMultiTypeFromValue,
   MultiTypeInputType,
   SelectOption,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
-
+import { FontVariation } from '@harness/design-system'
 import { Menu } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
 import {

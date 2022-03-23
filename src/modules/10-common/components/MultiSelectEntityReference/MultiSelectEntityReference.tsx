@@ -17,10 +17,10 @@ import {
   Tab,
   Icon,
   IconName,
-  Color,
   Checkbox,
   PageError
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { debounce, isEmpty, isEqual } from 'lodash-es'
 import { Scope } from '@common/interfaces/SecretsInterface'
 import { useStrings } from 'framework/strings'

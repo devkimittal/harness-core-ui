@@ -6,8 +6,8 @@
  */
 
 import React from 'react'
-import { Color, CardSelect, Container, Text, Layout, Icon } from '@wings-software/uicore'
-
+import { CardSelect, Container, Text, Layout, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { DelegateTypes } from '@delegates/constants'
 
 import type { CardData } from '../DelegateSelectStep'

@@ -36,22 +36,25 @@ interface COGatewayDetailsProps {
   isEditFlow: boolean
 }
 const COGatewayDetails: React.FC<COGatewayDetailsProps> = props => {
-  const history = useHistory()
-  const { getString } = useStrings()
-  const { showError, showSuccess } = useToaster()
-  const { trackEvent } = useTelemetry()
-  const { currentUserInfo } = useAppStore()
-  const [selectedTabId, setSelectedTabId] = useState<string>(props.activeTab ?? ASRuleTabs.CONFIGURATION)
-  const [validConfig, setValidConfig] = useState<boolean>(false)
-  const [validAccessSetup, setValidAccessSetup] = useState<boolean>(false)
-  const [saveInProgress, setSaveInProgress] = useState<boolean>(false)
-  const [activeConfigStep, setActiveConfigStep] = useState<{ count?: number; tabId?: string } | null>(null)
-  const tabs = [ASRuleTabs.CONFIGURATION, ASRuleTabs.SETUP_ACCESS, ASRuleTabs.REVIEW]
   const { accountId, orgIdentifier, projectIdentifier } = useParams<{
     accountId: string
     orgIdentifier: string
     projectIdentifier: string
   }>()
+  const history = useHistory()
+  const { getString } = useStrings()
+  const { showError, showSuccess } = useToaster()
+  const { trackEvent } = useTelemetry()
+  const { currentUserInfo } = useAppStore()
+
+  const [selectedTabId, setSelectedTabId] = useState<string>(props.activeTab ?? ASRuleTabs.CONFIGURATION)
+  const [validConfig, setValidConfig] = useState<boolean>(false)
+  const [validAccessSetup, setValidAccessSetup] = useState<boolean>(false)
+  const [saveInProgress, setSaveInProgress] = useState<boolean>(false)
+  const [activeConfigStep, setActiveConfigStep] = useState<{ count?: number; tabId?: string } | null>(null)
+  const [serverNames, setServerNames] = useState<string[]>([])
+
+  const tabs = [ASRuleTabs.CONFIGURATION, ASRuleTabs.SETUP_ACCESS, ASRuleTabs.REVIEW]
 
   const { data: servicesData, error } = useGetServices({
     account_id: accountId,
@@ -158,7 +161,8 @@ const COGatewayDetails: React.FC<COGatewayDetailsProps> = props => {
         props.gatewayDetails,
         orgIdentifier,
         projectIdentifier,
-        accountId
+        accountId,
+        serverNames
       )
       const result = await saveGateway({ service: gateway, deps: props.gatewayDetails.deps, apply_now: false }) // eslint-disable-line
       // Rule creation is halted until the access point creation takes place successfully.
@@ -258,6 +262,8 @@ const COGatewayDetails: React.FC<COGatewayDetailsProps> = props => {
                   setGatewayDetails={props.setGatewayDetails}
                   activeStepDetails={activeConfigStep}
                   allServices={servicesData?.response as Service[]}
+                  serverNames={serverNames}
+                  setServerNames={setServerNames}
                 />
               }
             />
@@ -270,6 +276,7 @@ const COGatewayDetails: React.FC<COGatewayDetailsProps> = props => {
                   gatewayDetails={props.gatewayDetails}
                   onEdit={handleReviewDetailsEdit}
                   allServices={servicesData?.response as Service[]}
+                  serverNames={serverNames}
                 />
               }
             />

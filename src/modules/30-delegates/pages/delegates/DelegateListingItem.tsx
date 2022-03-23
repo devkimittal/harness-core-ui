@@ -15,12 +15,12 @@ import {
   Text,
   Layout,
   Popover,
-  Color,
   Card,
   useToaster,
   useConfirmationDialog,
   Icon
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Menu, MenuItem, Classes, Position } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
 import { useDeleteDelegateGroupByIdentifier, DelegateGroupDetails } from 'services/portal'

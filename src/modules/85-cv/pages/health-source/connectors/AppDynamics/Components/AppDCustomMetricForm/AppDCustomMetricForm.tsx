@@ -6,16 +6,8 @@
  */
 
 import React, { useState, useMemo, useEffect, useContext } from 'react'
-import {
-  Container,
-  Accordion,
-  SelectOption,
-  FormInput,
-  Text,
-  Color,
-  FontVariation,
-  Radio
-} from '@wings-software/uicore'
+import { Container, Accordion, SelectOption, FormInput, Text, Radio } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
@@ -206,7 +198,8 @@ export default function AppDCustomMetricForm(props: AppDCustomMetricFormInterfac
                   values={{
                     sli: !!formikValues?.sli,
                     healthScore: !!formikValues?.healthScore,
-                    continuousVerification: !!formikValues?.continuousVerification
+                    continuousVerification: !!formikValues?.continuousVerification,
+                    riskCategory: formikValues?.riskCategory
                   }}
                   metricPackResponse={metricPackResponse}
                   hideServiceIdentifier

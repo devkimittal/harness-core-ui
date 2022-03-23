@@ -6,7 +6,8 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { Container, Text, Icon, Color, FontVariation } from '@wings-software/uicore'
+import { Container, Text, Icon } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { Classes } from '@blueprintjs/core'
 import classnames from 'classnames'
 import { useParams } from 'react-router-dom'

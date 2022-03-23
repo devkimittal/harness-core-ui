@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { IconName, MultiTypeInputType } from '@wings-software/uicore'
 import type { FormikErrors } from 'formik'
 import type { StepProps, ValidateInputSetProps } from '@pipeline/components/AbstractSteps/Step'

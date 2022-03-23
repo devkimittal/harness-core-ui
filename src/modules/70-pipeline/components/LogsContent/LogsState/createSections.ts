@@ -87,7 +87,7 @@ export function createSections(state: State, action: Action<ActionType.CreateSec
        * progressMap must have a status for this unit.
        * In case it doesn't, fallback to the 'UNKNOWN' status.
        */
-      const unitProgress = hasNoUnits
+      const unitProgress: ProgressMapValue | undefined = hasNoUnits
         ? { status: snakeCase(node.status || 'NotStarted').toUpperCase() as UnitLoadingStatus }
         : progressMap.get(unit)
       const unitStatus: UnitLoadingStatus = unitProgress?.status || 'NOT_STARTED'

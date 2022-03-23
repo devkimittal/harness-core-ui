@@ -7,7 +7,8 @@
 
 import React, { useMemo } from 'react'
 import { Divider } from '@blueprintjs/core'
-import { Card, Color, Container, Text } from '@wings-software/uicore'
+import { Card, Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { ChangeEventDTO, VerifyStepSummary } from 'services/cv'
 import { useStrings } from 'framework/strings'
 import { verificationResultToIcon } from '@cv/components/ActivitiesTimelineView/TimelineTooltip'

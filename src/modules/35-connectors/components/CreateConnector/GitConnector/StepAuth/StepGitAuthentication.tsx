@@ -16,10 +16,10 @@ import {
   StepProps,
   Container,
   ButtonVariation,
-  FontVariation,
   PageSpinner
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import { setupGitFormData, GitConnectionType } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'

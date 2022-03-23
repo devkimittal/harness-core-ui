@@ -8,7 +8,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import * as yup from 'yup'
 import {
-  Color,
   Formik,
   FormikForm,
   FormInput,
@@ -21,6 +20,7 @@ import {
   ModalErrorHandler,
   FlexExpander
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { FormikEffect, FormikEffectProps } from '@common/components/FormikEffect/FormikEffect'
 import { FlagTypeVariations } from '../CreateFlagDialog/FlagDialogUtils'

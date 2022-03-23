@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Button, Card, Color, Icon, Layout, Text } from '@wings-software/uicore'
+import { Button, Card, Icon, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './PermissionCard.module.scss'
 

@@ -10,8 +10,9 @@ import { act } from 'react-dom/test-utils'
 import { findByText, fireEvent, queryByText, render, waitFor } from '@testing-library/react'
 import { TestWrapper } from '@common/utils/testUtils'
 import type { AccessPoint, AccessPointCore } from 'services/lw'
+import * as lwServices from 'services/lw'
 import DNSLinkSetup from '../DNSLinkSetup'
-import { mockedSecurityGroupResponse } from './data'
+import { initialGatewayDetails, mockedSecurityGroupResponse } from './data'
 
 let mockAccessPointList = {
   response: [
@@ -46,14 +47,6 @@ let mockedHostedZonesData = {
 const mockURL = 'mock.com'
 const testpath = '/account/:accountId/ce/orgs/:orgIdentifier/projects/:projectIdentifier/autostopping-rules/create'
 const testparams = { accountId: 'accountId', orgIdentifier: 'orgIdentifier', projectIdentifier: 'projectIdentifier' }
-
-const accessDetails = {
-  dnsLink: { selected: true },
-  ssh: { selected: false },
-  rdp: { selected: false },
-  backgroundTasks: { selected: false },
-  ipaddress: { selected: false }
-}
 
 const mockAccessPointResourceData = {
   response: [
@@ -114,68 +107,6 @@ jest.mock('services/lw', () => ({
   useEditAccessPoint: jest.fn().mockImplementation(() => ({ mutate: Promise.resolve() }))
 }))
 
-const initialGatewayDetails = {
-  name: 'mockname',
-  cloudAccount: {
-    id: '',
-    name: ''
-  },
-  idleTimeMins: 15,
-  fullfilment: '',
-  filter: '',
-  kind: 'instance',
-  orgID: 'orgIdentifier',
-  projectID: 'projectIdentifier',
-  accountID: 'accountId',
-  hostName: '',
-  customDomains: [],
-  matchAllSubdomains: false,
-  disabled: false,
-  routing: {
-    instance: {
-      filterText: ''
-    },
-    lb: '',
-    ports: []
-  },
-  healthCheck: {
-    protocol: 'http',
-    path: '/',
-    port: 80,
-    timeout: 30
-  },
-  opts: {
-    preservePrivateIP: false,
-    deleteCloudResources: false,
-    alwaysUsePrivateIP: false,
-    access_details: accessDetails, // eslint-disable-line
-    hide_progress_page: false
-  },
-  provider: {
-    name: 'AWS',
-    value: 'aws',
-    icon: 'service-aws'
-  },
-  selectedInstances: [
-    {
-      id: '1',
-      ipv4: '',
-      launch_time: '', // eslint-disable-line
-      name: '',
-      region: 'us-east-2',
-      status: 'stopped',
-      tags: '',
-      type: 't2.micro',
-      vpc: 'vpc-4e233426'
-    }
-  ],
-  accessPointID: 'mockalbArn',
-  metadata: {
-    // security_groups: [], // eslint-disable-line
-  },
-  deps: []
-}
-
 describe('Use DNS for Setup', () => {
   test('renders without crashing', () => {
     const { container } = render(
@@ -184,6 +115,8 @@ describe('Use DNS for Setup', () => {
           gatewayDetails={initialGatewayDetails}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -197,6 +130,8 @@ describe('Use DNS for Setup', () => {
           gatewayDetails={initialGatewayDetails}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -243,6 +178,8 @@ describe('Use DNS for Setup', () => {
           gatewayDetails={initialGatewayDetails}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -289,6 +226,8 @@ describe('Use DNS for Setup', () => {
           gatewayDetails={initialGatewayDetails}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -359,6 +298,8 @@ describe('Use DNS for Setup', () => {
           gatewayDetails={initialGatewayDetails}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -379,6 +320,8 @@ describe('Use DNS for Setup', () => {
           gatewayDetails={initialGatewayDetails}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -404,6 +347,8 @@ describe('Use DNS for Setup', () => {
           }}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -439,6 +384,8 @@ describe('Azure DNS setup', () => {
           gatewayDetails={{ ...initialGatewayDetails, provider: azureProvider }}
           setGatewayDetails={jest.fn()}
           setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
         />
       </TestWrapper>
     )
@@ -460,5 +407,162 @@ describe('Azure DNS setup', () => {
       fireEvent.click(apToSelect)
     })
     expect(accessPointDropDown.value).toBe('mockALBname')
+  })
+})
+
+describe('Resource Access url selector tests', () => {
+  test('remove added custom domains', () => {
+    const { container, getByTestId } = render(
+      <TestWrapper path={testpath} pathParams={testparams}>
+        <DNSLinkSetup
+          gatewayDetails={{ ...initialGatewayDetails, customDomains: [mockURL] }}
+          setGatewayDetails={jest.fn()}
+          setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
+        />
+      </TestWrapper>
+    )
+
+    const input = getByTestId('noCustomDomain')
+    expect(input).toBeDefined()
+    act(() => {
+      fireEvent.click(input)
+    })
+
+    const customURL = container.querySelector('input[name="customURL"]') as HTMLInputElement
+    expect(customURL.value).toBe('')
+  })
+
+  test('hosted zone id is present', () => {
+    const { container } = render(
+      <TestWrapper path={testpath} pathParams={testparams}>
+        <DNSLinkSetup
+          gatewayDetails={{
+            ...initialGatewayDetails,
+            customDomains: [mockURL],
+            routing: {
+              ...initialGatewayDetails.routing,
+              custom_domain_providers: {
+                route53: {
+                  hosted_zone_id: 'testHostedZoneId'
+                }
+              }
+            }
+          }}
+          setGatewayDetails={jest.fn()}
+          setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
+        />
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('no hosted zone response', () => {
+    jest.spyOn(lwServices, 'useAllHostedZones').mockImplementation(
+      () =>
+        ({
+          data: null,
+          loading: false,
+          refetch: jest.fn()
+        } as any)
+    )
+    const { container, getByTestId } = render(
+      <TestWrapper path={testpath} pathParams={testparams}>
+        <DNSLinkSetup
+          gatewayDetails={{ ...initialGatewayDetails, customDomains: undefined }}
+          setGatewayDetails={jest.fn()}
+          setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
+        />
+      </TestWrapper>
+    )
+
+    const input = getByTestId('noCustomDomain')
+    expect(input).toBeDefined()
+    act(() => {
+      fireEvent.click(input)
+    })
+
+    const customURL = container.querySelector('input[name="customURL"]') as HTMLInputElement
+    expect(customURL.value).toBe('')
+  })
+})
+
+describe('Load balancer advanced config', () => {
+  test('remove health check data and add again with default values', () => {
+    const { container, getByTestId } = render(
+      <TestWrapper path={testpath} pathParams={testparams}>
+        <DNSLinkSetup
+          gatewayDetails={{ ...initialGatewayDetails }}
+          setGatewayDetails={jest.fn()}
+          setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
+        />
+      </TestWrapper>
+    )
+
+    const routingTab = container.querySelector('.bp3-tab-list div[data-tab-id="healthcheck"]')
+    expect(routingTab).toBeDefined()
+    act(() => {
+      fireEvent.click(routingTab!)
+    })
+    const toggle = getByTestId('toggleHealthCheck')
+    act(() => {
+      fireEvent.click(toggle)
+    })
+
+    expect(container).toMatchSnapshot()
+
+    act(() => {
+      fireEvent.click(toggle)
+    })
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('show routing table in case of empty selected instances', () => {
+    const { container } = render(
+      <TestWrapper path={testpath} pathParams={testparams}>
+        <DNSLinkSetup
+          gatewayDetails={{ ...initialGatewayDetails, selectedInstances: [] }}
+          setGatewayDetails={jest.fn()}
+          setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
+        />
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('show error', () => {
+    jest.spyOn(lwServices, 'useSecurityGroupsOfInstances').mockImplementation(
+      () =>
+        ({
+          mutate: jest.fn(() => Promise.reject({ message: 'error message' })),
+          loading: false
+        } as any)
+    )
+
+    const { container } = render(
+      <TestWrapper path={testpath} pathParams={testparams}>
+        <DNSLinkSetup
+          gatewayDetails={initialGatewayDetails}
+          setGatewayDetails={jest.fn()}
+          setHelpTextSections={jest.fn()}
+          serverNames={[]}
+          setServerNames={jest.fn()}
+        />
+      </TestWrapper>
+    )
+
+    expect(container).toMatchSnapshot()
   })
 })

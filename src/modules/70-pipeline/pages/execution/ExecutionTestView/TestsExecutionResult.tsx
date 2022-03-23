@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Heading, Text, Container, Color, HarnessDocTooltip } from '@wings-software/uicore'
+import { Heading, Text, Container, HarnessDocTooltip } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './BuildTests.module.scss'
 

@@ -6,19 +6,16 @@
  */
 
 .policySetHolder {
-  min-width: 420px;
-  background-color: #fafbfc !important;
-  border: 1px solid #dedfe9 !important;
+  background-color: var(--grey-50) !important;
+  border: 1px solid var(--form-field-border) !important;
   border-radius: 4px;
   font-size: 14px;
-  padding: var(--spacing-2) var(--spacing-medium) !important;
-  margin-bottom: var(--spacing-small) !important;
 }
 
 .styledPolicy {
-  border: 0.6px solid #b0b1c4;
+  border: 0.6px solid var(--grey-300);
   border-radius: 5px;
-  color: #0278d5 !important;
+  color: var(--primary-7) !important;
   padding: var(--spacing-xsmall) var(--spacing-small) !important;
   font-size: 12px !important;
   margin-right: 2px !important;

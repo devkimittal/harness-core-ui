@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Color } from '@wings-software/uicore'
+import { Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { VerifyStepSummary } from 'services/cv'
 import { useStrings } from 'framework/strings'
 import css from './VerificationStatusCard.module.scss'

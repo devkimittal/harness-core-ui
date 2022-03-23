@@ -9,7 +9,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   AvatarGroup,
-  Color,
   Layout,
   Text,
   SelectOption,
@@ -23,6 +22,7 @@ import {
   Container
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import { Dialog, Menu, Spinner } from '@blueprintjs/core'
 import { assoc, compose, prop } from 'lodash/fp'
 import { uniq } from 'lodash-es'

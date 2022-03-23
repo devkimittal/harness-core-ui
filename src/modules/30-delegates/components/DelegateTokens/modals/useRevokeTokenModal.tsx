@@ -7,7 +7,8 @@
 
 import React, { useCallback, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Dialog, Button, Layout, Text, ButtonVariation, Heading, FontVariation } from '@wings-software/uicore'
+import { Dialog, Button, Layout, Text, ButtonVariation, Heading } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import type { IDialogProps } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'

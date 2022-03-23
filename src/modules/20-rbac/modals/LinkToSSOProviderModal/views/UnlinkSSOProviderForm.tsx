@@ -8,7 +8,6 @@
 import React, { useState } from 'react'
 import {
   Button,
-  Color,
   Container,
   Formik,
   FormikForm as Form,
@@ -20,6 +19,7 @@ import {
   ButtonVariation,
   shouldShowError
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { useToaster } from '@common/components'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'

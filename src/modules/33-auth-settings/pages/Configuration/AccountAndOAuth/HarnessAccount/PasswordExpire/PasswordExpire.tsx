@@ -11,15 +11,14 @@ import { useParams } from 'react-router-dom'
 import {
   Layout,
   Text,
-  Color,
   Container,
   Switch,
   Collapse,
   Button,
-  Intent,
   ButtonVariation,
   useConfirmationDialog
 } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
 import type { LoginSettings } from 'services/cd-ng'
 import { usePasswordExpirationModal } from '@auth-settings/modals/PasswordExpiration/usePasswordExpiration'
 import { usePutLoginSettings } from 'services/cd-ng'

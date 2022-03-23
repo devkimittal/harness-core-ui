@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import { isEmpty as _isEmpty, defaultTo as _defaultTo } from 'lodash-es'
 import {
   Button,
-  Color,
   Container,
   ExpandingSearchInput,
   Icon,
@@ -23,6 +22,7 @@ import {
   TableV2
 } from '@wings-software/uicore'
 import type { CellProps } from 'react-table'
+import { Color } from '@harness/design-system'
 import type { SelectOption } from '@wings-software/uicore'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import {
@@ -78,7 +78,8 @@ const COEcsSelector: React.FC<COEcsSelectorProps> = props => {
   const {
     data: containers,
     refetch: fetchContainers,
-    loading: loadingContainers
+    loading: loadingContainers,
+    error: fetchContainersError
   } = useGetContainerClustersOfRegion({
     account_id: accountId,
     lazy: true
@@ -136,6 +137,12 @@ const COEcsSelector: React.FC<COEcsSelectorProps> = props => {
       })
     }
   }, [selectedRegion])
+
+  useEffect(() => {
+    if (!_isEmpty(fetchContainersError)) {
+      showError((fetchContainersError?.data as any)?.errors?.join('\n'), 8000)
+    }
+  }, [fetchContainersError])
 
   useEffect(() => {
     setAllClusterServicesForRegion()

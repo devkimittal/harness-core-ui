@@ -9,8 +9,6 @@ import React, { useState } from 'react'
 import { useHistory, useParams, Link } from 'react-router-dom'
 import {
   Container,
-  FontVariation,
-  Color,
   Heading,
   Text,
   Layout,
@@ -19,6 +17,8 @@ import {
   ButtonVariation,
   useConfirmationDialog
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
+
 import { Position, Menu, Intent } from '@blueprintjs/core'
 import type { SLOErrorBudgetResetDTO } from 'services/cv'
 import { useStrings } from 'framework/strings'

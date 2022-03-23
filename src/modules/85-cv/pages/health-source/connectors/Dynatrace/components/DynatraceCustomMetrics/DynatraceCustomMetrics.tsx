@@ -196,6 +196,7 @@ export default function DynatraceCustomMetrics(props: DynatraceCustomMetricsProp
                 values={{
                   sli: !!metricValues.sli,
                   healthScore: !!metricValues.healthScore,
+                  riskCategory: metricValues?.riskCategory,
                   continuousVerification: !!metricValues.continuousVerification
                 }}
                 metricPackResponse={metricPackResponse}

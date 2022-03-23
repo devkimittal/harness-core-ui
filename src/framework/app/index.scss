@@ -5,6 +5,9 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-.an-index-class-that-wont-exist {
-  display: none;
-}
+@import '~normalize.css';
+@import '~@blueprintjs/core/lib/css/blueprint.css';
+@import '~@blueprintjs/datetime/lib/css/blueprint-datetime.css';
+@import '~@harness/design-system/dist/style.css';
+@import '~@harness/uicore';
+@import '~@harness/ng-tooltip';

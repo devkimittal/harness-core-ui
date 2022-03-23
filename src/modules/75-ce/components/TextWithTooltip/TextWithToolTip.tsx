@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Text, Layout } from '@wings-software/uicore'
+import { Text, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ServiceError } from 'services/lw'
 import useErrorModalHook from '../../common/useErrorModalHook'

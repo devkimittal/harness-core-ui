@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Container, Heading, Layout, Text, Color } from '@wings-software/uicore'
+import { Container, Heading, Layout, Text } from '@wings-software/uicore'
 import Ansi from 'ansi-to-react'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { TestCase } from 'services/ti-service'
 import css from './BuildTests.module.scss'

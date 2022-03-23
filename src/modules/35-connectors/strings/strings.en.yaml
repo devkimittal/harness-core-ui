@@ -424,7 +424,7 @@ delegate:
   waitingForConnection: Waiting for connection
   noDelegates: You have no Delegates
   noMatchingDelegate: No eligible Delegates found. Install a new Delegate or continue to save.
-  delegateselectionPlaceholder: Select or Enter Delegate Selectors
+  delegateselectionPlaceholder: Select or Enter Delegates
   noMatchingDelegatesActive: None of the matching Delegates are in active state.
   couldNotFetch: Failed to update the Delegate list, Will try again in {{pollingInterval}}
   delegateSelectors: Delegate Selectors

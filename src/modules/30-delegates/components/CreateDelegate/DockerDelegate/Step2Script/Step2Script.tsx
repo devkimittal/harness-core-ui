@@ -8,8 +8,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import set from 'lodash-es/set'
-import { Button, Layout, StepProps, Heading, Text, Color, Container } from '@wings-software/uicore'
-
+import { Button, Layout, StepProps, Heading, Text, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import CopyToClipboard from '@common/components/CopyToClipBoard/CopyToClipBoard'
 import { useStrings } from 'framework/strings'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'

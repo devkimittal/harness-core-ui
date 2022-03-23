@@ -8,7 +8,8 @@
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
-import { Color, Container, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+import { Container, Layout, Text } from '@wings-software/uicore'
 import type { ProjectPathProps, ServicePathProps } from '@common/interfaces/RouteInterfaces'
 import {
   GetActiveServiceInstanceSummaryQueryParams,

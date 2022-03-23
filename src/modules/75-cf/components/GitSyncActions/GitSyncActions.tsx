@@ -6,8 +6,8 @@
  */
 
 import React, { ReactElement, useState } from 'react'
-import { Text, Color, Container, Icon, Layout } from '@wings-software/uicore'
-
+import { Text, Container, Icon, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import BranchSettingsButton from './BranchSettingsButton'
 import css from './GitSyncActions.module.scss'
 

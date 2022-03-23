@@ -8,20 +8,19 @@
 import {
   StepProps,
   Layout,
-  Color,
   Text,
   Container,
   FormInput,
   Formik,
   Button,
   SelectOption,
-  FontVariation,
   ButtonVariation,
   PageSpinner,
   ThumbnailSelect
 } from '@wings-software/uicore'
 import React, { useState, useEffect } from 'react'
 import * as Yup from 'yup'
+import { FontVariation, Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import type { ConnectorInfoDTO, ConnectorRequestBody, ConnectorConfigDTO } from 'services/cd-ng'
 import SecretInput from '@secrets/components/SecretInput/SecretInput'

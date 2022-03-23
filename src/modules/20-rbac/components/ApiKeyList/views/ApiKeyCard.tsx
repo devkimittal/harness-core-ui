@@ -11,15 +11,13 @@ import {
   ButtonVariation,
   Card,
   Collapse,
-  Color,
   Container,
-  FontVariation,
-  Intent,
   Layout,
   Popover,
   Text,
   useConfirmationDialog
 } from '@wings-software/uicore'
+import { Color, FontVariation, Intent } from '@harness/design-system'
 import ReactTimeago from 'react-timeago'
 import { Classes, Menu, Position } from '@blueprintjs/core'
 import { ApiKeyAggregateDTO, ApiKeyDTO, TokenDTO, useDeleteApiKey } from 'services/cd-ng'

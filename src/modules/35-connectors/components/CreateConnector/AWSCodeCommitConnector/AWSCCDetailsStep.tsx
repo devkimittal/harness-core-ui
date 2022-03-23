@@ -15,11 +15,11 @@ import {
   Layout,
   Text,
   Button,
-  FontVariation,
   Container,
   ButtonVariation
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import type { ConnectorConfigDTO, ConnectorInfoDTO } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'
 

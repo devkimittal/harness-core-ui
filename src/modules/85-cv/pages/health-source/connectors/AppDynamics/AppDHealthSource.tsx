@@ -9,7 +9,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { noop } from 'lodash-es'
 import { useParams } from 'react-router-dom'
 import {
-  Color,
   Text,
   Button,
   Container,
@@ -21,6 +20,7 @@ import {
   Utils,
   useToaster
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import {
   useGetAppDynamicsApplications,

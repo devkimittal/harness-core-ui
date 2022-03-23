@@ -6,8 +6,9 @@
  */
 
 import React, { useState, useMemo } from 'react'
-import { Text, Layout, Color, Icon, Button, Popover, TagsPopover, TableV2 } from '@wings-software/uicore'
+import { Text, Layout, Icon, Button, Popover, TagsPopover, TableV2 } from '@wings-software/uicore'
 import type { CellProps, Renderer, Column } from 'react-table'
+import { Color } from '@harness/design-system'
 import { Classes, Position } from '@blueprintjs/core'
 import { useHistory, useParams } from 'react-router-dom'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'

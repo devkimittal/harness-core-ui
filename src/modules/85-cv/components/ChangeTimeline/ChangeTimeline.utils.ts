@@ -7,7 +7,7 @@
 
 import moment from 'moment'
 import { sumBy, isNumber } from 'lodash-es'
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { ChangeEventDTO, TimeRangeDetail } from 'services/cv'
 import type { UseStringsReturn } from 'framework/strings'
 import DeploymentWithTwoChanges from '@cv/assets/ChangeTimelineSymbol/Deployment/DeploymentWithTwoChange.svg'

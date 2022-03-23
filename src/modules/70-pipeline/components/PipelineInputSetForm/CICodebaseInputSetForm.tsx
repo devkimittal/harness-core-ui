@@ -8,16 +8,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { get, isEmpty, isUndefined } from 'lodash-es'
-import {
-  FormInput,
-  MultiTypeInputType,
-  Container,
-  Layout,
-  Text,
-  Radio,
-  FontVariation,
-  Icon
-} from '@wings-software/uicore'
+import { FormInput, MultiTypeInputType, Container, Layout, Text, Radio, Icon } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { connect, FormikContext } from 'formik'
 import { useStrings } from 'framework/strings'
 import { getIdentifierFromValue, getScopeFromValue } from '@common/components/EntityReference/EntityReference'
@@ -128,8 +120,10 @@ function CICodebaseInputSetFormInternal({
   }, [loadingConnectorDetails, connectorDetails])
 
   useEffect(() => {
-    const type = get(formik?.values, codeBaseTypePath, '') as CodeBaseType
-    setCodeBaseType(type)
+    const type = get(formik?.values, codeBaseTypePath) as CodeBaseType
+    if (type) {
+      setCodeBaseType(type)
+    }
     const typeOfConnector = get(formik?.values, 'connectorRef.connector.type', '') as ConnectorInfoDTO['type']
     if (typeOfConnector) {
       setConnectorType(typeOfConnector)

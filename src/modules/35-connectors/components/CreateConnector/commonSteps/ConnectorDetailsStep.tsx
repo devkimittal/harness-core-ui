@@ -16,9 +16,9 @@ import {
   FormikForm,
   Container,
   Text,
-  FontVariation,
   ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 import { pick } from 'lodash-es'

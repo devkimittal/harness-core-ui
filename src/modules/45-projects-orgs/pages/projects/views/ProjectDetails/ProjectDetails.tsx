@@ -6,8 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Button, Color, Container, FontVariation, Icon, Layout, Popover, Text } from '@wings-software/uicore'
+import { Button, Container, Icon, Layout, Popover, Text } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
+import { FontVariation, Color } from '@harness/design-system'
 import { Classes, Position } from '@blueprintjs/core'
 import ReactTimeago from 'react-timeago'
 import { isEmpty } from 'lodash-es'

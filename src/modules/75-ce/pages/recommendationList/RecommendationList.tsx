@@ -6,10 +6,10 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { Card, Text, Layout, Container, Color, Icon, Button, ButtonVariation, TableV2 } from '@wings-software/uicore'
+import { Card, Text, Layout, Container, Icon, Button, ButtonVariation, TableV2 } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
 import type { CellProps, Renderer } from 'react-table'
-
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import {
   RecommendationItemDto,

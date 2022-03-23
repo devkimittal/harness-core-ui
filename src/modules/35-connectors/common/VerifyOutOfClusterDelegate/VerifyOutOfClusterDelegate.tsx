@@ -8,18 +8,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import cx from 'classnames'
-import {
-  StepsProgress,
-  Layout,
-  Button,
-  Text,
-  Intent,
-  Color,
-  StepProps,
-  Container,
-  ButtonVariation,
-  FontVariation
-} from '@wings-software/uicore'
+import { StepsProgress, Layout, Button, Text, StepProps, Container, ButtonVariation } from '@wings-software/uicore'
+import { Color, FontVariation, Intent } from '@harness/design-system'
 import { useGetDelegateFromId } from 'services/portal'
 import {
   useGetTestConnectionResult,

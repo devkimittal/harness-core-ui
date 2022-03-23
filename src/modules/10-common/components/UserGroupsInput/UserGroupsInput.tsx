@@ -12,13 +12,12 @@ import {
   Layout,
   Container,
   Text,
-  Color,
   Icon,
   FormError,
   DataTooltipInterface,
-  FormikTooltipContext,
-  FontVariation
+  FormikTooltipContext
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 
 import { get } from 'lodash-es'
 import { FormGroup, Intent } from '@blueprintjs/core'

@@ -25,7 +25,7 @@ exports[`<DelegateSelectorPanel /> test should be able to select multiple tags f
                 data-name="DelegateSelectors"
               >
                 <div
-                  class="bp3-popover-wrapper delegateInput delegatePopover bp3-fill"
+                  class="bp3-popover-wrapper TagInput--tagInput delegatePopover bp3-fill"
                 >
                   <div
                     class="bp3-popover-target bp3-popover-open"
@@ -200,7 +200,7 @@ exports[`<DelegateSelectorPanel /> test snapshot testing 1`] = `
                 data-name="DelegateSelectors"
               >
                 <div
-                  class="bp3-popover-wrapper delegateInput delegatePopover bp3-fill"
+                  class="bp3-popover-wrapper TagInput--tagInput delegatePopover bp3-fill"
                 >
                   <div
                     class="bp3-popover-target"

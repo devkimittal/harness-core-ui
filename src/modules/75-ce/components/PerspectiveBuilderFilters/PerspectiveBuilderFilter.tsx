@@ -7,7 +7,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Icon, Color, Container } from '@wings-software/uicore'
+import { Icon, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import {
   QlceViewFieldIdentifierData,
   QlceViewFilterOperator,

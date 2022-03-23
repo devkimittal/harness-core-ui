@@ -8,6 +8,7 @@
 const projectId = 'project1'
 const accountId = 'accountId'
 const orgIdentifier = 'default'
+const pipelineIdentifier = 'testPipeline_Cypress'
 
 export const pipelineListAPI = `/pipeline/api/pipelines/list?routingId=${accountId}&accountIdentifier=${accountId}&projectIdentifier=${projectId}&module=cd&orgIdentifier=${orgIdentifier}&searchTerm=&page=0&sort=lastUpdatedAt%2CDESC&size=20`
 export const pipelineSummaryAPI = `/pipeline/api/pipelines/summary/appdtest?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}`
@@ -15,6 +16,35 @@ export const pipelineDetailsAPI = `/pipeline/api/pipelines/appdtest?accountIdent
 export const pipelineExecutionSummaryAPI = `/pipeline/api/pipelines/execution/summary?routingId=${accountId}&accountIdentifier=${accountId}&projectIdentifier=${projectId}&orgIdentifier=${orgIdentifier}&module=cd&size=20&pipelineIdentifier=*&page=0&myDeployments=false`
 export const pipelineExecutionAPI = `/pipeline/api/pipelines/execution/C9mgNjxSS7-B-qQek27iuA?routingId=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}&accountIdentifier=${accountId}`
 export const pipelineExecutionForNodeAPI = `/pipeline/api/pipelines/execution/C9mgNjxSS7-B-qQek27iuA?routingId=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}&accountIdentifier=${accountId}&stageNodeId=g_LkakmWRPm-wC6rfC2ufg`
+export const servicesCallV2 = `/ng/api/servicesV2/list/access?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}`
+
+export const gitSyncEnabledCall = `/ng/api/git-sync/git-sync-enabled?accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}`
+export const pipelineSaveCall = `/pipeline/api/pipelines?accountIdentifier=${accountId}&projectIdentifier=${projectId}&orgIdentifier=${orgIdentifier}`
+export const gitSyncMetaCall = `/ng/api/git-sync?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}`
+export const gitSyncBranchCall = `/ng/api/git-sync-branch/listBranchesWithStatus?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}&yamlGitConfigIdentifier=&page=0&size=20&searchTerm=`
+export const executionStratergies = `ng/api/pipelines/configuration/strategies?routingId=${accountId}`
+export const yamlSnippet = `ng/api/pipelines/configuration/strategies/yaml-snippets?routingId=${accountId}&serviceDefinitionType=Kubernetes&strategyType=Rolling`
+export const stepLibrary = `/pipeline/api/pipelines/v2/steps?routingId=${accountId}&accountId=${accountId}`
+export const inputSetsTemplateCall = `/pipeline/api/inputSets/template?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&pipelineIdentifier=${pipelineIdentifier}&projectIdentifier=${projectId}`
+export const pipelineDetails = `/pipeline/api/pipelines/testPipeline_Cypress?accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}`
+export const applyTemplatesCall = `/template/api/templates/applyTemplates?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}&getDefaultFromOtherRepo=true`
+export const inputSetsCall = `/pipeline/api/inputSets?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}&pipelineIdentifier=${pipelineIdentifier}&pageIndex=0&pageSize=20&searchTerm=`
+export const pipelineDetailsWithRoutingIdCall = `/pipeline/api/pipelines/testPipeline_Cypress?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&projectIdentifier=${projectId}`
+export const pipelineInputSetTemplate = `template/api/templates/applyTemplates?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&pipelineIdentifier=${pipelineIdentifier}&projectIdentifier=${projectId}&getDefaultFromOtherRepo=true`
+
+export interface ValidObject {
+  resourceName: StepResourceObject[]
+  warningCheck?: boolean
+}
+
+export interface StepResourceObject {
+  type: string
+  name: string
+  value: string
+}
+export interface StepConfigObject {
+  [name: string]: { [name: string]: StepResourceObject | boolean }
+}
 
 export const pipelinesListCallResponse = {
   status: 'SUCCESS',
@@ -173,4 +203,83 @@ export const pipelinesListCallResponse = {
   },
   metaData: null,
   correlationId: 'f8b4e248-f6ba-47eb-938f-b205e6de5d4b'
+}
+
+export const servicesV2AccessResponse = {
+  status: 'SUCCESS',
+  data: [
+    {
+      service: {
+        accountId: 'zEaak-FLS425IEO7OLzMUg',
+        identifier: 'testService',
+        orgIdentifier: 'CVNG',
+        projectIdentifier: 'Dummy_Pipeline',
+        name: 'testService',
+        description: null,
+        deleted: false,
+        tags: {},
+        version: 18
+      },
+      createdAt: 1643080660753,
+      lastModifiedAt: 1645703389065
+    },
+    {
+      service: {
+        accountId: 'zEaak-FLS425IEO7OLzMUg',
+        identifier: 'testService2',
+        orgIdentifier: 'CVNG',
+        projectIdentifier: 'Dummy_Pipeline',
+        name: 'testService2',
+        description: null,
+        deleted: false,
+        tags: {},
+        version: 18
+      },
+      createdAt: 1643080660753,
+      lastModifiedAt: 1645703389065
+    },
+    {
+      service: {
+        accountId: 'zEaak-FLS425IEO7OLzMUg',
+        identifier: 'testService3',
+        orgIdentifier: 'CVNG',
+        projectIdentifier: 'Dummy_Pipeline',
+        name: 'testService3',
+        description: null,
+        deleted: false,
+        tags: {},
+        version: 18
+      },
+      createdAt: 1643080660753,
+      lastModifiedAt: 1645703389065
+    }
+  ],
+  metaData: null,
+  correlationId: 'dbfcc921-47f3-4841-b67a-7a4f85b7d5f3'
+}
+
+export const stepsData = {
+  'BG Swap Services': { resourceName: [] },
+  'Stage Deployment': { resourceName: [] },
+  Apply: {
+    resourceName: [{ type: 'resource', name: 'spec.filePaths[0].value', value: 'resource' }],
+    warningCheck: true
+  },
+  Delete: {
+    resourceName: [{ type: 'resource', name: 'spec.deleteResources.spec.resourceNames[0].value', value: 'resource' }]
+  },
+  'Canary Delete': { resourceName: [] },
+  'Rolling Deployment': { resourceName: [] },
+  'Canary Deployment': { resourceName: [] },
+  Scale: { resourceName: [{ type: 'resource', name: 'spec.workload', value: 'resource' }] },
+  'Rolling Rollback': { resourceName: [] },
+  'Shell Script': {
+    resourceName: [{ type: 'className', name: '.monaco-editor textarea:first', value: 'echo 1' }]
+  },
+  HTTP: {
+    resourceName: [
+      { type: 'resource', name: 'spec.url', value: 'https://abc.com' },
+      { type: 'resource', name: 'spec.requestBody', value: 'resource' }
+    ]
+  }
 }

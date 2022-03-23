@@ -13,7 +13,6 @@ import {
   Button,
   Collapse,
   Container,
-  FontVariation,
   Formik,
   FormikForm as Form,
   FormInput,
@@ -22,6 +21,7 @@ import {
   Text
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { FontVariation } from '@harness/design-system'
 import { FieldArray } from 'formik'
 import cx from 'classnames'
 import { Divider, IconName, Dialog } from '@blueprintjs/core'

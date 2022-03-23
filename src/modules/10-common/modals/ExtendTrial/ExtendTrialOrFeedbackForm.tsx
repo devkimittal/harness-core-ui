@@ -6,18 +6,8 @@
  */
 
 import React from 'react'
-import {
-  Formik,
-  FormikForm,
-  Heading,
-  Container,
-  Text,
-  Layout,
-  Button,
-  FormInput,
-  Color,
-  Tag
-} from '@wings-software/uicore'
+import { Formik, FormikForm, Heading, Container, Text, Layout, Button, FormInput, Tag } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useStrings } from 'framework/strings'
 import css from './useExtendTrialOrFeedbackModal.module.scss'

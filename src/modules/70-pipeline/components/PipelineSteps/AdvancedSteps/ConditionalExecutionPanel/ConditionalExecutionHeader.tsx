@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Link, Text } from '@wings-software/uicore'
+import { Link, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { StepMode as Modes } from '@pipeline/utils/stepUtils'
 import { ModeEntityNameMap } from './ConditionalExecutionPanelUtils'

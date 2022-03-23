@@ -8,7 +8,8 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { isEmpty, get } from 'lodash-es'
-import { Color, Icon, Intent, Layout, Text } from '@wings-software/uicore'
+import { Icon, Layout, Text } from '@wings-software/uicore'
+import { Intent, Color } from '@harness/design-system'
 import { GraphLayoutNode, NodeRunInfo, useGetBarriersExecutionInfo } from 'services/pipeline-ng'
 import {
   getIconFromStageModule,

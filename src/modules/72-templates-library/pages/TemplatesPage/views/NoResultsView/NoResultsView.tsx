@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { defaultTo } from 'lodash-es'
-import { Button, ButtonSize, ButtonVariation, Color, Container, Icon, Layout, Text } from '@wings-software/uicore'
+import { Button, ButtonSize, ButtonVariation, Container, Icon, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import templateIllustration from '@templates-library/pages/TemplatesPage/images/templates-illustration.svg'
 import { useStrings } from 'framework/strings'
 import { NewTemplatePopover } from '../NewTemplatePopover/NewTemplatePopover'

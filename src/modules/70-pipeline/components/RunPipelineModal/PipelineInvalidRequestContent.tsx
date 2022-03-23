@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Button, ButtonVariation, Color, FontVariation, Icon, Layout, Text } from '@wings-software/uicore'
+import { Button, ButtonVariation, Icon, Layout, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import type { GetDataError } from 'restful-react'
 import { defaultTo } from 'lodash-es'
 import { useStrings } from 'framework/strings'

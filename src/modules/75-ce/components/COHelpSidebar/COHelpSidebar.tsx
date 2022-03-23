@@ -5,8 +5,9 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Layout, Container, Text, Icon, Color, Heading } from '@wings-software/uicore'
+import { Layout, Container, Text, Icon, Heading } from '@wings-software/uicore'
 import React, { ReactElement, useState } from 'react'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import idleTimeIMG from './images/idleTime.svg'
 import spotVSODIMG from './images/spotOD.svg'

@@ -8,8 +8,8 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Text, Container, Icon, Color } from '@wings-software/uicore'
-
+import { Text, Container, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { noop } from 'lodash-es'
 import type { ModulePathParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import useCreateGitSyncModal from '@gitsync/modals/useCreateGitSyncModal'

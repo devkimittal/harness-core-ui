@@ -7,7 +7,6 @@
 
 .main {
   position: relative;
-  padding: var(--spacing-small) var(--spacing-large) !important;
   width: 300px;
   min-width: 300px;
 
@@ -18,11 +17,13 @@
   }
 
   .details {
+    padding: var(--spacing-medium) var(--spacing-large) !important;
     width: 100% !important;
     min-height: 220px !important;
   }
 
   .loading {
+    padding: var(--spacing-small) var(--spacing-large) !important;
     position: absolute;
     top: 50%;
     left: 50%;

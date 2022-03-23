@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Text, Color } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import type { Color } from '@harness/design-system'
 import { ColorData } from './StatusChip.constants'
 import css from './StatusChip.module.scss'
 

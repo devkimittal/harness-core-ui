@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, ExpandingSearchInput, FontVariation, Icon, Layout, Text } from '@wings-software/uicore'
+import { ExpandingSearchInput, Icon, Layout, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { usePipelineVariables } from '@pipeline/components/PipelineVariablesContext/PipelineVariablesContext'
 import css from '@pipeline/components/PipelineStudio/PipelineVariables/PipelineVariables.module.scss'

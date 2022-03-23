@@ -7,9 +7,9 @@
 
 import React from 'react'
 import { IPopoverProps, PopoverInteractionKind } from '@blueprintjs/core'
-import { Color, Icon, Layout, Popover, Text } from '@wings-software/uicore'
+import { Icon, Layout, Popover, Text } from '@wings-software/uicore'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'
-
+import { Color } from '@harness/design-system'
 import { getRepoDetailsByIndentifier } from '@common/utils/gitSyncUtils'
 import type { EntityGitDetails } from 'services/pipeline-ng'
 import { useStrings } from 'framework/strings'

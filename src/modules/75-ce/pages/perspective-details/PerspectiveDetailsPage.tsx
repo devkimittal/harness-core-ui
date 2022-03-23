@@ -14,14 +14,13 @@ import {
   Button,
   Container,
   Text,
-  Color,
   PageHeader,
   PageBody,
   Icon,
-  FontVariation,
   useToaster,
   getErrorInfoFromErrorObject
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import routes from '@common/RouteDefinitions'
 import {
   PerspectiveAnomalyData,

@@ -4266,14 +4266,14 @@ exports[`should render form for edit authtype clientKey 2`] = `
                   </div>
                 </div>
                 <div
-                  class="Layout--horizontal StyledProps--main StyledProps--flex StyledProps--flex-alignItems-center StyledProps--flex-justifyContent-flex-start StyledProps--margin-bottom-medium"
+                  class="Layout--horizontal Layout--layout-spacing-small StyledProps--main StyledProps--flex StyledProps--flex-alignItems-center StyledProps--flex-justifyContent-flex-start StyledProps--margin-bottom-medium"
                 >
                   <div
                     class="wrapper"
                     data-name="DelegateSelectors"
                   >
                     <div
-                      class="bp3-popover-wrapper delegateInput delegatePopover bp3-fill"
+                      class="bp3-popover-wrapper formInput delegatePopover bp3-fill"
                     >
                       <div
                         class="bp3-popover-target"

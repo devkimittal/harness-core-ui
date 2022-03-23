@@ -50,7 +50,8 @@ export const getServiceObjectFromgatewayDetails = (
   gatewayDetails: GatewayDetails,
   orgIdentifier: string,
   projectIdentifier: string,
-  accountId: string
+  accountId: string,
+  serverNames: string[] = []
 ): Service => {
   const hasInstances = !_isEmpty(gatewayDetails.selectedInstances)
   const isK8sRule = Utils.isK8sRule(gatewayDetails)
@@ -97,11 +98,7 @@ export const getServiceObjectFromgatewayDetails = (
     kind,
     cloud_account_id: gatewayDetails.cloudAccount.id, // eslint-disable-line
     idle_time_mins: gatewayDetails.idleTimeMins, // eslint-disable-line
-    custom_domains: Utils.getConditionalResult(
-      !_isEmpty(gatewayDetails.customDomains),
-      gatewayDetails.customDomains,
-      []
-    ), // eslint-disable-line
+    custom_domains: Utils.getAllCustomDomains(serverNames, gatewayDetails.customDomains),
     health_check: gatewayDetails.healthCheck,
     routing,
     opts: {

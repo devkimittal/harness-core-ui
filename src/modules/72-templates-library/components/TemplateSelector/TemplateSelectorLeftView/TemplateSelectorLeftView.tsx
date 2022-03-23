@@ -7,7 +7,6 @@
 
 import React, { useEffect, useState } from 'react'
 import {
-  Color,
   Container,
   DropDown,
   ExpandingSearchInput,
@@ -19,6 +18,7 @@ import {
   Views,
   PageError
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { defaultTo, isEmpty } from 'lodash-es'
 import { useParams } from 'react-router-dom'
 import { Breadcrumbs } from '@common/components/Breadcrumbs/Breadcrumbs'

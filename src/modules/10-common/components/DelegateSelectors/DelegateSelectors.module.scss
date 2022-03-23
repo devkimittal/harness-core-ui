@@ -7,7 +7,7 @@
 
 .wrapper {
   position: relative;
-  flex-shrink: 1 !important;
+  flex: 0 0 50%;
 
   .loader {
     display: flex;
@@ -59,11 +59,8 @@
   & :global(.bp3-input.bp3-tag-input) {
     max-height: fit-content !important;
   }
-}
 
-.delegateInput {
-  input,
-  :global(.bp3-tag) {
-    margin-bottom: 0 !important;
+  & :global(.bp3-tag-input-values) {
+    width: 100%;
   }
 }

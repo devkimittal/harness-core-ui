@@ -6,9 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Button, Container, Text, Color } from '@wings-software/uicore'
+import { Button, Container, Text } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
-
+import { Color } from '@harness/design-system'
 import { Dialog, IDialogProps } from '@blueprintjs/core'
 import type { ServiceError } from 'services/lw'
 import { useStrings } from 'framework/strings'

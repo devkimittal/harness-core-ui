@@ -1,3 +1,5 @@
 stepDescription:
   ZeroNorth: Run a security tool to test for vulnerabilities.
 zeroNorthImagePlaceholder: shield
+securityStage:
+  description: Scan code, artifacts, and infrastructure for security vulnerabilities.

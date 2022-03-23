@@ -9,7 +9,6 @@ import React, { MouseEvent, ReactElement, useState } from 'react'
 import {
   Text,
   Layout,
-  Color,
   Button,
   Popover,
   StepsProgress,
@@ -18,6 +17,7 @@ import {
   IconName
 } from '@wings-software/uicore'
 import { Position, Intent, PopoverInteractionKind } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import ReactTimeago from 'react-timeago'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'

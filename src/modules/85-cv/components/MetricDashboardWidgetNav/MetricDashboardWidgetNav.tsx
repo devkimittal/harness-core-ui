@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { Color, Container, Link, Text, Utils } from '@wings-software/uicore'
+import { Container, Link, Text, Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Classes, ITreeNode, PopoverInteractionKind, Tree } from '@blueprintjs/core'
 import { useParams } from 'react-router-dom'
 import cx from 'classnames'

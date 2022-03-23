@@ -10,13 +10,13 @@ import { v4 as nameSpace, v5 as uuid } from 'uuid'
 import cx from 'classnames'
 import {
   MultiTextInput,
-  Intent,
   Button,
   getMultiTypeFromValue,
   MultiTypeInputType,
   MultiTextInputProps,
   RUNTIME_INPUT_VALUE
 } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { connect, FormikContext } from 'formik'
 import { get, isEmpty } from 'lodash-es'
 import { ConfigureOptions, ConfigureOptionsProps } from '@common/components/ConfigureOptions/ConfigureOptions'

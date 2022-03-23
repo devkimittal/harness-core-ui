@@ -59,4 +59,5 @@ export interface InitNewRelicCustomFormInterface {
   healthScore: boolean
   continuousVerification: boolean
   serviceInstanceMetricPath?: string
+  riskCategory?: string
 }

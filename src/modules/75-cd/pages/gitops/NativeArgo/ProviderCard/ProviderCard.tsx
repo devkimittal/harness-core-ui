@@ -13,12 +13,12 @@ import {
   Layout,
   Text,
   Popover,
-  Color,
   ButtonVariation,
   Container,
   useConfirmationDialog
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import { Menu, Classes, Position, Dialog, Intent } from '@blueprintjs/core'
 import type { ConnectedArgoGitOpsInfoDTO, GitopsProviderResponse } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { CellProps, Column, Renderer } from 'react-table'
-import { Color, Icon, Layout, TableV2, Text, Utils } from '@harness/uicore'
+import { Icon, Layout, TableV2, Text, Utils } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import type { IconProps } from '@harness/uicore/dist/icons/Icon'
 import { useStrings } from 'framework/strings'
 import type { PageGitFullSyncEntityInfoDTO, GitFullSyncEntityInfoDTO } from 'services/cd-ng'

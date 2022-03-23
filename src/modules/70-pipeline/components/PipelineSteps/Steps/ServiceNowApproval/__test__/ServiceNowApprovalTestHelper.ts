@@ -283,3 +283,34 @@ export const mockServiceNowCreateMetadataResponse: UseGetMockData<ResponseListSe
     ]
   }
 }
+
+export const ConnectorsResponse = {
+  loading: false,
+  refetch: jest.fn(),
+  error: null,
+  data: {
+    status: 'SUCCESS',
+    data: {
+      content: [
+        {
+          connector: {
+            name: 'cp-snow',
+            identifier: 'cpsnow',
+            description: '',
+            orgIdentifier: 'harness',
+            projectIdentifier: 'test',
+            tags: {},
+            type: 'ServiceNow',
+            spec: {
+              serviceNowUrl: 'https://abc.com',
+              username: 'admin',
+              usernameRef: null,
+              passwordRef: '',
+              delegateSelectors: []
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -11,7 +11,11 @@ import { defaultTo as _defaultTo } from 'lodash-es'
 import { AdvancedConfigTabs, CONFIG_STEP_IDS, RESOURCES } from '@ce/constants'
 import { useStrings } from 'framework/strings'
 import { Utils } from '@ce/common/Utils'
-import type { ActiveStepDetailsProps, FixedScheduleClient, GatewayDetails } from '@ce/components/COCreateGateway/models'
+import type {
+  ASRuleCreationActiveStep,
+  FixedScheduleClient,
+  GatewayDetails
+} from '@ce/components/COCreateGateway/models'
 import type { Service } from 'services/lw'
 import COGatewayConfigStep from '../../COGatewayConfigStep'
 import RuleDependency from './RuleDependency'
@@ -23,7 +27,7 @@ interface AdvancedConfigurationProps {
   gatewayDetails: GatewayDetails
   setGatewayDetails: (details: GatewayDetails) => void
   allServices: Service[]
-  activeStepDetails?: ActiveStepDetailsProps | null
+  activeStepDetails?: ASRuleCreationActiveStep | null
 }
 
 const AdvancedConfiguration: React.FC<AdvancedConfigurationProps> = props => {

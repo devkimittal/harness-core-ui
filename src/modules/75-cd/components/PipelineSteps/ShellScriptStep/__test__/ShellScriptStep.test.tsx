@@ -12,6 +12,7 @@ import { StepViewType, StepFormikRef } from '@pipeline/components/AbstractSteps/
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { factory, TestStepWidget } from '@pipeline/components/PipelineSteps/Steps/__tests__/StepTestUtil'
 import { ShellScriptStep } from '../ShellScriptStep'
+import type { ShellScriptData } from '../shellScriptTypes'
 
 jest.mock('@common/components/MonacoEditor/MonacoEditor')
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
@@ -425,8 +426,33 @@ describe('Test Shell Script Step', () => {
           host: RUNTIME_INPUT_VALUE,
           connectorRef: RUNTIME_INPUT_VALUE,
           workingDirectory: RUNTIME_INPUT_VALUE
-        }
-      }
+        },
+        environmentVariables: [
+          {
+            name: 'testInput1',
+            type: 'String',
+            value: 'Test_A'
+          },
+          {
+            name: 'testInput2',
+            type: 'String',
+            value: 'Test_B'
+          }
+        ],
+        outputVariables: [
+          {
+            name: 'testOutput1',
+            type: 'String',
+            value: 'Test_C'
+          },
+          {
+            name: 'testOutput2',
+            type: 'String',
+            value: 'Test_D'
+          }
+        ]
+      },
+      timeout: RUNTIME_INPUT_VALUE
     }
     const { container } = render(
       <TestStepWidget
@@ -600,5 +626,116 @@ describe('Test Shell Script Step', () => {
     })
 
     expect(container).toMatchSnapshot()
+  })
+
+  test('renders empty inputVariables', () => {
+    const { container } = render(
+      <TestStepWidget
+        initialValues={{}}
+        type={StepType.SHELLSCRIPT}
+        stepViewType={StepViewType.InputVariable}
+        customStepProps={{}}
+      />
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  test('validates timeout is min 10s', () => {
+    const props = {
+      name: 'ShellScript Step',
+      identifier: 'ShellScriptStep',
+      timeout: '1s',
+      type: StepType.SHELLSCRIPT,
+      spec: {
+        environmentVariables: [
+          {
+            name: 'testInput1',
+            type: 'String',
+            value: 'Test_A'
+          }
+        ],
+        outputVariables: [
+          {
+            name: 'testOutput1',
+            type: 'String',
+            value: 'Test_C'
+          }
+        ],
+        source: {
+          type: 'Inline',
+          spec: {
+            script: 'test script'
+          }
+        }
+      }
+    }
+    const response = new ShellScriptStep().validateInputSet({
+      data: { ...props } as ShellScriptData,
+      template: { ...props } as ShellScriptData,
+      viewType: StepViewType.TriggerForm,
+      getString: jest.fn().mockImplementation(val => val)
+    })
+    expect(response).toMatchSnapshot()
+  })
+
+  test('empty validate input', () => {
+    const props = {
+      name: 'ShellScript Step',
+      identifier: 'ShellScriptStep',
+      timeout: '<+input>',
+      type: StepType.SHELLSCRIPT,
+      spec: {}
+    }
+    const response = new ShellScriptStep().validateInputSet({
+      data: { ...props } as ShellScriptData,
+      template: { ...props } as ShellScriptData,
+      viewType: StepViewType.Edit,
+      getString: jest.fn().mockImplementation(val => val)
+    })
+    expect(response).toMatchSnapshot()
+  })
+
+  test('set error validateInputset', () => {
+    const response = new ShellScriptStep().validateInputSet({
+      data: {
+        name: 'ShellScript Step',
+        identifier: 'ShellScriptStep',
+        timeout: '1s',
+        type: StepType.SHELLSCRIPT,
+        spec: {
+          source: {
+            spec: {
+              script: ''
+            }
+          },
+          executionTarget: {
+            host: '',
+            connectorRef: '',
+            workingDirectory: ''
+          }
+        }
+      },
+      template: {
+        name: 'ShellScript Step',
+        identifier: 'ShellScriptStep',
+        timeout: '<+input>',
+        type: StepType.SHELLSCRIPT,
+        spec: {
+          source: {
+            type: 'Inline',
+            spec: {
+              script: RUNTIME_INPUT_VALUE
+            }
+          },
+          executionTarget: {
+            host: RUNTIME_INPUT_VALUE,
+            connectorRef: RUNTIME_INPUT_VALUE,
+            workingDirectory: RUNTIME_INPUT_VALUE
+          }
+        }
+      },
+      viewType: StepViewType.DeploymentForm
+    })
+    expect(response).toMatchSnapshot()
   })
 })

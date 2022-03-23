@@ -14,10 +14,10 @@ import {
   Layout,
   Text,
   getMultiTypeFromValue,
-  FontVariation,
   Container
 } from '@wings-software/uicore'
 import { connect } from 'formik'
+import { FontVariation } from '@harness/design-system'
 import { get, set, isEmpty, pickBy, identity, isNil } from 'lodash-es'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'

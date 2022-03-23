@@ -6,9 +6,9 @@
  */
 
 import React from 'react'
-import { Layout, Text, Color } from '@wings-software/uicore'
+import { Layout, Text } from '@wings-software/uicore'
 import { defaultTo, set, get, isEmpty } from 'lodash-es'
-
+import { Color } from '@harness/design-system'
 import type { AllNGVariables as Variable } from '@pipeline/utils/types'
 import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'

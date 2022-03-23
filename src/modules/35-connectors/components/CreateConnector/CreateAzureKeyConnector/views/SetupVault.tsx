@@ -19,10 +19,10 @@ import {
   SelectOption,
   ModalErrorHandlerBinding,
   ModalErrorHandler,
-  FontVariation,
   ButtonVariation,
   shouldShowError
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useToaster } from '@common/exports'
 import {

@@ -18,10 +18,10 @@ import {
   Container,
   FormInput,
   Text,
-  FontVariation,
   ButtonVariation
 } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { FontVariation } from '@harness/design-system'
 import * as Yup from 'yup'
 import type { IOptionProps } from '@blueprintjs/core'
 import type { FormikProps } from 'formik'

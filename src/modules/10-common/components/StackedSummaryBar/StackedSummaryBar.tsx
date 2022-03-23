@@ -6,7 +6,9 @@
  */
 
 import React from 'react'
-import { Color, Container, Intent, Layout, Text } from '@wings-software/uicore'
+import { Container, Layout, Text } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
+
 import { loggerFor } from 'framework/logging/logging'
 import { ModuleName } from 'framework/types/ModuleName'
 import { handleZeroOrInfinityTrend, renderTrend } from './utils'

@@ -7,7 +7,6 @@
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  Color,
   Container,
   Formik,
   FormikForm,
@@ -21,6 +20,7 @@ import {
   NoDataCard
 } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { noop } from 'lodash-es'
 import HighchartsReact from 'highcharts-react-official'
@@ -240,7 +240,12 @@ export function GCOMetricsHealthSource(props: GCOMetricsHealthSourceProps): JSX.
       }}
     >
       {formikProps => {
-        const { sli = false, healthScore = false, continuousVerification = false } = formikProps?.values
+        const {
+          sli = false,
+          healthScore = false,
+          continuousVerification = false,
+          riskCategory = ''
+        } = formikProps?.values
 
         const currentSelectedMetricDetail = metricDefinitions?.find(
           (metricDefinition: StackdriverDefinition) =>
@@ -362,6 +367,7 @@ export function GCOMetricsHealthSource(props: GCOMetricsHealthSourceProps): JSX.
                   values={{
                     sli,
                     healthScore,
+                    riskCategory,
                     continuousVerification
                   }}
                   metricPackResponse={metricPackResponse}

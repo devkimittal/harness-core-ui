@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Layout, Text, Card, Color, Button, Radio, Container, ButtonVariation } from '@wings-software/uicore'
+import { Layout, Text, Card, Button, Radio, Container, ButtonVariation } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import RbacFactory from '@rbac/factories/RbacFactory'
 import { useStrings } from 'framework/strings'

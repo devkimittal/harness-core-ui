@@ -10,7 +10,6 @@ import {
   Text,
   Button,
   Card,
-  Color,
   Layout,
   PageSpinner,
   ButtonVariation,
@@ -19,6 +18,7 @@ import {
 } from '@wings-software/uicore'
 import { Classes, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 import { useStrings } from 'framework/strings'

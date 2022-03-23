@@ -15,10 +15,10 @@ import {
   StepProps,
   Container,
   PageSpinner,
-  ThumbnailSelect,
-  FontVariation
+  ThumbnailSelect
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import {
   DelegateTypes,

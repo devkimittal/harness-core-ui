@@ -6,7 +6,8 @@
  */
 
 import React, { FC } from 'react'
-import { ButtonSize, ButtonVariation, FontVariation, Heading, Layout } from '@wings-software/uicore'
+import { ButtonSize, ButtonVariation, Heading, Layout } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { OptionsMenuButton } from '@common/components'
 import { StringKeys, useStrings } from 'framework/strings'
 import type { SubSectionComponent } from './FlagChangesForm'

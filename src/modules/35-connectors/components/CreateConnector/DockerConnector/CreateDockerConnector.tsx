@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { StepWizard, Color } from '@wings-software/uicore'
+import { StepWizard } from '@wings-software/uicore'
 import { pick } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import ConnectorDetailsStep from '@connectors/components/CreateConnector/commonSteps/ConnectorDetailsStep'
 import VerifyOutOfClusterDelegate from '@connectors/common/VerifyOutOfClusterDelegate/VerifyOutOfClusterDelegate'
 import { Connectors, CONNECTOR_CREDENTIALS_STEP_IDENTIFIER, TESTCONNECTION_STEP_INDEX } from '@connectors/constants'

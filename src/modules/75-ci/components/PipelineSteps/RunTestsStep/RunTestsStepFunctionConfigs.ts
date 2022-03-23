@@ -24,7 +24,7 @@ export const transformValuesFieldsConfig = [
   },
   {
     name: 'spec.connectorRef',
-    type: TransformValuesTypes.Text
+    type: TransformValuesTypes.ConnectorRef
   },
   {
     name: 'spec.image',

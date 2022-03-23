@@ -233,6 +233,7 @@ export default function NewRelicCustomMetricForm(props: NewRelicCustomFormInterf
                 <SelectHealthSourceServices
                   values={{
                     sli: !!formikValues?.sli,
+                    riskCategory: formikValues?.riskCategory,
                     healthScore: !!formikValues?.healthScore,
                     continuousVerification: !!formikValues?.continuousVerification
                   }}

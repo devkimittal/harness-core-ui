@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, Text } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import dataErrorImage from '@cv/assets/dataError.svg'
 
 import type { ChangeSourceFetchingErrorProps } from './ChangesSourceFetchingErrorProps.types'

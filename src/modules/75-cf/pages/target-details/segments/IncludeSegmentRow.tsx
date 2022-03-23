@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Intent, Text } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { getErrorMessage } from '@cf/utils/CFUtils'
 import { useStrings } from 'framework/strings'
 import { useRemoveTargetsFromIncludeList, TargetSegmentParams } from '@cf/utils/SegmentUtils'

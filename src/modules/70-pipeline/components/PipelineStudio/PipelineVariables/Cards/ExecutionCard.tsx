@@ -8,7 +8,8 @@
 import React from 'react'
 import produce from 'immer'
 import { set } from 'lodash-es'
-import { Color, FontVariation, MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import cx from 'classnames'
 import type { ExecutionElementConfig, ExecutionWrapperConfig, StepElementConfig } from 'services/cd-ng'
 

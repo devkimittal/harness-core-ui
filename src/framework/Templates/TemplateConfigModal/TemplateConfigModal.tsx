@@ -15,12 +15,12 @@ import {
   FormikForm,
   FormInput,
   Text,
-  Color,
   Button,
   ButtonVariation,
   Container,
   Icon
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { NameIdDescriptionTags } from '@common/components/NameIdDescriptionTags/NameIdDescriptionTags'
 import RbacButton from '@rbac/components/Button/Button'

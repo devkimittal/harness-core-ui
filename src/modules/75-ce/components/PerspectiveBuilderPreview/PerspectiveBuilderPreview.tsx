@@ -7,8 +7,9 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Text, Layout, FlexExpander, Icon, TextInput, FontVariation } from '@wings-software/uicore'
+import { Container, Text, Layout, FlexExpander, Icon, TextInput } from '@wings-software/uicore'
 import cx from 'classnames'
+import { FontVariation } from '@harness/design-system'
 import { Menu, MenuItem, Popover, Position } from '@blueprintjs/core'
 import { noop } from 'lodash-es'
 import { useStrings } from 'framework/strings'

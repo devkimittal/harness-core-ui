@@ -10,7 +10,6 @@ import type { CellProps, Column, Renderer } from 'react-table'
 import cx from 'classnames'
 import {
   Button,
-  Color,
   Layout,
   Popover,
   Text,
@@ -20,10 +19,10 @@ import {
   TagsPopover,
   TableV2,
   Container,
-  ButtonSize,
-  FontVariation
+  ButtonSize
 } from '@wings-software/uicore'
 import { Classes, Menu, Position } from '@blueprintjs/core'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { formatDatetoLocale } from '@common/utils/dateUtils'
 import { GitDetailsColumn } from '@common/components/Table/GitDetailsColumn/GitDetailsColumn'

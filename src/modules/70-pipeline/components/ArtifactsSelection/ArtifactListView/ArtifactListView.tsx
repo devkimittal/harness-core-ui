@@ -10,16 +10,15 @@ import {
   Layout,
   Text,
   Icon,
-  Color,
   getMultiTypeFromValue,
   MultiTypeInputType,
   Button,
   ButtonSize,
   ButtonVariation,
-  Container,
-  FontVariation
+  Container
 } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color, FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { getConnectorNameFromValue, getStatus } from '@pipeline/components/PipelineStudio/StageBuilder/StageBuilderUtil'
 import type { PrimaryArtifact, SidecarArtifactWrapper } from 'services/cd-ng'

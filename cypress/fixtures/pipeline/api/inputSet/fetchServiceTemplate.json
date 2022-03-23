@@ -1,0 +1,9 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "inputSetTemplateYaml": "pipeline:\n  identifier: \"testPipeline_Cypress\"\n  stages:\n  - stage:\n      identifier: \"testStage_Cypress\"\n      type: \"Deployment\"\n      spec:\n        serviceConfig:\n          serviceRef: \"<+input>\"\n        infrastructure:\n          infrastructureDefinition:\n            type: \"KubernetesDirect\"\n            spec:\n              namespace: \"<+input>\"\n",
+    "modules": ["cd"]
+  },
+  "metaData": null,
+  "correlationId": "7ce977ec-3e8e-4d47-ba5f-3d0b8689abec"
+}

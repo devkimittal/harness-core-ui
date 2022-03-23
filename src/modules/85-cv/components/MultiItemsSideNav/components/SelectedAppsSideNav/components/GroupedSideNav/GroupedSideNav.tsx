@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Icon, Text, CollapseList, CollapseListPanel, Color } from '@wings-software/uicore'
+import { Container, Icon, Text, CollapseList, CollapseListPanel } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { useStrings } from 'framework/strings'
 import type { GroupedMetric } from './GroupedSideNav.types'

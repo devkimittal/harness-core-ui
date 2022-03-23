@@ -5,18 +5,9 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import {
-  Button,
-  ButtonVariation,
-  Color,
-  Container,
-  Formik,
-  FormInput,
-  Layout,
-  StepProps,
-  Text
-} from '@wings-software/uicore'
+import { Button, ButtonVariation, Container, Formik, FormInput, Layout, StepProps, Text } from '@wings-software/uicore'
 import React from 'react'
+import { Color } from '@harness/design-system'
 import { Form } from 'formik'
 import * as Yup from 'yup'
 import { useStrings } from 'framework/strings'

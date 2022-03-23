@@ -7,14 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Text,
-  FormInput,
-  MultiTypeInputType,
-  getMultiTypeFromValue,
-  SelectOption,
-  FontVariation
-} from '@wings-software/uicore'
+import { Text, FormInput, MultiTypeInputType, getMultiTypeFromValue, SelectOption } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import { defaultTo, get, isEqual, isUndefined } from 'lodash-es'
 import { connect } from 'formik'

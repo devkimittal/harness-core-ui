@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Button, ButtonVariation, Layout, ButtonSize, Text, Color, FontVariation } from '@harness/uicore'
+import { Button, ButtonVariation, Layout, ButtonSize, Text } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { capitalize } from 'lodash-es'
 import cx from 'classnames'
 import routes from '@common/RouteDefinitions'

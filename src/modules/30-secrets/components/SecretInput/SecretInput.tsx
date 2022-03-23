@@ -13,12 +13,11 @@ import {
   Icon,
   Container,
   Text,
-  Color,
   DataTooltipInterface,
   FormikTooltipContext,
   HarnessDocTooltip
 } from '@wings-software/uicore'
-
+import { Color } from '@harness/design-system'
 import { get, isPlainObject, pick } from 'lodash-es'
 import { FormGroup, Intent } from '@blueprintjs/core'
 import useCreateOrSelectSecretModal from '@secrets/modals/CreateOrSelectSecretModal/useCreateOrSelectSecretModal'

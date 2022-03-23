@@ -1,6 +1,14 @@
+/*
+ * Copyright 2022 Harness Inc. All rights reserved.
+ * Use of this source code is governed by the PolyForm Shield 1.0.0 license
+ * that can be found in the licenses directory at the root of this repository, also available at
+ * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
+ */
+
 import React from 'react'
-import { Layout, Icon, Text, Color, SelectOption, Select, MultiSelectOption } from '@wings-software/uicore'
+import { Layout, Icon, Text, SelectOption, Select, MultiSelectOption } from '@wings-software/uicore'
 import { Menu } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import type { EntityGitDetails } from 'services/cd-ng'
 import css from '../ConnectorDetailsPage.module.scss'
 

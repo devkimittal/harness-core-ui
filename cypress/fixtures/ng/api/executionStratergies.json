@@ -1,0 +1,10 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "Kubernetes": ["Rolling", "BlueGreen", "Canary", "Default"],
+    "Ssh": ["Default"],
+    "NativeHelm": ["Rolling", "Default"]
+  },
+  "metaData": null,
+  "correlationId": "74369edb-fe6b-4e7e-963e-68441985dbd2"
+}

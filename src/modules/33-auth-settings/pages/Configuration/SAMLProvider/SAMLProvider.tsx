@@ -12,7 +12,6 @@ import {
   Radio,
   Container,
   Collapse,
-  Color,
   Card,
   Text,
   Button,
@@ -21,6 +20,7 @@ import {
   Utils,
   useConfirmationDialog
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Menu, MenuItem } from '@blueprintjs/core'
 import { useToaster } from '@common/components'
 import { useStrings } from 'framework/strings'

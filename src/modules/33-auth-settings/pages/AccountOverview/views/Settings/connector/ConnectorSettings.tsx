@@ -7,10 +7,8 @@
 
 import React, { useState } from 'react'
 import {
-  Color,
   Text,
   Checkbox,
-  FontVariation,
   Layout,
   ButtonVariation,
   shouldShowError,
@@ -18,6 +16,7 @@ import {
   getErrorInfoFromErrorObject,
   Popover
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { PopoverInteractionKind } from '@blueprintjs/core'
 import { useParams } from 'react-router-dom'
 

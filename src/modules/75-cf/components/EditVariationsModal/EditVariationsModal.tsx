@@ -19,13 +19,12 @@ import {
   Formik,
   FormikForm as Form,
   FormInput,
-  Color,
   SelectOption,
-  FontVariation,
   Heading,
   Icon
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { FontVariation, Color } from '@harness/design-system'
 import { getErrorMessage, useValidateVariationValues } from '@cf/utils/CFUtils'
 import { useStrings } from 'framework/strings'
 import { useToaster } from '@common/exports'

@@ -10,16 +10,8 @@ import moment from 'moment'
 import cx from 'classnames'
 import { capitalize, pick } from 'lodash-es'
 import { useParams } from 'react-router-dom'
-import {
-  Text,
-  Layout,
-  Button,
-  FontVariation,
-  Color,
-  PageSpinner,
-  ButtonVariation,
-  ButtonSize
-} from '@wings-software/uicore'
+import { Text, Layout, Button, PageSpinner, ButtonVariation, ButtonSize } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { StringsMap } from 'stringTypes'
 import { useToaster } from '@common/components'

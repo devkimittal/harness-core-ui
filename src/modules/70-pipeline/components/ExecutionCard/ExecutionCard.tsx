@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Card, Color, FontVariation, Icon, Tag, TagsPopover, Text } from '@wings-software/uicore'
+import { Card, Icon, Tag, TagsPopover, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { Popover } from '@blueprintjs/core'
 import { defaultTo, get, isEmpty } from 'lodash-es'

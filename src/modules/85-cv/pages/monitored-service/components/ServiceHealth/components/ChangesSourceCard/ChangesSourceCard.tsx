@@ -7,7 +7,8 @@
 
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Color, Text } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { Ticker, TickerVerticalAlignment } from '@common/components/Ticker/Ticker'

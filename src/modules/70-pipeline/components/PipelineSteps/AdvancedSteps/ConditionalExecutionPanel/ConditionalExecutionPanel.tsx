@@ -6,9 +6,10 @@
  */
 
 import React from 'react'
-import { Color, Container, Formik } from '@wings-software/uicore'
+import { Container, Formik } from '@wings-software/uicore'
 import { debounce, noop } from 'lodash-es'
 import type { FormikProps } from 'formik'
+import { Color } from '@harness/design-system'
 import type { StepMode as Modes } from '@pipeline/utils/stepUtils'
 import type { Values } from '../../../PipelineStudio/StepCommands/StepCommandTypes'
 import ConditionalExecutionPanelHeader from './ConditionalExecutionHeader'

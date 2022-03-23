@@ -214,6 +214,8 @@ export function StepCommands(
     }
   }
 
+  const showAdvancedTab = isModule(ModuleName.CF) ? false : stageType !== StageType.FEATURE
+
   return (
     <div className={cx(css.stepCommand, className)}>
       {stepType === StepType.Template && onUseTemplate && onRemoveTemplate ? (
@@ -233,7 +235,7 @@ export function StepCommands(
               title={isStepGroup ? getString('stepGroupConfiguration') : getString('stepConfiguration')}
               panel={getStepWidgetWithFormikRef()}
             />
-            {!isModule(ModuleName.CF) && (
+            {showAdvancedTab && (
               <Tab
                 id={StepCommandTabs.Advanced}
                 title={getString('advancedTitle')}

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, IconName, Text, FontVariation } from '@wings-software/uicore'
+import { IconName, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 
 interface TrendProps {
   value: number

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Text, Color, Container, Layout, Icon } from '@wings-software/uicore'
+import { Text, Container, Layout, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import routes from '@common/RouteDefinitions'

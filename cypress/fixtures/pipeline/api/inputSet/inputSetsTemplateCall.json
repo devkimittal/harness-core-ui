@@ -1,0 +1,9 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "inputSetTemplateYaml": "pipeline:\n  identifier: \"testPipeline_Cypress\"\n  stages:\n  - stage:\n      identifier: \"testStage_Cypress\"\n      type: \"Deployment\"\n      spec:\n        serviceConfig:\n          serviceRef: \"<+input>\"\n",
+    "modules": ["cd"]
+  },
+  "metaData": null,
+  "correlationId": "9dff8281-46fe-4e5a-ad4a-88017e25cfca"
+}

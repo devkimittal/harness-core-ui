@@ -16,13 +16,12 @@ import {
   Text,
   StepProps,
   Accordion,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import cx from 'classnames'
 import { Form } from 'formik'
 import * as Yup from 'yup'
-
+import { FontVariation } from '@harness/design-system'
 import { get, isEmpty, set } from 'lodash-es'
 import { ConfigureOptions } from '@common/components/ConfigureOptions/ConfigureOptions'
 import { FormMultiTypeCheckboxField } from '@common/components'

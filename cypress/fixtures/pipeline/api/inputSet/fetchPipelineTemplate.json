@@ -1,0 +1,22 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "yamlPipeline": "pipeline:\n    name: testPipeline_Cypress\n    identifier: testPipeline_Cypress\n    allowStageExecutions: false\n    projectIdentifier: project1\n    orgIdentifier: default\n    tags: {}\n    stages:\n        - stage:\n              name: testStage_Cypress\n              identifier: testStage_Cypress\n              description: \"\"\n              type: Deployment\n              spec:\n                  serviceConfig:\n                      serviceRef: <+input>\n                      serviceDefinition:\n                          type: Kubernetes\n                          spec:\n                              variables: []\n                  infrastructure:\n                      environmentRef: re\n                      infrastructureDefinition:\n                          type: KubernetesDirect\n                          spec:\n                              connectorRef: dynarace\n                              namespace: <+input>\n                              releaseName: release-<+INFRA_KEY>\n                      allowSimultaneousDeployments: false\n                  execution:\n                      steps:\n                          - step:\n                                name: Rollout Deployment\n                                identifier: rolloutDeployment\n                                type: K8sRollingDeploy\n                                timeout: 10m\n                                spec:\n                                    skipDryRun: false\n                          - step:\n                                type: K8sApply\n                                name: test\n                                identifier: test\n                                spec:\n                                    filePaths:\n                                        - test\n                                    skipDryRun: false\n                                    skipSteadyStateCheck: false\n                                timeout: 10m\n                      rollbackSteps:\n                          - step:\n                                name: Rollback Rollout Deployment\n                                identifier: rollbackRolloutDeployment\n                                type: K8sRollingRollback\n                                timeout: 10m\n                                spec: {}\n                  serviceDependencies: []\n              tags: {}\n              failureStrategies:\n                  - onFailure:\n                        errors:\n                            - AllErrors\n                        action:\n                            type: StageRollback\n",
+    "version": 6,
+    "gitDetails": {
+      "objectId": null,
+      "branch": null,
+      "repoIdentifier": null,
+      "rootFolder": null,
+      "filePath": null,
+      "repoName": null
+    },
+    "entityValidityDetails": {
+      "valid": true,
+      "invalidYaml": null
+    },
+    "modules": ["cd"]
+  },
+  "metaData": null,
+  "correlationId": "ec2c067d-e0ac-4ee4-b1f9-fe5607f40452"
+}

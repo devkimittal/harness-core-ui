@@ -6,9 +6,10 @@
  */
 
 import React, { useMemo, useState, useEffect, useRef } from 'react'
-import { Container, Text, Icon, Color, Button } from '@wings-software/uicore'
+import { Container, Text, Icon, Button } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
-import type { FontProps } from '@wings-software/uicore/dist/styled-props/font/FontProps'
+import { Color } from '@harness/design-system'
+import type { FontProps } from '@harness/design-system'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import classnames from 'classnames'

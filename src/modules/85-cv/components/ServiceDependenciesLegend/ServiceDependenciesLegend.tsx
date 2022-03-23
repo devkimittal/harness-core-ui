@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Container, Icon, Text, Color, Spacing, Layout, FontVariation } from '@wings-software/uicore'
-import type { MarginProps } from '@wings-software/uicore/dist/styled-props/margin/MarginProps'
+import { Container, Icon, Text, Layout } from '@wings-software/uicore'
+import { FontVariation, Color, Spacing } from '@harness/design-system'
+import type { MarginProps } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { getServicesStates, getServicesTypes } from './ServiceDependenciesLegend.utils'
 import css from './ServiceDependenciesLegend.module.scss'

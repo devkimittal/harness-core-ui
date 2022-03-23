@@ -11,12 +11,12 @@ import { useHistory, useParams } from 'react-router-dom'
 import {
   Layout,
   SelectOption,
-  Color,
   Text,
   Switch,
   PageSpinner,
   VisualYamlSelectedView as SelectedView
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { parse } from 'yaml'
 import { isEmpty, isUndefined, merge, cloneDeep, get, defaultTo, set } from 'lodash-es'
 import { CompletionItemKind } from 'vscode-languageserver-types'

@@ -8,8 +8,8 @@
 import React, { useState } from 'react'
 import { isPlainObject, get, isNil, escape, defaultTo } from 'lodash-es'
 import cx from 'classnames'
-
-import { Color, FontVariation, Text, useNestedAccordion } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
+import { Text, useNestedAccordion } from '@wings-software/uicore'
 import type { VariableResponseMapValue } from 'services/pipeline-ng'
 import { TextInputWithCopyBtn } from '@common/components/TextInputWithCopyBtn/TextInputWithCopyBtn'
 

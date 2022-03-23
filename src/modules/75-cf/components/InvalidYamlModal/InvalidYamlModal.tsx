@@ -6,18 +6,8 @@
  */
 
 import React, { ReactElement } from 'react'
-import {
-  ButtonVariation,
-  Dialog,
-  Layout,
-  Button,
-  FontVariation,
-  Heading,
-  Icon,
-  Text,
-  Color,
-  Container
-} from '@wings-software/uicore'
+import { ButtonVariation, Dialog, Layout, Button, Heading, Icon, Text, Container } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './InvalidYamlModal.module.scss'
 

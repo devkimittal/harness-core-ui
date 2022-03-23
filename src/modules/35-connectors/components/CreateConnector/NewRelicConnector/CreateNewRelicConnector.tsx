@@ -6,19 +6,10 @@
  */
 
 import React, { useState, useMemo } from 'react'
-import {
-  Layout,
-  Button,
-  Text,
-  FormInput,
-  FormikForm,
-  Container,
-  SelectOption,
-  Icon,
-  Color
-} from '@wings-software/uicore'
+import { Layout, Button, Text, FormInput, FormikForm, Container, SelectOption, Icon } from '@wings-software/uicore'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { Color } from '@harness/design-system'
 import { PopoverInteractionKind, Tooltip } from '@blueprintjs/core'
 import { useToaster } from '@common/exports'
 import type { ConnectorConfigDTO } from 'services/cd-ng'

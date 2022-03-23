@@ -18,13 +18,13 @@ import {
   Pagination,
   useIsMounted,
   Icon,
-  Color,
   Button,
   FlexExpander,
   TextInput,
   PageError,
   HarnessDocTooltip
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import { get, noop, omit, debounce } from 'lodash-es'
 import cx from 'classnames'

@@ -12,13 +12,13 @@ import {
   Formik,
   Layout,
   NestedAccordionProvider,
-  Color,
   ButtonVariation,
   PageSpinner,
   VisualYamlSelectedView as SelectedView,
   getErrorInfoFromErrorObject,
   SelectOption
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import cx from 'classnames'
 import { useHistory } from 'react-router-dom'
@@ -31,7 +31,6 @@ import {
   usePostPipelineExecuteWithInputSetYaml,
   useGetTemplateFromPipeline,
   useGetMergeInputSetFromPipelineTemplateWithListInput,
-  useGetInputSetsListForPipeline,
   useRePostPipelineExecuteWithInputSetYaml,
   StageExecutionResponse,
   useRunStagesWithRuntimeInputYaml,
@@ -157,10 +156,11 @@ function RunPipelineFormBasic({
     selectedStageItems: [getAllStageItem(getString)]
   })
   const { setPipeline: updatePipelineInVaribalesContext } = usePipelineVariables()
+  const [existingProvide, setExistingProvide] = useState<'existing' | 'provide'>('existing')
 
   useEffect(() => {
-    getInputSetsList()
     getTemplateFromPipeline()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [canEdit] = usePermission(
@@ -178,14 +178,6 @@ function RunPipelineFormBasic({
     },
     [accountId, orgIdentifier, projectIdentifier, pipelineIdentifier]
   )
-
-  useEffect(() => {
-    if (inputSetYAML) {
-      const parsedYAML = parse(inputSetYAML)
-      setExistingProvide('provide')
-      setCurrentPipeline(parsedYAML)
-    }
-  }, [inputSetYAML])
 
   const stageIdentifiers = useMemo((): string[] => {
     let stageIds: string[] = []
@@ -313,27 +305,6 @@ function RunPipelineFormBasic({
     originalExecutionId: defaultTo(pipelineExecutionId, '')
   })
 
-  const {
-    refetch: getInputSetsList,
-    data: inputSetResponse,
-    loading: inputSetLoading
-  } = useGetInputSetsListForPipeline({
-    queryParams: {
-      accountIdentifier: accountId,
-      orgIdentifier,
-      projectIdentifier,
-      pipelineIdentifier,
-      ...(!isEmpty(repoIdentifier) && !isEmpty(branch)
-        ? {
-            repoIdentifier,
-            branch,
-            getDefaultFromOtherRepo: true
-          }
-        : {})
-    },
-    lazy: true
-  })
-
   const { mutate: mergeInputSet, loading: loadingMergeInputSetUpdate } =
     useGetMergeInputSetFromPipelineTemplateWithListInput({
       queryParams: {
@@ -403,8 +374,6 @@ function RunPipelineFormBasic({
     return executionStages
   }, [stageExecutionData?.data])
 
-  const inputSets = inputSetResponse?.data?.content
-
   const yamlTemplate = useMemo(() => {
     return parse(defaultTo(template?.data?.inputSetTemplateYaml, ''))?.pipeline
   }, [template?.data?.inputSetTemplateYaml])
@@ -421,6 +390,16 @@ function RunPipelineFormBasic({
   useEffect(() => {
     setSelectedInputSets(inputSetSelected)
   }, [inputSetSelected])
+
+  useEffect(() => {
+    if (inputSetYAML) {
+      const parsedYAML = parse(inputSetYAML)
+      setExistingProvide('provide')
+      setCurrentPipeline(parsedYAML)
+    } else {
+      setExistingProvide(template?.data?.hasInputSets ? 'existing' : 'provide')
+    }
+  }, [inputSetYAML, template?.data?.hasInputSets])
 
   useEffect(() => {
     if (getTemplateError) {
@@ -612,14 +591,6 @@ function RunPipelineFormBasic({
     ]
   )
 
-  const [existingProvide, setExistingProvide] = useState<'existing' | 'provide'>('existing')
-
-  useEffect(() => {
-    if (inputSets && !(inputSets.length > 0)) {
-      setExistingProvide('provide')
-    }
-  }, [inputSets])
-
   const [yamlHandler, setYamlHandler] = useState<YamlBuilderHandlerBinding | undefined>()
   const [lastYaml, setLastYaml] = useState({})
 
@@ -737,7 +708,6 @@ function RunPipelineFormBasic({
       loadingTemplate ||
       runLoading ||
       runStageLoading ||
-      inputSetLoading ||
       reRunLoading ||
       reRunStagesLoading
     )
@@ -852,7 +822,7 @@ function RunPipelineFormBasic({
                     resolvedPipeline={resolvedPipeline}
                     submitForm={submitForm}
                     setRunClicked={setRunClicked}
-                    inputSets={inputSets}
+                    hasInputSets={!!template?.data?.hasInputSets}
                     setSelectedInputSets={setSelectedInputSets}
                     loading={loadingMergeInputSetUpdate}
                     loadingMergeInputSetUpdate={loadingMergeInputSetUpdate}
@@ -948,7 +918,7 @@ function RunPipelineFormBasic({
                       branch={branch}
                       isGitSyncEnabled={isGitSyncEnabled}
                       setFormErrors={setFormErrors}
-                      getInputSetsList={getInputSetsList}
+                      refetchParentData={getTemplateFromPipeline}
                     />
                   </Layout.Horizontal>
                 )}

@@ -6,8 +6,9 @@
  */
 
 import { Spinner } from '@blueprintjs/core'
-import { Color, Container, Text } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
 import moment from 'moment'
+import { Color } from '@harness/design-system'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { getTimeFormatMoment } from '@cv/pages/monitored-service/components/ServiceHealth/ServiceHealth.utils'

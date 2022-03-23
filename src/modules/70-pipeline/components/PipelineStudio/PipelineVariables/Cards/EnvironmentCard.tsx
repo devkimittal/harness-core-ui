@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, FontVariation, MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { get } from 'lodash-es'
 import type { DeploymentStageConfig, ExecutionElementConfig, Infrastructure, StageElementConfig } from 'services/cd-ng'
 import { useStrings } from 'framework/strings'

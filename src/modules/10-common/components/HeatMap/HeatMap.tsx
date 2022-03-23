@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Color, Container, Text } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Classes, Popover, PopoverInteractionKind } from '@blueprintjs/core'
 import cx from 'classnames'
 import isUndefined from 'lodash/isUndefined'

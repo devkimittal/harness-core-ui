@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Color, Layout, Text, Container, FormInput, SelectOption } from '@wings-software/uicore'
+import { Layout, Text, Container, FormInput, SelectOption } from '@wings-software/uicore'
 import type { FormikProps } from 'formik'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import SecretInput from '@secrets/components/SecretInput/SecretInput'
 import SSHSecretInput from '@secrets/components/SSHSecretInput/SSHSecretInput'

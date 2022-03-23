@@ -64,6 +64,7 @@ declare global {
       visitPipelinesList(): void
       visitChangeIntelligence(): void
       fillName(name: string): void
+      initializeRoute(): void
       clickSubmit(): void
       fillField(fieldName: string, value: string): void
       addNewMonitoredServiceWithServiceAndEnv(): void
@@ -110,6 +111,10 @@ Cypress.Commands.add('visitCreatePipeline', () => {
 
 Cypress.Commands.add('fillName', (value: string) => {
   cy.fillField('name', value)
+})
+
+Cypress.Commands.add('initializeRoute', () => {
+  localStorage.setItem('token', 'JTIydG9rZW4lMjI=')
 })
 
 Cypress.Commands.add('visitVerifyStepInPipeline', () => {

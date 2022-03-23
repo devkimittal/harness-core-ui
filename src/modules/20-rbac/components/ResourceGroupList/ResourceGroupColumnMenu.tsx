@@ -6,7 +6,8 @@
  */
 
 import { Classes, Menu, Position } from '@blueprintjs/core'
-import { Button, Popover, useConfirmationDialog, useToaster, Intent } from '@wings-software/uicore'
+import { Button, Popover, useConfirmationDialog, useToaster } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Cell, CellValue, ColumnInstance, Renderer, Row, TableInstance } from 'react-table'

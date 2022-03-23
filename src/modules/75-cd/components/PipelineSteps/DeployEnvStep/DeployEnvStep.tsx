@@ -204,7 +204,6 @@ export interface DeployEnvironmentProps {
     readonly?: boolean
   }
   allowableTypes: MultiTypeInputType[]
-  environmentLabel?: string
 }
 
 interface DeployEnvironmentState {
@@ -227,8 +226,7 @@ export const DeployEnvironmentWidget: React.FC<DeployEnvironmentProps> = ({
   initialValues,
   onUpdate,
   readonly,
-  allowableTypes,
-  environmentLabel
+  allowableTypes
 }): JSX.Element => {
   const { getString } = useStrings()
   const { accountId, projectIdentifier, orgIdentifier } = useParams<
@@ -437,9 +435,7 @@ export const DeployEnvironmentWidget: React.FC<DeployEnvironmentProps> = ({
                 flex={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}
               >
                 <FormInput.MultiTypeInput
-                  label={
-                    environmentLabel ? environmentLabel : getString('cd.pipelineSteps.serviceTab.specifyYourService')
-                  }
+                  label={getString('cd.pipelineSteps.environmentTab.specifyYourEnvironment')}
                   tooltipProps={{ dataTooltipId: 'specifyYourEnvironment' }}
                   name="environmentRef"
                   useValue

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Card, Layout, Text, Color, Checkbox, FontVariation, Radio } from '@wings-software/uicore'
+import { Card, Layout, Text, Checkbox, Radio } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import RbacFactory from '@rbac/factories/RbacFactory'
 import type { ResourceType, ResourceCategory } from '@rbac/interfaces/ResourceType'
 import { useStrings } from 'framework/strings'

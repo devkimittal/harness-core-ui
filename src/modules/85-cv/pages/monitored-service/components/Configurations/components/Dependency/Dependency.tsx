@@ -6,7 +6,8 @@
  */
 
 import React, { useMemo, useState } from 'react'
-import { Layout, Text, Color, Container, Pagination, PageError, NoDataCard } from '@wings-software/uicore'
+import { Layout, Text, Container, Pagination, PageError, NoDataCard } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { isEqual } from 'lodash-es'
 import { useParams } from 'react-router-dom'
 import { useGetMonitoredServiceList } from 'services/cv'

@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Icon, Layout, Table, Select, SelectOption, TextInput, Text, Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
+import { Icon, Layout, Table, Select, SelectOption, TextInput, Text } from '@wings-software/uicore'
 import type { CellProps } from 'react-table'
 import type { Service, ServiceDep } from 'services/lw'
 import css from './COGatewayConfig.module.scss'

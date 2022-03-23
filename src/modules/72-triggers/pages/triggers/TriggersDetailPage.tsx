@@ -8,7 +8,6 @@
 import {
   Button,
   ButtonVariation,
-  Color,
   Container,
   Icon,
   Layout,
@@ -19,6 +18,7 @@ import {
   VisualYamlToggle,
   HarnessDocTooltip
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import React, { ReactNode } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'

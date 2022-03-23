@@ -11,15 +11,14 @@ import {
   Layout,
   Button,
   Popover,
-  Color,
   ButtonVariation,
   Icon,
-  FontVariation,
   TableV2,
   useConfirmationDialog,
   useToaster,
   Dialog
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import type { CellProps, Renderer, Column } from 'react-table'
 import { Classes, Position, Menu, Intent, PopoverInteractionKind, IconName, MenuItem } from '@blueprintjs/core'

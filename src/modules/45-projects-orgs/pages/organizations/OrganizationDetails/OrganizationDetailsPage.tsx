@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Card, Color, Heading, Icon, Layout, Text, Button, ButtonVariation } from '@wings-software/uicore'
+import { Card, Heading, Icon, Layout, Text, Button, ButtonVariation } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { Page } from '@common/exports'
 import routes from '@common/RouteDefinitions'
 import { Project, useGetOrganizationAggregateDTO } from 'services/cd-ng'

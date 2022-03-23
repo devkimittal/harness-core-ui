@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import {
   Card,
   Checkbox,
-  Color,
   Container,
   FormikForm,
   Layout,
@@ -19,7 +18,7 @@ import {
   Text,
   useToaster
 } from '@wings-software/uicore'
-
+import { Color } from '@harness/design-system'
 import produce from 'immer'
 import { debounce, get, isEmpty, set, unset } from 'lodash-es'
 import { StepViewType } from '@pipeline/components/AbstractSteps/Step'

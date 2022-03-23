@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'
-import { FormInput, getMultiTypeFromValue, MultiTypeInputType, PageSpinner } from '@wings-software/uicore'
+import { FormInput, getMultiTypeFromValue, MultiTypeInputType } from '@wings-software/uicore'
 import { useStrings } from 'framework/strings'
 import type {
   AccountPathProps,
@@ -25,12 +25,7 @@ import { JiraProjectBasicNG, JiraProjectNG, useGetJiraIssueCreateMetadata, useGe
 import { getGenuineValue, setIssueTypeOptions } from '../JiraApproval/helper'
 import type { JiraProjectSelectOption } from '../JiraApproval/types'
 import { isApprovalStepFieldDisabled } from '../Common/ApprovalCommons'
-import type {
-  JiraCreateDeploymentModeProps,
-  JiraCreateDeploymentModeFormContentInterface,
-  JiraFieldNGWithValue
-} from './types'
-import { JiraFieldsRenderer } from './JiraFieldsRenderer'
+import type { JiraCreateDeploymentModeProps, JiraCreateDeploymentModeFormContentInterface } from './types'
 import css from './JiraCreate.module.scss'
 
 function FormContent(formContentProps: JiraCreateDeploymentModeFormContentInterface) {
@@ -65,16 +60,14 @@ function FormContent(formContentProps: JiraCreateDeploymentModeFormContentInterf
   }
   const [projectOptions, setProjectOptions] = useState<JiraProjectSelectOption[]>([])
   const [projectMetadata, setProjectMetadata] = useState<JiraProjectNG>()
-  const [selectedField, setSelectedField] = useState<JiraFieldNGWithValue[]>([])
+
+  const [selectedProjectValue, setSelectedProjectValue] = useState<JiraProjectSelectOption>()
+  const [selectedIssueTypeValue, setSelectedIssueTypeValue] = useState<JiraProjectSelectOption>()
 
   const connectorRefFixedValue = getGenuineValue(
     initialValues.spec?.connectorRef || (inputSetData?.allValues?.spec?.connectorRef as string)
   )
   const projectKeyFixedValue = initialValues.spec?.projectKey || inputSetData?.allValues?.spec?.projectKey
-  const issueKeyFixedValue = initialValues.spec?.issueType || inputSetData?.allValues?.spec?.issueType
-
-  const [selectedProjectValue, setSelectedProjectValue] = useState<JiraProjectSelectOption>()
-  const [selectedIssueTypeValue, setSelectedIssueTypeValue] = useState<JiraProjectSelectOption>()
 
   useEffect(() => {
     // If connector value changes in form, fetch projects
@@ -130,33 +123,6 @@ function FormContent(formContentProps: JiraCreateDeploymentModeFormContentInterf
       }
     }
   }, [projectMetaResponse?.data])
-
-  useEffect(() => {
-    if (issueKeyFixedValue && projectMetadata?.issuetypes) {
-      const issueTypeData = projectMetadata?.issuetypes[issueKeyFixedValue as string]
-      const fieldKeys = Object.keys(issueTypeData?.fields || {})
-      const JiraSelectedFields: JiraFieldNGWithValue[] = []
-      fieldKeys.forEach(keyy => {
-        const fieldObject = issueTypeData?.fields[keyy]
-        if (
-          fieldObject &&
-          keyy !== 'Summary' &&
-          keyy !== 'Description' &&
-          template?.spec?.fields.filter(_field =>
-            _field.name === keyy
-              ? JiraSelectedFields.push({
-                  ...fieldObject,
-                  value: _field.value
-                })
-              : null
-          )
-        ) {
-          setSelectedField(JiraSelectedFields)
-        }
-      })
-    }
-  }, [issueKeyFixedValue, projectMetadata])
-
   return (
     <React.Fragment>
       {getMultiTypeFromValue(template?.timeout) === MultiTypeInputType.RUNTIME ? (
@@ -275,16 +241,6 @@ function FormContent(formContentProps: JiraCreateDeploymentModeFormContentInterf
           placeholder={getString('common.descriptionPlaceholder')}
         />
       ) : null}
-
-      {fetchingProjectMetadata ? (
-        <PageSpinner message={getString('pipeline.jiraCreateStep.fetchingFields')} className={css.fetching} />
-      ) : (
-        <JiraFieldsRenderer
-          jiraContextType={'JiraCreateDeploymentMode'}
-          selectedFields={selectedField}
-          readonly={readonly}
-        />
-      )}
     </React.Fragment>
   )
 }

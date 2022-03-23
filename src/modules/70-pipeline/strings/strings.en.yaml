@@ -764,6 +764,8 @@ stepDescription:
   HelmRollback: Rolls back all the deployed objects to the previous version.
   ServiceNowApproval: Use ServiceNow issues to approve steps and stages.
   Policy: Evaluate policy during pipeline execution
+  ServerlessAwsLambdaDeploy: Create the Lambda functions defined in this Stage.
+  ServerlessAwsLambdaRollback: Deploy the previous successful version as a new version.
 executionStrategy:
   executionStrategies: Execution Strategies
   useStrategy: Use Strategy
@@ -822,6 +824,7 @@ gitPullRequestNumber: Git Pull Request Number
 expressionsEvaluation: Expressions Evaluation
 deploymentFrequency: 'Deployment Frequency'
 retryPipeline: Retry Failed Pipeline
+openInNewTab: Open in new tab
 stagetoRetryFrom: Select the stage that you would like to resume from
 runAllParallelstages: Run all parallel stages
 runFailedStages: Run only failed stages

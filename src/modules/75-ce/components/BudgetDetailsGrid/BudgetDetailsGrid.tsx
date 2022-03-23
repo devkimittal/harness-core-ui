@@ -5,8 +5,9 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Container, Text, FontVariation, Color } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
 import React from 'react'
+import { Color, FontVariation } from '@harness/design-system'
 import moment from 'moment'
 import type { CellProps, Renderer } from 'react-table'
 import type { BudgetData, BudgetCostData, BudgetPeriod } from 'services/ce/services'

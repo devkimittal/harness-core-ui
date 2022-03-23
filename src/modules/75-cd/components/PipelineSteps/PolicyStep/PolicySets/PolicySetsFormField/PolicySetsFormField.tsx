@@ -64,6 +64,12 @@ function PolicySetsFormField({
   const tooltipContext = React.useContext(FormikTooltipContext)
   const dataTooltipId = tooltipContext?.formName ? `${tooltipContext?.formName}_${name}` : ''
 
+  const deletePolicySet = (policySetId: string) => {
+    const newPolicySetIds = policySetIds.filter(id => id !== policySetId)
+    formikProps?.setFieldTouched(name, true)
+    formikProps?.setFieldValue(name, newPolicySetIds)
+  }
+
   return (
     <FormGroup
       {...rest}
@@ -73,7 +79,7 @@ function PolicySetsFormField({
       label={<HarnessDocTooltip tooltipId={dataTooltipId} labelText={getString('common.policiesSets.policyset')} />}
     >
       {policySetIds.map(policySetId => {
-        return <MiniPolicySetRenderer policySetId={policySetId} key={policySetId} />
+        return <MiniPolicySetRenderer policySetId={policySetId} key={policySetId} deletePolicySet={deletePolicySet} />
       })}
       <Button
         minimal

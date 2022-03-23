@@ -9,9 +9,7 @@ import React from 'react'
 import {
   Button,
   ButtonVariation,
-  Color,
   Container,
-  FontVariation,
   Formik,
   FormikForm,
   FormInput,
@@ -21,6 +19,7 @@ import {
   Text,
   Accordion
 } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import * as yup from 'yup'
 import { useStrings } from 'framework/strings'
 import type { SLOErrorBudgetResetDTO } from 'services/cv'

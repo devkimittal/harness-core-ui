@@ -7,8 +7,9 @@
 
 import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Avatar, Color, Container, FontVariation, Icon, Layout, Text } from '@harness/uicore'
+import { Avatar, Container, Icon, Layout, Text } from '@harness/uicore'
 import { noop, defaultTo } from 'lodash-es'
+import { FontVariation, Color } from '@harness/design-system'
 import cx from 'classnames'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import { useGitSyncStore } from 'framework/GitRepoStore/GitSyncStoreContext'

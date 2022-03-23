@@ -24,6 +24,8 @@ import {
   mockStatusResponse,
   mockStatusErrorResponse
 } from './JiraUpdateTestHelper'
+import type { JiraUpdateData } from '../types'
+import { processFormData } from '../helper'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 
@@ -287,6 +289,183 @@ describe('Jira Update tests', () => {
         ]
       },
       name: 'jira update step'
+    })
+  })
+
+  test('Minimum time cannot be less than 10s', () => {
+    const response = new JiraUpdate().validateInputSet({
+      data: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '1s',
+        type: 'JiraUpdate',
+        spec: {
+          connectorRef: '',
+          issueKey: '',
+          fields: []
+        }
+      },
+      template: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '<+input>',
+        type: 'JiraUpdate',
+        spec: {
+          connectorRef: '',
+          issueKey: '',
+          fields: []
+        }
+      },
+      viewType: StepViewType.TriggerForm
+    })
+    expect(response).toMatchSnapshot('Value must be greater than or equal to "10s"')
+  })
+})
+
+describe('Jira Update process form data tests', () => {
+  test('if duplicate fields are not sent', () => {
+    const formValues: JiraUpdateData = {
+      name: 'jiraUpdate',
+      identifier: 'jup',
+      timeout: '10m',
+      type: 'JiraUpdate',
+      spec: {
+        connectorRef: { label: 'conn', value: 'conn' },
+        issueKey: 'id1',
+        transitionTo: {
+          status: '' || { label: 'progress', value: 'progress' },
+          transitionName: ''
+        },
+        fields: [
+          {
+            name: 'f1',
+            value: 'v1'
+          },
+          {
+            name: 'f2',
+            value: { label: 'vb2', value: 'vb2' }
+          }
+        ],
+        selectedFields: [
+          {
+            name: 'f2',
+            value: { label: 'vb2', value: 'vb2' },
+            key: 'f2',
+            allowedValues: [],
+            schema: {
+              typeStr: '',
+              type: 'string'
+            }
+          },
+          {
+            name: 'f3',
+            value: [
+              { label: 'v3', value: 'v3' },
+              { label: 'v32', value: 'v32' }
+            ],
+            key: 'f3',
+            allowedValues: [],
+            schema: {
+              typeStr: '',
+              type: 'string'
+            }
+          }
+        ]
+      }
+    }
+
+    const returned = processFormData(formValues)
+    expect(returned).toStrictEqual({
+      name: 'jiraUpdate',
+      identifier: 'jup',
+      timeout: '10m',
+      type: 'JiraUpdate',
+      spec: {
+        connectorRef: 'conn',
+        delegateSelectors: undefined,
+        issueKey: 'id1',
+        transitionTo: {
+          status: 'progress',
+          transitionName: ''
+        },
+        fields: [
+          {
+            name: 'f2',
+            value: 'vb2'
+          },
+          {
+            name: 'f3',
+            value: 'v3,v32'
+          },
+          {
+            name: 'f1',
+            value: 'v1'
+          }
+        ]
+      }
+    })
+  })
+
+  test('if runtime values work', () => {
+    const formValues: JiraUpdateData = {
+      name: 'jiraUpdate',
+      identifier: 'jup',
+      timeout: '10m',
+      type: 'JiraUpdate',
+      spec: {
+        connectorRef: '<+input>',
+        delegateSelectors: undefined,
+        issueKey: '<+input>',
+        transitionTo: {
+          status: '<+input>',
+          transitionName: ''
+        },
+        fields: [
+          {
+            name: 'f1',
+            value: '<+a.b>'
+          }
+        ],
+        selectedFields: [
+          {
+            name: 'f2',
+            value: '<+x.y>',
+            key: 'f2',
+            allowedValues: [],
+            schema: {
+              typeStr: '',
+              type: 'string'
+            }
+          }
+        ]
+      }
+    }
+
+    const returned = processFormData(formValues)
+    expect(returned).toStrictEqual({
+      name: 'jiraUpdate',
+      identifier: 'jup',
+      timeout: '10m',
+      type: 'JiraUpdate',
+      spec: {
+        connectorRef: '<+input>',
+        delegateSelectors: undefined,
+        issueKey: '<+input>',
+        transitionTo: {
+          status: '<+input>',
+          transitionName: ''
+        },
+        fields: [
+          {
+            name: 'f2',
+            value: '<+x.y>'
+          },
+          {
+            name: 'f1',
+            value: '<+a.b>'
+          }
+        ]
+      }
     })
   })
 })

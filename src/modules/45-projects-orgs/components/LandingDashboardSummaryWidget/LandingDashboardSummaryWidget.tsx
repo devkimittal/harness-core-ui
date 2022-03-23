@@ -6,8 +6,9 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Card, Color, Container, FontVariation, Icon, IconName, Layout, Text } from '@wings-software/uicore'
+import { Card, Container, Icon, IconName, Layout, Text } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { FontVariation, Color } from '@harness/design-system'
 import cx from 'classnames'
 import { TimeRangeToDays, useLandingDashboardContext } from '@common/factories/LandingDashboardContext'
 import { useStrings } from 'framework/strings'

@@ -7,13 +7,15 @@
 
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Button, Layout, StepProps, StepsProgress, Intent, Heading } from '@wings-software/uicore'
+import { Button, Layout, StepProps, StepsProgress, Heading } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ConnectorConfigDTO } from 'services/cd-ng'
 import { useGetTestConnectionResult } from 'services/cd-ng'
-import { CE_AZURE_CONNECTOR_CREATION_EVENTS } from '@connectors/trackingConstants'
+import { CCM_CONNECTOR_SAVE_EVENT, CE_AZURE_CONNECTOR_CREATION_EVENTS } from '@connectors/trackingConstants'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import { useStepLoadTelemetry } from '@connectors/common/useTrackStepLoad/useStepLoadTelemetry'
+import { Connectors } from '@connectors/constants'
 import ShowConnectorError from '../ShowConnectorError'
 import type { CEAzureDTO } from '../Overview/AzureConnectorOverview'
 import css from '../../CreateCeAzureConnector_new.module.scss'
@@ -98,7 +100,7 @@ const TestConnection: React.FC<StepProps<CEAzureDTO> & TestConnectionProps> = pr
         rightIcon="chevron-right"
         className={css.continueAndPreviousBtns}
         onClick={() => {
-          trackEvent(CE_AZURE_CONNECTOR_CREATION_EVENTS.CONNECTOR_FINISH_CLICK, {})
+          trackEvent(CCM_CONNECTOR_SAVE_EVENT, { type: Connectors.CE_AZURE })
           props.onClose?.()
         }}
       />

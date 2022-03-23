@@ -16,14 +16,13 @@ import {
   FormInput,
   Formik,
   FormikForm,
-  FontVariation,
   FlexExpander,
   DateInput,
-  Color,
   Icon,
   HarnessDocTooltip
 } from '@wings-software/uicore'
 import moment from 'moment'
+import { FontVariation, Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import Highcharts from 'highcharts/highcharts'
 import { useParams } from 'react-router-dom'

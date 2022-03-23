@@ -7,7 +7,8 @@
 
 import React, { useState } from 'react'
 import cx from 'classnames'
-import { Button, Card, Heading, Color, Layout, Icon, IconName, Text } from '@wings-software/uicore'
+import { Button, Card, Heading, Layout, Icon, IconName, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import { useStrings } from 'framework/strings'
 import type { Project, ConnectorInfoDTO } from 'services/cd-ng'

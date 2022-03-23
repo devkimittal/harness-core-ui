@@ -9,20 +9,18 @@ import React, { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { CellProps, Column, Renderer } from 'react-table'
 import {
-  Color,
   Layout,
   Text,
   Button,
   Container,
   PageError,
   TableV2,
-  Intent,
   useConfirmationDialog,
-  FontVariation,
   ButtonVariation,
   getErrorInfoFromErrorObject,
   Card
 } from '@wings-software/uicore'
+import { Color, FontVariation, Intent } from '@harness/design-system'
 import { Classes, Menu, Popover, Position, PopoverInteractionKind } from '@blueprintjs/core'
 import { defaultTo } from 'lodash-es'
 import { useToaster } from '@common/components'

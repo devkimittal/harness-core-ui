@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Icon, Color, Layout, Text } from '@wings-software/uicore'
+import { Icon, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import testReportEmptyState from './images/test_report_empty_state.svg'
 import css from './BuildTests.module.scss'

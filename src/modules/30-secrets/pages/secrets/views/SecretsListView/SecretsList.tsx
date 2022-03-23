@@ -12,7 +12,6 @@ import { Menu, Position, Classes, Intent } from '@blueprintjs/core'
 import type { Column, Renderer, CellProps } from 'react-table'
 import {
   Text,
-  Color,
   Layout,
   Icon,
   Button,
@@ -22,6 +21,7 @@ import {
   useToaster,
   TableV2
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { String, useStrings } from 'framework/strings'
 import { SecretResponseWrapper, useDeleteSecretV2 } from 'services/cd-ng'
 import type { PageSecretResponseWrapper, SecretTextSpecDTO } from 'services/cd-ng'

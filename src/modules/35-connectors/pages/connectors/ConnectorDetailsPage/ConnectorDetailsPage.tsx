@@ -6,10 +6,11 @@
  */
 
 import React, { useEffect, useMemo } from 'react'
-import { Layout, Container, Icon, Text, Color, SelectOption, PageSpinner, PageError } from '@wings-software/uicore'
+import { Layout, Container, Icon, Text, SelectOption, PageSpinner, PageError } from '@wings-software/uicore'
 import { Tag } from '@blueprintjs/core'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { Page } from '@common/exports'
 import {
   useGetConnector,

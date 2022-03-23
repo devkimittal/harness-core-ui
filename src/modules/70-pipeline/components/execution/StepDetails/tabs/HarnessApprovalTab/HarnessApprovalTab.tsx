@@ -6,10 +6,10 @@
  */
 
 import React from 'react'
-import { Button, FormInput, Layout, TextInput, Text, Color } from '@wings-software/uicore'
+import { Button, FormInput, Layout, TextInput, Text } from '@wings-software/uicore'
 import { Formik } from 'formik'
 import cx from 'classnames'
-
+import { Color } from '@harness/design-system'
 import {
   useAddHarnessApprovalActivity,
   ApprovalInstanceResponse,

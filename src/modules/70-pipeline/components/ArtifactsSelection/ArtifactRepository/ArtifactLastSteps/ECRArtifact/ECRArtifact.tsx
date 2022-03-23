@@ -16,10 +16,10 @@ import {
   SelectOption,
   StepProps,
   Text,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
 import { Form } from 'formik'
+import { FontVariation } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 import { defaultTo, get, merge } from 'lodash-es'

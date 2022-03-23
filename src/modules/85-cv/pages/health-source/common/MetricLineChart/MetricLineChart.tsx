@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { GetDataError } from 'restful-react'
-import { Container, NoDataCard, Icon, Text, FontVariation } from '@wings-software/uicore'
+import { Container, NoDataCard, Icon, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useStrings } from 'framework/strings'

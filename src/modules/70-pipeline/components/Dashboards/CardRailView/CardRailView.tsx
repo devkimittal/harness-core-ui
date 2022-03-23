@@ -6,7 +6,8 @@
  */
 
 import React, { useRef, useEffect, useState } from 'react'
-import { Container, Text, Icon, Color, Layout, FontVariation } from '@wings-software/uicore'
+import { Container, Text, Icon, Layout } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import classnames from 'classnames'
 import { Classes } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'

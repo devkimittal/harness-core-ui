@@ -12,13 +12,13 @@ import {
   FormikForm,
   FormInput,
   Text,
-  Color,
   Button,
   ButtonVariation,
   SelectOption,
   Container
 } from '@wings-software/uicore'
 import { isEmpty } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { useStrings } from 'framework/strings'
 import { NameId } from '@common/components/NameIdDescriptionTags/NameIdDescriptionTags'

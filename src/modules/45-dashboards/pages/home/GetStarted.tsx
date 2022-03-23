@@ -8,9 +8,9 @@
 import React from 'react'
 import { Drawer } from '@blueprintjs/core'
 
-import { Layout, Button, Text, Color } from '@wings-software/uicore'
+import { Layout, Button, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
-
 interface DrawerProps {
   isOpen: boolean
   setDrawerOpen: (state: boolean) => void

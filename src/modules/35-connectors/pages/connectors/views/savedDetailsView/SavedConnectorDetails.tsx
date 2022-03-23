@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Layout, Text, Color, Icon, IconName, Card } from '@wings-software/uicore'
+import { Layout, Text, Icon, IconName, Card } from '@wings-software/uicore'
 import moment from 'moment'
+import { Color } from '@harness/design-system'
 import { Connectors } from '@connectors/constants'
 import type {
   ConnectorInfoDTO,

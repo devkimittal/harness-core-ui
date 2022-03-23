@@ -8,7 +8,6 @@
 import {
   Button,
   ButtonVariation,
-  Color,
   Container,
   Icon,
   IconName,
@@ -18,6 +17,7 @@ import {
   Text
 } from '@wings-software/uicore'
 import React from 'react'
+import { Color } from '@harness/design-system'
 import type { CellProps, Column, Renderer } from 'react-table'
 import { useParams } from 'react-router-dom'
 import { Classes, Menu, Position } from '@blueprintjs/core'

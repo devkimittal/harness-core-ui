@@ -9,6 +9,7 @@ import React from 'react'
 import { render, act, fireEvent, queryByAttribute, waitFor } from '@testing-library/react'
 import { StepType } from '@pipeline/components/PipelineSteps/PipelineStepInterface'
 import { StepFormikRef, StepViewType } from '@pipeline/components/AbstractSteps/Step'
+import type { CompletionItemInterface } from '@common/interfaces/YAMLBuilderProps'
 import { TestStepWidget, factory } from '../../__tests__/StepTestUtil'
 import { ServiceNowApproval } from '../ServiceNowApproval'
 import { getDefaultCriterias } from '../helper'
@@ -19,7 +20,8 @@ import {
   mockServiceNowCreateMetadataResponse,
   getServiceNowApprovalEditModeProps,
   getServiceNowApprovalEditModePropsWithValues,
-  getServiceNowApprovalDeploymentModeProps
+  getServiceNowApprovalDeploymentModeProps,
+  ConnectorsResponse
 } from './ServiceNowApprovalTestHelper'
 
 jest.mock('@common/components/YAMLBuilder/YamlBuilder')
@@ -27,7 +29,9 @@ jest.mock('@common/components/YAMLBuilder/YamlBuilder')
 jest.mock('services/cd-ng', () => ({
   useGetConnector: () => mockConnectorResponse,
   useGetServiceNowTicketTypes: () => mockTicketTypesResponse,
-  useGetServiceNowIssueCreateMetadata: () => mockServiceNowCreateMetadataResponse
+  useGetServiceNowIssueCreateMetadata: () => mockServiceNowCreateMetadataResponse,
+  getConnectorListV2Promise: jest.fn(() => Promise.resolve(ConnectorsResponse.data)),
+  getServiceNowTicketTypesPromise: jest.fn(() => Promise.resolve(mockTicketTypesResponse.data))
 }))
 
 describe('ServiceNow Approval tests', () => {
@@ -50,6 +54,21 @@ describe('ServiceNow Approval tests', () => {
     fireEvent.click(getByText('Submit'))
     await waitFor(() => queryByText('Errors'))
     expect(container).toMatchSnapshot('input set with errors')
+  })
+
+  test('Basic snapshot - deploymentform mode', async () => {
+    const props = getServiceNowApprovalDeploymentModeProps()
+    const { container } = render(
+      <TestStepWidget
+        template={props.inputSetData?.template}
+        initialValues={props.initialValues}
+        type={StepType.ServiceNowApproval}
+        stepViewType={StepViewType.DeploymentForm}
+        inputSetData={props.inputSetData}
+      />
+    )
+
+    expect(container).toMatchSnapshot('serviceNow-approval-deploymentform')
   })
 
   test('deploymentform mode - readonly', async () => {
@@ -217,5 +236,84 @@ describe('ServiceNow Approval tests', () => {
       },
       name: 'serviceNow approval step'
     })
+  })
+
+  test('Minimum time cannot be less than 10s', () => {
+    const response = new ServiceNowApproval().validateInputSet({
+      data: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '1s',
+        type: 'ServiceNowApproval',
+        spec: {
+          connectorRef: '',
+          ticketType: '',
+          ticketNumber: '',
+          approvalCriteria: getDefaultCriterias(),
+          rejectionCriteria: getDefaultCriterias()
+        }
+      },
+      template: {
+        name: 'Test A',
+        identifier: 'Test A',
+        timeout: '<+input>',
+        type: 'JServiceNowApproval',
+        spec: {
+          connectorRef: '',
+          ticketType: '',
+          ticketNumber: '',
+          approvalCriteria: getDefaultCriterias(),
+          rejectionCriteria: getDefaultCriterias()
+        }
+      },
+      viewType: StepViewType.TriggerForm
+    })
+    expect(response).toMatchSnapshot('Value must be greater than or equal to "10s"')
+  })
+})
+const getYaml = () => `pipeline:
+    stages:
+      - stage:
+            spec:
+                execution:
+                    steps:
+                        - step:
+                              name: ServiceNow Approval
+                              identifier: serviceNowApproval
+                              type: ServiceNowApproval
+                              timeout: 1d
+                              spec:
+                                  connectorRef: connectorRef
+                                  ticketNumber: ticketNumber
+                                  ticketType: ticketType`
+const getParams = () => ({
+  accountId: 'accountId',
+  module: 'cd',
+  orgIdentifier: 'default',
+  pipelineIdentifier: '-1',
+  projectIdentifier: 'projectIdentifier'
+})
+const connectorRefPath = 'pipeline.stages.0.stage.spec.execution.steps.0.step.spec.connectorRef'
+const ticketTypeRefPath = 'pipeline.stages.0.stage.spec.execution.steps.0.step.spec.ticketType'
+
+describe('Test ServiceNowApproval Fields autocomplete', () => {
+  test('Test connector autocomplete', async () => {
+    const step = new ServiceNowApproval() as any
+    let list: CompletionItemInterface[]
+    list = await step.getConnectorsListForYaml(connectorRefPath, getYaml(), getParams())
+    expect(list).toHaveLength(1)
+    expect(list[0].insertText).toBe('cpsnow')
+    list = await step.getConnectorsListForYaml('invalid path', getYaml(), getParams())
+    expect(list).toHaveLength(0)
+  })
+
+  test('Test ticket type autocomplete', async () => {
+    const step = new ServiceNowApproval() as any
+    let list: CompletionItemInterface[]
+    list = await step.getTicketTypeListForYaml(ticketTypeRefPath, getYaml(), getParams())
+    expect(list).toHaveLength(3)
+    expect(list[0].insertText).toBe('pid1')
+    list = await step.getTicketTypeListForYaml('invalid path', getYaml(), getParams())
+    expect(list).toHaveLength(0)
   })
 })

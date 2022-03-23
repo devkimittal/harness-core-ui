@@ -8,7 +8,6 @@
 import React, { useState } from 'react'
 import {
   Container,
-  Color,
   Collapse,
   IconName,
   Text,
@@ -20,6 +19,7 @@ import {
 } from '@wings-software/uicore'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'
 import { noop } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { useGitSyncStore } from 'framework/GitRepoStore/GitSyncStoreContext'
 import { GitBranchDTO, GitSyncConfig, useGetListOfBranchesWithStatus } from 'services/cd-ng'

@@ -7,8 +7,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Button, Checkbox, Color, Layout, Popover, Text } from '@wings-software/uicore'
+import { Button, Checkbox, Layout, Popover, Text } from '@wings-software/uicore'
 import { Tabs, Tab } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import { useTelemetry } from '@common/hooks/useTelemetry'
 import routes from '@common/RouteDefinitions'
 import type { PipelinePathProps } from '@common/interfaces/RouteInterfaces'

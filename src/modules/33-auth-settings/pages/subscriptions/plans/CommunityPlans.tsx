@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Button, Card, Color, Layout, Text } from '@wings-software/uicore'
+import { Button, Card, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { StringKeys, useStrings } from 'framework/strings'
 import communityImage from './images/community.svg'

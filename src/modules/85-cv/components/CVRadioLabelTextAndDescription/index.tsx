@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Text, Color } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { StringsMap } from 'stringTypes'
 

@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Color } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { ChangeEventDTO } from 'services/cv'
 import { ChangeSourceTypes } from '@cv/pages/ChangeSource/ChangeSourceDrawer/ChangeSourceDrawer.constants'
 import { VerificationStatus } from '../ChangeEventCard.constant'

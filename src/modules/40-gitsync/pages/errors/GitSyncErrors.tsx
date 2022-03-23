@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import {
   Button,
   ButtonVariation,
-  Color,
   ExpandingSearchInput,
   ExpandingSearchInputHandle,
   Layout,
@@ -18,6 +17,7 @@ import {
   Tabs,
   Text
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useGetGitSyncErrorsCount } from 'services/cd-ng'
 import GitFilters, { GitFilterScope } from '@common/components/GitFilters/GitFilters'

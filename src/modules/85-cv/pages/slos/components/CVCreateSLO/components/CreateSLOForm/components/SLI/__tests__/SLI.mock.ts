@@ -27,6 +27,124 @@ export const mockedMonitoredServiceData = {
   correlationId: '6ad5972a-c382-46dc-a0d4-263ba5806db8'
 }
 
+export const mockedMonitoredService = {
+  orgIdentifier: 'CVNG',
+  projectIdentifier: 'chidemo',
+  identifier: 'checkout_ddscsdcdsc',
+  name: 'checkout_ddscsdcdsc',
+  type: 'Application',
+  description: '',
+  serviceRef: 'checkout',
+  environmentRef: 'ddscsdcdsc',
+  environmentRefList: ['ddscsdcdsc'],
+  tags: {},
+  sources: {
+    healthSources: [
+      {
+        name: 'NR-1',
+        identifier: 'NR1',
+        type: 'NewRelic',
+        spec: {
+          connectorRef: 'account.NewRelic123Test',
+          applicationName: 'My Application',
+          applicationId: '107019083',
+          feature: 'apm',
+          metricPacks: [
+            {
+              identifier: 'Performance'
+            }
+          ],
+          newRelicMetricDefinitions: [
+            {
+              identifier: 'New_Relic_Metric',
+              metricName: 'New Relic Metric',
+              riskProfile: {
+                category: 'Errors',
+                metricType: null,
+                thresholdTypes: []
+              },
+              analysis: {
+                liveMonitoring: {
+                  enabled: false
+                },
+                deploymentVerification: {
+                  enabled: false,
+                  serviceInstanceFieldName: null,
+                  serviceInstanceMetricPath: null
+                },
+                riskProfile: {
+                  category: 'Errors',
+                  metricType: null,
+                  thresholdTypes: []
+                }
+              },
+              sli: {
+                enabled: true
+              },
+              groupName: 'group-1',
+              nrql: "SELECT average(`apm.service.transaction.duration`) FROM Metric WHERE appName = 'My Application' TIMESERIES",
+              responseMapping: {
+                metricValueJsonPath: '$.timeSeries.[*].results.[*].average',
+                timestampJsonPath: '$.timeSeries.[*].endTimeSeconds',
+                serviceInstanceJsonPath: null,
+                timestampFormat: null
+              }
+            }
+          ],
+          metricDefinitions: [
+            {
+              identifier: 'New_Relic_Metric',
+              metricName: 'New Relic Metric',
+              riskProfile: {
+                category: 'Errors',
+                metricType: null,
+                thresholdTypes: []
+              },
+              analysis: {
+                liveMonitoring: {
+                  enabled: false
+                },
+                deploymentVerification: {
+                  enabled: false,
+                  serviceInstanceFieldName: null,
+                  serviceInstanceMetricPath: null
+                },
+                riskProfile: {
+                  category: 'Errors',
+                  metricType: null,
+                  thresholdTypes: []
+                }
+              },
+              sli: {
+                enabled: true
+              },
+              groupName: 'group-1',
+              nrql: "SELECT average(`apm.service.transaction.duration`) FROM Metric WHERE appName = 'My Application' TIMESERIES",
+              responseMapping: {
+                metricValueJsonPath: '$.timeSeries.[*].results.[*].average',
+                timestampJsonPath: '$.timeSeries.[*].endTimeSeconds',
+                serviceInstanceJsonPath: null,
+                timestampFormat: null
+              }
+            }
+          ]
+        }
+      }
+    ],
+    changeSources: [
+      {
+        name: 'Harness CD Next Gen',
+        identifier: 'harness_cd_next_gen',
+        type: 'HarnessCDNextGen',
+        enabled: true,
+        spec: {},
+        category: 'Deployment'
+      }
+    ]
+  },
+  dependencies: []
+}
+
 export const expectedMonitoredServiceOptions = [
   {
     label: 'Service_101_QA',

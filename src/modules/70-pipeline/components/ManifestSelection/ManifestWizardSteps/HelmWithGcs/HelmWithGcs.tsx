@@ -17,11 +17,10 @@ import {
   MultiTypeInputType,
   Text,
   ButtonVariation,
-  getErrorInfoFromErrorObject,
-  FontVariation
+  getErrorInfoFromErrorObject
 } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
-
+import { FontVariation } from '@harness/design-system'
 import { Form } from 'formik'
 import * as Yup from 'yup'
 import cx from 'classnames'

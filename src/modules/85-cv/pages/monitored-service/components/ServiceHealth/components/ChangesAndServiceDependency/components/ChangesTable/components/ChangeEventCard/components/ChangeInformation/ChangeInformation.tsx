@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Text, Container, Color } from '@wings-software/uicore'
+import { Text, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { getOnClickOptions } from '../ChangeDetails/ChangeDetails.utils'
 import type { ChangeInfoData } from '../../ChangeEventCard.types'

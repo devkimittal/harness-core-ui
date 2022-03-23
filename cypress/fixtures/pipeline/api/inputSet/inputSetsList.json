@@ -1,0 +1,38 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "totalPages": 1,
+    "totalItems": 1,
+    "pageItemCount": 1,
+    "pageSize": 20,
+    "content": [
+      {
+        "identifier": "testService",
+        "name": "testService",
+        "pipelineIdentifier": "testPipeline_Cypress",
+        "inputSetType": "INPUT_SET",
+        "tags": {},
+        "version": 0,
+        "gitDetails": {
+          "objectId": null,
+          "branch": null,
+          "repoIdentifier": null,
+          "rootFolder": null,
+          "filePath": null,
+          "repoName": null
+        },
+        "createdAt": 1647321920494,
+        "lastUpdatedAt": 1647321920494,
+        "isOutdated": false,
+        "entityValidityDetails": {
+          "valid": true,
+          "invalidYaml": null
+        }
+      }
+    ],
+    "pageIndex": 0,
+    "empty": false
+  },
+  "metaData": null,
+  "correlationId": "551c062c-ceb9-4a69-a39c-e7f884b6df3b"
+}

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, FontVariation, MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { MultiTypeInputType, NestedAccordionPanel, Text } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import cx from 'classnames'
 import { isEmpty, lowerCase } from 'lodash-es'
 import type { PipelineInfrastructure, Infrastructure, ExecutionElementConfig } from 'services/cd-ng'

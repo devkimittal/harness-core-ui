@@ -7,8 +7,9 @@
 
 import React, { useMemo } from 'react'
 import cx from 'classnames'
-import { Color, Container, Icon, StackTraceList, Text, PageError, NoDataCard } from '@wings-software/uicore'
+import { Container, Icon, StackTraceList, Text, PageError, NoDataCard } from '@wings-software/uicore'
 import { isEmpty } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { getErrorMessage } from '@cv/utils/CommonUtils'
 import { transformSampleData } from './utils'

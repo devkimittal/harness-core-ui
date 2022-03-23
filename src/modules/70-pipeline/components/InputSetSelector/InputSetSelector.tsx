@@ -7,7 +7,6 @@
 
 import React, { useState } from 'react'
 import {
-  Color,
   Layout,
   Popover,
   Button,
@@ -17,6 +16,7 @@ import {
   PageSpinner,
   Container
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { clone, defaultTo, isEmpty } from 'lodash-es'
 import cx from 'classnames'
 import { Classes, Position } from '@blueprintjs/core'

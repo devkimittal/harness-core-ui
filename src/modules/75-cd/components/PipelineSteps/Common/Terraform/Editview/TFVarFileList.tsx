@@ -15,13 +15,13 @@ import {
   Button,
   Icon,
   StepWizard,
-  Color,
   Label,
   FormikTooltipContext,
   HarnessDocTooltip,
   ButtonVariation,
   MultiTypeInputType
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Classes, MenuItem, Popover, PopoverInteractionKind, Menu, Dialog, IDialogProps } from '@blueprintjs/core'
 import { FieldArray, FieldArrayRenderProps } from 'formik'
 import type { FormikProps } from 'formik'

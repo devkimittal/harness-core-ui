@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Button, ButtonVariation, Color, FontVariation, Icon, IconName, Layout, Text } from '@wings-software/uicore'
+import { Button, ButtonVariation, Icon, IconName, Layout, Text } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { PopoverInteractionKind, Classes, Position } from '@blueprintjs/core'
 import cx from 'classnames'
 import { useFeatureFlags } from '@common/hooks/useFeatureFlag'

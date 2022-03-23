@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { FontVariation, Layout, Text } from '@wings-software/uicore'
+import { Layout, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import type { NodeRiskCountDTO } from 'services/cv'
 import { useStrings } from 'framework/strings'
 import NodeRiskCountsDisplay from './NodeRiskCountsDisplay'

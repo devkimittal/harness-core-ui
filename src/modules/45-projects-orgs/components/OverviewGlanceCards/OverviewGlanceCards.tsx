@@ -6,8 +6,9 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Card, Color, Icon, Layout } from '@wings-software/uicore'
+import { Card, Icon, Layout } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import GlanceCard, { GlanceCardProps } from '@common/components/GlanceCard/GlanceCard'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { CountChangeDetails, ResponseExecutionResponseCountOverview, useGetCounts } from 'services/dashboard-service'

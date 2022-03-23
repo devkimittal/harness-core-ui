@@ -9,8 +9,9 @@ import React, { useEffect, useRef } from 'react'
 import { unset } from 'lodash-es'
 import YAML from 'yaml'
 import produce from 'immer'
-import { Button, Color, Icon, Layout, Tab, Tabs } from '@wings-software/uicore'
+import { Button, Icon, Layout, Tab, Tabs } from '@wings-software/uicore'
 import { Expander } from '@blueprintjs/core'
+import { Color } from '@harness/design-system'
 import {
   PipelineContextType,
   usePipelineContext

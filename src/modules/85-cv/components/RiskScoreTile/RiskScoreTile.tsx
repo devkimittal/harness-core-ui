@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Text, Color, Container } from '@wings-software/uicore'
+import { Text, Container } from '@wings-software/uicore'
 import cx from 'classnames'
+import { Color } from '@harness/design-system'
 import type { TextProps } from '@wings-software/uicore/dist/components/Text/Text'
 import { isNumber } from 'highcharts'
 import { getColorStyle } from '@common/components/HeatMap/ColorUtils'

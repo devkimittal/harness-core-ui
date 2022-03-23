@@ -9,16 +9,8 @@ import React, { useMemo } from 'react'
 import cx from 'classnames'
 import type { CellProps, Column, Renderer } from 'react-table'
 import ReactTimeago from 'react-timeago'
-import {
-  Layout,
-  Text,
-  Color,
-  Button,
-  ButtonVariation,
-  NoDataCard,
-  TableV2,
-  FontVariation
-} from '@wings-software/uicore'
+import { Layout, Text, Button, ButtonVariation, NoDataCard, TableV2 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { get } from 'lodash-es'
 import { useStrings } from 'framework/strings'

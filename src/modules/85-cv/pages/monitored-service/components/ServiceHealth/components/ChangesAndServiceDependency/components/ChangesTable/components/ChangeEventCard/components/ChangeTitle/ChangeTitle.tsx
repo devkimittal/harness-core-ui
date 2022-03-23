@@ -6,7 +6,8 @@
  */
 
 import React, { useMemo, useCallback } from 'react'
-import { Text, Container, Color, Icon, Layout, Button, ButtonVariation } from '@wings-software/uicore'
+import { Text, Container, Icon, Layout, Button, ButtonVariation } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ChangeTitleData } from '../../ChangeEventCard.types'
 import { getIconByChangeType } from './ChangeTitle.utils'

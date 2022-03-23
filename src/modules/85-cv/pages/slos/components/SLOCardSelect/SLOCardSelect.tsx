@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { FontVariation, Text } from '@wings-software/uicore'
+import { Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import type { RiskCount } from 'services/cv'
 
 interface SLOCardSelectProps extends RiskCount {

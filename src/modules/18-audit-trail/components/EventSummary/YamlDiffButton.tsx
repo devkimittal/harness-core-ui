@@ -5,7 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Color, FontVariation, Text, Layout, Icon, Container } from '@harness/uicore'
+import { Text, Layout, Icon, Container } from '@harness/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { MonacoDiffEditor } from 'react-monaco-editor'
 import { useStrings } from 'framework/strings'

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Card, Color, FontVariation, FormInput, Heading, Icon, Layout, Text, Container } from '@wings-software/uicore'
+import { Card, FormInput, Heading, Icon, Layout, Text, Container } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import SLOTargetChartWrapper from '@cv/pages/slos/components/SLOTargetChart/SLOTargetChart'
 import {

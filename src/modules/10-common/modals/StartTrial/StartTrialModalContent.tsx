@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react'
-import { Button, Heading, Color, Container, Layout, IconName, Icon, Text } from '@wings-software/uicore'
+import { Button, Heading, Container, Layout, IconName, Icon, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { useUpdateLSDefaultExperience } from '@common/hooks/useUpdateLSDefaultExperience'
 import { String, useStrings } from 'framework/strings'

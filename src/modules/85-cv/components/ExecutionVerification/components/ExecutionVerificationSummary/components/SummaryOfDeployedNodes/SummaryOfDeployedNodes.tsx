@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, Text } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useUpdateQueryParams } from '@common/hooks'
 import type { ExecutionQueryParams } from '@pipeline/utils/executionUtils'

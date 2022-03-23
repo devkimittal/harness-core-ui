@@ -6,8 +6,9 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Text, Color, ModalErrorHandler, ModalErrorHandlerBinding, Page, TableV2 } from '@wings-software/uicore'
+import { Text, ModalErrorHandler, ModalErrorHandlerBinding, Page, TableV2 } from '@wings-software/uicore'
 import moment from 'moment'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import type { CellProps } from 'react-table'
 import { useStrings } from 'framework/strings'

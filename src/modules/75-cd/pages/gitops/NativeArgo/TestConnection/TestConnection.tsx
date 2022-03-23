@@ -8,19 +8,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import cx from 'classnames'
-import {
-  Layout,
-  Container,
-  StepsProgress,
-  Intent,
-  Button,
-  Card,
-  Color,
-  Icon,
-  Text,
-  ButtonVariation
-} from '@wings-software/uicore'
-
+import { Layout, Container, StepsProgress, Button, Card, Icon, Text, ButtonVariation } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
 import { String, useStrings } from 'framework/strings'
 import type { ConnectedArgoGitOpsInfoDTO } from 'services/cd-ng'
 import type { BaseProviderStepProps } from '../../types'

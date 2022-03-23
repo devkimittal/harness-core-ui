@@ -7,7 +7,8 @@
 
 import React, { useMemo, useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
-import { Button, Color, Container, FlexExpander, Icon, Intent, Layout, Tab, Tabs, Text } from '@wings-software/uicore'
+import { Button, Container, FlexExpander, Icon, Layout, Tab, Tabs, Text } from '@wings-software/uicore'
+import { Intent, Color } from '@harness/design-system'
 import { ApiKey, CreateFeatureFlagQueryParams, FeatureFlagRequestRequestBody, useCreateFeatureFlag } from 'services/cf'
 import routes from '@common/RouteDefinitions'
 import { useStrings } from 'framework/strings'

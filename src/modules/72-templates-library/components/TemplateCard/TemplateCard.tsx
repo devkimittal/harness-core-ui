@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { defaultTo, isEmpty, noop } from 'lodash-es'
-import { Card, Text, Color, Container, Tag, Layout, Icon } from '@wings-software/uicore'
+import { Card, Text, Container, Tag, Layout, Icon } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { Position } from '@blueprintjs/core'
 import { TimeAgoPopover } from '@common/components'

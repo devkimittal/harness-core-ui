@@ -12,7 +12,7 @@ import type { StringsMap } from 'stringTypes'
 import WorkflowVariables from '@pipeline/components/WorkflowVariablesSelection/WorkflowVariables'
 import ArtifactsSelection from '@pipeline/components/ArtifactsSelection/ArtifactsSelection'
 import ManifestSelection from '@pipeline/components/ManifestSelection/ManifestSelection'
-import { getDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
+import { getSelectedDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
 import { useStrings } from 'framework/strings'
 import { DeployTabs } from '@cd/components/PipelineStudio/DeployStageSetupShell/DeployStageSetupShellUtils'
 import { usePipelineContext } from '@pipeline/components/PipelineStudio/PipelineContext/PipelineContext'
@@ -55,7 +55,7 @@ const KubernetesServiceSpecEditable: React.FC<KubernetesServiceInputFormProps> =
   } = usePipelineContext()
 
   const { stage } = getStageFromPipeline<DeploymentStageElementConfig>(selectedStageId || '')
-  const selectedDeploymentType = getDeploymentType(stage, getStageFromPipeline, isPropagating)
+  const selectedDeploymentType = getSelectedDeploymentType(stage, getStageFromPipeline, isPropagating)
 
   return (
     <div className={css.serviceDefinition}>

@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Layout, TagsPopover, Text } from '@harness/uicore'
+import { Layout, TagsPopover, Text } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import { defaultTo, isEmpty } from 'lodash-es'
 
 import css from './EnvironmentsListColumns.module.scss'

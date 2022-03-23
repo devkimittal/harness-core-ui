@@ -15,7 +15,6 @@ import {
   Layout,
   StepProps,
   Container,
-  Color,
   SelectOption,
   TextInput,
   MultiSelectOption,
@@ -25,11 +24,11 @@ import {
   ButtonVariation,
   Label,
   DropDown,
-  Heading,
-  FontVariation
+  Heading
 } from '@wings-software/uicore'
 import cx from 'classnames'
 import * as Yup from 'yup'
+import { FontVariation, Color } from '@harness/design-system'
 import { useHistory, useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
 import { Project, useGetInvites, Organization, useAddUsers, AddUsers, useGetUsers } from 'services/cd-ng'

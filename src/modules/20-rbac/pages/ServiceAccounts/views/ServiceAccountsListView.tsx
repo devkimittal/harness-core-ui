@@ -11,13 +11,13 @@ import {
   Avatar,
   Button,
   ButtonVariation,
-  Color,
   Layout,
   Popover,
   TableV2,
   Text,
   useConfirmationDialog
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { CellProps, Column, Renderer } from 'react-table'
 import { Classes, Intent, Menu, Position } from '@blueprintjs/core'
 import { noop } from 'lodash-es'

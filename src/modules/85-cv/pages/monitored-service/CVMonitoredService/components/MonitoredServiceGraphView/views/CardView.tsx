@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Container, Icon, Color, PageError, NoDataCard, FlexExpander } from '@wings-software/uicore'
+import { Container, Icon, PageError, NoDataCard, FlexExpander } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import noDataImage from '@cv/assets/noData.svg'
 import { DependencyGraph } from '@cv/components/DependencyGraph/DependencyGraph'

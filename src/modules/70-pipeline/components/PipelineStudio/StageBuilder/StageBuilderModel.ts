@@ -5,7 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Color, IconName, Utils } from '@wings-software/uicore'
+import { IconName, Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { defaultTo, isEmpty, uniq } from 'lodash-es'
 import type { PipelineInfoConfig, StageElementWrapperConfig } from 'services/cd-ng'
 import type { UseStringsReturn } from 'framework/strings'

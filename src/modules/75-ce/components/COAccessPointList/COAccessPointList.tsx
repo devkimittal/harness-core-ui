@@ -7,7 +7,8 @@
 
 import React, { useEffect, useState } from 'react'
 import type { CellProps } from 'react-table'
-import { Text, Color, Layout, Container, Button, Page, PageSpinner, Icon, TableV2 } from '@wings-software/uicore'
+import { Text, Layout, Container, Button, Page, PageSpinner, Icon, TableV2 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import type { IconName } from '@blueprintjs/icons'
 import { Classes, Menu, Popover, Position } from '@blueprintjs/core'

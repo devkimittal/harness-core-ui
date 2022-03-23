@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { CellProps, Column, Renderer } from 'react-table'
-import { Color, Container, Layout, TableV2, Text } from '@wings-software/uicore'
+import { Container, Layout, TableV2, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Position } from '@blueprintjs/core'
 import { defaultTo, isEmpty } from 'lodash-es'
 import { TemplateListCardContextMenu } from '@templates-library/pages/TemplatesPage/views/TemplateListCardContextMenu/TemplateListCardContextMenu'

@@ -21,9 +21,9 @@ import {
   PageError,
   Formik,
   FormikForm,
-  Heading,
-  FontVariation
+  Heading
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useModalHook } from '@harness/use-modal'
 import { CF_DEFAULT_PAGE_SIZE, getErrorMessage, SegmentsSortByField, SortOrder } from '@cf/utils/CFUtils'
 import { useStrings } from 'framework/strings'

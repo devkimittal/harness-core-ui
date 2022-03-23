@@ -6,19 +6,9 @@
  */
 
 import React, { useCallback, useContext, useMemo } from 'react'
-import {
-  Card,
-  Color,
-  Container,
-  Formik,
-  FormikForm,
-  FormInput,
-  Icon,
-  IconName,
-  Layout,
-  Text
-} from '@wings-software/uicore'
+import { Card, Container, Formik, FormikForm, FormInput, Icon, IconName, Layout, Text } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { FormConnectorReferenceField } from '@connectors/components/ConnectorReferenceField/FormConnectorReferenceField'
 import { useStrings } from 'framework/strings'

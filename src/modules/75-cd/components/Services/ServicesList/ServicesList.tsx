@@ -12,9 +12,7 @@ import type { CellProps, Renderer } from 'react-table'
 import ReactTimeago from 'react-timeago'
 import {
   Button,
-  Color,
   Dialog,
-  Intent,
   Layout,
   Popover,
   TagsPopover,
@@ -23,6 +21,7 @@ import {
   useToaster
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color, Intent } from '@harness/design-system'
 import { Classes, Menu, Position } from '@blueprintjs/core'
 import { defaultTo, pick } from 'lodash-es'
 import type { TableProps } from '@harness/uicore'

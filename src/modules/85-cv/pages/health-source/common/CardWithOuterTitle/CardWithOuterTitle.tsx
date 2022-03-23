@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Layout, Text, Card, Color } from '@wings-software/uicore'
+import { Layout, Text, Card } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import css from './CardWithOuterTitle.module.scss'
 
 interface CardWithOuterTitleProp {

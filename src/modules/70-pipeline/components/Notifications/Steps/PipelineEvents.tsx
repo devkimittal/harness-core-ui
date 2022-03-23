@@ -8,16 +8,15 @@
 import {
   Button,
   ButtonVariation,
-  Color,
   Formik,
   FormInput,
   Layout,
   MultiSelectOption,
   StepProps,
-  Text,
-  Intent
+  Text
 } from '@wings-software/uicore'
 import React from 'react'
+import { Color, Intent } from '@harness/design-system'
 import * as Yup from 'yup'
 import { Form } from 'formik'
 import { startCase, isEmpty } from 'lodash-es'

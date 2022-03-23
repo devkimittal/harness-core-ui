@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { capitalize, isUndefined, startCase } from 'lodash-es'
-import { Button, Color, Container, Icon, Layout, Text } from '@wings-software/uicore'
+import { Button, Container, Icon, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ResponseBoolean } from 'services/cd-ng'
 

@@ -8,7 +8,6 @@
 import React, { useState } from 'react'
 import {
   Button,
-  Color,
   Container,
   Checkbox,
   Formik,
@@ -20,6 +19,7 @@ import {
   Text,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { useToaster } from '@common/components'

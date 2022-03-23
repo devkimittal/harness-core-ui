@@ -5,7 +5,8 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { Intent, StepsProgress, ModalErrorHandler, ModalErrorHandlerBinding } from '@wings-software/uicore'
+import { StepsProgress, ModalErrorHandler, ModalErrorHandlerBinding } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { SSHKeyValidationMetadata, useValidateSecret, ResponseSecretValidationResultDTO } from 'services/cd-ng'

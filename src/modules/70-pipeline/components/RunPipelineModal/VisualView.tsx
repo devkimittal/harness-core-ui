@@ -13,10 +13,7 @@ import { defaultTo } from 'lodash-es'
 
 import { useStrings } from 'framework/strings'
 import { GitSyncStoreProvider } from 'framework/GitRepoStore/GitSyncStoreContext'
-import type {
-  InputSetSummaryResponse,
-  ResponseInputSetTemplateWithReplacedExpressionsResponse
-} from 'services/pipeline-ng'
+import type { ResponseInputSetTemplateWithReplacedExpressionsResponse } from 'services/pipeline-ng'
 import type { PipelineInfoConfig } from 'services/cd-ng'
 import SelectExistingInputsOrProvideNew from './SelectExistingOrProvide'
 import { InputSetSelector } from '../InputSetSelector/InputSetSelector'
@@ -44,7 +41,7 @@ export interface VisualViewProps {
   }
   getTemplateError: any
   submitForm(): void
-  inputSets?: InputSetSummaryResponse[]
+  hasInputSets: boolean
   setSelectedInputSets: Dispatch<SetStateAction<InputSetValue[] | undefined>>
   loading?: boolean
   loadingMergeInputSetUpdate: boolean
@@ -65,7 +62,7 @@ export default function VisualView(props: VisualViewProps): React.ReactElement {
     resolvedPipeline,
     setRunClicked,
     submitForm,
-    inputSets,
+    hasInputSets,
     setSelectedInputSets,
     loading,
     loadingMergeInputSetUpdate
@@ -136,7 +133,7 @@ export default function VisualView(props: VisualViewProps): React.ReactElement {
           </Layout.Horizontal>
         ) : (
           <>
-            {inputSets?.length ? (
+            {hasInputSets ? (
               <>
                 {executionView ? null : (
                   <Layout.Vertical

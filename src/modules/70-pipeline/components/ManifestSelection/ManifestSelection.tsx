@@ -15,7 +15,7 @@ import { usePipelineContext } from '@pipeline/components/PipelineStudio/Pipeline
 
 import type { PipelineType } from '@common/interfaces/RouteInterfaces'
 import { getIdentifierFromValue, getScopeFromValue } from '@common/components/EntityReference/EntityReference'
-import { getDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
+import { getSelectedDeploymentType, isServerlessDeploymentType } from '@pipeline/utils/stageHelpers'
 
 import { useStrings } from 'framework/strings'
 import type { Scope } from '@common/interfaces/SecretsInterface'
@@ -128,7 +128,7 @@ export default function ManifestSelection({
     }
   }
 
-  const deploymentType = getDeploymentType(stage, getStageFromPipeline, isPropagating)
+  const deploymentType = getSelectedDeploymentType(stage, getStageFromPipeline, isPropagating)
 
   return (
     <Layout.Vertical>

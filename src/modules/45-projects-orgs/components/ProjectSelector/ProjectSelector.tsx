@@ -12,7 +12,6 @@ import cx from 'classnames'
 import {
   Text,
   Layout,
-  Color,
   Container,
   Popover,
   Pagination,
@@ -21,6 +20,7 @@ import {
   ExpandingSearchInput,
   NoDataCard
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import routes from '@common/RouteDefinitions'
 import { Project, useGetProjectAggregateDTOList } from 'services/cd-ng'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'

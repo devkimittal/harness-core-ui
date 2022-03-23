@@ -6,7 +6,8 @@
  */
 
 import React, { ReactElement } from 'react'
-import { Container, FormInput, Layout, Text, Color, Icon, FontVariation, Heading } from '@wings-software/uicore'
+import { Container, FormInput, Layout, Text, Icon, Heading } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import css from './SaveFlagToGitSubForm.module.scss'
 

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { Popover, Position } from '@blueprintjs/core'
-import { Icon, Layout, Text, FontVariation } from '@wings-software/uicore'
+import { Icon, Layout, Text } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import cx from 'classnames'
 import { String } from 'framework/strings'
 import css from './CDExecutionSummary.module.scss'

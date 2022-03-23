@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { Column, CellProps, Renderer } from 'react-table'
-import { Layout, Color, Text, Card, FontVariation, TableV2 } from '@wings-software/uicore'
+import { Layout, Text, Card, TableV2 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { formatDatetoLocale } from '@common/utils/dateUtils'
 import { String, useStrings } from 'framework/strings'
 import type { DelegateSelectionLogParams } from 'services/portal'

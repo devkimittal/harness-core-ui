@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Layout, Text, Color, Icon, TabNavigation } from '@wings-software/uicore'
+import { Container, Layout, Text, Icon, TabNavigation } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { Page } from '@common/exports'
 import routes from '@common/RouteDefinitions'

@@ -8,7 +8,6 @@
 import React, { useEffect } from 'react'
 import {
   Button,
-  Color,
   Formik,
   Layout,
   Text,
@@ -21,6 +20,7 @@ import {
   MultiTypeInputType,
   StepProps
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { Form } from 'formik'

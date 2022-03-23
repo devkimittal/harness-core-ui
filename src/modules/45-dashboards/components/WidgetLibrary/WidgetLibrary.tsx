@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Layout, Text, Color, Icon, ExpandingSearchInput, Card, Button } from '@wings-software/uicore'
+import { Layout, Text, Icon, ExpandingSearchInput, Card, Button } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { useGet, useMutate } from 'restful-react'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import css from './WidgetLibrary.module.scss'

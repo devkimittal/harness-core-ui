@@ -16,10 +16,10 @@ import {
   Button,
   Text,
   PageSpinner,
-  useToaster,
-  FontVariation
+  useToaster
 } from '@wings-software/uicore'
 import { Menu, MenuItem, Popover, Position } from '@blueprintjs/core'
+import { FontVariation } from '@harness/design-system'
 import { useParams, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
 import { useUpdatePerspective, CEView } from 'services/ce'

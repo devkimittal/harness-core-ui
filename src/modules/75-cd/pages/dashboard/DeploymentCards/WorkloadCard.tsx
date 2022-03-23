@@ -6,8 +6,9 @@
  */
 
 import React, { useMemo } from 'react'
-import { Layout, Icon, Color } from '@wings-software/uicore'
+import { Layout, Icon } from '@wings-software/uicore'
 import { useHistory, useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import RepositoryCard from '@pipeline/components/Dashboards/BuildCards/RepositoryCard'
 import type { WorkloadDateCountInfo, LastWorkloadInfo } from 'services/cd-ng'
 import routes from '@common/RouteDefinitions'

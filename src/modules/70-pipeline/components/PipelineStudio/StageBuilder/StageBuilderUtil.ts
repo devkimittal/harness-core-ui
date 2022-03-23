@@ -6,7 +6,8 @@
  */
 
 import { flatMap, findIndex, cloneDeep, set } from 'lodash-es'
-import { Color, Utils } from '@wings-software/uicore'
+import { Utils } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { v4 as uuid } from 'uuid'
 import type { NodeModelListener, LinkModelListener, DiagramEngine } from '@projectstorm/react-diagrams-core'
 import produce from 'immer'

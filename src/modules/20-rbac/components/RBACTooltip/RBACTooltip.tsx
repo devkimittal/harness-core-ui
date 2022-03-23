@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Color, Layout, Text } from '@harness/uicore'
+import { Layout, Text } from '@harness/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
 import type { ResourceType } from '@rbac/interfaces/ResourceType'

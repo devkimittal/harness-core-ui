@@ -6,8 +6,9 @@
  */
 
 import React from 'react'
-import { Layout, getMultiTypeFromValue, MultiTypeInputType, Text, Icon, Color, IconName } from '@wings-software/uicore'
+import { Layout, getMultiTypeFromValue, MultiTypeInputType, Text, Icon, IconName } from '@wings-software/uicore'
 import { isEmpty, get, defaultTo } from 'lodash-es'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { useParams } from 'react-router-dom'
 import type {

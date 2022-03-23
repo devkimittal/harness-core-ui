@@ -6,8 +6,9 @@
  */
 
 import React, { ReactElement } from 'react'
-import { ButtonSize, Color, FontVariation, Layout, Text, Popover } from '@harness/uicore'
+import { ButtonSize, Layout, Text, Popover } from '@harness/uicore'
 import { PopoverInteractionKind } from '@blueprintjs/core'
+import { FontVariation, Color } from '@harness/design-system'
 import { capitalize } from 'lodash-es'
 import { useStrings } from 'framework/strings'
 import { FeatureDescriptor, customFeatureDescriptor } from 'framework/featureStore/FeatureDescriptor'

@@ -13,11 +13,11 @@ import {
   PageHeader,
   PageBody,
   PageSpinner,
-  Color,
   Text,
   PageError
 } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import LandingDashboardFactory from '@common/factories/LandingDashboardFactory'
 import {
   LandingDashboardContextProvider,

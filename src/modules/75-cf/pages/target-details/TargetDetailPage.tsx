@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Avatar, Container, Intent, Layout, Text, PageError } from '@wings-software/uicore'
+import { Avatar, Container, Layout, Text, PageError } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { DeleteTargetQueryParams, GetTargetQueryParams, useDeleteTarget, useGetTarget } from 'services/cf'
 import routes from '@common/RouteDefinitions'

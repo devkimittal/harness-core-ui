@@ -9,18 +9,17 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   Heading,
-  FontVariation,
   Card,
   FormInput,
   SelectOption,
   Layout,
   Container,
   Text,
-  Color,
   ButtonVariation,
   useToaster
 } from '@wings-software/uicore'
 import type { RadioButtonProps } from '@wings-software/uicore/dist/components/RadioButton/RadioButton'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { ProjectPathProps } from '@common/interfaces/RouteInterfaces'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
@@ -77,7 +76,7 @@ const SLI: React.FC<SLIProps> = ({ children, formikProps, ...rest }) => {
   const monitoredService = monitoredServiceData?.data?.monitoredService
   const { serviceRef, environmentRef } = monitoredService || {}
   const { healthSources = [], changeSources = [] } = monitoredService?.sources || {}
-  const healthSourcesOptions = useMemo(() => getHealthSourceOptions(monitoredServiceData?.data), [monitoredServiceData])
+  const healthSourcesOptions = useMemo(() => getHealthSourceOptions(monitoredService), [monitoredServiceData])
   const activeHealthSource: SelectOption = useMemo(
     () => healthSourcesOptions.find(healthSource => healthSource.value === values.healthSourceRef) ?? defaultOption,
     [healthSourcesOptions, values.healthSourceRef]
@@ -139,7 +138,7 @@ const SLI: React.FC<SLIProps> = ({ children, formikProps, ...rest }) => {
     showHealthSourceDrawer(drawerProps)
     setDrawerHeaderProps?.(healthSourceDrawerHeaderProps(true))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [monitoredService, serviceRef, environmentRef, healthSources, changeSources])
+  }, [monitoredService, serviceRef, environmentRef, healthSources, changeSources, formikProps])
 
   const radioItems: Pick<RadioButtonProps, 'label' | 'value'>[] = useMemo(() => {
     const { AVAILABILITY, LATENCY } = SLITypes

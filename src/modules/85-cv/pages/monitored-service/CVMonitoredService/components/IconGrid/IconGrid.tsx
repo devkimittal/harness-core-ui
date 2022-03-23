@@ -7,7 +7,8 @@
 
 import React from 'react'
 import type { IconProps } from '@wings-software/uicore/dist/icons/Icon'
-import { Color, Layout, Text, Utils, Icon, FontVariation } from '@wings-software/uicore'
+import { Layout, Text, Utils, Icon } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { getRiskColorValue, getRiskLabelStringId } from '@cv/utils/CommonUtils'
 import { useStrings } from 'framework/strings'
 import type { RiskData } from 'services/cv'

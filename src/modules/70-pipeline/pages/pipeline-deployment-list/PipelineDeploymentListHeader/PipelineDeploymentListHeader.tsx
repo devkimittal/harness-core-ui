@@ -7,8 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { ButtonVariation, Checkbox, Color, ExpandingSearchInput } from '@wings-software/uicore'
-
+import { ButtonVariation, Checkbox, ExpandingSearchInput } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import cx from 'classnames'
 import { String, useStrings } from 'framework/strings'
 import type { PipelinePathProps, PipelineType } from '@common/interfaces/RouteInterfaces'

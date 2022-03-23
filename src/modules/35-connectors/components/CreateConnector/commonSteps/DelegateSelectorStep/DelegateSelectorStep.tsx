@@ -16,10 +16,9 @@ import {
   ModalErrorHandlerBinding,
   FormikForm as Form,
   StepProps,
-  Color,
-  FontVariation,
   ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'
 import { DelegateTypes } from '@connectors/pages/connectors/utils/ConnectorUtils'

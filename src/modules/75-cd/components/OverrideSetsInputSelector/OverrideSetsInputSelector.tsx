@@ -9,7 +9,6 @@ import React from 'react'
 import {
   Button,
   Checkbox,
-  Color,
   Icon,
   Layout,
   Popover,
@@ -19,6 +18,7 @@ import {
   TextInput,
   PageSpinner
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { isArray, clone } from 'lodash-es'
 import cx from 'classnames'
 import { Classes, Position } from '@blueprintjs/core'

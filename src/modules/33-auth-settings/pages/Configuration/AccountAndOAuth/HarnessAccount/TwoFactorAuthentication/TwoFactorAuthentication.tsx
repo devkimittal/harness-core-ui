@@ -7,7 +7,8 @@
 
 import React, { Dispatch, SetStateAction } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import { Card, Color, Text, useConfirmationDialog, Intent } from '@wings-software/uicore'
+import { Card, Text, useConfirmationDialog } from '@wings-software/uicore'
+import { Color, Intent } from '@harness/design-system'
 import type { AccountPathProps } from '@common/interfaces/RouteInterfaces'
 import { useStrings } from 'framework/strings'
 import { useAppStore } from 'framework/AppStore/AppStoreContext'

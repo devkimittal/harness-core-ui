@@ -7,8 +7,9 @@
 
 import React, { useState } from 'react'
 
-import { Button, Text, Color, Container, ExpandingSearchInput, Layout } from '@wings-software/uicore'
+import { Button, Text, Container, ExpandingSearchInput, Layout } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import {
   PagePMSPipelineSummaryResponse,
   ResponsePagePMSPipelineSummaryResponse,

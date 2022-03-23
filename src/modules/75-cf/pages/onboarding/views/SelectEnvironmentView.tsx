@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { Container, Layout, Intent, Icon, Text, Color } from '@wings-software/uicore'
+import { Container, Layout, Icon, Text } from '@wings-software/uicore'
+import { Intent, Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import EnvironmentDialog from '@cf/components/CreateEnvironmentDialog/EnvironmentDialog'
 import { useEnvironmentSelectV2 } from '@cf/hooks/useEnvironmentSelectV2'

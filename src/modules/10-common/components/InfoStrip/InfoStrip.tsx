@@ -7,7 +7,8 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { Icon, IconName, Intent } from '@wings-software/uicore'
+import { Icon, IconName } from '@wings-software/uicore'
+import { Intent } from '@harness/design-system'
 import css from './InfoStrip.module.scss'
 interface InfoStripProps {
   intent: Intent

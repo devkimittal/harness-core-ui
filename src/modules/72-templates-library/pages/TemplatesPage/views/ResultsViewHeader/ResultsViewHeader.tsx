@@ -6,7 +6,8 @@
  */
 
 import React, { Dispatch, SetStateAction } from 'react'
-import { Color, Container, DropDown, Layout, SelectOption, Text } from '@wings-software/uicore'
+import { Container, DropDown, Layout, SelectOption, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Sort, SortFields } from '@templates-library/pages/TemplatesPage/TemplatesPageUtils'
 import { useStrings } from 'framework/strings'
 import type { PageTemplateSummaryResponse } from 'services/template-ng'

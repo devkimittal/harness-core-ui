@@ -6,13 +6,13 @@
  */
 
 import React from 'react'
-import { Button, Layout, Text, Color } from '@wings-software/uicore'
+import { Button, Layout, Text } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
 import { Dialog } from '@blueprintjs/core'
 import cx from 'classnames'
 import moment from 'moment'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
-
 import { TrialModalTemplate } from '@pipeline/components/TrialModalTemplate/TrialModalTemplate'
 import { ModuleLicenseType, Editions } from '@common/constants/SubscriptionTypes'
 import { useLicenseStore } from 'framework/LicenseStore/LicenseStoreContext'

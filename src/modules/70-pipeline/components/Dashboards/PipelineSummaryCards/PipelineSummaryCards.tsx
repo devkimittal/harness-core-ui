@@ -6,8 +6,9 @@
  */
 
 import React, { useState } from 'react'
-import { Color, Container, Text } from '@wings-software/uicore'
+import { Container, Text } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { useGetPipelinedHealth } from 'services/pipeline-ng'
 import type { PipelineType, ExecutionPathProps } from '@common/interfaces/RouteInterfaces'

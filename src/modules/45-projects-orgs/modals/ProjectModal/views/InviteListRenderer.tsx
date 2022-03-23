@@ -8,18 +8,9 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 import { Menu } from '@blueprintjs/core'
-import {
-  SelectOption,
-  Layout,
-  Color,
-  Text,
-  Button,
-  Avatar,
-  Container,
-  FontVariation,
-  ButtonVariation
-} from '@wings-software/uicore'
+import { SelectOption, Layout, Text, Button, Avatar, Container, ButtonVariation } from '@wings-software/uicore'
 import { useParams } from 'react-router-dom'
+import { FontVariation, Color } from '@harness/design-system'
 import { Select } from '@blueprintjs/select'
 import { useToaster } from '@common/exports'
 import { useDeleteInvite, useUpdateInvite, Invite } from 'services/cd-ng'

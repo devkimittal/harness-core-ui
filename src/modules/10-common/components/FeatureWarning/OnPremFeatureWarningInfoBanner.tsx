@@ -6,7 +6,8 @@
  */
 
 import React, { ReactElement, useState } from 'react'
-import { Color, Layout, PageHeader, Text, Button, FontVariation, ButtonVariation } from '@wings-software/uicore'
+import { Layout, PageHeader, Text, Button, ButtonVariation } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { ExploreSaasPlansBtn } from './featureWarningUtil'
 import css from './FeatureWarning.module.scss'

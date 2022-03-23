@@ -8,7 +8,8 @@
 import React from 'react'
 import moment from 'moment'
 import { Spinner } from '@blueprintjs/core'
-import { Color, Container, Icon, Layout, Text } from '@wings-software/uicore'
+import { Container, Icon, Layout, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 export interface BarrierStepTooltipProps {

@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import {
-  Color,
   Container,
   Layout,
   Text,
@@ -17,12 +16,12 @@ import {
   Card,
   PageBody,
   Popover,
-  FontVariation,
   ButtonVariation,
   ButtonSize,
   PillToggle,
   Icon
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { Position, Menu, MenuItem, Slider } from '@blueprintjs/core'
 import { NGBreadcrumbs } from '@common/components/NGBreadcrumbs/NGBreadcrumbs'
 import { useStrings } from 'framework/strings'

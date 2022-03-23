@@ -9,7 +9,6 @@ import React from 'react'
 import {
   Button,
   Text,
-  Color,
   StepProps,
   FormikForm,
   Formik,
@@ -18,9 +17,9 @@ import {
   FormInput,
   ButtonVariation,
   ModalErrorHandlerBinding,
-  FontVariation,
   getErrorInfoFromErrorObject
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { NgSmtpDTO, useValidateConnectivity, ValidateConnectivityQueryParams } from 'services/cd-ng'

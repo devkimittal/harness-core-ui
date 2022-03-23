@@ -10,15 +10,14 @@ import { defaultTo, omit } from 'lodash-es'
 import {
   Layout,
   NestedAccordionProvider,
-  FontVariation,
   Text,
-  Color,
   PageHeader,
   PageBody,
   VisualYamlSelectedView as SelectedView,
   VisualYamlToggle,
   getErrorInfoFromErrorObject
 } from '@wings-software/uicore'
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import { parse } from 'yaml'
 import type { FormikProps } from 'formik'

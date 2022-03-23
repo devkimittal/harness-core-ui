@@ -15,10 +15,10 @@ import {
   StepProps,
   Container,
   SelectOption,
-  FontVariation,
   ButtonVariation
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { FontVariation } from '@harness/design-system'
 import { setupArtifactoryFormData } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import type { ConnectorConfigDTO, ConnectorRequestBody, ConnectorInfoDTO } from 'services/cd-ng'
 import SecretInput from '@secrets/components/SecretInput/SecretInput'

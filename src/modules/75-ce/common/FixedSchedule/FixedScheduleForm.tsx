@@ -12,7 +12,6 @@ import { defaultTo as _defaultTo, isEmpty as _isEmpty, capitalize as _capitalize
 import * as Yup from 'yup'
 import {
   Button,
-  Color,
   Container,
   DateInput,
   Formik,
@@ -25,6 +24,7 @@ import {
   PillToggle,
   Checkbox
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { FormikProps } from 'formik'
 import { useParams } from 'react-router-dom'
 import DaysOfWeekSelector from '@ce/common/DaysOfWeekSelector/DaysOfWeekSelector'

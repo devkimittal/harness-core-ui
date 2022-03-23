@@ -9,7 +9,6 @@ import React from 'react'
 import * as Yup from 'yup'
 import {
   Button,
-  Color,
   Container,
   Formik,
   FormikForm as Form,
@@ -19,6 +18,7 @@ import {
   ModalErrorHandler,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { OrganizationCard } from '@projects-orgs/components/OrganizationCard/OrganizationCard'
 import type { Organization } from 'services/cd-ng'
 import { NameIdDescriptionTags } from '@common/components'

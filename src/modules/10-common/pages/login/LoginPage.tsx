@@ -7,17 +7,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import {
-  FormInput,
-  Formik,
-  FormikForm,
-  Button,
-  Text,
-  Color,
-  Container,
-  HarnessIcons,
-  Layout
-} from '@wings-software/uicore'
+import { FormInput, Formik, FormikForm, Button, Text, Container, HarnessIcons, Layout } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useToaster } from '@common/components'
 import AppStorage from 'framework/utils/AppStorage'
 import { useStrings } from 'framework/strings'

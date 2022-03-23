@@ -14,10 +14,10 @@ import {
   Button,
   ButtonVariation,
   Text,
-  Color,
   FormError,
   FormikForm
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { defaultTo, get, isEmpty, pick } from 'lodash-es'
 import { Formik } from 'formik'
 import { useParams } from 'react-router-dom'

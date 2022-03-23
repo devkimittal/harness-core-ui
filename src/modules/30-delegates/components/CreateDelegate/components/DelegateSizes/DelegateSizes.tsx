@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Layout, CardSelect, Container, Text, Color } from '@wings-software/uicore'
+import { Layout, CardSelect, Container, Text } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import type { SelectOption } from '@wings-software/uicore'
 import { DelegateSizeDetails, useGetDelegateSizes } from 'services/portal'
 

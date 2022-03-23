@@ -15,9 +15,10 @@ import {
   Text,
   FixedTypeComponentProps,
   MultiTypeInputType,
-  ButtonVariation,
-  FontVariation
+  ButtonVariation
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
+
 import { Classes, Dialog } from '@blueprintjs/core'
 import cx from 'classnames'
 import type { Scope } from '@common/interfaces/SecretsInterface'

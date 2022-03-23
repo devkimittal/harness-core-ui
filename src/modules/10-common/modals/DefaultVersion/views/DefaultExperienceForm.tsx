@@ -8,7 +8,6 @@
 import React from 'react'
 import {
   Layout,
-  Color,
   Heading,
   Text,
   Container,
@@ -19,6 +18,7 @@ import {
   CardSelectType,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Experiences } from '@common/constants/Utils'
 import { useStrings } from 'framework/strings'
 import type { StringsMap } from 'stringTypes'

@@ -60,7 +60,7 @@ exports[`<AdvancedSteps /> tests snapshot test 1`] = `
                             data-name="DelegateSelectors"
                           >
                             <div
-                              class="bp3-popover-wrapper delegateInput delegatePopover bp3-fill"
+                              class="bp3-popover-wrapper TagInput--tagInput delegatePopover bp3-fill"
                             >
                               <div
                                 class="bp3-popover-target"

@@ -8,7 +8,18 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { defaultTo } from 'lodash-es'
-import { Page, ButtonVariation, Layout, Select, GridListToggle, Views, SelectOption } from '@wings-software/uicore'
+import {
+  Page,
+  ButtonVariation,
+  Layout,
+  Select,
+  GridListToggle,
+  Views,
+  SelectOption,
+  HarnessDocTooltip,
+  Heading
+} from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import { ResourceType } from '@rbac/interfaces/ResourceType'
 import { PermissionIdentifier } from '@rbac/interfaces/PermissionIdentifier'
@@ -99,7 +110,15 @@ const MonitoredService: React.FC = () => {
 
   return (
     <>
-      <Page.Header breadcrumbs={<NGBreadcrumbs />} title={getString('cv.monitoredServices.title')} />
+      <Page.Header
+        breadcrumbs={<NGBreadcrumbs />}
+        title={
+          <Heading level={3} font={{ variation: FontVariation.H4 }} data-tooltip-id={'gcpInfraCluster'}>
+            {getString('cv.monitoredServices.title')}
+            <HarnessDocTooltip tooltipId={'gcpInfraCluster'} useStandAlone />
+          </Heading>
+        }
+      />
       <Page.Header
         title={createButton}
         toolbar={

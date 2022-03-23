@@ -1,0 +1,9 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "mergedPipelineYaml": "name: \"testPipeline_Cypress\"\nidentifier: \"testPipeline_Cypress\"\nallowStageExecutions: false\nprojectIdentifier: \"project1\"\norgIdentifier: \"default\"\ntags: {}\nstages:\n- stage:\n    name: \"testStage_Cypress\"\n    identifier: \"testStage_Cypress\"\n    description: \"\"\n    type: \"Deployment\"\n    spec:\n      serviceConfig:\n        serviceRef: \"<+input>\"\n        serviceDefinition:\n          type: \"Kubernetes\"\n          spec:\n            variables: []\n      infrastructure:\n        environmentRef: \"re\"\n        infrastructureDefinition:\n          type: \"KubernetesDirect\"\n          spec:\n            connectorRef: \"dynarace\"\n            namespace: \"<+input>\"\n            releaseName: \"release-<+INFRA_KEY>\"\n        allowSimultaneousDeployments: false\n      execution:\n        steps:\n        - step:\n            name: \"Rollout Deployment\"\n            identifier: \"rolloutDeployment\"\n            type: \"K8sRollingDeploy\"\n            timeout: \"10m\"\n            spec:\n              skipDryRun: false\n        - step:\n            type: \"K8sApply\"\n            name: \"test\"\n            identifier: \"test\"\n            spec:\n              filePaths:\n              - \"test\"\n              skipDryRun: false\n              skipSteadyStateCheck: false\n            timeout: \"10m\"\n        rollbackSteps:\n        - step:\n            name: \"Rollback Rollout Deployment\"\n            identifier: \"rollbackRolloutDeployment\"\n            type: \"K8sRollingRollback\"\n            timeout: \"10m\"\n            spec: {}\n      serviceDependencies: []\n    tags: {}\n    failureStrategies:\n    - onFailure:\n        errors:\n        - \"AllErrors\"\n        action:\n          type: \"StageRollback\"\n",
+    "templateReferenceSummaries": []
+  },
+  "metaData": null,
+  "correlationId": "85932f23-9bf6-40df-b9b2-cca46fefd254"
+}

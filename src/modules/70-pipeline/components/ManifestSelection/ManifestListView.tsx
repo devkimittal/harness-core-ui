@@ -10,7 +10,6 @@ import {
   Layout,
   Text,
   Icon,
-  Color,
   StepWizard,
   StepProps,
   Button,
@@ -18,11 +17,10 @@ import {
   getMultiTypeFromValue,
   ButtonSize,
   ButtonVariation,
-  Container,
-  FontVariation
+  Container
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
-
+import { FontVariation, Color } from '@harness/design-system'
 import { useParams } from 'react-router-dom'
 import cx from 'classnames'
 import { Dialog, IDialogProps, Classes } from '@blueprintjs/core'

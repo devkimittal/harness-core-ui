@@ -141,12 +141,27 @@ const routes = {
         path: `governance/policies/edit/${policyIdentifier}`
       })
   ),
-  toGovernancePolicySetsListing: withAccountId(({ orgIdentifier, projectIdentifier, module }: GovernancePathProps) =>
+  toGovernanceViewPolicy: withAccountId(
+    ({
+      orgIdentifier,
+      projectIdentifier,
+      policyIdentifier
+    }: Partial<ProjectPathProps> & {
+      policyIdentifier: string
+    }) =>
+      getScopeBasedRoute({
+        scope: {
+          orgIdentifier,
+          projectIdentifier
+        },
+        path: `governance/policies/view/${policyIdentifier}`
+      })
+  ),
+  toGovernancePolicySetsListing: withAccountId(({ orgIdentifier, projectIdentifier }: ProjectPathProps) =>
     getScopeBasedRoute({
       scope: {
         orgIdentifier,
-        projectIdentifier,
-        module
+        projectIdentifier
       },
       path: 'governance/policy-sets'
     })

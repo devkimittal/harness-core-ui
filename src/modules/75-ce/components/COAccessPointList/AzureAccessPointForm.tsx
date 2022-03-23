@@ -12,7 +12,6 @@ import cx from 'classnames'
 import { isEmpty as _isEmpty } from 'lodash-es'
 import {
   Button,
-  Color,
   Container,
   Formik,
   FormikForm,
@@ -23,6 +22,7 @@ import {
   Text
 } from '@wings-software/uicore'
 import { useModalHook } from '@harness/use-modal'
+import { Color } from '@harness/design-system'
 import { Dialog } from '@blueprintjs/core'
 import { useToaster } from '@common/exports'
 import {

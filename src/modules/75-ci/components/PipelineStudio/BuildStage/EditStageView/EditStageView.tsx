@@ -15,10 +15,10 @@ import {
   Button,
   Switch,
   TextInput,
-  RUNTIME_INPUT_VALUE,
-  Color
+  RUNTIME_INPUT_VALUE
 } from '@wings-software/uicore'
 import * as Yup from 'yup'
+import { Color } from '@harness/design-system'
 import { defaultTo, isEmpty, set } from 'lodash-es'
 import { useParams } from 'react-router-dom'
 import type { FormikErrors } from 'formik'

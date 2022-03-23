@@ -14,9 +14,9 @@ import {
   Button,
   getMultiTypeFromValue,
   MultiTypeInputType,
-  MultiTextInputProps,
-  FontVariation
+  MultiTextInputProps
 } from '@wings-software/uicore'
+import { FontVariation } from '@harness/design-system'
 import { FieldArray, connect, FormikContext } from 'formik'
 import { get } from 'lodash-es'
 import { ConfigureOptions, ConfigureOptionsProps } from '@common/components/ConfigureOptions/ConfigureOptions'

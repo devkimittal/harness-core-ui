@@ -1,0 +1,6 @@
+{
+  "status": "SUCCESS",
+  "data": "failureStrategies:\n  - onFailure:\n      errors:\n        - AllErrors\n      action:\n        type: StageRollback\nspec:\n  execution:\n    steps:\n      - step:\n          name: \"Rollout Deployment\"\n          identifier: rolloutDeployment\n          type: K8sRollingDeploy\n          timeout: 10m\n          spec:\n            skipDryRun: false\n    rollbackSteps:\n      - step:\n          name: \"Rollback Rollout Deployment\"\n          identifier: rollbackRolloutDeployment\n          type: K8sRollingRollback\n          timeout: 10m\n          spec: {}\n",
+  "metaData": null,
+  "correlationId": "bb15cdb5-5458-409b-a2b1-f8202cc2f04d"
+}

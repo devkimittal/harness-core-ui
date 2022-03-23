@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { StepWizard, Color } from '@wings-software/uicore'
+import { StepWizard } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { pick } from 'lodash-es'
 import {
   Connectors,

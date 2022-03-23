@@ -7,7 +7,8 @@
 
 import React, { ReactNode } from 'react'
 import { useParams } from 'react-router-dom'
-import { Text, Container, Layout, Color, AvatarGroup } from '@wings-software/uicore'
+import { Text, Container, Layout, AvatarGroup } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { UserGroupDTO, getUserGroupAggregateListPromise, UserMetadataDTO } from 'services/cd-ng'
 import { MultiSelectEntityReference, useToaster } from '@common/exports'
 import type {

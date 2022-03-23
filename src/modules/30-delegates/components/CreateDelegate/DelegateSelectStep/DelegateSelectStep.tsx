@@ -7,7 +7,8 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Layout, StepProps, Button, Color, Text, Container } from '@wings-software/uicore'
+import { Layout, StepProps, Button, Text, Container } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 
 import { DelegateTypes } from '@delegates/constants'

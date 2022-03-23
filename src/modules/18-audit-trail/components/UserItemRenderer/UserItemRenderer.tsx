@@ -6,7 +6,8 @@
  */
 
 import React, { MouseEventHandler } from 'react'
-import { Layout, Text, Avatar, Color, MultiSelectOption } from '@wings-software/uicore'
+import { Layout, Text, Avatar, MultiSelectOption } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { Menu } from '@blueprintjs/core'
 
 export interface UserItem extends MultiSelectOption {

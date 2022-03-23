@@ -129,14 +129,44 @@ if (isCypress && isCypressCoverage) {
     }
   })(mergedConfig, {
     module: {
+      rules: [
+        {
+          test: /\.(j|t)sx?$/,
+          use: [
+            {
+              loader: 'babel-loader'
+            }
+          ]
+        }
+      ]
+    }
+  })
+
+  mergedConfig = mergeWithRules({
+    module: {
       rules: {
-        test: /\.(j|t)sx?$/,
-        use: [
-          {
-            loader: 'babel-loader'
-          }
-        ]
+        test: 'match',
+        use: {
+          loader: 'match',
+          options: 'replace'
+        }
       }
+    }
+  })(mergedConfig, {
+    module: {
+      rules: [
+        {
+          test: /\.(j|t)sx?$/,
+          use: [
+            {
+              loader: 'swc-loader',
+              options: {
+                parseMap: true
+              }
+            }
+          ]
+        }
+      ]
     }
   })
 } else {

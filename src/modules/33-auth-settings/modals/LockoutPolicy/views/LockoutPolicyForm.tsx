@@ -10,7 +10,6 @@ import * as yup from 'yup'
 import { useParams } from 'react-router-dom'
 import {
   Layout,
-  Color,
   Formik,
   FormikForm,
   FormInput,
@@ -22,6 +21,7 @@ import {
   ModalErrorHandlerBinding,
   ButtonVariation
 } from '@wings-software/uicore'
+import { Color } from '@harness/design-system'
 import { useToaster } from '@common/components'
 import type { LoginSettings, UserLockoutPolicy } from 'services/cd-ng'
 import { usePutLoginSettings } from 'services/cd-ng'
