@@ -5,10 +5,16 @@ export interface EventPreferenceUpdateModalReturn {
   closeEventPreferenceEditModal: () => void
 }
 
+export enum EventPreferenceFormFieldNames {
+  IS_NOT_A_RISK = 'isNotARisk',
+  REASON = 'reason',
+  PRIORITY = 'priority'
+}
+
 export interface EventPreferenceForm {
-  isNotARisk: boolean
-  reason: string
-  priority: 'P0' | 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | null
+  [EventPreferenceFormFieldNames.IS_NOT_A_RISK]: boolean
+  [EventPreferenceFormFieldNames.REASON]: string
+  [EventPreferenceFormFieldNames.PRIORITY]: 'P0' | 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | null
 }
 
 export interface EventEditModalInitialValues {

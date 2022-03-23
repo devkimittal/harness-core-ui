@@ -7,9 +7,15 @@
  **/
 // this is an auto-generated file, do not update this manually
 declare const styles: {
-  readonly errorText: string
-  readonly priorityRadioGroup: string
-  readonly reasonTextArea: string
-  readonly separator: string
+  readonly resetButton: string
+  readonly slider: string
+  readonly sliderLeftValue: string
+  readonly sliderRange: string
+  readonly sliderRightValue: string
+  readonly sliderTrack: string
+  readonly thumb: string
+  readonly thumbZindex3: string
+  readonly thumbZindex4: string
+  readonly thumbZindex5: string
 }
 export default styles

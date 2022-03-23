@@ -2935,6 +2935,7 @@ export interface StringsMap {
   'pipeline.verification.logClustersInViolation': string
   'pipeline.verification.logs.actions': string
   'pipeline.verification.logs.allEvents': string
+  'pipeline.verification.logs.baseline': string
   'pipeline.verification.logs.clusterType': string
   'pipeline.verification.logs.copyURL': string
   'pipeline.verification.logs.countPerMin': string
@@ -4735,6 +4736,12 @@ export interface StringsMap {
   'cv.learnMore': string
   'cv.left': string
   'cv.logCluster': string
+  'cv.logs.eventMarkedAs': string
+  'cv.logs.eventPriorityUpdate': string
+  'cv.logs.notARisk': string
+  'cv.logs.priorityOrRiskSelectionRequired': string
+  'cv.logs.radarChartInfo': string
+  'cv.logs.reportedBy': string
   'cv.logsCluster': string
   'cv.maxValue': string
   'cv.messageFrequency': string

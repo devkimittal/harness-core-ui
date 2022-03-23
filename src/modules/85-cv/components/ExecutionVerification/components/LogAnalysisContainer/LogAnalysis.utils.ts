@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { getEventTypeChartColor, getRiskColorValue } from '@cv/utils/CommonUtils'
+import { getEventTypeChartColor } from '@cv/utils/CommonUtils'
 import type { SelectOption } from '@pipeline/components/PipelineSteps/Steps/StepsTypes'
 import type { UseStringsReturn } from 'framework/strings'
 import type { LogData, RestResponsePageLogAnalysisClusterDTO } from 'services/cv'
@@ -37,6 +37,8 @@ export const getClusterTypes = (getString: UseStringsReturn['getString']): Selec
     { label: getString('pipeline.verification.logs.knownEvent'), value: 'KNOWN_EVENT' },
     { label: getString('pipeline.verification.logs.unknownEvent'), value: 'UNKNOWN_EVENT' },
     { label: getString('pipeline.verification.logs.unexpectedFrequency'), value: 'UNEXPECTED_FREQUENCY' }
+    // TODO: update baseline filter
+    // { label: getString('pipeline.verification.logs.baseline'), value: 'BASELINE' }
   ]
 }
 

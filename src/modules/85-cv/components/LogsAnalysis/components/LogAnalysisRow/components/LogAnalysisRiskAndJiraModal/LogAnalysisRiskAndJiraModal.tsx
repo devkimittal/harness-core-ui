@@ -6,16 +6,16 @@
  */
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { Container, Heading, Button, Text, Color, ButtonVariation, FontVariation } from '@wings-software/uicore'
+import { Container, Heading, Button, Text, Color, FontVariation } from '@wings-software/uicore'
 import { Drawer } from '@blueprintjs/core'
 import { useStrings } from 'framework/strings'
 import type { SampleDataProps, LogAnalysisRiskAndJiraModalProps } from './LogAnalysisRiskAndJiraModal.types'
 import { ActivityHeadingContent } from './components/ActivityHeadingContent'
 import useEventPreferenceUpdateModal from './components/EventPreferenceUpdateModal/EventPreferenceUpdateModal'
 import { DrawerProps } from './LogAnalysisRiskAndJiraModal.constants'
-import css from './LogAnalysisRiskAndJiraModal.module.scss'
 import type { EventPreferenceForm } from './components/EventPreferenceUpdateModal/EventPreferenceUpdateModal.type'
 import getLogAnalysisLineChartOptions from '../../LogAnalysisLineChartConfig'
+import css from './LogAnalysisRiskAndJiraModal.module.scss'
 
 export function SampleData(props: SampleDataProps): JSX.Element {
   const { logMessage } = props
@@ -47,16 +47,16 @@ export function LogAnalysisRiskAndJiraModal(props: LogAnalysisRiskAndJiraModalPr
     onHide()
   }, [onHide])
 
-  const onSubmitOfEventPreferenceEdit = (values: EventPreferenceForm): void => {
-    console.log('edit values', values)
-  }
-
-  const { openEventPreferenceEditModal } = useEventPreferenceUpdateModal({
+  const { openEventPreferenceEditModal, closeEventPreferenceEditModal } = useEventPreferenceUpdateModal({
     initialModalValue: {
       activityType
     },
     onSubmitOfEventPreferenceEdit
   })
+
+  function onSubmitOfEventPreferenceEdit(values: EventPreferenceForm): void {
+    closeEventPreferenceEditModal()
+  }
 
   // const onSubmitCallback = useCallback(
   //   data => {
@@ -73,9 +73,9 @@ export function LogAnalysisRiskAndJiraModal(props: LogAnalysisRiskAndJiraModalPr
         <Heading level={2} font={{ variation: FontVariation.H4 }}>
           {getString('pipeline.verification.logs.eventDetails')}
         </Heading>
-        <Button variation={ButtonVariation.SECONDARY} onClick={() => openEventPreferenceEditModal()}>
+        {/* <Button variation={ButtonVariation.SECONDARY} onClick={() => openEventPreferenceEditModal()}>
           {getString('pipeline.verification.logs.updateEventPreference')}
-        </Button>
+        </Button> */}
         {/* <IconHeading /> */}
         {/* {} */}
       </Container>
@@ -83,7 +83,10 @@ export function LogAnalysisRiskAndJiraModal(props: LogAnalysisRiskAndJiraModalPr
         {/* <Formik initialValues={feedback ?? {}} onSubmit={onSubmitCallback}>
           {formikProps => <RiskAndMessageForm handleSubmit={formikProps.handleSubmit} hasSubmitted={hasSubmitted} />}
         </Formik> */}
-        <Container>
+        {/* <Container margin={{ bottom: 'small' }}>
+          <UpdatedEventPreference />
+        </Container> */}
+        <Container style={{ flex: 1 }}>
           <ActivityHeadingContent activityType={activityType} trendData={trendData} count={count} />
           <SampleData logMessage={message} />
         </Container>

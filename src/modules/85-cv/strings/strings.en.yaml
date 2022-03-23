@@ -812,3 +812,10 @@ customHealthSource:
   ServiceInstance:
     pathLabel: Provide Service Instance to map to Harness Service Instance
     pathModalHeader: Select path for Service Instance
+logs:
+  priorityOrRiskSelectionRequired: 'Priority or Risk selection is required'
+  eventMarkedAs: This event was marked as
+  eventPriorityUpdate: This event was marked with priority
+  notARisk: Not a Risk
+  reportedBy: Reported by
+  radarChartInfo: Click the node on the radar visual to explore more details

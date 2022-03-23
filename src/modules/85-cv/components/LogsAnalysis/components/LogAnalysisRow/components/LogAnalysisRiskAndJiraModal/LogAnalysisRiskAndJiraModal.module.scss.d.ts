@@ -24,6 +24,8 @@ declare const styles: {
   readonly logo: string
   readonly main: string
   readonly message: string
+  readonly reasonText: string
+  readonly reasonTextContainer: string
   readonly sampleEvent: string
   readonly sharePopoverContent: string
   readonly urlContent: string

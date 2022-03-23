@@ -5,13 +5,15 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import type { SeriesLineOptions } from 'highcharts'
+import type { SeriesColumnOptions } from 'highcharts'
 
-export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions[]): Highcharts.Options {
+export default function getLogAnalysisLineChartOptions(series: SeriesColumnOptions[]): Highcharts.Options {
+  console.log('series', series)
+
   return {
     chart: {
       type: 'column',
-      renderTo: 'chart',
+      // renderTo: 'chart',
       // margin: [0, 0, 0],
       backgroundColor: 'transparent',
       style: {
@@ -28,12 +30,14 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
     xAxis: {
       labels: { enabled: false },
       // lineWidth: 0,
-      tickLength: 0,
+      tickLength: 1,
       gridLineWidth: 0,
       min: 0.25,
       title: {
         text: ''
-      }
+      },
+      startOnTick: true,
+      endOnTick: true
     },
     yAxis: {
       labels: { enabled: false },
@@ -47,6 +51,14 @@ export default function getLogAnalysisLineChartOptions(series: SeriesLineOptions
     plotOptions: {
       series: {
         pointWidth: 10
+      },
+      column: {},
+      bar: {
+        groupPadding: 0,
+        pointPadding: 0,
+        dataLabels: {
+          enabled: true
+        }
       }
     },
     tooltip: {

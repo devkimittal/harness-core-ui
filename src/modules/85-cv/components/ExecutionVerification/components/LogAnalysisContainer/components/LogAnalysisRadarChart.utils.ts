@@ -6,12 +6,32 @@
  */
 
 import type { SeriesScatterOptions } from 'highcharts'
+import { getEventTypeChartColor } from '@cv/utils/CommonUtils'
+import type { MinMaxAngleState } from './LogAnalysisRadarChart.types'
 
-export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOptions[]): Highcharts.Options {
+export function getRadarChartSeries(data: any[]): SeriesScatterOptions['data'] {
+  return data.map(marker => {
+    return {
+      name: marker.angle,
+      data: [{ x: marker.angle, y: marker.radius === 'UNKNOWN' ? 90 : 45 }],
+      color: getEventTypeChartColor(marker.radius),
+      pointPlacement: 'on',
+      marker: { symbol: 'circle' }
+    }
+  })
+}
+
+export default function getLogAnalysisSpiderChartOptions(
+  series: SeriesScatterOptions['data'],
+  minMaxAngle: MinMaxAngleState
+): Highcharts.Options {
   return {
     chart: {
       polar: true,
-      type: 'scatter'
+      type: 'scatter',
+      height: 400,
+      marginTop: 20,
+      marginBottom: 20
     },
     accessibility: {
       description:
@@ -29,13 +49,14 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
     },
 
     xAxis: {
-      labels: { enabled: false },
-      //   categories: ['Sales', 'Marketing', 'Development', 'Customer Support', 'Information Technology', 'Administration'],
+      labels: { enabled: true },
+      // categories: [0, 15, 30, 45],
       tickmarkPlacement: 'on',
       lineWidth: 0,
-      tickAmount: 12,
-      max: 360,
-      min: 0
+      tickAmount: 13,
+      max: minMaxAngle.max,
+      min: minMaxAngle.min
+      // tickInterval: 10
     },
 
     yAxis: {
@@ -43,21 +64,21 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
       plotBands: [
         {
           from: 0,
-          to: 33000,
+          to: 30,
           color: '#ffffff'
           // "outerRadius": "105%",
           // "thickness": "50%"
         },
         {
-          from: 33000,
-          to: 66000,
+          from: 30,
+          to: 60,
           color: '#FAFCFF'
           // "outerRadius": "105%",
           // "thickness": "50%"
         },
         {
-          from: 66000,
-          to: 100000,
+          from: 60,
+          to: 100,
           color: '#EFFBFF'
           // "outerRadius": "105%",
           // "thickness": "50%"
@@ -66,17 +87,17 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
       // "reversed": true,
       // "min": 1,
       //   maximum
-      max: 100000,
+      max: 100,
       allowDecimals: false,
       // "tickInterval": 25000,
       // "tickAmount": 5,
-      tickPositions: [0, 33000, 66000, 100000],
+      tickPositions: [0, 30, 60, 100],
       // "tickLength": 25000,
       // "gridLineInterpolation": "polygon",
       gridLineColor: '#ECE6E6',
       // "lineWidth": 1,
       // "tickmarkPlacement": "between",
-      tickPixelInterval: 25000
+      tickPixelInterval: 25
       // "tickPosition": "outside",
       // "labels": {
       //   "enabled": true,
@@ -92,36 +113,17 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
       pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
     },
 
-    series: [
-      {
-        name: 'a',
-        data: [{ x: 80, y: 45444 }],
-        color: 'red',
-        pointPlacement: 'on',
-        marker: { symbol: 'circle' }
-      },
-      {
-        name: 'b',
-        data: [{ x: 280, y: 12111 }],
-        pointPlacement: 'on',
-        marker: { symbol: 'circle' }
-      },
-      {
-        name: 'c',
-        data: [{ x: 160, y: 30032 }],
-        pointPlacement: 'on',
-        marker: { symbol: 'circle' }
-      },
-      {
-        name: 'c',
-        data: [{ x: 240, y: 80000 }],
-        pointPlacement: 'on',
-        color: 'red',
-        marker: { symbol: 'circle' }
-      }
-    ],
+    series,
     plotOptions: {
       series: {
+        // events: {
+        //   click: (...e) => {
+        //     console.log('click ', e)
+        //   },
+        //   mouseOver: (...e) => {
+        //     console.log('mouseover', e)
+        //   }
+        // },
         cursor: 'pointer',
         point: {
           events: {
@@ -131,22 +133,33 @@ export default function getLogAnalysisSpiderChartOptions(series: SeriesScatterOp
           }
         }
       }
+      // dataLabels: {
+      //   enabled: true,
+      //   format: '<span class="wheel-label" style="color: red">name</span>',
+      //   style: {
+      //     textShadow: false,
+      //     width: 150,
+      //     fontSize: '16px'
+      //   }
+      // }
     }
 
     // responsive: {
     //   rules: [
     //     {
+    //       // callback: () => {}
     //       condition: {
-    //         maxWidth: 200
+    //         height: 400,
+    //         callback: () => {}
     //       },
     //       chartOptions: {
-    //         legend: {
-    //           align: 'center',
-    //           verticalAlign: 'bottom',
-    //           layout: 'horizontal'
-    //         },
+    //         // legend: {
+    //         //   align: 'center',
+    //         //   verticalAlign: 'bottom',
+    //         //   layout: 'horizontal'
+    //         // },
     //         pane: {
-    //           size: '90%'
+    //           size: '70%'
     //         }
     //       }
     //     }

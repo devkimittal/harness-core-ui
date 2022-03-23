@@ -30,3 +30,13 @@
     }
   }
 }
+
+.separator {
+  margin: var(--spacing-large) 0;
+  border-bottom: 1px solid var(--grey-200);
+}
+
+.errorText {
+  font-size: var(--font-size-normal) !important;
+  font-weight: 400 !important;
+}

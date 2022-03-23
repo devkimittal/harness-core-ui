@@ -666,7 +666,8 @@ verification:
     filterByClusterType: Filter by cluster type
     knownEvent: Known
     unknownEvent: Unknown
-    unexpectedFrequency: Frequency
+    unexpectedFrequency: Unexpected
+    baseline: Baseline
     allEvents: All Events
     noAnalysis: No analysis
     clusterType: CLUSTER TYPE
