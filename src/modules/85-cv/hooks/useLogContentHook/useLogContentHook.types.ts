@@ -33,3 +33,8 @@ export interface ExecutionLogToolbarProps {
   isFullScreen: boolean
   setIsFullScreen: (isFullScreen: React.SetStateAction<boolean>) => void
 }
+
+export enum LogTypes {
+  ApiCallLog = 'ApiCallLog',
+  ExecutionLog = 'ExecutionLog'
+}

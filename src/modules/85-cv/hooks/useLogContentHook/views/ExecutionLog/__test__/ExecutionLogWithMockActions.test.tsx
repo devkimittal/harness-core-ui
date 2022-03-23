@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event'
 import { render, screen, waitFor } from '@testing-library/react'
 import * as cvService from 'services/cv'
 import { TestWrapper } from '@common/utils/testUtils'
+import { LogTypes } from '@cv/hooks/useLogContentHook/useLogContentHook.types'
 import ExecutionLog from '../ExecutionLog'
 import {
   testWrapperProps,
@@ -89,7 +90,7 @@ describe('ExecutionLog - with mock actions', () => {
         queryParams: {
           accountId: pathParams.accountId,
           pageSize: PAGE_SIZE,
-          logType: 'ExecutionLog',
+          logType: LogTypes.ExecutionLog,
           pageNumber: 0,
           errorLogsOnly: false,
           healthSources: ['dynatrace_prod/dyna']
@@ -117,7 +118,7 @@ describe('ExecutionLog - with mock actions', () => {
         queryParams: {
           accountId: pathParams.accountId,
           pageSize: PAGE_SIZE,
-          logType: 'ExecutionLog',
+          logType: LogTypes.ExecutionLog,
           pageNumber: 0,
           errorLogsOnly: true
         },

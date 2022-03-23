@@ -120,12 +120,6 @@ describe('Unit tests for ExecutionVerificationView unit tests', () => {
       </TestWrapper>
     )
 
-    expect(screen.getByText('pipeline.verification.analysisTab.metrics')).toHaveAttribute('aria-selected', 'true')
-    expect(screen.queryByText('cv.executionLogs')).not.toBeInTheDocument()
-
-    userEvent.click(screen.getByText('pipeline.verification.analysisTab.logs'))
-
-    expect(screen.getByText('pipeline.verification.analysisTab.logs')).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByText('cv.executionLogs')).toBeInTheDocument()
 
     userEvent.click(screen.getByText('cv.executionLogs'))

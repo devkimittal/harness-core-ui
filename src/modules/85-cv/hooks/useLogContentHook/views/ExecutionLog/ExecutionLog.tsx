@@ -19,6 +19,7 @@ import ExecutionLogHeader from '../ExecutionLogHeader'
 import ExecutionLogToolbar from '../ExecutionLogToolbar'
 import { reducer, useActionCreator } from './ExecutionLogState'
 import { defaultReducerState, PAGE_SIZE } from './ExecutionLog.constants'
+import { LogTypes } from '../../useLogContentHook.types'
 import { isPositiveNumber } from '../../useLogContentHook.utils'
 import { convertLogDataToLogLineData } from './ExecutionLog.utils'
 import type { State, Action, ActionType, ExecutionLogProps } from './ExecutionLog.types'
@@ -43,7 +44,7 @@ const ExecutionLog: React.FC<ExecutionLogProps> = ({ activityId }) => {
     queryParams: {
       accountId,
       pageSize: PAGE_SIZE,
-      logType: 'ExecutionLog',
+      logType: LogTypes.ExecutionLog,
       pageNumber,
       errorLogsOnly,
       ...(healthSource?.value ? { healthSources: [healthSource.value as string] } : {})

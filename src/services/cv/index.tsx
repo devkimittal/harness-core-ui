@@ -553,7 +553,7 @@ export interface CVNGLog {
   endTime?: number
   lastUpdatedAt?: number
   logRecords?: CVNGLogRecord[]
-  logType?: 'API_CALL_LOG' | 'EXECUTION_LOG'
+  logType?: 'ApiCallLog' | 'ExecutionLog'
   startTime?: number
   traceableId?: string
   traceableType?: 'ONBOARDING' | 'VERIFICATION_TASK'
@@ -567,7 +567,7 @@ export interface CVNGLogDTO {
   startTime?: number
   traceableId?: string
   traceableType?: 'ONBOARDING' | 'VERIFICATION_TASK'
-  type?: 'API_CALL_LOG' | 'EXECUTION_LOG'
+  type?: 'ApiCallLog' | 'ExecutionLog'
 }
 
 export interface CVNGLogRecord {
@@ -1449,6 +1449,7 @@ export interface Error {
     | 'POLICY_SET_ERROR'
     | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
     | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   correlationId?: string
   detailedMessage?: string
   message?: string
@@ -1800,6 +1801,7 @@ export interface Failure {
     | 'POLICY_SET_ERROR'
     | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
     | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   correlationId?: string
   errors?: ValidationError[]
   message?: string
@@ -3538,6 +3540,7 @@ export interface ResponseMessage {
     | 'POLICY_SET_ERROR'
     | 'INVALID_ARTIFACTORY_REGISTRY_REQUEST'
     | 'INVALID_NEXUS_REGISTRY_REQUEST'
+    | 'ENTITY_NOT_FOUND'
   exception?: Throwable
   failureTypes?: (
     | 'EXPIRED'
@@ -11768,7 +11771,7 @@ export const getVerifyStepHealthSourcesPromise = (
 
 export interface GetVerifyStepLogsQueryParams {
   accountId: string
-  logType: string
+  logType: 'ApiCallLog' | 'ExecutionLog'
   errorLogsOnly?: boolean
   healthSources?: string[]
   pageNumber?: number

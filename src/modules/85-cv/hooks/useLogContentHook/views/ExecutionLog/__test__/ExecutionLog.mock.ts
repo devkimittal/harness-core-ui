@@ -8,6 +8,7 @@
 import routes from '@common/RouteDefinitions'
 import { executionPathProps, pipelineModuleParams } from '@common/utils/routeUtils'
 import type { TestWrapperProps } from '@common/utils/testUtils'
+import { LogTypes } from '@cv/hooks/useLogContentHook/useLogContentHook.types'
 import type {
   ExecutionLogDTO,
   RestResponseDeploymentActivitySummaryDTO,
@@ -62,7 +63,7 @@ export const executionLogs: ExecutionLogDTO[] = [
     traceableType: 'VERIFICATION_TASK',
     log: TEXT_LEARNING_ENGINE,
     logLevel: 'INFO',
-    type: 'EXECUTION_LOG'
+    type: LogTypes.ExecutionLog
   }
 ]
 
