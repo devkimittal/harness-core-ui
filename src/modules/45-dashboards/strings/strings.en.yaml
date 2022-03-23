@@ -8,6 +8,7 @@ sideNav:
   noDashboard: 'No custom dashboard found'
 modules:
   harness: 'By Harness'
+  currentGen: 'CG Deployments'
 homePage:
   folders: 'Folders'
   searchPlaceholder: 'Search by name'

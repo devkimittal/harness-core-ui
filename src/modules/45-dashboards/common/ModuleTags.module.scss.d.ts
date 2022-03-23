@@ -10,6 +10,7 @@ declare const styles: {
   readonly cdTag: string
   readonly ceTag: string
   readonly cfTag: string
+  readonly cgTag: string
   readonly ciTag: string
   readonly harnessTag: string
   readonly moduleTag: string

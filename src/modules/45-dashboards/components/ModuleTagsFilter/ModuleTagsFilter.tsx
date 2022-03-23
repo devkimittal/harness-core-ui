@@ -18,7 +18,7 @@ export interface ModuleTagsFilterProps {
 
 const ModuleTagsFilter: React.FC<ModuleTagsFilterProps> = ({ selectedFilter, setPredefinedFilter }) => {
   const { getString } = useStrings()
-  const { CENG_ENABLED, CING_ENABLED, CDNG_ENABLED, CFNG_ENABLED } = useFeatureFlags()
+  const { CENG_ENABLED, CING_ENABLED, CDNG_ENABLED, CFNG_ENABLED, CUSTOM_DASHBOARD_V2 } = useFeatureFlags()
 
   const renderTagsFilter = (moduleName: string, cssClass: string, text: StringKeys, isEnabled = false) => {
     return (
@@ -43,6 +43,7 @@ const ModuleTagsFilter: React.FC<ModuleTagsFilterProps> = ({ selectedFilter, set
       {renderTagsFilter('CI', moduleTagCss.ciTag, 'buildsText', CING_ENABLED)}
       {renderTagsFilter('CD', moduleTagCss.cdTag, 'deploymentsText', CDNG_ENABLED)}
       {renderTagsFilter('CF', moduleTagCss.cfTag, 'common.purpose.cf.continuous', CFNG_ENABLED)}
+      {renderTagsFilter('CG', moduleTagCss.cgTag, 'dashboards.modules.currentGen', CUSTOM_DASHBOARD_V2)}
     </>
   )
 }
