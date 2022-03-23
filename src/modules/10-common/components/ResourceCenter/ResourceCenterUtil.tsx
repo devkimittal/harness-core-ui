@@ -153,16 +153,10 @@ export const MenuItems = ({ closeResourceCenter }: { closeResourceCenter: () => 
     e.preventDefault()
     window.open(url)
   }
-  const openSaber = (e: React.MouseEvent<Element, MouseEvent>): void => {
+  const openFileATicket = (e: React.MouseEvent<Element, MouseEvent>): void => {
     e.stopPropagation()
     e.preventDefault()
-    window.Saber?.do('set_options', {
-      feedback_values: { _email: currentUserInfo.email }
-    })
     closeResourceCenter()
-    setTimeout(function () {
-      window.Saber?.do('open')
-    }, 500)
   }
 
   return isCommunity ? (
@@ -179,7 +173,7 @@ export const MenuItems = ({ closeResourceCenter }: { closeResourceCenter: () => 
           title: getString('common.resourceCenter.ticketmenu.submit'),
           description: getString('common.resourceCenter.ticketmenu.submitDesc'),
           onClick: e => {
-            openSaber(e)
+            openFileATicket(e)
           }
         })}
       </Layout.Horizontal>
