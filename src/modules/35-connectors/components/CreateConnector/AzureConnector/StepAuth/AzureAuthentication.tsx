@@ -26,7 +26,8 @@ import {
   DelegateTypes,
   DelegateCardInterface,
   setupAzureFormData,
-  AzureSecretKeyType
+  AzureSecretKeyType,
+  AzureManagedIdentityTypes
 } from '@connectors/pages/connectors/utils/ConnectorUtils'
 import type { SecretReferenceInterface } from '@secrets/utils/SecretField'
 import type { ConnectorConfigDTO, ConnectorInfoDTO } from 'services/cd-ng'
@@ -54,11 +55,13 @@ interface StepConfigureProps {
 interface AzureFormInterface {
   authType: string | undefined
   azureEnvironmentType: string | undefined
-  clientId: string | undefined
+  applicationId: string | undefined
   tenantId: string | undefined
   secretType: string | undefined
   secretText: SecretReferenceInterface | void
   secretFile: SecretReferenceInterface | void
+  clientId: string | undefined
+  managedIdentity: string
 }
 const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthenticationProps> = props => {
   const { prevStepData, nextStep } = props
@@ -66,7 +69,7 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
   const { getString } = useStrings()
 
   const environments = {
-    AZURE_GLOBAL: 'AZURE',
+    AZURE_GLOBAL: 'AZURE_GLOBAL',
     US_GOVERNMENT: 'AZURE_US_GOVERNMENT'
   }
 
@@ -97,14 +100,27 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
     }
   ]
 
+  const managedIdentityOptions = [
+    {
+      label: getString('connectors.azure.managedIdentities.userAssigned'),
+      value: AzureManagedIdentityTypes.USER_MANAGED
+    },
+    {
+      label: getString('connectors.azure.managedIdentities.systemAssigned'),
+      value: AzureManagedIdentityTypes.SYSTEM_MANAGED
+    }
+  ]
+
   const defaultInitialFormData: AzureFormInterface = {
     authType: undefined,
     azureEnvironmentType: environments.AZURE_GLOBAL,
-    clientId: undefined,
+    applicationId: undefined,
     tenantId: undefined,
     secretType: AzureSecretKeyType.SECRET,
     secretText: undefined,
-    secretFile: undefined
+    secretFile: undefined,
+    clientId: undefined,
+    managedIdentity: AzureManagedIdentityTypes.USER_MANAGED
   }
 
   const [initialValues, setInitialValues] = useState(defaultInitialFormData)
@@ -177,9 +193,9 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                     items={environmentOptions}
                   />
                   <FormInput.Text
-                    name={'clientId'}
-                    placeholder={getString('connectors.azure.clientId')}
-                    label={getString('connectors.azure.clientId')}
+                    name={'applicationId'}
+                    placeholder={getString('connectors.azure.applicationId')}
+                    label={getString('connectors.azure.applicationId')}
                   />
                   <FormInput.Text
                     name={'tenantId'}
@@ -212,7 +228,28 @@ const AzureAuthentication: React.FC<StepProps<StepConfigureProps> & AzureAuthent
                     />
                   )}
                 </Layout.Vertical>
-              ) : null}
+              ) : (
+                <Layout.Vertical>
+                  <FormInput.Select
+                    name="azureEnvironmentType"
+                    label={getString('environment')}
+                    items={environmentOptions}
+                  />
+                  <FormInput.RadioGroup
+                    disabled={false}
+                    name="managedIdentity"
+                    label={getString('authentication')}
+                    items={managedIdentityOptions}
+                  />
+                  {formikProps.values.managedIdentity === AzureManagedIdentityTypes.USER_MANAGED && (
+                    <FormInput.Text
+                      name={'clientId'}
+                      placeholder={getString('connectors.azure.clientId')}
+                      label={getString('connectors.azure.clientId')}
+                    />
+                  )}
+                </Layout.Vertical>
+              )}
             </Container>
             <Layout.Horizontal padding={{ top: 'small' }} spacing="medium">
               <Button

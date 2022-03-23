@@ -51,6 +51,11 @@ export const AzureSecretKeyType = {
   CERT: 'Certificate'
 }
 
+export const AzureManagedIdentityTypes = {
+  USER_MANAGED: 'UserAssignedManagedIdentity',
+  SYSTEM_MANAGED: 'SystemAssignedManagedIdentity'
+}
+
 export const GCP_AUTH_TYPE = {
   DELEGATE: 'delegate',
   ENCRYPTED_KEY: 'encryptedKey'
@@ -637,22 +642,36 @@ export const setupAzureFormData = async (connectorInfo: ConnectorInfoDTO, accoun
     orgIdentifier: connectorInfo.orgIdentifier
   }
 
-  const secretType = connectorInfoSpec.credential.spec.auth.type
-  const secretKey = await setSecretField(
-    secretType === AzureSecretKeyType.SECRET
-      ? connectorInfoSpec.credential.spec.auth.spec.secretRef
-      : connectorInfoSpec.credential.spec.auth.spec.certificateRef,
-    scopeQueryParams
-  )
+  const delegateInCluster = connectorInfoSpec.credential.type === DelegateTypes.DELEGATE_IN_CLUSTER
+  const authType = connectorInfoSpec.credential.spec.auth.type
+  const secretKey =
+    !delegateInCluster &&
+    (await setSecretField(
+      authType === AzureSecretKeyType.SECRET
+        ? connectorInfoSpec.credential.spec.auth.spec.secretRef
+        : connectorInfoSpec.credential.spec.auth.spec.certificateRef,
+      scopeQueryParams
+    ))
+
+  const managedIdentity = connectorInfoSpec.credentials.spec.auth.type
 
   return {
     azureEnvironmentType: connectorInfoSpec.azureEnvironmentType,
     authType: connectorInfoSpec.credential.type,
-    clientId: connectorInfoSpec.credential.spec.clientId || undefined,
+    clientId:
+      delegateInCluster && managedIdentity === AzureManagedIdentityTypes.USER_MANAGED
+        ? connectorInfoSpec.credentials.spec.auth.spec.clientId
+        : undefined,
     tenantId: connectorInfoSpec.credential.spec.tenantId || undefined,
-    secretType,
-    secretText: secretType === AzureSecretKeyType.SECRET ? secretKey : undefined,
-    secretFile: secretType === AzureSecretKeyType.CERT ? secretKey : undefined
+    secretType: !delegateInCluster && authType,
+    secretText: !delegateInCluster && authType === AzureSecretKeyType.SECRET ? secretKey : undefined,
+    secretFile: !delegateInCluster && authType === AzureSecretKeyType.CERT ? secretKey : undefined,
+    applicationId:
+      (!delegateInCluster &&
+        authType === AzureManagedIdentityTypes.USER_MANAGED &&
+        connectorInfoSpec.credential.spec.applicationId) ||
+      undefined,
+    managedIdentity: delegateInCluster && authType
   }
 }
 
@@ -1047,7 +1066,7 @@ export const buildAzurePayload = (formData: FormData) => {
           ? {
               type: formData.authType,
               spec: {
-                clientId: formData.clientId,
+                applicationId: formData.applicationId,
                 tenantId: formData.tenantId,
                 auth: {
                   type: formData.secretType,
@@ -1062,7 +1081,22 @@ export const buildAzurePayload = (formData: FormData) => {
                 }
               }
             }
-          : { type: formData.authType },
+          : {
+              type: formData.authType,
+              spec: {
+                auth: {
+                  type: formData.managedIdentity,
+                  ...(formData.managedIdentity === AzureManagedIdentityTypes.USER_MANAGED
+                    ? {
+                        spec: {
+                          clientId: formData.clientId
+                        }
+                      }
+                    : {})
+                }
+              },
+              clientId: formData.clientId
+            },
       azureEnvironmentType: formData.azureEnvironmentType
     }
   }

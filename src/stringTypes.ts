@@ -1402,11 +1402,15 @@ export interface StringsMap {
   'connectors.awsKms.validation.selectDelegate': string
   'connectors.awsKms.validation.selectRegion': string
   'connectors.awsSecretManager.secretNamePrefix': string
+  'connectors.azure.applicationId': string
   'connectors.azure.auth.certificate': string
   'connectors.azure.auth.secret': string
   'connectors.azure.clientId': string
   'connectors.azure.environments.azureGlobal': string
   'connectors.azure.environments.usGov': string
+  'connectors.azure.managedIdentities.systemAssigned': string
+  'connectors.azure.managedIdentities.userAssigned': string
+  'connectors.azure.managedIdentity': string
   'connectors.azure.validation.certificate': string
   'connectors.azure.validation.clientId': string
   'connectors.azure.validation.environment': string

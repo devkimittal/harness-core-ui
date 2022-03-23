@@ -267,6 +267,10 @@ ACR:
   repositoryError: 'No repository found with given Registry'
 azure:
   clientId: '{{ $.common.clientId }}'
+  applicationId: 'Application Id'
+  managedIdentities: 
+    userAssigned: 'User Assigned Managed Identity'
+    systemAssigned: 'System Assigned Managed Identity'
   validation:
     environment: '{{ $.common.validation.environmentIsRequired }}'
     clientId: '{{ $.common.validation.clientIdIsRequired }}'
