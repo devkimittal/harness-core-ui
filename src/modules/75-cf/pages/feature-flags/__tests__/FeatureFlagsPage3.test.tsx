@@ -12,6 +12,7 @@ import { TestWrapper } from '@common/utils/testUtils'
 import mockImport from 'framework/utils/mockImport'
 import mockEnvironments from '@cf/pages/environments/__tests__/mockEnvironments'
 import mockGitSync from '@cf/utils/testData/data/mockGitSync'
+import mockGovernance from '@cf/utils/testData/data/mockGovernance'
 import FeatureFlagsPage, { RenderColumnFlag } from '../FeatureFlagsPage'
 import type { RenderColumnFlagProps } from '../FeatureFlagsPage'
 import mockFeatureFlags from './mockFeatureFlags'
@@ -170,6 +171,7 @@ describe('FeatureFlagsPage', () => {
             update={jest.fn()}
             toggleFeatureFlag={toggleFeatureFlag}
             cell={cellMock}
+            governance={mockGovernance}
             {...props}
           />
         </TestWrapper>

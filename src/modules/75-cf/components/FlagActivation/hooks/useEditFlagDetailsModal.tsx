@@ -14,6 +14,7 @@ import type {
 import { showToaster } from '@cf/utils/CFUtils'
 
 import { GIT_SYNC_ERROR_CODE, UseGitSync } from '@cf/hooks/useGitSync'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import { useStrings } from 'framework/strings'
 import { AUTO_COMMIT_MESSAGES } from '@cf/constants/GitSyncConstants'
 import patch from '../../../utils/instructions'
@@ -35,6 +36,7 @@ interface UseEditFlagDetailsModalReturn {
 const useEditFlagDetailsModal = (props: UseEditFlagDetailsModalProps): UseEditFlagDetailsModalReturn => {
   const { featureFlag, gitSync, refetchFlag, submitPatch } = props
   const { getString } = useStrings()
+  const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
 
   const [openEditDetailsModal, hideEditDetailsModal] = useModalHook(() => {
     const gitSyncFormMeta = gitSync?.getGitSyncFormMeta(AUTO_COMMIT_MESSAGES.UPDATED_FLAG_VARIATIONS)
@@ -85,7 +87,11 @@ const useEditFlagDetailsModal = (props: UseEditFlagDetailsModalProps): UseEditFl
               if (error.status === GIT_SYNC_ERROR_CODE) {
                 gitSync?.handleError(error.data as GitSyncErrorResponse)
               } else {
-                patch.feature.reset()
+                if (isGovernanceError(error)) {
+                  handleGovernanceError(error.data)
+                } else {
+                  patch.feature.reset()
+                }
               }
             })
         })

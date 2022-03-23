@@ -23,6 +23,7 @@ import useActiveEnvironment from '@cf/hooks/useActiveEnvironment'
 import { useFeatureFlagTelemetry } from '@cf/hooks/useFeatureFlagTelemetry'
 import { PageSpinner } from '@common/components'
 import { GIT_SYNC_ERROR_CODE, useGitSync } from '@cf/hooks/useGitSync'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import { AUTO_COMMIT_MESSAGES } from '@cf/constants/GitSyncConstants'
 import FlagElemAbout from './FlagElemAbout'
 import FlagElemBoolean from './FlagElemBoolean'
@@ -56,6 +57,7 @@ const FlagWizard: React.FC<FlagWizardProps> = props => {
   const { projectIdentifier, orgIdentifier, accountId: accountIdentifier } = useParams<Record<string, string>>()
   const history = useHistory()
   const { activeEnvironment, withActiveEnvironment } = useActiveEnvironment()
+  const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
 
   const { isAutoCommitEnabled, isGitSyncEnabled, gitSyncLoading, handleAutoCommit, getGitSyncFormMeta, handleError } =
     useGitSync()
@@ -114,7 +116,11 @@ const FlagWizard: React.FC<FlagWizardProps> = props => {
           if (error.status === GIT_SYNC_ERROR_CODE) {
             handleError(error.data as GitSyncErrorResponse)
           } else {
-            showError(getErrorMessage(error), 0, 'cf.savegw.error')
+            if (isGovernanceError(error)) {
+              handleGovernanceError(error.data)
+            } else {
+              showError(getErrorMessage(error), 0, 'cf.savegw.error')
+            }
           }
         })
     } else {

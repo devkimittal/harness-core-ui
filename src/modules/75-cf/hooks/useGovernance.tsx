@@ -6,7 +6,7 @@
  */
 
 import { useParams } from 'react-router-dom'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useModalHook } from '@harness/use-modal'
 import { EvaluationModal } from '@governance/EvaluationModal'
 import type { ModulePathParams, ProjectPathProps } from '@common/interfaces/RouteInterfaces'
@@ -14,20 +14,25 @@ import { useFeatureFlag } from '@common/hooks/useFeatureFlag'
 import { FeatureFlag } from '@common/featureFlags'
 import { useStrings } from 'framework/strings'
 
-export interface UseGovernance {
+export interface UseGovernancePayload {
   isGovernanceEnabled: boolean
   governanceError: any
   handleError: (error: any) => void
+  isGovernanceError(err: any): boolean
 }
 
-export const useGovernance = (): UseGovernance => {
+export const useGovernance = (): UseGovernancePayload => {
   const { getString } = useStrings()
 
   const OPA_FF_GOVERNANCE = useFeatureFlag(FeatureFlag.OPA_FF_GOVERNANCE)
 
-  const isGovernanceEnabled = useMemo<boolean>(() => !!OPA_FF_GOVERNANCE, [OPA_FF_GOVERNANCE])
+  const isGovernanceEnabled = !!OPA_FF_GOVERNANCE
 
   const { accountId: accountIdentifier } = useParams<ProjectPathProps & ModulePathParams>()
+
+  function isGovernanceError(err: any): boolean {
+    return !!err?.data?.details?.governanceMetadata
+  }
 
   const [governanceError, setGovernanceError] = useState<any>()
 
@@ -41,7 +46,7 @@ export const useGovernance = (): UseGovernance => {
       <EvaluationModal
         accountId={accountIdentifier}
         key={governanceError.id}
-        module={'cf'}
+        module="cf"
         metadata={governanceError}
         headingErrorMessage={getString('cf.policyEvaluations.failedToSave')}
       />
@@ -52,6 +57,7 @@ export const useGovernance = (): UseGovernance => {
   return {
     isGovernanceEnabled,
     governanceError,
-    handleError
+    handleError,
+    isGovernanceError
   }
 }

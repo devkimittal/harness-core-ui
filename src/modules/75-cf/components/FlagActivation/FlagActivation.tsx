@@ -127,7 +127,7 @@ const FlagActivation: React.FC<FlagActivationProps> = props => {
       }
     }
   })
-  const governance = useGovernance()
+  const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
 
   const FFM_1513 = useFeatureFlag(FeatureFlag.FFM_1513)
 
@@ -336,8 +336,8 @@ const FlagActivation: React.FC<FlagActivationProps> = props => {
               if (err.status === GIT_SYNC_ERROR_CODE) {
                 gitSync.handleError(err.data as GitSyncErrorResponse)
               } else {
-                if (err?.data?.details?.governanceMetadata) {
-                  governance.handleError(err.data)
+                if (isGovernanceError(err)) {
+                  handleGovernanceError(err.data)
                 } else {
                   showError(get(err, 'data.message', err?.message), 0)
                 }

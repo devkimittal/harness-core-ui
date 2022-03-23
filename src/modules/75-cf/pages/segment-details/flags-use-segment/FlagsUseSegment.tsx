@@ -49,7 +49,7 @@ export const FlagsUseSegment = ({ gitSync }: FlagsUseSegmentProps): ReactElement
     segmentIdentifier
   } = useParams<Record<string, string>>()
   const { activeEnvironment: environmentIdentifier } = useActiveEnvironment()
-  const governance = useGovernance()
+  const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
 
   const queryParams = {
     accountIdentifier,
@@ -107,8 +107,8 @@ export const FlagsUseSegment = ({ gitSync }: FlagsUseSegmentProps): ReactElement
         if (e.status === GIT_SYNC_ERROR_CODE) {
           gitSync.handleError(e.data as GitSyncErrorResponse)
         } else {
-          if (e?.data?.details?.governanceMetadata) {
-            governance.handleError(e.data)
+          if (isGovernanceError(e)) {
+            handleGovernanceError(e.data)
           } else {
             showError(getErrorMessage(e), undefined, 'cf.path.feature.error')
           }

@@ -77,7 +77,7 @@ export const EditVariationsModal: React.FC<EditVariationsModalProps> = ({
     const { getString } = useStrings()
     const validateVariationValues = useValidateVariationValues()
     const { showError, clear } = useToaster()
-    const governance = useGovernance()
+    const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
 
     const { mutate: submitPatch, loading: patchLoading } = usePatchFeature({
       identifier: feature.identifier as string,
@@ -183,8 +183,8 @@ export const EditVariationsModal: React.FC<EditVariationsModalProps> = ({
           if (error.status === GIT_SYNC_ERROR_CODE) {
             gitSync.handleError(error.data as GitSyncErrorResponse)
           } else {
-            if (error?.data?.details?.governanceMetadata) {
-              governance.handleError(error.data)
+            if (isGovernanceError(error)) {
+              handleGovernanceError(error.data)
             } else {
               showError(getErrorMessage(error), 0, 'cf.submit.patch.error')
             }

@@ -20,11 +20,7 @@ jest.mock('react-router-dom', () => ({
 
 const renderHookUnderTest = () => {
   const wrapper: FC = ({ children }) => {
-    return (
-      <div>
-        <ModalProvider>{children}</ModalProvider>
-      </div>
-    )
+    return <ModalProvider>{children}</ModalProvider>
   }
   return renderHook(() => useGovernance(), { wrapper })
 }

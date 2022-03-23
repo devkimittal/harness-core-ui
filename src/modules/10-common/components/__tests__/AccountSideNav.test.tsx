@@ -57,7 +57,7 @@ describe('AccountSideNav', () => {
         <AccountSideNav />
       </TestWrapper>
     )
-    expect(renderObj.getByText('common.governance')).toBeTruthy()
+    expect(renderObj.getByText('common.governance')).toBeInTheDocument()
   })
 
   test('AccountSideNav test ff governance', () => {
@@ -70,7 +70,7 @@ describe('AccountSideNav', () => {
         <AccountSideNav />
       </TestWrapper>
     )
-    expect(renderObj.getByText('common.governance')).toBeTruthy()
+    expect(renderObj.getByText('common.governance')).toBeInTheDocument()
   })
 
   test('AccountSideNav test no licenses enabled', () => {

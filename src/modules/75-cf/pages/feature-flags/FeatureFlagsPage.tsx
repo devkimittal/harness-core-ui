@@ -65,7 +65,7 @@ import SaveFlagToGitModal from '@cf/components/SaveFlagToGitModal/SaveFlagToGitM
 import { AUTO_COMMIT_MESSAGES } from '@cf/constants/GitSyncConstants'
 import GitSyncActions from '@cf/components/GitSyncActions/GitSyncActions'
 import { GitDetails, GitSyncFormValues, GIT_SYNC_ERROR_CODE, useGitSync, UseGitSync } from '@cf/hooks/useGitSync'
-import { useGovernance, UseGovernance } from '@cf/hooks/useGovernance'
+import { useGovernance, UseGovernancePayload } from '@cf/hooks/useGovernance'
 import usePlanEnforcement from '@cf/hooks/usePlanEnforcement'
 import FlagOptionsMenuButton from '@cf/components/FlagOptionsMenuButton/FlagOptionsMenuButton'
 import { FeatureIdentifier } from 'framework/featureStore/FeatureIdentifier'
@@ -81,7 +81,7 @@ export interface RenderColumnFlagProps {
   gitSync: UseGitSync
   cell: Cell<Feature>
   toggleFeatureFlag: UseToggleFeatureFlag
-  governance: UseGovernance
+  governance: UseGovernancePayload
   update: (status: boolean) => void
 }
 
@@ -100,6 +100,7 @@ export const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
   const [flagNameTextSize, setFlagNameTextSize] = useState(300)
   const ref = useRef<HTMLDivElement>(null)
   const { activeEnvironment } = useActiveEnvironment()
+  const { handleError: handleGovernanceError, isGovernanceError } = governance
 
   const [isSaveToggleModalOpen, setIsSaveToggleModalOpen] = useState(false)
 
@@ -142,8 +143,8 @@ export const RenderColumnFlag: React.FC<RenderColumnFlagProps> = ({
       if (error.status === GIT_SYNC_ERROR_CODE) {
         gitSync.handleError(error.data as GitSyncErrorResponse)
       } else {
-        if (error?.data?.details?.governanceMetadata) {
-          governance.handleError(error.data)
+        if (isGovernanceError(error)) {
+          handleGovernanceError(error.data)
         } else {
           showError(getErrorMessage(error), 0, 'cf.toggle.ff.status.error')
         }

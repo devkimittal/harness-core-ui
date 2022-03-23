@@ -82,7 +82,7 @@ export const FlagPrerequisites: React.FC<FlagPrerequisitesProps> = props => {
     environmentIdentifier
   } = useParams<Record<string, string>>()
   const [searchTerm, setSearchTerm] = useState<string>()
-  const governance = useGovernance()
+  const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
   const gitSyncFormMeta = gitSync?.getGitSyncFormMeta(AUTO_COMMIT_MESSAGES.UPDATES_FLAG_PREREQS)
   const PAGE_SIZE = 500
 
@@ -214,8 +214,8 @@ export const FlagPrerequisites: React.FC<FlagPrerequisitesProps> = props => {
               if (err.status === GIT_SYNC_ERROR_CODE) {
                 gitSync.handleError(err.data as GitSyncErrorResponse)
               } else {
-                if (err?.data?.details?.governanceMetadata) {
-                  governance.handleError(err.data)
+                if (isGovernanceError(err)) {
+                  handleGovernanceError(err.data)
                 } else {
                   showError(get(err, 'data.message', err?.message), undefined, 'cf.patch.req.error')
                 }

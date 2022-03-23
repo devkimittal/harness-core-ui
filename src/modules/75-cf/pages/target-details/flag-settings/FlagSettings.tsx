@@ -18,7 +18,7 @@ import {
   PageError,
   Pagination
 } from '@wings-software/uicore'
-import { UseGovernance, useGovernance } from '@cf/hooks/useGovernance'
+import { useGovernance } from '@cf/hooks/useGovernance'
 import { useStrings } from 'framework/strings'
 import { Feature, GitDetails, GitSyncErrorResponse, Target, useGetAllFeatures, Variation } from 'services/cf'
 import { ItemContainer } from '@cf/components/ItemContainer/ItemContainer'
@@ -75,7 +75,6 @@ export const FlagSettings: React.FC<FlagSettingsProps> = ({ target, gitSync }) =
     projectIdentifier,
     environmentIdentifier
   }
-  const governance = useGovernance()
 
   const [pageNumber, setPageNumber] = useState(0)
   const [queryString, setQueryString] = useState('')
@@ -204,7 +203,6 @@ export const FlagSettings: React.FC<FlagSettingsProps> = ({ target, gitSync }) =
                   patchParams={patchParams}
                   key={feature.identifier}
                   gitSync={gitSync}
-                  governance={governance}
                 />
               ))}
             </Layout.Vertical>
@@ -237,8 +235,7 @@ const FlagSettingsRow: React.FC<{
   feature: Feature
   patchParams: FlagPatchParams
   gitSync: UseGitSync
-  governance: UseGovernance
-}> = ({ feature, index, patchParams, target, gitSync, governance }) => {
+}> = ({ feature, index, patchParams, target, gitSync }) => {
   const { withActiveEnvironment } = useActiveEnvironment()
 
   return (
@@ -301,7 +298,6 @@ const FlagSettingsRow: React.FC<{
             feature={feature}
             gitSync={gitSync}
             target={target}
-            governance={governance}
           />
         </Container>
       </Layout.Horizontal>
@@ -317,7 +313,6 @@ export interface VariationSelectProps {
   feature: Feature
   target: Target
   gitSync: UseGitSync
-  governance: UseGovernance
 }
 
 export const VariationSelect: React.FC<VariationSelectProps> = ({
@@ -327,8 +322,7 @@ export const VariationSelect: React.FC<VariationSelectProps> = ({
   target,
   feature,
   patchParams,
-  gitSync,
-  governance
+  gitSync
 }) => {
   const { getString } = useStrings()
   const [index, setIndex] = useState<number>(variations.findIndex(v => v.identifier === selectedIdentifier))
@@ -346,6 +340,7 @@ export const VariationSelect: React.FC<VariationSelectProps> = ({
         }
       : undefined
   const { activeEnvironment } = useActiveEnvironment()
+  const { handleError: handleGovernanceError, isGovernanceError } = useGovernance()
   const [canEdit] = usePermission({
     resource: { resourceType: ResourceType.ENVIRONMENT, resourceIdentifier: activeEnvironment },
     permissions: [PermissionIdentifier.EDIT_FF_FEATUREFLAG]
@@ -402,8 +397,8 @@ export const VariationSelect: React.FC<VariationSelectProps> = ({
       if (e.status === GIT_SYNC_ERROR_CODE) {
         gitSync.handleError(e.data as GitSyncErrorResponse)
       } else {
-        if (e?.data?.details?.governanceMetadata) {
-          governance.handleError(e.data)
+        if (isGovernanceError(e)) {
+          handleGovernanceError(e.data)
         } else {
           showError(getErrorMessage(e), 0, 'cf.serve.flag.variant.error')
         }
