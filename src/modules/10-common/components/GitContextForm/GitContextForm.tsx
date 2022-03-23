@@ -60,8 +60,9 @@ const GitContextForm: React.FC<GitContextFormProps<Record<string, any> & GitCont
   const [searchTerm, setSearchTerm] = React.useState<string>('')
 
   React.useEffect(() => {
+    const defaultRepoSelect = gitDetails?.repoIdentifier ?? gitSyncRepos[0]?.identifier
     const isSelectedBranchExist = !!branchSelectOptions.filter(item => item.value === defaultBranchSelect.value)[0]
-    if (!isSelectedBranchExist) {
+    if (!isSelectedBranchExist && defaultRepoSelect === formikProps?.values?.repo) {
       branchSelectOptions.push(defaultBranchSelect)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,7 +102,7 @@ const GitContextForm: React.FC<GitContextFormProps<Record<string, any> & GitCont
           projectIdentifier,
           yamlGitConfigIdentifier: formikProps.values.repo,
           page: 0,
-          size: 20,
+          size: 100,
           searchTerm
         }
       })
