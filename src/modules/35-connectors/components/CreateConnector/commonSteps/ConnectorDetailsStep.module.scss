@@ -24,8 +24,12 @@
     }
 
     .gitDetailsContainer {
-      .bp3-popover-wrapper {
-        width: 56% !important;
+      .bp3-form-group {
+        width: 54% !important;
+      }
+
+      [class*='Layout--horizontal'] {
+        width: calc(54% + 24px) !important;
       }
     }
   }

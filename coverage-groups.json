@@ -17,7 +17,11 @@
     "Connectors": ["src/modules/35-connectors/**", "src/modules/10-common/components/YAMLBuilder/**"],
     "Delegates": ["src/modules/30-delegates/**"],
     "STO": ["src/modules/85-sto-steps/**", "src/modules/27-sto/**"],
-    "GitSync": ["src/modules/40-gitsync/**", "src/modules/10-common/components/SCMCheck/**"],
+    "GitSync": [
+      "src/modules/40-gitsync/**",
+      "src/modules/10-common/components/SCMCheck/**",
+      "src/modules/10-common/components/GitContextForm/**"
+    ],
     "CI": ["src/modules/75-ci/**"],
     "CF": ["src/modules/75-cf/**"],
     "CE": ["src/modules/75-ce/**", "src/modules/35-connectors/CreateConnector/CEK8sConnector/**"],

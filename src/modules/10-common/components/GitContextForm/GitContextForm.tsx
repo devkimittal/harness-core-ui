@@ -197,7 +197,7 @@ const GitContextForm: React.FC<GitContextFormProps<Record<string, any> & GitCont
           }}
           className={css.selectBranchInput}
         />
-        {loadingBranchList && <Icon margin={{ top: 'xsmall' }} name="spinner" />}
+        <Container width={16}>{loadingBranchList && <Icon margin={{ top: 'xsmall' }} name="spinner" />}</Container>
       </Layout.Horizontal>
     </Container>
   )

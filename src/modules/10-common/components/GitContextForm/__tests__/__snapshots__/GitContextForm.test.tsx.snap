@@ -157,6 +157,10 @@ exports[`GitContextForm test GitContextForm for create with deafault restriction
                 </div>
               </div>
             </div>
+            <div
+              class="StyledProps--font StyledProps--main"
+              style="width: 16px;"
+            />
           </div>
         </div>
       </div>
@@ -321,6 +325,10 @@ exports[`GitContextForm test GitContextForm for create without deafult restricti
                 </div>
               </div>
             </div>
+            <div
+              class="StyledProps--font StyledProps--main"
+              style="width: 16px;"
+            />
           </div>
         </div>
       </div>
@@ -487,6 +495,10 @@ exports[`GitContextForm test GitContextForm for edit should have repo and branch
                 </div>
               </div>
             </div>
+            <div
+              class="StyledProps--font StyledProps--main"
+              style="width: 16px;"
+            />
           </div>
         </div>
       </div>
