@@ -7,9 +7,6 @@
  **/
 // this is an auto-generated file, do not update this manually
 declare const styles: {
-  readonly loading: string
-  readonly manualInterventionTab: string
-  readonly permissibleActions: string
-  readonly shadow: string
+  readonly main: string
 }
 export default styles

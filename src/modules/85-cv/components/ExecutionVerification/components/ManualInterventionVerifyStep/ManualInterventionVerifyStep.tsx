@@ -86,11 +86,18 @@ export function ManualInterventionVerifyStep(props: ManualInterventionVerifyStep
 
   if (isManualInterruption) {
     return (
-      <Container padding={'small'} background={Color.YELLOW_100} flex={{ justifyContent: 'flex-start' }} width={'100%'}>
-        <Text font={{ weight: 'bold', size: 'small' }} padding={{ right: 'small' }}>
+      <Container
+        className={css.shadow}
+        padding={'small'}
+        border={{ radius: 0 }}
+        background={Color.YELLOW_100}
+        flex={{ justifyContent: 'flex-start' }}
+        width={'100%'}
+      >
+        <Text font={{ weight: 'bold', size: 'small' }} color={Color.BLACK} padding={{ right: 'small' }}>
           {getString('cv.deploymentVerification.failed')}
         </Text>
-        <Container className={cx(css.manualInterventionTab, { [css.loading]: loading })}>
+        <Container color={Color.BLACK} className={cx(css.manualInterventionTab, { [css.loading]: loading })}>
           <Select
             className={css.permissibleActions}
             name={'permissibleActions'}
