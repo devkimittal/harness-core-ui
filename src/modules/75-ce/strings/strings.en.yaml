@@ -5,7 +5,7 @@ common:
   newBudget: 'New Budget'
   budget: 'Budget'
   spendTillDate: 'Spend Till Date'
-  containerService: 'Container Service'
+  containerService: 'ECS'
 allRegions: 'All Regions'
 allClusters: 'All Clusters'
 enforcementMessage:
