@@ -51,7 +51,10 @@ jest.mock('services/cv', () => ({
   useGetSloMetrics: jest
     .fn()
     .mockImplementation(() => ({ data: listMetricDTOResponse, loading: false, error: null, refetch: jest.fn() })),
-  useGetSliGraph: jest.fn().mockImplementation(() => ({ data: {}, loading: false, error: null, refetch: jest.fn() }))
+  useGetSliGraph: jest.fn().mockImplementation(() => ({ data: {}, loading: false, error: null, refetch: jest.fn() })),
+  useGetMonitoredService: jest
+    .fn()
+    .mockImplementation(() => ({ data: {}, loading: false, error: null, refetch: jest.fn() }))
 }))
 
 const renderComponent = (): RenderResult => {
@@ -395,7 +398,7 @@ describe('CVCreateSLO - Edit', () => {
     )
   })
 
-  test('+ New Health Source should go to Configurations in monitored service details page', () => {
+  test('+ New Health Source should should open the drawer to add a new health source', () => {
     jest
       .spyOn(cvServices, 'useGetServiceLevelObjective')
       .mockImplementation(() => ({ data: SLOResponse, loading: false, error: null, refetch: jest.fn() } as any))
@@ -419,20 +422,10 @@ describe('CVCreateSLO - Edit', () => {
       })
     )
 
-    expect(
-      screen.getByText(
-        routes.toCVAddMonitoringServicesEdit({ ...pathParams, identifier: 'test1_env1' }) +
-          getCVMonitoringServicesSearchParam({
-            tab: MonitoredServiceEnum.Configurations,
-            redirectToSLO: true,
-            sloIdentifier: 'SLO5',
-            monitoredServiceIdentifier: 'monitored_service_identifier'
-          })
-      )
-    )
+    expect(screen.getByText('cv.healthSource.addHealthSource')).toBeInTheDocument()
   })
 
-  test('+ New Metric should go to Configurations in monitored service details page', () => {
+  test('+ New Metric should open the health source drawer in edit mode', () => {
     jest
       .spyOn(cvServices, 'useGetServiceLevelObjective')
       .mockImplementation(() => ({ data: SLOResponse, loading: false, error: null, refetch: jest.fn() } as any))
@@ -449,24 +442,7 @@ describe('CVCreateSLO - Edit', () => {
     )
 
     userEvent.click(screen.getByText('continue'))
-
-    userEvent.click(
-      screen.getAllByRole('button', {
-        name: /cv.newMetric/g
-      })[0]
-    )
-
-    expect(
-      screen.getByText(
-        routes.toCVAddMonitoringServicesEdit({ ...pathParams, identifier: 'test1_env1' }) +
-          getCVMonitoringServicesSearchParam({
-            tab: MonitoredServiceEnum.Configurations,
-            redirectToSLO: true,
-            sloIdentifier: 'SLO5',
-            monitoredServiceIdentifier: 'monitored_service_identifier'
-          })
-      )
-    )
+    expect(screen.getAllByText('cv.newMetric')[0]).toBeEnabled()
   })
 
   test('it should not render Event type and Good request metric dropdowns for Threshold based', () => {

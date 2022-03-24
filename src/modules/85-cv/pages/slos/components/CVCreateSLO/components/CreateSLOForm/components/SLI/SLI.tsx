@@ -76,9 +76,9 @@ const SLI: React.FC<SLIProps> = ({ children, formikProps, ...rest }) => {
   const monitoredService = monitoredServiceData?.data?.monitoredService
   const { serviceRef, environmentRef } = monitoredService || {}
   const { healthSources = [], changeSources = [] } = monitoredService?.sources || {}
-  const healthSourcesOptions = useMemo(() => getHealthSourceOptions(monitoredService), [monitoredServiceData])
+  const healthSourcesOptions = useMemo(() => getHealthSourceOptions(monitoredService), [monitoredService])
   const activeHealthSource: SelectOption = useMemo(
-    () => healthSourcesOptions.find(healthSource => healthSource.value === values.healthSourceRef) ?? defaultOption,
+    () => healthSourcesOptions.find(healthSource => healthSource?.value === values?.healthSourceRef) ?? defaultOption,
     [healthSourcesOptions, values.healthSourceRef]
   )
 

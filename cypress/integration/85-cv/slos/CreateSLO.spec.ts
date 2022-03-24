@@ -50,6 +50,7 @@ describe('Create SLO', () => {
     cy.intercept('GET', listSLOsCall, listSLOsCallResponse)
     cy.intercept('GET', getUserJourneysCall, listUserJourneysCallResponse)
     cy.intercept('GET', listMonitoredServices, listMonitoredServicesCallResponse)
+    cy.intercept('GET', getMonitoredService, getMonitoredServiceResponse)
     cy.intercept('GET', getSLOMetrics, listSLOMetricsCallResponse)
     cy.intercept('GET', getSLORiskCount, listRiskCountDataEmptyResponse)
 
@@ -124,6 +125,7 @@ describe('Create SLO', () => {
     cy.intercept('GET', getUserJourneysCall, listUserJourneysCallResponse)
     cy.intercept('GET', getSLORiskCount, getSLORiskCountResponse)
     cy.intercept('GET', listMonitoredServices, listMonitoredServicesCallResponse)
+    cy.intercept('GET', getMonitoredService, getMonitoredServiceResponse)
     cy.intercept('GET', getSLOMetrics, listSLOMetricsCallResponse)
     cy.intercept('GET', getServiceLevelObjective, errorResponse).as('getServiceLevelObjective')
 
@@ -186,6 +188,7 @@ describe('Create SLO', () => {
   it('should validate all form field errors and default values', () => {
     cy.intercept('GET', getUserJourneysCall, listUserJourneysCallResponse)
     cy.intercept('GET', listMonitoredServices, listMonitoredServicesCallResponse)
+    cy.intercept('GET', getMonitoredService, getMonitoredServiceResponse)
     cy.intercept('GET', getSLOMetrics, listSLOMetricsCallResponse)
     cy.intercept('POST', getSliGraph, errorResponse)
 
@@ -371,6 +374,7 @@ describe('Create SLO', () => {
     cy.intercept('GET', listSLOsCall, updatedListSLOsCallResponse)
     cy.intercept('GET', getSLORiskCount, getSLORiskCountResponse)
     cy.intercept('GET', getUserJourneysCall, listUserJourneysCallResponse)
+    cy.intercept('GET', getMonitoredService, getMonitoredServiceResponse)
     cy.intercept('GET', listMonitoredServices, listMonitoredServicesCallResponse)
     cy.intercept('GET', getSLOMetrics, listSLOMetricsCallResponse)
 
@@ -468,6 +472,7 @@ describe('Create SLO', () => {
     cy.intercept('GET', getUserJourneysCall, listUserJourneysCallResponse)
     cy.intercept('GET', getSLORiskCount, getSLORiskCountResponse)
     cy.intercept('GET', listMonitoredServices, listMonitoredServicesCallResponse)
+    cy.intercept('GET', getMonitoredService, getMonitoredServiceResponse)
 
     cy.intercept('GET', getMonitoredService, getMonitoredServiceResponse).as('getMonitoredService')
     cy.intercept('GET', listSLOsCallWithCVNGProd, updatedListSLOsCallResponse)
@@ -526,7 +531,7 @@ describe('Create SLO', () => {
     cy.contains('span', 'SLO created successfully').should('be.visible')
   })
 
-  it('should be able to add new Health Source while editing a SLO and back button should redirect to the SLOs in MS service page', () => {
+  it.only('should be able to add new Health Source while editing a SLO and back button should redirect to the SLOs in MS service page', () => {
     cy.intercept('GET', listSLOsCall, updatedListSLOsCallResponse)
     cy.intercept('GET', getUserJourneysCall, listUserJourneysCallResponse)
     cy.intercept('GET', getSLORiskCount, getSLORiskCountResponse)
@@ -554,13 +559,6 @@ describe('Create SLO', () => {
 
     cy.findByRole('button', { name: /New Health Source/i }).click()
 
-    cy.wait('@getMonitoredService')
-    cy.findByRole('button', { name: /Save/i }).click({ force: true })
-
-    cy.contains('span', 'Monitored Service updated').should('be.visible')
-
-    cy.contains('h2', 'Define SLO identification').should('be.visible')
-
-    cy.findByRole('button', { name: /Back/i }).click({ force: true })
+    cy.contains('p', 'Add New Health Source').should('be.visible')
   })
 })

@@ -68,7 +68,7 @@ const PickMetric: React.FC<PickMetricProps> = props => {
     validRequestMetric,
     SLIMetricType,
     objectiveComparator
-  } = formikProps.values
+  } = formikProps?.values || {}
   const isRatioBasedMetric = SLIMetricType === SLIMetricTypes.RATIO
 
   const {
@@ -179,7 +179,7 @@ const PickMetric: React.FC<PickMetricProps> = props => {
                     icon="plus"
                     text={getString('cv.newMetric')}
                     variation={ButtonVariation.LINK}
-                    disabled={!monitoredServiceRef}
+                    disabled={!healthSourceRef}
                     onClick={onAddNewMetric}
                     permission={{
                       permission: PermissionIdentifier.EDIT_MONITORED_SERVICE,
@@ -207,7 +207,7 @@ const PickMetric: React.FC<PickMetricProps> = props => {
                 icon="plus"
                 text={getString('cv.newMetric')}
                 variation={ButtonVariation.LINK}
-                disabled={!monitoredServiceRef}
+                disabled={!healthSourceRef}
                 onClick={onAddNewMetric}
                 permission={{
                   permission: PermissionIdentifier.EDIT_MONITORED_SERVICE,
