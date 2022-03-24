@@ -50,11 +50,6 @@ function StepCommonFieldsInputSet<T>(props: StepCommonFieldsInputSetProps<T>): J
 
   const stepCss = stepViewType === StepViewType.DeploymentForm ? css.sm : css.lg
 
-  // If neither value is runtime then return null
-  if (!isLimitCPURuntime && !isTimeoutRuntime && !isRunAsUserRuntime) {
-    return null
-  }
-
   const renderMultiTypeTextField = ({
     name,
     tooltipId,
