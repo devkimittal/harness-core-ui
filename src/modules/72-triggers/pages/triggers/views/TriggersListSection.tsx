@@ -348,7 +348,7 @@ const RenderWebhookIcon = ({
   if (webhookSourceRepo?.toLowerCase() === GitSourceProviders.CUSTOM.value.toLowerCase()) {
     const curlCommand = `curl -X POST ${
       (webhookSecret && `-H 'X-Harness-Webhook-Token: ${webhookSecret}'`) || ''
-    } -H 'content-type: application/json' --url ${webhookUrl} -d '{"sample_key": "sample_value"}'`
+    } -H 'content-type: application/json' --url '${webhookUrl}' -d '{"sample_key": "sample_value"}'`
 
     return (
       <Popover
