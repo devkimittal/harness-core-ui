@@ -6,7 +6,8 @@
  */
 
 import React from 'react'
-import { Color, Container, FontVariation, Layout, Text } from '@harness/uicore'
+import { Container, Layout, Text } from '@harness/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { useStrings } from 'framework/strings'
 import type { NodepoolTimeRangeValue } from '@ce/types'
 

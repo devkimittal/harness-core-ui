@@ -7,7 +7,8 @@
 
 import React, { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Layout, Text, Color, FontVariation, Card, Popover, Container } from '@wings-software/uicore'
+import { Layout, Text, Card, Popover, Container } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { Position, Menu, MenuItem } from '@blueprintjs/core'
 
 import { NodepoolTimeRange, NodepoolTimeRangeType, NodepoolTimeRangeValue } from '@ce/types'

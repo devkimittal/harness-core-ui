@@ -10,14 +10,14 @@ import {
   Container,
   Layout,
   Text,
-  Color,
-  FontVariation,
   Card,
   Button,
   ButtonVariation,
   Icon,
-  Tabs
+  Tabs,
+  getErrorInfoFromErrorObject
 } from '@wings-software/uicore'
+import { Color, FontVariation } from '@harness/design-system'
 import { Dialog, Position, Toaster } from '@blueprintjs/core'
 import { useModalHook } from '@harness/use-modal'
 import { defaultTo, isEqual } from 'lodash-es'
@@ -213,7 +213,7 @@ const NodeRecommendationDetails: React.FC<NodeRecommendationDetailsProps> = ({
         setUpdatedState(addBufferToState(state, buffer))
         UpdatePreferenceToaster.show({ message: getString('ce.nodeRecommendation.updatePreferences'), icon: 'tick' })
       } catch (e: any) {
-        showError(getString('ce.nodeRecommendation.fetchRecommendationError'))
+        showError(getErrorInfoFromErrorObject(e))
       }
     } else {
       showError(getString('ce.nodeRecommendation.inconsistentResourceReq'))

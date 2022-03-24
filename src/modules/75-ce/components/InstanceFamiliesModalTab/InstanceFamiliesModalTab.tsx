@@ -6,7 +6,8 @@
  */
 
 import React, { useMemo, useState } from 'react'
-import { Container, Text, FontVariation, Checkbox, Layout } from '@harness/uicore'
+import { Container, Text, Checkbox, Layout } from '@harness/uicore'
+import { FontVariation } from '@harness/design-system'
 import { CellProps, useTable, Column } from 'react-table'
 import cx from 'classnames'
 import { flatten } from 'lodash-es'
