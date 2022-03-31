@@ -31,6 +31,7 @@ $ brew install yarn
 > Note: More options here: https://classic.yarnpkg.com/en/docs/install
 
 3. Clone this repo
+4. Little change
 
 ```
 $ git clone git@github.com:harness/harness-core-ui.git
